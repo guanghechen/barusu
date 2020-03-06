@@ -24,6 +24,10 @@
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@barusu/eslint-config": [
+        "./packages/eslint-config"
+      ],
+    }
   }
 }
