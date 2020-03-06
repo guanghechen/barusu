@@ -16,6 +16,7 @@
     "node": ">= 12.16.0"
   },
   "scripts": {
+    ":publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
     "clean": "lerna clean --yes"
