@@ -1,0 +1,29 @@
+{
+  "name": "@barusu/root",
+  "version": "0.0.0",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/#readme",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
+    "clean": "lerna clean --yes"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
+}
