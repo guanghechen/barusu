@@ -28,6 +28,9 @@
       "@barusu/eslint-config": [
         "./packages/eslint-config"
       ],
+      "@barusu/option-util": [
+        "./packages/option-util"
+      ],
     }
   }
 }
