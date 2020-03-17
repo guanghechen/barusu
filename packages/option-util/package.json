@@ -32,8 +32,6 @@
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.1",
-    "rimraf": "^3.0.2",
-    "typescript": "^3.8.2"
+    "@barusu/eslint-config": "^0.0.1"
   }
 }

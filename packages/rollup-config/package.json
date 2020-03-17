@@ -48,8 +48,6 @@
     "rollup-plugin-typescript2": "^0.26.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.1",
-    "rimraf": "^3.0.2",
-    "typescript": "^3.8.2"
+    "@barusu/eslint-config": "^0.0.1"
   }
 }
