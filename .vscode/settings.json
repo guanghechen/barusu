@@ -4,9 +4,12 @@
     "cond",
     "downlevel",
     "eslintconfig",
+    "ioptions",
     "plusplus",
     "postbuild",
     "prebuild",
+    "sourcemap",
+    "styl",
     "tsbuildinfo"
   ]
 }

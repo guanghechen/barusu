@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "@barusu/eslint-config"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+  }
+}
