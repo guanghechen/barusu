@@ -31,6 +31,7 @@
     "prebuild": "rimraf *.tsbuildinfo lib/",
     "build": "tsc -b tsconfig.json",
     "postbuild": "rimraf lib/**/*.tsbuildinfo",
+    "lint:fix": "echo 'no lint needed'",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
