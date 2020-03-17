@@ -31,6 +31,9 @@
       "@barusu/option-util": [
         "./packages/option-util"
       ],
+      "@barusu/rollup-config": [
+        "./packages/rollup-config"
+      ],
     }
   }
 }
