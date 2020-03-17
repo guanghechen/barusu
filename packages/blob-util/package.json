@@ -1,0 +1,41 @@
+{
+  "name": "@barusu/blob-util",
+  "version": "0.0.1",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/blob-util#readme",
+  "source": "src/index.ts",
+  "main": "lib/cjs/index.js",
+  "types": "lib/cjs/index.d.ts",
+  "module": "lib/esm/index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "files": [
+    "lib/",
+    ".eslintrc",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "start": "rollup -w -c rollup.config.js",
+    "prebuild": "yarn lint:fix && rimraf lib/",
+    "build": "rollup -c rollup.config.js",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "@barusu/eslint-config": "^0.0.1",
+    "@barusu/rollup-config": "^0.0.1",
+    "rollup": "^1.31.1"
+  }
+}

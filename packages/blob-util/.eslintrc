@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "@barusu/eslint-config"
+  ]
+}
