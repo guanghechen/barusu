@@ -1,7 +1,7 @@
 {
   "name": "@barusu/rollup-config",
   "version": "0.0.1",
-  "description": "rollup for react+ts+stylus",
+  "description": "rollup configs for ts project",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -10,11 +10,10 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/scaffold/rollup-config#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/rollup-config#readme",
   "keywords": [
     "rollup",
-    "typescript",
-    "stylus"
+    "typescript"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,7 +23,7 @@
   },
   "files": [
     "lib/",
-    ".eslintrc",
+    ".eslintrc.js",
     "CHANGELOG.md",
     "LICENSE",
     "README.md",
