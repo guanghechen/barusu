@@ -1,0 +1,48 @@
+{
+  "name": "@barusu/tool-find-inconsistent-packages",
+  "version": "0.0.2",
+  "description": "find inconsistent package versions in monorepo",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/tool-find-inconsistent-packages#readme",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "files": [
+    "lib/",
+    ".eslintrc.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "bin": {
+    "find-inconsistent": "./lib/cjs/cli.js"
+  },
+  "scripts": {
+    "start": "rollup -w -c rollup.config.js",
+    "prebuild": "rimraf lib/",
+    "build": "rollup -c rollup.config.js",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "fs-extra": "^8.1.0"
+  },
+  "devDependencies": {
+    "@barusu/eslint-config": "^0.0.2",
+    "@barusu/rollup-config": "^0.0.2",
+    "rollup": "^1.31.1"
+  }
+}
