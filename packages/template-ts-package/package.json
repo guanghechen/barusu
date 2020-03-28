@@ -1,0 +1,36 @@
+{
+  "name": "@barusu/template-ts-package",
+  "version": "0.0.1",
+  "description": "templates to create a ts package",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/template-ts-package#readme",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "boilerplate",
+    "cli.js",
+    "index.js",
+    "package.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "create-ts-package": "./cli.js"
+  },
+  "scripts": {
+    "build": "echo 'no build action needed'",
+    "lint:fix": "echo 'no lint action needed'"
+  },
+  "dependencies": {
+    "plop": "^2.6.0",
+    "semver-regex": "^3.1.1"
+  }
+}

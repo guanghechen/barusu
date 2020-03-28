@@ -1,0 +1,47 @@
+{
+  "name": "{{{packageName}}}",
+  "version": "{{{lowerCase packageVersion}}}",
+{{#if packageAuthor}}
+  "author": {
+    "name": "{{{packageAuthor}}}",
+    "url": "https://github.com/{{{packageAuthor}}}/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}.git"
+  },
+{{#if isLernaProject}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}/tree/master/{{{packageLocation}}}#readme",
+{{else}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}#readme",
+{{/if}}
+{{/if}}
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "files": [
+    "lib/",
+    ".eslintrc.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "start": "rollup -w -c rollup.config.js",
+    "prebuild": "rimraf lib/",
+    "build": "rollup -c rollup.config.js",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "@barusu/eslint-config": "^{{{lowerCase packageVersion}}}",
+    "@barusu/rollup-config": "^{{{lowerCase packageVersion}}}",
+    "rollup": "^1.31.1"
+  }
+}
