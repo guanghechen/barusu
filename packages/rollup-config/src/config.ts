@@ -14,7 +14,7 @@ import {
 } from './types/options'
 
 
-export interface ProdConfigParams {
+export interface ProdConfigParams extends rollup.InputOptions {
   manifest: {
     /**
      * 源文件入口
@@ -62,7 +62,7 @@ export interface ProdConfigParams {
 
 export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOptions[] => {
   // process task
-  const { manifest, pluginOptions = {} } = props
+  const { manifest, pluginOptions = {}, ...resetInputOptions } = props
   const {
     eslintOptions = {},
     nodeResolveOptions = {},
@@ -71,6 +71,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     peerDepsExternalOptions = {},
   } = pluginOptions
   const config: rollup.RollupOptions = {
+    ...resetInputOptions,
     input: manifest.source,
     output: [
       manifest.main && {

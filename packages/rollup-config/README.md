@@ -12,6 +12,8 @@ yarn add --dev @barusu/rollup-config
 
 ## Options
 
+extends from rollup.InputOptions
+
 * `manifest`
 
    property  | type      | required  | description
@@ -21,7 +23,7 @@ yarn add --dev @barusu/rollup-config
    `module`  | `string`  | `false`   | target entry file of es
 
 
-* pluginOptions
+* `pluginOptions`
    property                   | type      | required  | description
   :--------------------------:|:---------:|:---------:|:------------------------
    `eslintOption`             | `object`  | `false`   | options for [rollup-plugin-eslint][]
