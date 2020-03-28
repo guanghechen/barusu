@@ -5,7 +5,7 @@ import manifest from './package.json'
 
 const resolvePath = p => path.resolve(__dirname, p)
 const paths = {
-  eslintrc: resolvePath('.eslintrc'),
+  eslintrc: resolvePath('.eslintrc.js'),
   tsconfig: resolvePath('tsconfig.json'),
 }
 
@@ -15,17 +15,13 @@ const config = createRollupConfig({
   pluginOptions: {
     eslintOptions: {
       configFile: paths.eslintrc,
-      include: ['src/**/*{.ts,.tsx}'],
-      exclude: ['src/**/*.styl.d.ts'],
     },
     typescriptOptions: {
       tsconfig: paths.tsconfig,
-      include: ['src/**/*{.ts,.tsx}'],
-      exclude: '**/__tests__/**',
+      useTsconfigDeclarationDir: true,
     },
     commonjsOptions: {
       include: ['../../node_modules/**'],
-      exclude: ['**/*.stories.js'],
       namedExports: {
       },
     },
