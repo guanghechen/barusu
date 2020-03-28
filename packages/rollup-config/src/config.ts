@@ -95,6 +95,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
       eslint({
         fix: true,
         throwOnError: true,
+        include: ['src/**/*{.ts,.tsx}'],
         exclude: ['*.css', '*.styl', '*.styl.d.ts'],
         ...eslintOptions,
       }),
@@ -102,6 +103,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         clean: true,
         typescript: require('typescript'),
         rollupCommonJSResolveHack: true,
+        include: ['src/**/*{.ts,.tsx}'],
         ...typescriptOptions,
       }),
       commonjs({
