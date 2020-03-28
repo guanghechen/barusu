@@ -1,5 +1,5 @@
 {
-  "name": "@barusu/option-util",
+  "name": "@barusu/webpack-source-map-loader",
   "version": "0.0.1",
   "author": {
     "name": "lemon-clown",
@@ -9,9 +9,8 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/option-util#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/webpack-source-map-loader#readme",
   "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
   "license": "MIT",
@@ -36,6 +35,11 @@
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.1",
     "@barusu/rollup-config": "^0.0.1",
+    "@types/webpack": "^4.41.6",
+    "@types/loader-utils": "^1.1.3",
     "rollup": "^1.31.1"
+  },
+  "dependencies": {
+    "loader-utils": "^2.0.0"
   }
 }

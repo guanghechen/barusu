@@ -1,12 +1,19 @@
 {
   "cSpell.words": [
+    "Lerna",
     "barusu",
+    "cacheable",
     "cond",
     "downlevel",
     "eslintconfig",
+    "ioptions",
+    "plopfile",
     "plusplus",
     "postbuild",
     "prebuild",
+    "rollup",
+    "sourcemap",
+    "styl",
     "tsbuildinfo"
   ]
 }

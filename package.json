@@ -17,14 +17,19 @@
   },
   "scripts": {
     ":publish": "lerna publish",
+    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "bootstrap": "lerna bootstrap",
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
+    "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "@barusu/template-ts-package": "^0.0.1",
+    "lerna": "^3.20.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.2"
   }
 }

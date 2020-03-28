@@ -1,15 +1,21 @@
 {
-  "name": "@barusu/option-util",
-  "version": "0.0.1",
+  "name": "{{{packageName}}}",
+  "version": "{{{lowerCase packageVersion}}}",
+{{#if packageAuthor}}
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "{{{packageAuthor}}}",
+    "url": "https://github.com/{{{packageAuthor}}}/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/option-util#readme",
+{{#if isLernaProject}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}/tree/master/{{{packageLocation}}}#readme",
+{{else}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}#readme",
+{{/if}}
+{{/if}}
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",
@@ -34,8 +40,8 @@
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.1",
-    "@barusu/rollup-config": "^0.0.1",
+    "@barusu/eslint-config": "^{{{lowerCase packageVersion}}}",
+    "@barusu/rollup-config": "^{{{lowerCase packageVersion}}}",
     "rollup": "^1.31.1"
   }
 }

@@ -5,7 +5,8 @@
     "outDir": "lib",
     "declarationDir": "lib/types",
     "target": "es2015",
-    "module": "es2015"
+    "module": "es2015",
+    "noImplicitThis": false
   },
   "include": [
     "src"

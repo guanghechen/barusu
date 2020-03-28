@@ -1,11 +1,3 @@
 {
-  "extends": "./tsconfig.settings.json",
-  "references": [
-    {
-      "path": "./packages/eslint-config"
-    },
-    {
-      "path": "./packages/option-util"
-    },
-  ]
+  "extends": "./tsconfig.settings.json"
 }

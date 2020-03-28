@@ -4,10 +4,12 @@
     "alwaysStrict": true,
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "lib/types",
     "downlevelIteration": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "module": "es2015"
     "moduleResolution": "node",
     "newLine": "LF",
     "noEmit": false,
@@ -21,26 +23,17 @@
     "pretty": false,
     "removeComments": false,
     "resolveJsonModule": true,
+    "rootDir": "src",
     "sourceMap": true,
     "strict": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "suppressImplicitAnyIndexErrors": true,
-    "baseUrl": ".",
-    "paths": {
-      "@barusu/blob-util": [
-        "./packages/blob-util"
-      ],
-      "@barusu/option-util": [
-        "./packages/option-util"
-      ],
-      "@barusu/rollup-config": [
-        "./packages/rollup-config"
-      ],
-      "@barusu/template-ts-package": [
-        "./packages/template-ts-package"
-      ],
-    }
-  }
+    "target": "es2015",
+    "outDir": "lib"
+  },
+  "include": [
+    "src"
+  ]
 }
