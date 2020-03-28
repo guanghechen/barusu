@@ -1,17 +1,13 @@
 {
   "extends": "../../tsconfig.settings",
   "compilerOptions": {
+    "rootDir": "src",
     "outDir": "lib",
-    "rootDir": ".",
-    "target": "es5",
-    "module": "CommonJS"
+    "declarationDir": "lib/types",
+    "target": "es2015",
+    "module": "es2015"
   },
   "include": [
     "src"
-  ],
-  "references": [
-    {
-      "path": "../eslint-config"
-    }
   ]
 }
