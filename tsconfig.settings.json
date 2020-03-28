@@ -41,6 +41,9 @@
       "@barusu/template-ts-package": [
         "./packages/template-ts-package"
       ],
+      "@barusu/tool-find-inconsistent-packages": [
+        "./packages/tool-find-inconsistent-packages"
+      ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader"
       ],
