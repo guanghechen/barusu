@@ -1,14 +1,3 @@
 {
-  "extends": "./tsconfig.settings.json",
-  "references": [
-    {
-      "path": "./packages/eslint-config"
-    },
-    {
-      "path": "./packages/option-util"
-    },
-    {
-      "path": "./packages/rollup-config"
-    },
-  ]
+  "extends": "./tsconfig.settings.json"
 }
