@@ -71,7 +71,6 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     peerDepsExternalOptions = {},
   } = pluginOptions
   const config: rollup.RollupOptions = {
-    ...resetInputOptions,
     input: manifest.source,
     output: [
       manifest.main && {
@@ -111,6 +110,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         ...commonjsOptions,
       }),
     ] as rollup.Plugin[],
+    ...resetInputOptions,
   }
 
   return [
