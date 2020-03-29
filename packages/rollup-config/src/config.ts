@@ -90,6 +90,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
       peerDepsExternal(peerDepsExternalOptions),
       nodeResolve({
         browser: true,
+        preferBuiltins: false,
         ...nodeResolveOptions,
       }),
       eslint({
