@@ -12,13 +12,6 @@ const paths = {
 
 const baseConfig = createRollupConfig({
   manifest,
-  external: [
-    '@types/fs-extra',
-    'fs-extra',
-    'path',
-    'glob',
-    'chalk',
-  ],
   pluginOptions: {
     eslintOptions: {
       configFile: paths.eslintrc,
