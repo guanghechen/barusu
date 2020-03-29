@@ -1,6 +1,6 @@
 {
   "name": "@barusu/option-util",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -34,8 +34,8 @@
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.2",
-    "@barusu/rollup-config": "^0.0.2",
+    "@barusu/eslint-config": "^0.0.3",
+    "@barusu/rollup-config": "^0.0.3",
     "rollup": "^1.31.1"
   }
 }

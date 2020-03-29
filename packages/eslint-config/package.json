@@ -1,6 +1,6 @@
 {
   "name": "@barusu/eslint-config",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "eslintconfig for ts packages",
   "author": {
     "name": "lemon-clown",
