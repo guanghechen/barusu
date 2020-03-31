@@ -5,10 +5,43 @@
 
 # Usage
 
-## Install
-```shell
-yarn add --dev @barusu/rollup-config
-```
+* Install
+  ```shell
+  yarn add --dev @barusu/rollup-config
+  ```
+
+* Use in `rollup.config.js`
+  ```js
+  import path from 'path'
+  import { createRollupConfig } from '@barusu/rollup-config'
+  import manifest from './package.json'
+
+  const resolvePath = p => path.resolve(__dirname, p)
+  const paths = {
+    eslintrc: resolvePath('.eslintrc.js'),
+    tsconfig: resolvePath('tsconfig.json'),
+  }
+
+  const config = createRollupConfig({
+    manifest,
+    pluginOptions: {
+      eslintOptions: {
+        configFile: paths.eslintrc,
+      },
+      typescriptOptions: {
+        tsconfig: paths.tsconfig,
+        useTsconfigDeclarationDir: true,
+      },
+      commonjsOptions: {
+        include: ['./node_modules/**'],
+        namedExports: {
+        },
+      },
+    }
+  })
+
+  export default config
+  ```
 
 ## Options
 
@@ -16,11 +49,12 @@ extends from rollup.InputOptions
 
 * `manifest`
 
-   property  | type      | required  | description
-  :---------:|:---------:|:---------:|:------------------------
-   `source`  | `string`  | `true`    | source entry file
-   `main`    | `string`  | `false`   | target entry file of cjs
-   `module`  | `string`  | `false`   | target entry file of es
+   property       | type                      | required  | description
+  :--------------:|:-------------------------:|:---------:|:------------------------
+   `source`       | `string`                  | `true`    | source entry file
+   `main`         | `string`                  | `false`   | target entry file of cjs
+   `module`       | `string`                  | `false`   | target entry file of es
+   `dependencies` | `{[key: string]: string}` | `false`   | ignore these dependencies (`external`)
 
 
 * `pluginOptions`
