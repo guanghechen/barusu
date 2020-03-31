@@ -5,7 +5,12 @@
 
 # Usage
 
-## Install
-```shell
-yarn add @barusu/tool-find-inconsistent-packages
-```
+* Install
+  ```shell
+  yarn add --dev @barusu/tool-find-inconsistent-packages
+  ```
+
+* Check if the version number of the same library is the same in the monorepo
+  ```shell
+  yarn find-inconsistent
+  ```
