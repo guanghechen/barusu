@@ -5,7 +5,7 @@ const manifest = require('./package.json')
 
 
 module.exports = function (plop) {
-  plop.setGenerator('inline-tokenizer', {
+  plop.setGenerator('ts-package', {
     description: 'create template typescript project',
     prompts: [
       {
@@ -62,9 +62,6 @@ module.exports = function (plop) {
     actions: function (answers) {
       const resolveSourcePath = (p) => path.normalize(path.resolve(__dirname, 'boilerplate', p))
       const resolveTargetPath = (p) => path.normalize(path.resolve(answers.packageLocation, p))
-
-      // set other data
-      console.log('answers:', answers)
 
       return [
         {

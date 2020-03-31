@@ -5,7 +5,23 @@
 
 # Usage
 
-## Install
-```shell
-yarn add --dev @barusu/eslint-config
-```
+  * Install
+    ```shell
+    yarn add --dev @barusu/eslint-config
+    ```
+
+  * Use in .eslint.rc
+    ```javascript
+    module.exports = {
+      root: true,
+      extends: [
+        '@barusu/eslint-config'
+      ],
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: './tsconfig.json'
+      },
+      rules: {
+      }
+    }
+    ```

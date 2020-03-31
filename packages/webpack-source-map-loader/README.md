@@ -7,7 +7,7 @@
 
 ## Install
 ```shell
-yarn add @barusu/webpack-source-map-loader
+yarn add --dev @barusu/webpack-source-map-loader
 ```
 
 ## Use in webpack
