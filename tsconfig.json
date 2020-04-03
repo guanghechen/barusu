@@ -1,3 +1,23 @@
 {
-  "extends": "./tsconfig.settings.json"
+  "extends": "./tsconfig.settings.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@barusu/blob-util": [
+        "./packages/blob-util/src"
+      ],
+      "@barusu/option-util": [
+        "./packages/option-util/src"
+      ],
+      "@barusu/rollup-config": [
+        "./packages/rollup-config/src"
+      ],
+      "@barusu/tool-find-inconsistent-packages": [
+        "./packages/tool-find-inconsistent-packages/src"
+      ],
+      "@barusu/webpack-source-map-loader": [
+        "./packages/webpack-source-map-loader/src"
+      ],
+    }
+  }
 }
