@@ -26,27 +26,6 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "baseUrl": ".",
-    "paths": {
-      "@barusu/blob-util": [
-        "./packages/blob-util"
-      ],
-      "@barusu/option-util": [
-        "./packages/option-util"
-      ],
-      "@barusu/rollup-config": [
-        "./packages/rollup-config"
-      ],
-      "@barusu/template-ts-package": [
-        "./packages/template-ts-package"
-      ],
-      "@barusu/tool-find-inconsistent-packages": [
-        "./packages/tool-find-inconsistent-packages"
-      ],
-      "@barusu/webpack-source-map-loader": [
-        "./packages/webpack-source-map-loader"
-      ],
-    }
+    "suppressImplicitAnyIndexErrors": true
   }
 }

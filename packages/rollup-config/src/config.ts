@@ -12,9 +12,14 @@ import {
   PeerDepsExternalOptions,
   EslintOptions,
 } from './types/options'
+import { convertToBoolean, coverBoolean } from './util'
 
 
 export interface ProdConfigParams extends rollup.InputOptions {
+  /**
+   * 是否生成 sourceMap （包括 declarationMap）
+   */
+  useSourceMap: boolean
   manifest: {
     /**
      * 源文件入口
@@ -65,8 +70,15 @@ export interface ProdConfigParams extends rollup.InputOptions {
 
 
 export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOptions[] => {
+  const DEFAULT_USE_SOURCE_MAP = coverBoolean(true, convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP))
+
   // process task
-  const { manifest, pluginOptions = {}, ...resetInputOptions } = props
+  const {
+    useSourceMap = DEFAULT_USE_SOURCE_MAP,
+    manifest,
+    pluginOptions = {},
+    ...resetInputOptions
+  } = props
   const {
     eslintOptions = {},
     nodeResolveOptions = {},
@@ -81,13 +93,13 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         file: manifest.main,
         format: 'cjs',
         exports: 'named',
-        sourcemap: true,
+        sourcemap: useSourceMap,
       },
       manifest.module && {
         file: manifest.module,
         format: 'es',
         exports: 'named',
-        sourcemap: true,
+        sourcemap: useSourceMap,
       }
     ].filter(Boolean) as rollup.OutputOptions[],
     external: [
@@ -115,6 +127,11 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         typescript: require('typescript'),
         rollupCommonJSResolveHack: true,
         include: ['src/**/*{.ts,.tsx}'],
+        tsconfigOverride: {
+          compilerOptions: {
+            declarationMap: useSourceMap,
+          }
+        },
         ...typescriptOptions,
       }),
       commonjs({

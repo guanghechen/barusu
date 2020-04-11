@@ -33,10 +33,10 @@
   ],
   "scripts": {
     "prebuild": "yarn lint:fix && rimraf *.tsbuildinfo lib/",
-    "build": "tsc -b tsconfig.json",
-    "postbuild": "rimraf lib/package.json lib/test lib/**/*.tsbuildinfo && mv lib/src/* lib && rimraf lib/src/",
+    "build": "tsc -p tsconfig.src.json --sourceMap --declarationMap",
+    "postbuild": "rimraf lib/**/*.tsbuildinfo",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",

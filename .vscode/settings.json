@@ -12,6 +12,7 @@
     "plusplus",
     "postbuild",
     "prebuild",
+    "rimraf",
     "rollup",
     "sourcemap",
     "styl",

@@ -5,6 +5,7 @@ const manifest = require('./package.json')
 
 
 module.exports = function (plop) {
+  const cwd = path.resolve(process.cwd())
   plop.setGenerator('ts-package', {
     description: 'create template typescript project',
     prompts: [
@@ -20,7 +21,7 @@ module.exports = function (plop) {
         message: 'author',
         default: (answers) => {
           // detect package.json
-          const packageJsonPath = path.resolve(process.cwd(), 'package.json')
+          const packageJsonPath = path.resolve(cwd, 'package.json')
           if (fs.existsSync(packageJsonPath)) {
             const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf-8')
             const packageJson = JSON.parse(packageJsonContent)
@@ -62,6 +63,14 @@ module.exports = function (plop) {
     actions: function (answers) {
       const resolveSourcePath = (p) => path.normalize(path.resolve(__dirname, 'boilerplate', p))
       const resolveTargetPath = (p) => path.normalize(path.resolve(answers.packageLocation, p))
+      const relativePath = path.relative(answers.packageLocation, cwd)
+      answers.tsconfigExtends = answers.isLernaProject
+        ? path.join(relativePath, 'tsconfig')
+        : './tsconfig.settings'
+      answers.tsconfigSrcExtends = answers.isLernaProject
+        ? path.join(relativePath, 'tsconfig.settings')
+        : './tsconfig.settings'
+      answers.nodeModulesPath = path.join(relativePath, 'node_modules')
 
       return [
         {
@@ -84,12 +93,20 @@ module.exports = function (plop) {
           path: resolveTargetPath('rollup.config.js'),
           templateFile: resolveSourcePath('rollup.config.js.hbs')
         },
+        !answers.isLernaProject && {
+          type: 'add',
+          path: resolveTargetPath('tsconfig.settings.json'),
+          templateFile: resolveSourcePath('tsconfig.settings.json.hbs')
+        },
         {
           type: 'add',
           path: resolveTargetPath('tsconfig.json'),
-          templateFile: answers.isLernaProject
-            ? resolveSourcePath('tsconfig.json.hbs')
-            : resolveSourcePath('tsconfig.full.json.hbs')
+          templateFile: resolveSourcePath('tsconfig.json.hbs')
+        },
+        {
+          type: 'add',
+          path: resolveTargetPath('tsconfig.src.json'),
+          templateFile: resolveSourcePath('tsconfig.src.json.hbs')
         },
         {
           type: 'add',
