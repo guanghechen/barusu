@@ -4,7 +4,9 @@
     "rootDir": "src",
     "outDir": "lib",
     "target": "es2015",
-    "module": "commonjs"
+    "module": "commonjs",
+    "sourceMap": false,
+    "declarationMap": false
   },
   "include": [
     "src"
