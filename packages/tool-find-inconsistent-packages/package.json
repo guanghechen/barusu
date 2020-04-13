@@ -46,6 +46,7 @@
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.5",
     "@barusu/rollup-config": "^0.0.5",
+    "cross-env": "^7.0.2",
     "rollup": "^1.31.1"
   }
 }

@@ -50,6 +50,7 @@
     "rollup-plugin-typescript2": "^0.26.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.5"
+    "@barusu/eslint-config": "^0.0.5",
+    "cross-env": "^7.0.2"
   }
 }
