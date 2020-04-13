@@ -1,0 +1,53 @@
+{
+  "name": "es static import",
+  "cases": [
+    {
+      "input": "import'xx'",
+      "output": [
+        "import",
+        "'",
+        "xx"
+      ]
+    },
+    {
+      "input": "import * as xx from 'xx'",
+      "output": [
+        "import * as xx from ",
+        "'",
+        "xx"
+      ]
+    },
+    {
+      "input": "import {} from 'xx/xx'",
+      "output": [
+        "import {} from ",
+        "'",
+        "xx/xx"
+      ]
+    },
+    {
+      "input": "import { a } from '@xx/dxfe.js'",
+      "output": [
+        "import { a } from ",
+        "'",
+        "@xx/dxfe.js"
+      ]
+    },
+    {
+      "input": "import { a as b, c } from '@xx/y'",
+      "output": [
+        "import { a as b, c } from ",
+        "'",
+        "@xx/y"
+      ]
+    },
+    {
+      "input": "import x, { a as b, c, d as e } from '@xx-xfe/df-x'",
+      "output": [
+        "import x, { a as b, c, d as e } from ",
+        "'",
+        "@xx-xfe/df-x"
+      ]
+    }
+  ]
+}

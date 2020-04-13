@@ -18,6 +18,9 @@
       "@barusu/tool-sort-imports": [
         "./packages/tool-sort-imports/src"
       ],
+      "@barusu/tool-tsconfig-paths": [
+        "./packages/tool-tsconfig-paths/src"
+      ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
       ],
