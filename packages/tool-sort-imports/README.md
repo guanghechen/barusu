@@ -7,5 +7,16 @@
 
   * Install
     ```shell
-    yarn add @barusu/tool-sort-imports
+    yarn add --dev @barusu/tool-sort-imports
     ```
+
+  * Usage
+    ```shell
+    npx sort-imports 'src/**/*.ts'
+    ```
+
+  * Options
+    - `[indent='<indent>']`
+    - `[quote='<quote>']`
+    - `[max-column='<column limit>']`
+    - `[log-level='<debug>']`
