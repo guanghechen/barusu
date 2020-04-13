@@ -16,6 +16,7 @@
     "node": ">= 12.16.0"
   },
   "scripts": {
+    "pre:publish": "yarn find-inconsistent && yarn sort-imports",
     ":publish": "lerna publish",
     "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "bootstrap": "lerna bootstrap",
@@ -23,7 +24,8 @@
     "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes && yarn install",
     "rebuild": "lerna exec -- 'rimraf lib/' && yarn build",
-    "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent-packages/lib/cjs/cli.js"
+    "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent-packages/lib/cjs/cli.js",
+    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js 'packages/**/src/**/*.ts' --log-level=verbose"
   },
   "workspaces": [
     "packages/*"
