@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-sort-imports",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -47,8 +47,8 @@
     "minimist": "^1.2.5"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.5",
-    "@barusu/rollup-config": "^0.0.5",
+    "@barusu/eslint-config": "^0.0.6",
+    "@barusu/rollup-config": "^0.0.6",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
