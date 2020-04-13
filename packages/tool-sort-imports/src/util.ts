@@ -31,6 +31,10 @@ const relativeRegex = /^([.\/\\]+)([^\n]*)$/
 export function compareModulePath(p1: string, p2: string): number {
   if (p1 === p2) return 0
 
+  // put react on top
+  if (p1 === 'react') return -1
+  if (p2 === 'react') return 1
+
   // compare npm package
   if (npmPackageRegex.test(p1)) {
     if (!npmPackageRegex.test(p2)) return -1
