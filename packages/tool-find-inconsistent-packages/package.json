@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-find-inconsistent-packages",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "find inconsistent package versions in monorepo",
   "author": {
     "name": "lemon-clown",
@@ -44,8 +44,8 @@
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.6",
-    "@barusu/rollup-config": "^0.0.6",
+    "@barusu/eslint-config": "^0.0.7",
+    "@barusu/rollup-config": "^0.0.7",
     "cross-env": "^7.0.2",
     "rollup": "^1.31.1"
   }
