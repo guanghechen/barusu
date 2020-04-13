@@ -8,6 +8,7 @@
     "downlevel",
     "eslintconfig",
     "ioptions",
+    "kase",
     "plopfile",
     "plusplus",
     "postbuild",

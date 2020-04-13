@@ -1,0 +1,107 @@
+{
+  "title": "test regex",
+  "references": [
+    "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import"
+  ],
+  "cases": [
+    {
+      "title": "default export",
+      "input": "import defaultExport from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "defaultExport": "defaultExport",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "export alias",
+      "input": "import * as name from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "defaultExport": "* as name",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "exportN",
+      "input": "import { export } from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "exportN": "export",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "exportN alias",
+      "input": "import { export as alias } from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "exportN": "export as alias",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "exportN multiple",
+      "input": "import { export1 , export2 } from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "exportN": "export1 , export2",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "exportN multiple + long module path",
+      "input": "import { foo , bar } from \"module-name/path/to/specific/un-exported/file\";",
+      "answer": {
+        "type": "import",
+        "exportN": "foo , bar",
+        "quote": "\"",
+        "moduleName": "module-name/path/to/specific/un-exported/file"
+      }
+    },
+    {
+      "title": "default export + default export alias",
+      "input": "import defaultExport, * as name from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "defaultExport": "defaultExport, * as name",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "no export",
+      "input": "import \"module-name\";",
+      "answer": {
+        "type": "import",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "exportN + exportN alias",
+      "input": "import { export1 , export2 as alias2, export3 } from \"module-name\";",
+      "answer": {
+        "type": "import",
+        "exportN": "export1 , export2 as alias2, export3",
+        "quote": "\"",
+        "moduleName": "module-name"
+      }
+    },
+    {
+      "title": "multiple line exportN alias",
+      "input": "import {\n  StaticImportOrExportStatItem,\n  createStaticImportOrExportRegex,\n  formatImportOrExportStatItem,\n  compareModulePath,\n} from './util'",
+      "answer": {
+        "type": "import",
+        "exportN": "StaticImportOrExportStatItem,\n  createStaticImportOrExportRegex,\n  formatImportOrExportStatItem,\n  compareModulePath,",
+        "quote": "'",
+        "moduleName": "./util"
+      }
+    }
+  ]
+}

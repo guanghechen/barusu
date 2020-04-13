@@ -1,5 +1,5 @@
 {
-  "extends": "{{{tsconfigSrcExtends}}}",
+  "extends": "../../tsconfig.settings",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",

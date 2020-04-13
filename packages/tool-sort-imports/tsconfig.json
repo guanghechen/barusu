@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitThis": false
+    "module": "commonjs"
   },
   "include": [
     "src",
