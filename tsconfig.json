@@ -15,6 +15,9 @@
       "@barusu/tool-find-inconsistent-packages": [
         "./packages/tool-find-inconsistent-packages/src"
       ],
+      "@barusu/tool-sort-imports": [
+        "./packages/tool-sort-imports/src"
+      ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
       ],
