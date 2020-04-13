@@ -37,7 +37,7 @@ export function processSourceMap(
 
   const sourcesWithoutContent: SourceContentItem[] = []
   for (let i = 0; i < rawSourceMap.sourcesContent.length; ++i) {
-    const sourceContent = rawSourceMap.sourcesContent.length[i]
+    const sourceContent = rawSourceMap.sourcesContent[i]
     if (!sourceContent) {
       sourcesWithoutContent.push({
         index: i,
