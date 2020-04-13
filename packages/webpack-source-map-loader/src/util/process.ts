@@ -1,8 +1,8 @@
-import webpack from 'webpack'
-import { RawSourceMap } from 'source-map'
 import * as fs from 'fs'
-import * as path from 'path'
 import * as loaderUtils from 'loader-utils'
+import * as path from 'path'
+import { RawSourceMap } from 'source-map'
+import webpack from 'webpack'
 import { resize } from './resize'
 
 

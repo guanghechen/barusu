@@ -1,5 +1,5 @@
-import fs from 'fs-extra'
 import chalk from 'chalk'
+import fs from 'fs-extra'
 import glob from 'glob'
 import minimist from 'minimist'
 import path from 'path'

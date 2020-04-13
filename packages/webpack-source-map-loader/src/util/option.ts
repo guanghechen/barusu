@@ -1,5 +1,5 @@
-import webpack from 'webpack'
 import * as loaderUtils from 'loader-utils'
+import webpack from 'webpack'
 
 
 /**

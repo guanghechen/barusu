@@ -1,5 +1,5 @@
 import path from 'path'
-import { logger, PackageManager } from './index'
+import { PackageManager, logger } from './index'
 
 
 let packageJsonPath = process.argv[2] || 'package.json'
