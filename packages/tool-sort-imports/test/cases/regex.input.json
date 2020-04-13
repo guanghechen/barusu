@@ -92,6 +92,16 @@
         "quote": "\"",
         "moduleName": "module-name"
       }
+    },
+    {
+      "title": "multiple line exportN alias",
+      "input": "import {\n  StaticImportOrExportStatItem,\n  createStaticImportOrExportRegex,\n  formatImportOrExportStatItem,\n  compareModulePath,\n} from './util'",
+      "answer": {
+        "type": "import",
+        "exportN": "StaticImportOrExportStatItem,\n  createStaticImportOrExportRegex,\n  formatImportOrExportStatItem,\n  compareModulePath,",
+        "quote": "'",
+        "moduleName": "./util"
+      }
     }
   ]
 }
