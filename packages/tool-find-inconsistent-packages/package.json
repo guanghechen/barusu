@@ -48,6 +48,6 @@
     "@barusu/eslint-config": "^0.0.7",
     "@barusu/rollup-config": "^0.0.7",
     "cross-env": "^7.0.2",
-    "rollup": "^1.31.1"
+    "rollup": "^2.6.1"
   }
 }

@@ -12,6 +12,9 @@
       "@barusu/option-util": [
         "./packages/option-util/src"
       ],
+      "@barusu/package-util": [
+        "./packages/package-util/src"
+      ],
       "@barusu/rollup-config": [
         "./packages/rollup-config/src"
       ],
