@@ -1,6 +1,6 @@
 import { Level } from './level'
 import { Logger, Options } from './logger'
-export { Level, DEBUG, INFO, VERBOSE, WARN, ERROR, FATAL } from './level'
+export { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
 
 
 let registered = false

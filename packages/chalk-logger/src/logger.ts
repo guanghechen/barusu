@@ -1,9 +1,9 @@
+import chalk, { Chalk } from 'chalk'
 import fs from 'fs-extra'
 import moment from 'moment'
 import { inspect } from 'util'
-import chalk, { Chalk } from 'chalk'
 import { Color, colorToChalk } from './color'
-import { DEBUG, VERBOSE, INFO, WARN, ERROR, FATAL, Level } from './level'
+import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
 
 
 export interface Options {
