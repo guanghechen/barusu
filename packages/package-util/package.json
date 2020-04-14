@@ -1,6 +1,6 @@
 {
   "name": "@barusu/package-util",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -40,8 +40,8 @@
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.7",
-    "@barusu/rollup-config": "^0.0.7",
+    "@barusu/eslint-config": "^0.0.8",
+    "@barusu/rollup-config": "^0.0.8",
     "cross-env": "^7.0.2",
     "rollup": "^2.6.1"
   }
