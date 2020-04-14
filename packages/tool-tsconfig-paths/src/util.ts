@@ -1,4 +1,12 @@
+import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 import { createStaticImportOrExportRegex } from '@barusu/tool-sort-imports'
+
+
+export const logger = new ColorfulChalkLogger('resolve-tsconfig-paths', {
+  level: INFO,
+  date: true,
+}, process.argv)
+
 
 
 const esStaticImportOrExportRegex = createStaticImportOrExportRegex()
