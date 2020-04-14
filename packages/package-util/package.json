@@ -10,7 +10,7 @@
     "url": "https://github.com/lemon-clown/barusu.git"
   },
   "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/package-util#readme",
-  "module": "lib/esm/index.js",
+  "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
   "license": "MIT",
