@@ -115,6 +115,8 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     const dependencies = collectAllDependencies(
       undefined,
       Object.keys(manifest.dependencies || {}),
+      undefined,
+      /[\s\S]*/,
     )
     externals.push(...dependencies)
   }
