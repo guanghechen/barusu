@@ -1,12 +1,10 @@
-import chalk from 'chalk'
+import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 
 
-export const logger = {
-  verb: (...messages: string[]) => console.info(chalk.cyan(messages.join(' '))),
-  info: (...messages: string[]) => console.info(chalk.green(messages.join(' '))),
-  warn: (...messages: string[]) => console.info(chalk.yellow(messages.join(' '))),
-  error: (...messages: string[]) => console.error(chalk.red(messages.join(' '))),
-}
+export const logger = new ColorfulChalkLogger('find-inconsistent', {
+  level: INFO,
+  date: true,
+}, process.argv)
 
 
 export const checkFatalError = (hasError: boolean): never | void => {
