@@ -1,12 +1,14 @@
 import {
   StaticImportOrExportStatItem,
   compareModulePath,
+  createCommentRegex,
   createStaticImportOrExportRegex,
   formatImportOrExportStatItem,
 } from './util'
 export {
   StaticImportOrExportStatItem,
   compareModulePath,
+  createCommentRegex,
   createStaticImportOrExportRegex,
   formatImportOrExportStatItem,
 } from './util'
@@ -18,12 +20,14 @@ export class StaticImportStatement {
   public readonly maxColumn: number
   public readonly itemRank: Record<StaticImportOrExportStatItem['type'], number>
   public readonly staticImportOrExportRegex: RegExp
+  public readonly topCommentRegex: RegExp
 
   public constructor(
     quote = '\'',
     indent = '  ',
     maxColumn = 100,
-    staticImportOrExportRegex: RegExp = createStaticImportOrExportRegex('g')
+    staticImportOrExportRegex: RegExp = createStaticImportOrExportRegex('g'),
+    topCommentRegex: RegExp = createCommentRegex(),
   ) {
     if (staticImportOrExportRegex.flags.indexOf('g') < 0) {
       // eslint-disable-next-line no-param-reassign
@@ -35,6 +39,7 @@ export class StaticImportStatement {
     this.indent = indent
     this.maxColumn = Number.isNaN(maxColumn) ? 100 : maxColumn,
     this.staticImportOrExportRegex = staticImportOrExportRegex
+    this.topCommentRegex = new RegExp('^(' + topCommentRegex.source + '|\\s*)*')
     this.itemRank = {
       'import': 1,
       'export': 2,
@@ -45,8 +50,11 @@ export class StaticImportStatement {
     const self = this
     const items: StaticImportOrExportStatItem[] = []
     const regex: RegExp = this.staticImportOrExportRegex
-    regex.lastIndex = 0
-    let startIndex = 0
+    const m = self.topCommentRegex.exec(content)
+    const firstNonCommentIndex = m == null ? 0 : m[0].length
+
+    let startIndex = firstNonCommentIndex
+    regex.lastIndex = startIndex
     for (let m: RegExpExecArray | null; (m = regex.exec(content)) != null;) {
       if (!/^[;\s]*$/.test(content.substring(startIndex, m.index))) break
       const { defaultExport, exportN: exportNStr, moduleName, type } = m.groups!
@@ -61,12 +69,16 @@ export class StaticImportStatement {
       items.push(item)
       startIndex = regex.lastIndex
     }
-    if (startIndex <= 0) return content.trimLeft()
 
+    if (startIndex <= firstNonCommentIndex) return content.trimLeft()
     const newStatements: string = items
       .sort(self.compare.bind(self))
       .map(item => item.fullStatement).join('\n')
-    return (newStatements + '\n\n\n' + content.slice(startIndex).trimLeft()).trimRight() + '\n'
+    return (
+      content.slice(0, firstNonCommentIndex)
+      + (newStatements + '\n\n\n' + content.slice(startIndex).trimLeft()).trimRight()
+      + '\n'
+    )
   }
 
   protected format(item: Omit<StaticImportOrExportStatItem, 'fullStatement'>): string {

@@ -27,6 +27,21 @@ export function createStaticImportOrExportRegex(flags?: string): RegExp {
 
 
 /**
+ * 创建匹配注释的正则表达式
+ * @param flags
+ */
+export function createCommentRegex(flags?: string): RegExp {
+  const inlineCommentRegex = /(?<inlineComment>\/\/[^\n]*)/
+  const blockCommentRegex = /(?<blockComment>\/\*[\s\S]*?\*\/)/
+  const regex = new RegExp(
+    inlineCommentRegex.source
+    + '|' + blockCommentRegex.source
+  , flags)
+  return regex
+}
+
+
+/**
  * 比较两个路径的大小
  *  - npm 包排在最前面
  *  - 绝对路径排在相对路径前面
