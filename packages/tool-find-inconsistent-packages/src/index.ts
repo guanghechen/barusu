@@ -2,7 +2,6 @@ import fs from 'fs-extra'
 import glob from 'glob'
 import path from 'path'
 import { checkFatalError, logger } from './util'
-export { checkFatalError, logger } from './util'
 
 
 export type PackageDependencies = { [name: string]: string }

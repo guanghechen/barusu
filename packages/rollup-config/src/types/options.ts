@@ -1,4 +1,5 @@
 export { RollupCommonJSOptions as CommonJSOptions } from '@rollup/plugin-commonjs'
+export { RollupJsonOptions as JsonOptions } from '@rollup/plugin-json'
 export { Options as NodeResolveOptions } from '@rollup/plugin-node-resolve'
 export { EslintOptions } from 'rollup-plugin-eslint'
 export {

@@ -1,3 +1,12 @@
+import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
+
+
+export const logger = new ColorfulChalkLogger('sort-imports', {
+  level: INFO,
+  date: true,
+}, process.argv)
+
+
 /**
  * 创建匹配静态 import/export 的正则表达式
  */
@@ -12,6 +21,21 @@ export function createStaticImportOrExportRegex(flags?: string): RegExp {
     + exportNRegex.source + '?'
     + /(?:\s+from)/.source + '?'
     + moduleNameRegex.source
+  , flags)
+  return regex
+}
+
+
+/**
+ * 创建匹配注释的正则表达式
+ * @param flags
+ */
+export function createCommentRegex(flags?: string): RegExp {
+  const inlineCommentRegex = /(?<inlineComment>\/\/[^\n]*)/
+  const blockCommentRegex = /(?<blockComment>\/\*[\s\S]*?\*\/)/
+  const regex = new RegExp(
+    inlineCommentRegex.source
+    + '|' + blockCommentRegex.source
   , flags)
   return regex
 }

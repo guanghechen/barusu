@@ -6,6 +6,9 @@
       "@barusu/blob-util": [
         "./packages/blob-util/src"
       ],
+      "@barusu/chalk-logger": [
+        "./packages/chalk-logger/src"
+      ],
       "@barusu/option-util": [
         "./packages/option-util/src"
       ],

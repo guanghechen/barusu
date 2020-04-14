@@ -40,11 +40,10 @@
     "test": "mocha -r ts-node/register -r tsconfig-paths/register test/*.test.ts"
   },
   "dependencies": {
+    "@barusu/chalk-logger": "^0.0.7",
     "@types/fs-extra": "^8.1.0",
-    "@types/minimist": "^1.2.0",
-    "chalk": "^3.0.0",
-    "fs-extra": "^8.1.0",
-    "minimist": "^1.2.5"
+    "commander": "^5.0.0",
+    "fs-extra": "^8.1.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.7",

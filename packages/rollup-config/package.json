@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/eslint": "^6.1.8",
     "@types/rollup-plugin-peer-deps-external": "^2.2.0",

@@ -3,7 +3,7 @@ import path from 'path'
 import * as TsconfigUtil from 'tsconfig'
 import { createMatchPath } from 'tsconfig-paths'
 import { correctModulePath } from './util'
-export * from './util'
+export { correctModulePath } from './util'
 
 
 export interface Paths {

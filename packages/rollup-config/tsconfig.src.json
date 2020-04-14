@@ -1,12 +1,13 @@
 {
   "extends": "../../tsconfig.settings",
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "lib",
-    "target": "es2015",
+    "declarationMap": false,
+    "declarationDir": "lib/types",
     "module": "commonjs",
+    "rootDir": "src",
     "sourceMap": false,
-    "declarationMap": false
+    "target": "es2015",
+    "outDir": "lib"
   },
   "include": [
     "src"

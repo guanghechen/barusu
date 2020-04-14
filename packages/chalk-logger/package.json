@@ -1,21 +1,15 @@
 {
-  "name": "{{{packageName}}}",
-  "version": "{{{lowerCase packageVersion}}}",
-{{#if packageAuthor}}
+  "name": "@barusu/chalk-logger",
+  "version": "0.0.7",
   "author": {
-    "name": "{{{packageAuthor}}}",
-    "url": "https://github.com/{{{packageAuthor}}}/"
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}.git"
+    "url": "https://github.com/lemon-clown/barusu.git"
   },
-{{#if isLernaProject}}
-  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}/tree/master/{{{packageLocation}}}#readme",
-{{else}}
-  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}#readme",
-{{/if}}
-{{/if}}
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/chalk-logger#readme",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",
@@ -41,9 +35,16 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
   },
+  "dependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "chalk": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "moment": "^2.24.0"
+  },
   "devDependencies": {
-    "@barusu/eslint-config": "^{{{lowerCase packageVersion}}}",
-    "@barusu/rollup-config": "^{{{lowerCase packageVersion}}}",
+    "@barusu/eslint-config": "^0.0.7",
+    "@barusu/rollup-config": "^0.0.7",
+    "commander": "^5.0.0",
     "cross-env": "^7.0.2",
     "rollup": "^1.31.1"
   }

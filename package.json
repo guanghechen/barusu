@@ -24,7 +24,7 @@
     "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes && yarn install",
     "rebuild": "lerna exec -- 'rimraf lib/' && yarn build",
-    "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent-packages/lib/cjs/cli.js",
+    "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent-packages/lib/cjs/cli.js --log-level=verbose",
     "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js 'packages/**/src/**/*.ts' --log-level=verbose"
   },
   "workspaces": [
