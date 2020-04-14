@@ -4,7 +4,12 @@ import {
   createStaticImportOrExportRegex,
   formatImportOrExportStatItem,
 } from './util'
-export * from './util'
+export {
+  StaticImportOrExportStatItem,
+  compareModulePath,
+  createStaticImportOrExportRegex,
+  formatImportOrExportStatItem,
+} from './util'
 
 
 export class StaticImportStatement {
@@ -28,7 +33,7 @@ export class StaticImportStatement {
 
     this.quote = quote
     this.indent = indent
-    this.maxColumn = maxColumn
+    this.maxColumn = Number.isNaN(maxColumn) ? 100 : maxColumn,
     this.staticImportOrExportRegex = staticImportOrExportRegex
     this.itemRank = {
       'import': 1,

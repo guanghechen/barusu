@@ -1,3 +1,12 @@
+import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
+
+
+export const logger = new ColorfulChalkLogger('sort-imports', {
+  level: INFO,
+  date: true,
+}, process.argv)
+
+
 /**
  * 创建匹配静态 import/export 的正则表达式
  */

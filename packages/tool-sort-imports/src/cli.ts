@@ -1,46 +1,56 @@
-import chalk from 'chalk'
+import { version } from '@barusu/tool-sort-imports/package.json'
+import program from 'commander'
 import fs from 'fs-extra'
 import glob from 'glob'
-import minimist from 'minimist'
 import path from 'path'
 import { StaticImportStatement } from './index'
+import { logger } from './util'
 
 
-const prefix = '[tool-sort-imports]'
-const LogLevel = {
-  DEBUG: 1,
-  VERBOSE: 2,
-  INFO: 3,
-}
+program
+  .version(version)
+
+logger.registerToCommander(program)
 
 
-async function handle(pattern: string, args: any) {
-  const encoding = args.encoding || 'utf-8'
-  const logLevel = LogLevel[(args.logLevel || args['log-level'] || 'info').toUpperCase()] || LogLevel.INFO
-  const maxColumn = args.maxColumn|| args['max-column']
+program
+  .name('sort-imports')
+  .usage('[glob pattern of source file] [options]')
+  .arguments('[glob pattern of source file]')
+  .option('-e, --encoding <encoding>', 'encoding of source file', 'utf-8')
+  .option('--max-column <maxColumn>', 'maximum column width', 100 as any)
+  .option('--indent <indent>', 'indent of source codes', '  ')
+  .option('--quote <quote>', 'quotation marker surround the module path', '\'')
+  .action(function (cmd, options: any) {
+    const pattern: string = options.args[0] || 'packages/**/src/**/*.{ts,tsx}'
+    const {
+      quote,
+      indent,
+      encoding = 'utf-8',
+      maxColumn = 100,
+    } = options
 
-  const stat = new StaticImportStatement(args.quote, args.indent, maxColumn)
-  glob(pattern, (err, matches) => {
-    if (err) {
-      throw err
-    }
-    for (const m of matches) {
-      const absolutePath = path.resolve(m)
-      if (logLevel <= LogLevel.DEBUG) {
-        console.debug(chalk.yellow(`${ prefix }: absolutePath(${ absolutePath })`))
+    logger.debug('quote:', quote)
+    logger.debug('indent:', indent)
+    logger.debug('encoding:', encoding)
+    logger.debug('maxColumn:', maxColumn)
+
+    const stat = new StaticImportStatement(quote, indent, Number.parseInt(maxColumn))
+    glob(pattern, (err, matches) => {
+      if (err) {
+        throw err
       }
+      for (const m of matches) {
+        const absolutePath = path.resolve(m)
+        logger.debug('absolutePath:', absolutePath)
 
-      const content: string = fs.readFileSync(absolutePath, encoding).toString()
-      const resolvedContent: string = stat.process(content)
-      if (content !== resolvedContent) {
-        if (logLevel <= LogLevel.INFO) {
-          console.debug(chalk.green(`${ prefix } processing: ${ absolutePath }`))
+        const content: string = fs.readFileSync(absolutePath, encoding).toString()
+        const resolvedContent: string = stat.process(content)
+        if (content !== resolvedContent) {
+          logger.info('processing:', absolutePath)
         }
+        fs.writeFileSync(absolutePath, resolvedContent, encoding)
       }
-      fs.writeFileSync(absolutePath, resolvedContent, encoding)
-    }
+    })
   })
-}
-
-
-handle(process.argv[2], minimist(process.argv.slice(2)))
+  .parse(process.argv)
