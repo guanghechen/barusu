@@ -1,16 +1,17 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import rollup from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
-import typescript from 'rollup-plugin-typescript2'
-import peerDepsExternal from 'rollup-plugin-peer-deps-external'
+import rollup from 'rollup'
 import { eslint } from 'rollup-plugin-eslint'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external'
+import typescript from 'rollup-plugin-typescript2'
 import {
-  NodeResolveOptions,
-  TypescriptOptions,
   CommonJSOptions,
-  PeerDepsExternalOptions,
   EslintOptions,
+  JsonOptions,
+  NodeResolveOptions,
+  PeerDepsExternalOptions,
+  TypescriptOptions,
 } from './types/options'
 import { convertToBoolean, coverBoolean } from './util'
 
@@ -50,6 +51,10 @@ export interface ProdConfigParams extends rollup.InputOptions {
      */
     eslintOptions?: EslintOptions,
     /**
+     * options for @rollup/plugin-json
+     */
+    jsonOptions?: JsonOptions,
+    /**
      * options for @rollup/plugin-node-resolve
      */
     nodeResolveOptions?: NodeResolveOptions
@@ -80,6 +85,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     ...resetInputOptions
   } = props
   const {
+    jsonOptions = {},
     eslintOptions = {},
     nodeResolveOptions = {},
     typescriptOptions = {},
@@ -121,6 +127,10 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         include: ['src/**/*{.ts,.tsx}'],
         exclude: ['*.css', '*.styl', '*.styl.d.ts'],
         ...eslintOptions,
+      }),
+      json({
+        namedExports: true,
+        ...jsonOptions,
       }),
       typescript({
         clean: true,
