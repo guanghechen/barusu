@@ -13,14 +13,21 @@ import {
   PeerDepsExternalOptions,
   TypescriptOptions,
 } from './types/options'
-import { convertToBoolean, coverBoolean } from './util'
+import { convertToBoolean, coverBoolean } from './util/option-util'
+import { collectAllDependencies } from './util/package-util'
 
 
 export interface ProdConfigParams extends rollup.InputOptions {
   /**
    * 是否生成 sourceMap （包括 declarationMap）
+   * @default true
    */
   useSourceMap: boolean
+  /**
+   * 是否将所有的依赖置为 external
+   * @default true
+   */
+  externalAllDependencies: boolean
   manifest: {
     /**
      * 源文件入口
@@ -75,11 +82,15 @@ export interface ProdConfigParams extends rollup.InputOptions {
 
 
 export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOptions[] => {
-  const DEFAULT_USE_SOURCE_MAP = coverBoolean(true, convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP))
+  const DEFAULT_USE_SOURCE_MAP = coverBoolean(
+    true, convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP))
+  const DEFAULT_EXTERNAL_ALL_DEPENDENCIES = coverBoolean(
+    true, convertToBoolean(process.env.ROLLUP_EXTERNAL_ALL_DEPENDENCIES))
 
   // process task
   const {
     useSourceMap = DEFAULT_USE_SOURCE_MAP,
+    externalAllDependencies = DEFAULT_EXTERNAL_ALL_DEPENDENCIES,
     manifest,
     pluginOptions = {},
     ...resetInputOptions
@@ -92,6 +103,22 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     commonjsOptions = {},
     peerDepsExternalOptions = {},
   } = pluginOptions
+
+  const externals: string[] = [
+    'glob',
+    'sync',
+    ...require('builtin-modules'),
+    ...Object.keys(manifest.dependencies || {}),
+  ]
+
+  if (externalAllDependencies) {
+    const dependencies = collectAllDependencies(
+      undefined,
+      Object.keys(manifest.dependencies || {}),
+    )
+    externals.push(...dependencies)
+  }
+
   const config: rollup.RollupOptions = {
     input: manifest.source,
     output: [
@@ -108,12 +135,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         sourcemap: useSourceMap,
       }
     ].filter(Boolean) as rollup.OutputOptions[],
-    external: [
-      'glob',
-      'sync',
-      ...require('builtin-modules'),
-      ...Object.keys(manifest.dependencies || {})
-    ],
+    external: externals.sort().filter((x, i, A) => A.indexOf(x) === i),
     plugins: [
       peerDepsExternal(peerDepsExternalOptions),
       nodeResolve({
