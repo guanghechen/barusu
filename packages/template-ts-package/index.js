@@ -55,7 +55,7 @@ module.exports = function (plop) {
             return 'packages/' + answers.packageName.replace(/^[^\/]+[\/]/, '')
           }
           answers.projectName = answers.packageName.replace(/^@/, '').replace('\/', '-')
-          return packageName.replace(/^@/, '')
+          return answers.packageName.replace(/^@/, '')
         },
         transform: (text) => text.trim(),
       },
