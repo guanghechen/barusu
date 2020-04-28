@@ -7,5 +7,15 @@
 
   * Install
     ```shell
-    yarn add @barusu/template-simple-html
+    yarn global add @barusu/template-simple-html
+    ```
+
+  * Create new html project
+    ```
+    template-simple-html new-html-project
+    ```
+
+  * Add new html page
+    ```
+    template-simple-html add-html-page
     ```
