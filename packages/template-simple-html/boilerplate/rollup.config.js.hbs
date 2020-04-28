@@ -1,0 +1,164 @@
+import { copy, empty } from '@barusu/template-simple-html'
+import nodeResolve from '@rollup/plugin-node-resolve'
+import autoprefixer from 'autoprefixer'
+import path from 'path'
+import postcssFlexbugsFixes from 'postcss-flexbugs-fixes'
+import pug from 'pug'
+import postcss from 'rollup-plugin-postcss'
+import manifest from './package.json'
+
+
+/**
+ * 环境变量
+ */
+const env = (() => {
+  const isEnvProduction = (process.env.NODE_ENV != null && process.env.NODE_ENV.toLowerCase() === 'production')
+  return {
+    isEnvProduction,
+    shouldUseSourceMap: !isEnvProduction,
+  }
+})()
+
+
+/**
+ * 路径变量
+ */
+const paths = (() => {
+  const resolvePath = (...p) => path.resolve(...p)
+  const resolveSrc = (...p) => resolvePath('src/', ...p)
+  const resolveDst = (...p) => resolvePath('dist/', ...p)
+
+  return {
+    emptyBundlePath: resolvePath('node_modules/@barusu/template-simple-html/.cache/empty.__tmp__.js'),
+    srcRoot: resolveSrc(),
+    dstRoot: resolveDst(),
+    _shared: {
+      resource: {
+        src: resolveSrc('_shared/resource/'),
+        dst: resolveDst('_shared/resource/'),
+      },
+      script: {
+        src: resolveSrc('_shared/script/'),
+        dst: resolveDst('_shared/script/'),
+      },
+      style: {
+        src: resolveSrc('_shared/style/main.styl'),
+        dst: resolveDst('_shared/style/main.css'),
+      },
+    },
+    pages: [
+      { name: '{{{titleCase defaultPage.name}}}', path: '{{{defaultPage.path}}}' }
+    ]
+      .map(p => ({
+        name: p.name,
+        resource: {
+          src: resolveSrc(p.path, 'resource/'),
+          dst: resolveDst(p.path, 'resource/'),
+        },
+        script: {
+          src: resolveSrc(p.path, 'script/'),
+          dst: resolveDst(p.path, 'script/'),
+        },
+        style: {
+          src: resolveSrc(p.path, 'style/main.styl'),
+          dst: resolveDst(p.path, 'style/main.css'),
+        },
+        html: {
+          src: resolveSrc(p.path, 'index.pug'),
+          dst: resolveDst(p.path, 'index.html'),
+        }
+      }))
+  }
+})()
+
+
+// transpile (*.styl|*.sass|*.scss) ==> *.css
+const styleConfigs = [
+  paths._shared.style,
+  ...paths.pages.map(page => page.style),
+]
+  .map(({ src, dst }) => ({
+    input: src,
+    output: {
+      file: paths.emptyBundlePath,
+    },
+    plugins: [
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      postcss({
+        extract: dst,
+        minimize: false,
+        modules: false,
+        plugins: [
+          postcssFlexbugsFixes({}),
+          autoprefixer({})
+        ],
+      }),
+    ]
+  }))
+
+
+const resourceConfig = {
+  output: {
+    file: paths.emptyBundlePath,
+  },
+  plugins: [
+    empty(),
+    copy({
+      copyOnce: false,
+      verbose: true,
+      targets: [
+        //- copy resources
+        {
+          src: paths._shared.resource.src + '/*',
+          dest: paths._shared.resource.dst,
+        },
+        ...paths.pages.map(page => ({
+          src: page.resource.src + '/*',
+          dest: page.resource.dst,
+        })),
+
+        //- copy scripts
+        {
+          src: paths._shared.script.src + '/*',
+          dest: paths._shared.script.dst,
+        },
+        ...paths.pages.map(page => ({
+          src: page.script.src + '/*',
+          dest: page.script.dst,
+        })),
+
+        //- transpile pug
+        ...paths.pages.map(page => {
+          const { dir: destDir, base: destFileName } = path.parse(page.html.dst)
+          return {
+            src: page.html.src,
+            dest: destDir,
+            rename: destFileName,
+            transform: (content, srcPath, dstPath) => {
+              return pug.render(content, {
+                pretty: true,
+                data: {
+                  title: `${ page.name } | ${ manifest.name }`,
+                  sharedJsPath: path.relative(dstPath, paths._shared.script.dst),
+                  sharedCssPath: path.relative(dstPath, path.dirname(paths._shared.style.dst)),
+                }
+              })
+            },
+          }
+        }),
+      ].filter(Boolean)
+    }),
+  ],
+}
+
+
+const config = [
+  ...styleConfigs,
+  resourceConfig,
+]
+
+
+export default config

@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(http-equiv="Pragma" content="no-cache")
+    meta(http-equiv="Cache-Control" content="no-store")
+    title #{data.title}
+    link(rel="stylesheet" type="text/css" href=(data.sharedCssPath + "/main.css"))
+  body
+    #root
+
+    //- 第三方依赖
+    script(type="text/javascript" src=(data.sharedJsPath + "/third-party/moment.min.js"))
+    script(type="text/javascript" src=(data.sharedJsPath + "/third-party/axios.min.js"))
+
+    //- 工具函数
+    script(type="text/javascript" src=(data.sharedJsPath + "/util/util.js"))
+
+    //- 入口文件
+    script(type="text/javascript" src="./script/main.js")

@@ -1,0 +1,40 @@
+{
+  "name": "@barusu/template-simple-html",
+  "version": "0.0.9",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/template-simple-html#readme",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "files": [
+    "boilerplate/",
+    "lib/",
+    "cli.js",
+    "plop.js",
+    "package.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "template-simple-html": "./cli.js"
+  },
+  "scripts": {
+    "build": "echo 'no build action needed'",
+    "lint:fix": "echo 'no lint action needed'"
+  },
+  "dependencies": {
+    "colorette": "^1.1.0",
+    "fs-extra": "^8.1.0",
+    "globby": "^11.0.0",
+    "is-plain-object": "^3.0.0",
+    "plop": "^2.6.0",
+    "semver-regex": "^3.1.1"
+  }
+}

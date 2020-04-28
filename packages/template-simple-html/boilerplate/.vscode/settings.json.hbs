@@ -1,0 +1,39 @@
+{
+  "liveServer.settings.port": {{{serverPort}}},
+  "liveServer.settings.mount": [
+    ["/", "dist/"],
+  ],
+  "liveServer.settings.ignoreFiles": [
+    ".idea/**",
+    ".vscode/**",
+    "node_modules/**",
+    "src/**",
+    ".DS_Store",
+    "npm-debug.log*",
+    "yarn-debug.log*",
+    "lerna-debug.log*",
+    "npm-error.log*",
+    "yarn-error.log*",
+    "yarn.lock",
+    "*.tsbuildinfo"
+  ],
+  "cSpell.words": [
+    "autoprefixer",
+    "axios",
+    "barusu",
+    "builtins",
+    "colorette",
+    "flexbugs",
+    "globby",
+    "postcss",
+    "prebuild",
+    "readdir",
+    "styl"
+  ],
+  "remote.SSH.defaultForwardedPorts": [
+    {
+      "localPort": {{{serverPort}}},
+      "remotePort": {{{serverPort}}}
+    }
+  ]
+}

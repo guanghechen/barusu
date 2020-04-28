@@ -1,0 +1,40 @@
+{
+  "name": "{{{packageName}}}",
+  "version": "{{{lowerCase packageVersion}}}",
+{{#if packageAuthor}}
+  "author": {
+    "name": "{{{packageAuthor}}}",
+    "url": "https://github.com/{{{packageAuthor}}}/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}.git"
+  },
+{{#if isLernaProject}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}/tree/master/{{{packageLocation}}}#readme",
+{{else}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}#readme",
+{{/if}}
+{{/if}}
+  "private": true,
+  "scripts": {
+    "start": "rollup -w -c rollup.config.js",
+    "prebuild": "rimraf dist/",
+    "build:dev": "cross-env rollup -c rollup.config.js",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "add-page": "template-simple-html add-html-page"
+  },
+  "devDependencies": {
+    "@barusu/template-simple-html": "^{{{lowerCase templateVersion}}}",
+    "@rollup/plugin-node-resolve": "^7.1.3",
+    "autoprefixer": "^9.7.6",
+    "cross-env": "^7.0.2",
+    "fs-extra": "^8.1.0",
+    "postcss-flexbugs-fixes": "^4.2.0",
+    "pug": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.6.1",
+    "rollup-plugin-postcss": "^2.8.2",
+    "stylus": "^0.54.7"
+  }
+}
