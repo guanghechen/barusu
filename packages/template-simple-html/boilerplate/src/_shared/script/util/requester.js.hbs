@@ -1,0 +1,14 @@
+/**
+ * 创建对 mock 数据的请求
+ */
+export function createRequester(options) {
+  const {
+    baseURL = '/',
+    timeout = 5000,
+    ...restOptions
+  } = options
+
+  // 异步请求工具类实例
+  const requester = axios.create(options)
+  return requester
+}

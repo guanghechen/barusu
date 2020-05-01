@@ -2,20 +2,42 @@ doctype html
 html
   head
     meta(charset="UTF-8")
+    meta(name="renderer" content="webkit")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(http-equiv="Pragma" content="no-cache")
     meta(http-equiv="Cache-Control" content="no-store")
     title #{data.title}
-    link(rel="stylesheet" type="text/css" href=(data.sharedCssPath + "/main.css"))
+
+    //- 第三方样式
+    each styleSrc in data.sharedThirdPartyStyles
+      link(rel="stylesheet" type="text/css" href=styleSrc)
+
+    //- 当前页面特有的第三方样式
+    each styleSrc in data.sharedThirdPartyStyles
+      link(rel="stylesheet" type="text/css" href=styleSrc)
+
+    //- 页面间共享的样式
+    each styleSrc in data.sharedStyles
+      link(rel="stylesheet" type="text/css" href=styleSrc)
+
+    //- 当前页面特有的样式
+    each styleSrc in data.styles
+      link(rel="stylesheet" type="text/css" href=styleSrc)
   body
     #root
 
-    //- 第三方依赖
-    script(type="text/javascript" src=(data.sharedJsPath + "/third-party/moment.min.js"))
-    script(type="text/javascript" src=(data.sharedJsPath + "/third-party/axios.min.js"))
+    //- 第三方脚本
+    each scriptSrc in data.sharedThirdPartyScripts
+      script(type="text/javascript" src=scriptSrc)
 
-    //- 工具函数
-    script(type="text/javascript" src=(data.sharedJsPath + "/util/util.js"))
+    //- 当前页面特有的第三方脚本
+    each scriptSrc in data.thirdPartyScripts
+      script(type="text/javascript" src=scriptSrc)
 
-    //- 入口文件
-    script(type="text/javascript" src="./script/main.js")
+    //- 页面间共享的脚本
+    each scriptSrc in data.sharedScripts
+      script(type="text/javascript" src=scriptSrc)
+
+    //- 当前页面特有的脚本
+    each scriptSrc in data.scripts
+      script(type="text/javascript" src=scriptSrc)

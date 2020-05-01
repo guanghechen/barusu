@@ -12,8 +12,8 @@ module.exports = function (plop) {
     return [
       {
         type: 'add',
-        path: resolveTargetPath(`src/${ pagePath }/script/main.js`),
-        templateFile: resolveSourcePath(`src/page/script/main.js.hbs`)
+        path: resolveTargetPath(`src/${ pagePath }/index.pug`),
+        templateFile: resolveSourcePath(`src/page/index.pug.hbs`)
       },
       {
         type: 'add',
@@ -22,8 +22,13 @@ module.exports = function (plop) {
       },
       {
         type: 'add',
-        path: resolveTargetPath(`src/${ pagePath }/index.pug`),
-        templateFile: resolveSourcePath(`src/page/index.pug.hbs`)
+        path: resolveTargetPath(`src/${ pagePath }/script/main.js`),
+        templateFile: resolveSourcePath(`src/page/script/main.js.hbs`)
+      },
+      {
+        type: 'add',
+        path: resolveTargetPath(`src/${ pagePath }/script/util.js`),
+        templateFile: resolveSourcePath(`src/page/script/util.js.hbs`)
       },
     ]
   }
@@ -136,8 +141,18 @@ module.exports = function (plop) {
         },
         {
           type: 'add',
-          path: resolveTargetPath('src/_shared/script/util/util.js'),
-          templateFile: resolveSourcePath('src/_shared/script/util/util.js.hbs')
+          path: resolveTargetPath('src/_shared/script/util/requester.js'),
+          templateFile: resolveSourcePath('src/_shared/script/util/requester.js.hbs')
+        },
+        {
+          type: 'add',
+          path: resolveTargetPath('src/_shared/script/util/task.js'),
+          templateFile: resolveSourcePath('src/_shared/script/util/task.js.hbs')
+        },
+        {
+          type: 'add',
+          path: resolveTargetPath('src/_shared/script/main.js'),
+          templateFile: resolveSourcePath('src/_shared/script/main.js.hbs')
         },
         {
           type: 'add',

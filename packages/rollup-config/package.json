@@ -45,7 +45,7 @@
     "@types/eslint": "^6.1.8",
     "@types/rollup-plugin-peer-deps-external": "^2.2.0",
     "builtin-modules": "^3.1.0",
-    "rollup": "^2.6.1",
+    "rollup": "2.6.1",
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-typescript2": "^0.27.0"

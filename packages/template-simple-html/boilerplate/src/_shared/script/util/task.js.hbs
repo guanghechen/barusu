@@ -1,0 +1,11 @@
+/**
+ * 周期性执行任务
+ * @param task 无参函数
+ * @param interval 执行周期
+ */
+export async function doIntervalTask(task, interval, doImmediately) {
+  if (doImmediately) {
+    await task()
+  }
+  setTimeout(doIntervalTask, interval, true)
+}
