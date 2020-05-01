@@ -11,11 +11,30 @@
     ```
 
   * Create new html project
-    ```
-    template-simple-html new-html-project
+    ```shell
+    template-simple-html new-html-project <project name>
     ```
 
   * Add new html page
+    ```shell
+    cd <project path>
+    yarn add-page <page-name>
     ```
-    template-simple-html add-html-page
+
+  * Start
+    ```shell
+    cd <project path>
+    yarn start
     ```
+
+  * Build
+    ```shell
+    cd <project path>
+    yarn build
+    ```
+
+# Notice
+  * Chrome should run in port 9222 to support debug
+    - see https://github.com/Microsoft/vscode-chrome-debug#attach
+
+  * Temporary file `.empty.__tmp__.js` will created, due to the rollup.Configuration.output cannot be empty. It is not recommended that you modify this path as this file is configured to be ignored both in `vscode` and `git`.

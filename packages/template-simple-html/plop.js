@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
+const { titleCase } = require('title-case')
 const semverRegex = require('semver-regex')
 const manifest = require('./package.json')
 
@@ -199,13 +200,30 @@ module.exports = function (plop) {
       if (fs.existsSync(rollupConfigPath)) {
         const encoding = 'utf-8'
         let content = fs.readFileSync(rollupConfigPath, encoding)
-        content = content.replace(/\n([^\S\n]+)pages:\s+(\[\n+\s+[^\]]+\])/, (m, p1, p2) => {
-          data = eval(p2)
-          data.push({
-            name: answers.pageName,
-            path: answers.pagePath,
-          })
-          data = data
+        content = content.replace(/\n([^\S\n]+)const\s+pages\s*=\s*(\[\n+\s+[^\]]+\])/, (m, p1, p2) => {
+          let pages = null
+          try {
+            pages = eval(p2)
+          } catch (error) {
+            return m
+          }
+
+          const item = {
+            name: titleCase(answers.pageName),
+            srcPath: answers.pagePath,
+            dstPath: answers.pagePath,
+          }
+
+          // check if it's duplicated
+          const existedOne = pages.find(x => (
+            x.name === item.name
+            && x.srcPath === item.srcPath
+            && x.dstPath === item.dstPath
+          ))
+          if (existedOne != null) return m
+
+          pages.push(item)
+          pages = pages
             .map(d => {
               let s = '  {'
               for (const [key, val] of Object.entries(d)) {
@@ -214,7 +232,7 @@ module.exports = function (plop) {
               return p1 + s.replace(/,$/, '') + ' }'
             })
             .join(',\n')
-          return '\n' + p1 + 'pages: [\n' + data + '\n' + p1 + ']'
+          return '\n' + p1 + 'const pages = [\n' + pages + '\n' + p1 + ']'
         })
         fs.writeFileSync(rollupConfigPath, content, encoding)
       }

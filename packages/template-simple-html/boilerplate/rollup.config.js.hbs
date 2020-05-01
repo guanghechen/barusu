@@ -1,7 +1,9 @@
-import { coverBoolean } from '@barusu/option-util'
+import { coverString, coverBoolean } from '@barusu/option-util'
 import { copy, empty } from '@barusu/template-simple-html'
+import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import autoprefixer from 'autoprefixer'
+import { bold, yellow } from 'colorette'
 import globby from 'globby'
 import path from 'path'
 import postcssFlexbugsFixes from 'postcss-flexbugs-fixes'
@@ -14,8 +16,12 @@ import manifest from './package.json'
  * 环境变量
  */
 const env = (() => {
-  const isEnvProduction = (process.env.NODE_ENV != null && process.env.NODE_ENV.toLowerCase() === 'production')
+  const nodeEnv = coverString('development', process.env.NODE_ENV).toLowerCase()
+  const isEnvDevelopment = nodeEnv === 'development'
+  const isEnvProduction = nodeEnv === 'production'
+
   return {
+    isEnvDevelopment,
     isEnvProduction,
     shouldUseSourceMap: coverBoolean(true, process.env.SHOULD_USE_SOURCEMAP),
   }
@@ -33,98 +39,130 @@ const paths = (() => {
   // _shared files
   const resolveSrcSharedPath = (...p) => resolveSrcPath('_shared/', ...p)
   const resolveDstSharedPath = (...p) => resolveDstPath('_shared/', ...p)
+  const createSharedPaths = () => ({
+    srcRoot: resolveSrcSharedPath(),
+    dstRoot: resolveDstSharedPath(),
+    styles: [
+      {
+        src: resolveSrcSharedPath('style/main.styl'),
+        dest: resolveDstSharedPath('style/main.css'),
+      },
+    ],
+    scripts: [
+      {
+        src: resolveSrcSharedPath('script/main.js'),
+        dest: resolveDstSharedPath('script/main.js'),
+      },
+    ],
+    resources: [
+      {
+        src: [
+          resolveSrcSharedPath('resource/*'),
+        ],
+        dest: resolveDstSharedPath('resource/'),
+      },
+    ],
+    thirdPartyStyles: [
+      {
+        src: [
+          resolveSrcSharedPath('style/third-party/**/*.css'),
+        ],
+        dest: resolveDstSharedPath('style/third-party/'),
+      },
+    ],
+    thirdPartyScripts: [
+      {
+        src: [
+          resolveSrcSharedPath('script/third-party/**/*.js'),
+        ],
+        dest: resolveDstSharedPath('script/third-party/'),
+      },
+    ],
+  })
 
-  return {
-    emptyBundlePath: resolvePath('node_modules/@barusu/template-simple-html/.cache/empty.__tmp__.js'),
+  // page files
+  const createPagePaths = ({ name, srcPath, dstPath }) => ({
+    name,
+    html: {
+      src: resolveSrcPath(srcPath, 'index.pug'),
+      dest: resolveDstPath(dstPath, 'index.html'),
+    },
+    styles: [
+      {
+        src: resolveSrcPath(srcPath, 'style/main.styl'),
+        dest: resolveDstPath(dstPath, 'style/main.css'),
+      },
+    ],
+    scripts: [
+      {
+        src: resolveSrcPath(srcPath, 'script/main.js'),
+        dest: resolveDstPath(dstPath, 'script/main.js'),
+      },
+    ],
+    resources: [
+      {
+        src: [
+          resolveSrcPath(srcPath, 'resource/*'),
+        ],
+        dest: resolveDstPath(dstPath, 'resource/'),
+      },
+    ],
+    thirdPartyStyles: [
+      {
+        src: [
+          resolveSrcPath(srcPath, 'style/third-party/**/*.css'),
+        ],
+        dest: resolveDstPath(dstPath, 'style/third-party/'),
+      },
+    ],
+    thirdPartyScripts: [
+      {
+        src: [
+          resolveSrcPath(srcPath, 'script/third-party/**/*.js'),
+        ],
+        dest: resolveDstPath(dstPath, 'script/third-party/'),
+      },
+    ],
+  })
+
+  const pages = [
+    { name: '{{{titleCase defaultPage.name}}}', srcPath: '{{{defaultPage.path}}}', dstPath: '{{{defaultPage.path}}}' }
+  ]
+    .filter(Boolean)
+    .filter((item, index, arr) => {
+      // duplicated path is not allowed
+      const existedOne = arr.find((x, i) => {
+        if (i >= index) return undefined
+        if (x.srcPath !== item.srcPath || x.dstPath !== item.dstPath) return undefined
+        return x
+      })
+      if (existedOne != null) {
+        console.log(
+          bold(yellow('[warning]'))
+          + yellow(` find duplicated item with srcPath(${ item.srcPath }), dstPath(${ item.dstPath }). skipped.`))
+        return false
+      }
+      return true
+    })
+
+  const result = {
+    emptyBundlePath: resolvePath('.empty.__tmp__.js'),
     srcRoot: resolveSrcPath(),
     dstRoot: resolveDstPath(),
-    _shared: {
-      srcRoot: resolveSrcSharedPath(),
-      dstRoot: resolveDstSharedPath(),
-      styles: [
-        {
-          src: resolveSrcSharedPath('style/main.styl'),
-          dest: resolveDstSharedPath('style/main.css'),
-        },
-      ],
-      scripts: [
-        {
-          src: resolveSrcSharedPath('script/main.js'),
-          dest: resolveDstSharedPath('script/main.js'),
-        },
-      ],
-      resources: [
-        {
-          src: [
-            resolveSrcSharedPath('resource/*'),
-          ],
-          dest: resolveDstSharedPath('resource/'),
-        },
-      ],
-      thirdPartyStyles: [
-        {
-          src: [
-            resolveSrcSharedPath('style/third-party/**/*.css'),
-          ],
-          dest: resolveDstSharedPath('style/third-party/'),
-        },
-      ],
-      thirdPartyScripts: [
-        {
-          src: [
-            resolveSrcSharedPath('script/third-party/**/*.js'),
-          ],
-          dest: resolveDstSharedPath('script/third-party/'),
-        },
-      ],
-    },
+    _shared: createSharedPaths(),
     pages: [
-      { name: '{{{titleCase defaultPage.name}}}', path: '{{{defaultPage.path}}}' }
-    ]
-      .map(p => ({
-        name: p.name,
-        html: {
-          src: resolveSrcPath(p.path, 'index.pug'),
-          dest: resolveDstPath(p.path, 'index.html'),
-        },
-        styles: [
-          {
-            src: resolveSrcPath(p.path, 'style/main.styl'),
-            dest: resolveDstPath(p.path, 'style/main.css'),
-          },
-        ],
-        scripts: [
-          {
-            src: resolveSrcPath(p.path, 'script/main.js'),
-            dest: resolveDstPath(p.path, 'script/main.js'),
-          },
-        ],
-        resources: [
-          {
-            src: [
-              resolveSrcPath(p.path, 'resource/*'),
-            ],
-            dest: resolveDstPath(p.path, 'resource/'),
-          },
-        ],
-        thirdPartyStyles: [
-          {
-            src: [
-              resolveSrcPath(p.path, 'style/third-party/**/*.css'),
-            ],
-            dest: resolveDstPath(p.path, 'style/third-party/'),
-          },
-        ],
-        thirdPartyScripts: [
-          {
-            src: [
-              resolveSrcPath(p.path, 'script/third-party/**/*.js'),
-            ],
-            dest: resolveDstPath(p.path, 'script/third-party/'),
-          },
-        ],
-      }))
+      // index page
+      pages.length > 0 && {
+        ...createPagePaths(pages[0]),
+        html: createPagePaths({ ...pages[0], dstPath: '' }).html,
+      },
+
+      // pages
+      ...pages.map(createPagePaths),
+    ].filter(Boolean),
   }
+
+  return result
 })()
 
 
@@ -174,6 +212,10 @@ const scriptConfigs = [
         browser: true,
         preferBuiltins: false,
       }),
+      json({
+        indent: '  ',
+        namedExports: true,
+      })
     ]
   }))
 

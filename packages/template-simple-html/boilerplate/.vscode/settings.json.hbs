@@ -17,6 +17,15 @@
     "yarn.lock",
     "*.tsbuildinfo"
   ],
+  "remote.SSH.defaultForwardedPorts": [
+    {
+      "localPort": {{{serverPort}}},
+      "remotePort": {{{serverPort}}}
+    }
+  ],
+  "files.exclude": {
+    ".empty.__tmp__.js": true
+  },
   "cSpell.words": [
     "autoprefixer",
     "axios",
@@ -31,11 +40,5 @@
     "readdir",
     "sourcemap",
     "styl"
-  ],
-  "remote.SSH.defaultForwardedPorts": [
-    {
-      "localPort": {{{serverPort}}},
-      "remotePort": {{{serverPort}}}
-    }
   ]
 }

@@ -153,6 +153,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         ...eslintOptions,
       }),
       json({
+        indent: '  ',
         namedExports: true,
         ...jsonOptions,
       }),
