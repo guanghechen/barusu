@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
+const { titleCase } = require('title-case')
 const semverRegex = require('semver-regex')
 const manifest = require('./package.json')
 
@@ -208,7 +209,7 @@ module.exports = function (plop) {
           }
 
           const item = {
-            name: answers.pageName,
+            name: titleCase(answers.pageName),
             srcPath: answers.pagePath,
             dstPath: answers.pagePath,
           }
