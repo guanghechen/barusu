@@ -1,6 +1,6 @@
 {
   "name": "@barusu/blob-util",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -36,8 +36,8 @@
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.9",
-    "@barusu/rollup-config": "^0.0.9",
+    "@barusu/eslint-config": "^0.0.10",
+    "@barusu/rollup-config": "^0.0.10",
     "cross-env": "^7.0.2",
     "rollup": "2.6.1"
   }
