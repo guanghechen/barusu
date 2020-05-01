@@ -1,5 +1,6 @@
-import { coverBoolean } from '@barusu/option-util'
+import { coverString, coverBoolean } from '@barusu/option-util'
 import { copy, empty } from '@barusu/template-simple-html'
+import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import autoprefixer from 'autoprefixer'
 import globby from 'globby'
@@ -14,8 +15,12 @@ import manifest from './package.json'
  * 环境变量
  */
 const env = (() => {
-  const isEnvProduction = (process.env.NODE_ENV != null && process.env.NODE_ENV.toLowerCase() === 'production')
+  const nodeEnv = coverString('development', process.env.NODE_ENV).toLowerCase()
+  const isEnvDevelopment = nodeEnv === 'development'
+  const isEnvProduction = nodeEnv === 'production'
+
   return {
+    isEnvDevelopment,
     isEnvProduction,
     shouldUseSourceMap: coverBoolean(true, process.env.SHOULD_USE_SOURCEMAP),
   }
@@ -174,6 +179,10 @@ const scriptConfigs = [
         browser: true,
         preferBuiltins: false,
       }),
+      json({
+        indent: '  ',
+        namedExports: true,
+      })
     ]
   }))
 
