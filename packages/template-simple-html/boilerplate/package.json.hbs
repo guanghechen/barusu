@@ -17,12 +17,17 @@
 {{/if}}
 {{/if}}
   "private": true,
+  "files": [
+    "dist/",
+    "package.json",
+    "yarn.lock"
+  ],
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
     "prebuild": "rimraf dist/",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "build:prod": "cross-env SHOULD_USE_SOURCEMAP=false yarn build",
-    "add-page": "template-simple-html add-html-page"
+    "add-page": "template-simple-html add-html-page ."
   },
   "devDependencies": {
     "@barusu/option-util": "^{{{lowerCase templateVersion}}}",
