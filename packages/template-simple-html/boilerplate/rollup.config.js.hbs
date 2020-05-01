@@ -1,6 +1,8 @@
+import { coverBoolean } from '@barusu/option-util'
 import { copy, empty } from '@barusu/template-simple-html'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import autoprefixer from 'autoprefixer'
+import globby from 'globby'
 import path from 'path'
 import postcssFlexbugsFixes from 'postcss-flexbugs-fixes'
 import pug from 'pug'
@@ -15,7 +17,7 @@ const env = (() => {
   const isEnvProduction = (process.env.NODE_ENV != null && process.env.NODE_ENV.toLowerCase() === 'production')
   return {
     isEnvProduction,
-    shouldUseSourceMap: !isEnvProduction,
+    shouldUseSourceMap: coverBoolean(true, process.env.SHOULD_USE_SOURCEMAP),
   }
 })()
 
@@ -25,48 +27,102 @@ const env = (() => {
  */
 const paths = (() => {
   const resolvePath = (...p) => path.resolve(...p)
-  const resolveSrc = (...p) => resolvePath('src/', ...p)
-  const resolveDst = (...p) => resolvePath('dist/', ...p)
+  const resolveSrcPath = (...p) => resolvePath('src/', ...p)
+  const resolveDstPath = (...p) => resolvePath('dist/', ...p)
+
+  // _shared files
+  const resolveSrcSharedPath = (...p) => resolveSrcPath('_shared/', ...p)
+  const resolveDstSharedPath = (...p) => resolveDstPath('_shared/', ...p)
 
   return {
     emptyBundlePath: resolvePath('node_modules/@barusu/template-simple-html/.cache/empty.__tmp__.js'),
-    srcRoot: resolveSrc(),
-    dstRoot: resolveDst(),
+    srcRoot: resolveSrcPath(),
+    dstRoot: resolveDstPath(),
     _shared: {
-      resource: {
-        src: resolveSrc('_shared/resource/'),
-        dst: resolveDst('_shared/resource/'),
-      },
-      script: {
-        src: resolveSrc('_shared/script/'),
-        dst: resolveDst('_shared/script/'),
-      },
-      style: {
-        src: resolveSrc('_shared/style/main.styl'),
-        dst: resolveDst('_shared/style/main.css'),
-      },
+      srcRoot: resolveSrcSharedPath(),
+      dstRoot: resolveDstSharedPath(),
+      styles: [
+        {
+          src: resolveSrcSharedPath('style/main.styl'),
+          dest: resolveDstSharedPath('style/main.css'),
+        },
+      ],
+      scripts: [
+        {
+          src: resolveSrcSharedPath('script/main.js'),
+          dest: resolveDstSharedPath('script/main.js'),
+        },
+      ],
+      resources: [
+        {
+          src: [
+            resolveSrcSharedPath('resource/*'),
+          ],
+          dest: resolveDstSharedPath('resource/'),
+        },
+      ],
+      thirdPartyStyles: [
+        {
+          src: [
+            resolveSrcSharedPath('style/third-party/**/*.css'),
+          ],
+          dest: resolveDstSharedPath('style/third-party/'),
+        },
+      ],
+      thirdPartyScripts: [
+        {
+          src: [
+            resolveSrcSharedPath('script/third-party/**/*.js'),
+          ],
+          dest: resolveDstSharedPath('script/third-party/'),
+        },
+      ],
     },
     pages: [
       { name: '{{{titleCase defaultPage.name}}}', path: '{{{defaultPage.path}}}' }
     ]
       .map(p => ({
         name: p.name,
-        resource: {
-          src: resolveSrc(p.path, 'resource/'),
-          dst: resolveDst(p.path, 'resource/'),
-        },
-        script: {
-          src: resolveSrc(p.path, 'script/'),
-          dst: resolveDst(p.path, 'script/'),
-        },
-        style: {
-          src: resolveSrc(p.path, 'style/main.styl'),
-          dst: resolveDst(p.path, 'style/main.css'),
-        },
         html: {
-          src: resolveSrc(p.path, 'index.pug'),
-          dst: resolveDst(p.path, 'index.html'),
-        }
+          src: resolveSrcPath(p.path, 'index.pug'),
+          dest: resolveDstPath(p.path, 'index.html'),
+        },
+        styles: [
+          {
+            src: resolveSrcPath(p.path, 'style/main.styl'),
+            dest: resolveDstPath(p.path, 'style/main.css'),
+          },
+        ],
+        scripts: [
+          {
+            src: resolveSrcPath(p.path, 'script/main.js'),
+            dest: resolveDstPath(p.path, 'script/main.js'),
+          },
+        ],
+        resources: [
+          {
+            src: [
+              resolveSrcPath(p.path, 'resource/*'),
+            ],
+            dest: resolveDstPath(p.path, 'resource/'),
+          },
+        ],
+        thirdPartyStyles: [
+          {
+            src: [
+              resolveSrcPath(p.path, 'style/third-party/**/*.css'),
+            ],
+            dest: resolveDstPath(p.path, 'style/third-party/'),
+          },
+        ],
+        thirdPartyScripts: [
+          {
+            src: [
+              resolveSrcPath(p.path, 'script/third-party/**/*.js'),
+            ],
+            dest: resolveDstPath(p.path, 'script/third-party/'),
+          },
+        ],
       }))
   }
 })()
@@ -74,10 +130,10 @@ const paths = (() => {
 
 // transpile (*.styl|*.sass|*.scss) ==> *.css
 const styleConfigs = [
-  paths._shared.style,
-  ...paths.pages.map(page => page.style),
+  ...paths._shared.styles,
+  ...paths.pages.map(page => page.styles).flat(1),
 ]
-  .map(({ src, dst }) => ({
+  .map(({ src, dest }) => ({
     input: src,
     output: {
       file: paths.emptyBundlePath,
@@ -88,13 +144,35 @@ const styleConfigs = [
         preferBuiltins: false,
       }),
       postcss({
-        extract: dst,
+        extract: dest,
         minimize: false,
         modules: false,
         plugins: [
           postcssFlexbugsFixes({}),
           autoprefixer({})
         ],
+      }),
+    ]
+  }))
+
+
+// transpile js
+const scriptConfigs = [
+  ...paths._shared.scripts,
+  ...paths.pages.map(page => page.scripts).flat(1),
+]
+  .map(({ src, dest }) => ({
+    inlineDynamicImports: true,
+    input: src,
+    output: {
+      format: 'iife',
+      file: dest,
+      sourcemap: env.shouldUseSourceMap,
+    },
+    plugins: [
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
       }),
     ]
   }))
@@ -111,44 +189,88 @@ const resourceConfig = {
       verbose: true,
       targets: [
         //- copy resources
-        {
-          src: paths._shared.resource.src + '/*',
-          dest: paths._shared.resource.dst,
-        },
-        ...paths.pages.map(page => ({
-          src: page.resource.src + '/*',
-          dest: page.resource.dst,
-        })),
+        ...paths._shared.resources,
+        ...paths.pages.map(page => page.resources).flat(1),
+
+        //- copy styles
+        ...paths._shared.thirdPartyStyles,
+        ...paths.pages.map(page => page.thirdPartyStyles).flat(1),
 
         //- copy scripts
-        {
-          src: paths._shared.script.src + '/*',
-          dest: paths._shared.script.dst,
-        },
-        ...paths.pages.map(page => ({
-          src: page.script.src + '/*',
-          dest: page.script.dst,
-        })),
+        ...paths._shared.thirdPartyScripts,
+        ...paths.pages.map(page => page.thirdPartyScripts).flat(1),
 
         //- transpile pug
-        ...paths.pages.map(page => {
-          const { dir: destDir, base: destFileName } = path.parse(page.html.dst)
-          return {
-            src: page.html.src,
-            dest: destDir,
-            rename: destFileName,
-            transform: (content, srcPath, dstPath) => {
-              return pug.render(content, {
-                pretty: true,
-                data: {
-                  title: `${ page.name } | ${ manifest.name }`,
-                  sharedJsPath: path.relative(dstPath, paths._shared.script.dst),
-                  sharedCssPath: path.relative(dstPath, path.dirname(paths._shared.style.dst)),
+        ...(
+          paths.pages.map(page => {
+            const { dir: destDir, base: destFileName } = path.parse(page.html.dest)
+            const collectDependenceTargets = async (item) => {
+              const { src, dest, flatten = true, ...options } = item
+              const sources = await globby(item.src, options)
+
+              const destinations = Array.isArray(dest) ? dest : [dest]
+              return destinations
+                .map(destination => (
+                  sources.map(srcFilePath => {
+                    const { base, dir } = path.parse(srcFilePath)
+                    const destinationFolder = (flatten || (!flatten && !dir))
+                      ? destination
+                      : dir.replace(dir.split(/[\\\/]/)[0], destination)
+                    const destFilePath = path.join(destinationFolder, base)
+                    return destFilePath
+                  })
+                ))
+                .flat(1)
+            }
+
+            return {
+              src: page.html.src,
+              dest: destDir,
+              rename: destFileName,
+              transform: async (content, srcPath, dstPath) => {
+                const baseDestPath = path.dirname(dstPath)
+                const calcRelativePath = (filePath) => {
+                  const p = path.relative(baseDestPath, filePath)
+                  if (/^[.]/.test(p)) return p
+                  return './' + p
                 }
-              })
-            },
-          }
-        }),
+
+                const sharedThirdPartyStyles = (
+                  await Promise.all(paths._shared.thirdPartyStyles
+                    .map(item => collectDependenceTargets(item, baseDestPath)))
+                ).flat(1).map(calcRelativePath)
+                const sharedThirdPartyScripts = (
+                  await Promise.all(paths._shared.thirdPartyScripts
+                    .map(item => collectDependenceTargets(item, baseDestPath)))
+                ).flat(1).map(calcRelativePath)
+
+                const thirdPartyStyles = (
+                  await Promise.all(page.thirdPartyStyles
+                    .map(item => collectDependenceTargets(item, dstPath)))
+                ).flat(1).map(calcRelativePath)
+                const thirdPartyScripts = (
+                  await Promise.all(page.thirdPartyScripts
+                    .map(item => collectDependenceTargets(item, dstPath)))
+                ).flat(1).map(calcRelativePath)
+
+                return pug.render(content, {
+                  pretty: true,
+                  data: {
+                    title: `${ page.name } | ${ manifest.name }`,
+                    sharedStyles: paths._shared.styles.map(item => calcRelativePath(item.dest)),
+                    sharedScripts: paths._shared.scripts.map(item => calcRelativePath(item.dest)),
+                    sharedThirdPartyStyles,
+                    sharedThirdPartyScripts,
+                    styles: page.styles.map(item => calcRelativePath(item.dest)),
+                    scripts: page.scripts.map(item => calcRelativePath(item.dest)),
+                    thirdPartyStyles,
+                    thirdPartyScripts,
+                  }
+                })
+              },
+            }
+          })
+        ),
       ].filter(Boolean)
     }),
   ],
@@ -157,8 +279,9 @@ const resourceConfig = {
 
 const config = [
   ...styleConfigs,
+  ...scriptConfigs,
   resourceConfig,
-]
+].filter(Boolean)
 
 
 export default config

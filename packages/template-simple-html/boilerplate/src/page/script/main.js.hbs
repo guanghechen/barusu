@@ -1,8 +1,13 @@
+import { sum } from './util'
+
+
 window.onload = async function () {
   const {
     doIntervalTask,
     createRequester,
   } = window.__util__
 
-  const { requester, CHART_DATA_URLS } = createRequester()
+  console.log('sum(1 + 2):', sum(1, 2))
+
+  const requester = createRequester()
 }
