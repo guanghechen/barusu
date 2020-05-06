@@ -43,7 +43,8 @@
     "@barusu/chalk-logger": "^0.0.11",
     "@types/fs-extra": "^8.1.0",
     "commander": "^5.0.0",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "globby": "^11.0.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.11",
