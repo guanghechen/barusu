@@ -25,7 +25,7 @@
     "clean": "lerna clean --yes && yarn install",
     "rebuild": "lerna exec -- yarn build",
     "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent-packages/lib/cjs/cli.js --log-level=verbose",
-    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js 'packages/**/src/**/*.ts' --log-level=verbose"
+    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose"
   },
   "workspaces": [
     "packages/*"
@@ -37,5 +37,22 @@
     "ts-node": "^8.8.2",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.2"
+  },
+  "@barusu/tool-sort-imports": {
+    "pattern": [
+      "packages/**/src/**/*.{ts,tsx}",
+      "packages/**/test/**/*.{ts,tsx}"
+    ],
+    "topModule": [
+      "react",
+      "vue",
+      "fs",
+      "fs-extra",
+      "path",
+      "glob"
+    ],
+    "indent": "  ",
+    "quote": "'",
+    "maxColumn": 100
   }
 }
