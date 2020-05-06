@@ -21,6 +21,7 @@ program
   .option('--max-column <maxColumn>', 'maximum column width', 100 as any)
   .option('--indent <indent>', 'indent of source codes', '  ')
   .option('--quote <quote>', 'quotation marker surround the module path', '\'')
+  .option('-M, --top-module <moduleName>', '', (val: string, acc: string[]) => acc.concat(val), [])
   .action(function (cmd, options: any) {
     const pattern: string = options.args[0] || 'packages/**/src/**/*.{ts,tsx}'
     const {
@@ -28,14 +29,16 @@ program
       indent,
       encoding = 'utf-8',
       maxColumn = 100,
+      topModule,
     } = options
 
     logger.debug('quote:', quote)
     logger.debug('indent:', indent)
     logger.debug('encoding:', encoding)
     logger.debug('maxColumn:', maxColumn)
+    logger.debug('topModule:', topModule)
 
-    const stat = new StaticImportStatement(quote, indent, Number.parseInt(maxColumn))
+    const stat = new StaticImportStatement(quote, indent, Number.parseInt(maxColumn), topModule)
     glob(pattern, (err, matches) => {
       if (err) {
         throw err

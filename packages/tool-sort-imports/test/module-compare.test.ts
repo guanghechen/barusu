@@ -18,7 +18,7 @@ before(async function test() {
     describe(data.title, function () {
       for (const kase of data.cases) {
         const { input, answer } = kase
-        const output = compareModulePath(input.p1, input.p2)
+        const output = compareModulePath(input.p1, input.p2, ['react'])
 
         it(kase.title, function () {
           if (answer === undefined) {
