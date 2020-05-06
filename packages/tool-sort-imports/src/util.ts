@@ -88,9 +88,10 @@ export function compareModulePath(p1: string, p2: string, topModules: string[]):
   if (relativeRegex.test(p1) && relativeRegex.test(p2)) {
     const [, a1, b1] = relativeRegex.exec(p1)!
     const [, a2, b2] = relativeRegex.exec(p2)!
-    if (a1 === a2) return b1 < b2 ? -1 : 1
-    // './' < '../'
-    return a1 < a2 ? -1 : 1
+    const c1 = a1.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1')
+    const c2 = a2.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1')
+    if (c1.length === c2.length) return b1 < b2 ? -1 : 1
+    return c1.length > c2.length ? -1 : 1
   }
 
   // fallback

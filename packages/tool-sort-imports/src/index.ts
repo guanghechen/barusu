@@ -65,7 +65,7 @@ export class StaticImportStatement {
       const item = {
         defaultExport,
         exportN: exportN.filter(x => /\S/.test(x)).sort(),
-        moduleName,
+        moduleName: moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
         type: type as any,
       } as StaticImportOrExportStatItem
       item.fullStatement = self.format(item)
