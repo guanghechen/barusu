@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { it, before } from 'mocha'
 import { expect } from 'chai'
+import { before, it } from 'mocha'
 import { compareModulePath } from '../src/util'
 
 
@@ -34,4 +34,3 @@ before(async function test() {
     })
   }
 })
-

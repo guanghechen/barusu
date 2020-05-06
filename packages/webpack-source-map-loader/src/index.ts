@@ -1,6 +1,6 @@
 import fs from 'fs'
-import * as loaderUtils from 'loader-utils'
 import path from 'path'
+import * as loaderUtils from 'loader-utils'
 import { RawSourceMap } from 'source-map'
 import webpack from 'webpack'
 import { processSourceMap } from './util/process'

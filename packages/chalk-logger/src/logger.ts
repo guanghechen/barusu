@@ -1,5 +1,5 @@
-import chalk, { Chalk } from 'chalk'
 import fs from 'fs-extra'
+import chalk, { Chalk } from 'chalk'
 import moment from 'moment'
 import { inspect } from 'util'
 import { Color, colorToChalk } from './color'

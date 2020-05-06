@@ -1,7 +1,7 @@
-import { version } from '@barusu/tool-tsconfig-paths/package.json'
-import program from 'commander'
 import fs from 'fs'
 import path from 'path'
+import { version } from '@barusu/tool-tsconfig-paths/package.json'
+import program from 'commander'
 import { TsconfigPathAliasResolver } from './index'
 import { logger } from './util'
 
