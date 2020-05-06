@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { it, before } from 'mocha'
 import { expect } from 'chai'
+import { before, it } from 'mocha'
 import { createStaticImportOrExportRegex } from '../src/util'
 
 
@@ -11,6 +11,8 @@ before(async function test() {
   const testFileNames: string[] = [
     'regex.input.json',
   ]
+
+  const logKase = (kase: any) => kase.input
 
   const regex = createStaticImportOrExportRegex()
   const removeUndefined = (o: object) => JSON.parse(JSON.stringify(o))
@@ -27,12 +29,11 @@ before(async function test() {
             expect(output).to.be.null
             return
           }
-          expect(output).not.to.be.null
-          expect(output!.groups).not.to.be.undefined
-          expect(removeUndefined(output!.groups!)).to.deep.equal(answer)
+          expect(output, logKase(kase)).not.to.be.null
+          expect(output!.groups, logKase(kase)).not.to.be.undefined
+          expect(removeUndefined(output!.groups!), logKase(kase)).to.deep.equal(answer)
         })
       }
     })
   }
 })
-

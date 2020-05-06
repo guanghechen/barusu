@@ -21,7 +21,7 @@ export function createStaticImportOrExportRegex(flags?: string): RegExp {
     + exportNRegex.source + '?'
     + /(?:\s+from)/.source + '?'
     + moduleNameRegex.source
-  , flags)
+    , flags)
   return regex
 }
 
@@ -36,7 +36,7 @@ export function createCommentRegex(flags?: string): RegExp {
   const regex = new RegExp(
     inlineCommentRegex.source
     + '|' + blockCommentRegex.source
-  , flags)
+    , flags)
   return regex
 }
 
@@ -52,12 +52,23 @@ export function createCommentRegex(flags?: string): RegExp {
 const npmPackageRegex = /^[\w@]/
 const absoluteRegex = /^(\/|[A-Z]:)/
 const relativeRegex = /^([.\/\\]+)([^\n]*)$/
-export function compareModulePath(p1: string, p2: string): number {
+
+export function compareModulePath(p1: string, p2: string, topModules: string[]): number {
   if (p1 === p2) return 0
 
-  // put react on top
-  if (p1 === 'react') return -1
-  if (p2 === 'react') return 1
+  // topModules take precedence
+  const tmIndex1 = topModules.indexOf(p1)
+  const tmIndex2 = topModules.indexOf(p2)
+  if (tmIndex1 >= 0 || tmIndex2 >= 0) {
+    if (tmIndex1 >= 0) {
+      if (tmIndex2 >= 0) return tmIndex1 - tmIndex2
+      return -1
+    }
+    return 1
+  }
+
+  if (topModules.includes(p1) && !topModules.includes(p2)) return -1
+  if (topModules.includes(p2) && !topModules.includes(p1)) return 1
 
   // compare npm package
   if (npmPackageRegex.test(p1)) {
@@ -77,9 +88,10 @@ export function compareModulePath(p1: string, p2: string): number {
   if (relativeRegex.test(p1) && relativeRegex.test(p2)) {
     const [, a1, b1] = relativeRegex.exec(p1)!
     const [, a2, b2] = relativeRegex.exec(p2)!
-    if (a1 === a2) return b1 < b2 ? -1 : 1
-    // './' < '../'
-    return a1 < a2 ? -1 : 1
+    const c1 = a1.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1')
+    const c2 = a2.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1')
+    if (c1.length === c2.length) return b1 < b2 ? -1 : 1
+    return c1.length > c2.length ? -1 : 1
   }
 
   // fallback

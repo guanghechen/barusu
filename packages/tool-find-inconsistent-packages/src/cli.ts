@@ -1,6 +1,6 @@
+import path from 'path'
 import { version } from '@barusu/tool-find-inconsistent-packages/package.json'
 import program from 'commander'
-import path from 'path'
 import { PackageManager } from './index'
 import { logger } from './util'
 

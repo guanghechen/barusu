@@ -1,6 +1,7 @@
 {
   "name": "@barusu/tool-sort-imports",
   "version": "0.0.11",
+  "description": "sort import/export statement",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -11,7 +12,6 @@
   },
   "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/tool-sort-imports#readme",
   "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
   "license": "MIT",
@@ -43,7 +43,8 @@
     "@barusu/chalk-logger": "^0.0.11",
     "@types/fs-extra": "^8.1.0",
     "commander": "^5.0.0",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "globby": "^11.0.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.11",
