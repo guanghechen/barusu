@@ -8,16 +8,20 @@ html
     meta(http-equiv="Cache-Control" content="no-store")
     title #{data.title}
 
-    //- 第三方样式
+    //- 页面间共享的第三方样式
     each styleSrc in data.sharedThirdPartyStyles
+      link(rel="stylesheet" type="text/css" href=styleSrc)
+
+    //- 页面间共享的样式
+    each styleSrc in data.sharedStyles
       link(rel="stylesheet" type="text/css" href=styleSrc)
 
     //- 当前页面特有的第三方样式
     each styleSrc in data.sharedThirdPartyStyles
       link(rel="stylesheet" type="text/css" href=styleSrc)
 
-    //- 页面间共享的样式
-    each styleSrc in data.sharedStyles
+    //- 当前页面特有的第三方样式
+    each styleSrc in data.thirdPartyStyles
       link(rel="stylesheet" type="text/css" href=styleSrc)
 
     //- 当前页面特有的样式
@@ -26,16 +30,16 @@ html
   body
     #root
 
-    //- 第三方脚本
+    //- 页面间共享的第三方脚本
     each scriptSrc in data.sharedThirdPartyScripts
-      script(type="text/javascript" src=scriptSrc)
-
-    //- 当前页面特有的第三方脚本
-    each scriptSrc in data.thirdPartyScripts
       script(type="text/javascript" src=scriptSrc)
 
     //- 页面间共享的脚本
     each scriptSrc in data.sharedScripts
+      script(type="text/javascript" src=scriptSrc)
+
+    //- 当前页面特有的第三方脚本
+    each scriptSrc in data.thirdPartyScripts
       script(type="text/javascript" src=scriptSrc)
 
     //- 当前页面特有的脚本
