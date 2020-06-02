@@ -1,8 +1,8 @@
-import fs from 'fs-extra'
-import path from 'path'
 import { expect } from 'chai'
 import { before, it } from 'mocha'
-import { compareModulePath } from '../src/util'
+import fs from 'fs-extra'
+import path from 'path'
+import { compareModulePath, defaultModuleRankItems } from '../src/util'
 
 
 it('This is a required placeholder to allow before() to work', () => { })
@@ -20,7 +20,13 @@ before(async function test() {
     describe(data.title, function () {
       for (const kase of data.cases) {
         const { input, answer } = kase
-        const output = compareModulePath(input.p1, input.p2, ['react'])
+        const output = compareModulePath(input.p1, input.p2, [
+          {
+            regex: /^(react|vue|angular)(?:\-[\w\-.]*)?$/,
+            rank: 0.1,
+          },
+          ...defaultModuleRankItems,
+        ])
 
         it(kase.title, function () {
           if (answer === undefined) {
