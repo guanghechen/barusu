@@ -1,9 +1,9 @@
+import program from 'commander'
 import fs from 'fs-extra'
+import globby from 'globby'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import { name, version } from '@barusu/tool-sort-imports/package.json'
-import program from 'commander'
-import globby from 'globby'
 import { StaticImportStatement } from './index'
 import { logger } from './util'
 
@@ -23,7 +23,6 @@ program
   .option('--max-column <maxColumn>', 'maximum column width')
   .option('--indent <indent>', 'indent of source codes')
   .option('--quote <quote>', 'quotation marker surround the module path')
-  .option('-M, --top-module <moduleName>', 'top modules', (val, acc: string[]) => acc.concat(val), [])
   .action(function (cmd, options: any) {
     const cwd: string = options.args[0] || path.resolve()
     const packageJsonPath = path.resolve(cwd, 'package.json')
@@ -35,7 +34,7 @@ program
       maxColumn: 100,
       indent: '  ',
       quote: '\'',
-      topModule: [],
+      moduleRanks: undefined,
     }
 
     if (fs.existsSync(packageJsonPath)) {
@@ -56,10 +55,6 @@ program
       // eslint-disable-next-line no-param-reassign
       delete options.pattern
     }
-    if (options.topModule.length <= 0) {
-      // eslint-disable-next-line no-param-reassign
-      delete options.topModule
-    }
 
     const {
       logLevel = defaultOptions.logLevel,
@@ -68,7 +63,7 @@ program
       indent = defaultOptions.indent,
       encoding = defaultOptions.encoding,
       maxColumn = defaultOptions.maxColumn,
-      topModule = defaultOptions.topModule,
+      moduleRanks = defaultOptions.moduleRanks,
     } = options
 
     // reset log-level
@@ -77,15 +72,41 @@ program
       if (level != null) logger.setLevel(level)
     }
 
+    // parse regex in moduleRanks
+    if (moduleRanks != null) {
+      if (!Array.isArray(moduleRanks)) {
+        logger.error('[Bad option] moduleRanks should be array.')
+        process.exit(-1)
+      }
+
+      for (let i = 0; i < moduleRanks.length; ++i) {
+        const item = moduleRanks[i]
+        if (
+          item == null ||
+          (typeof item.regex !== 'string') ||
+          (typeof item.rank !== 'number')
+        ) {
+          logger.error(`[Bad option] missed regex / rank in moduleRanks[${ i }]: ${ JSON.stringify(item) }`)
+          process.exit(-1)
+        }
+        try {
+          item.regex = new RegExp(item.regex)
+        } catch (error) {
+          logger.error('', error)
+          process.exit(-1)
+        }
+      }
+    }
+
     logger.debug('packageJsonPath:', packageJsonPath)
     logger.debug('pattern:', pattern)
     logger.debug('quote:', quote)
     logger.debug('indent:', indent)
     logger.debug('encoding:', encoding)
     logger.debug('maxColumn:', maxColumn)
-    logger.debug('topModule:', topModule)
+    logger.debug('moduleRanks:', moduleRanks)
 
-    const stat = new StaticImportStatement(quote, indent, Number.parseInt(maxColumn), topModule)
+    const stat = new StaticImportStatement(quote, indent, Number.parseInt(maxColumn), moduleRanks)
     globby(pattern, {
       onlyFiles: true,
       expandDirectories: false,

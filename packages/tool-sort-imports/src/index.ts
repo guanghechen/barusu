@@ -1,8 +1,10 @@
 import {
+  ModuleRankItem,
   StaticImportOrExportStatItem,
   compareModulePath,
   createCommentRegex,
   createStaticImportOrExportRegex,
+  defaultModuleRankItems,
   formatImportOrExportStatItem,
 } from './util'
 export {
@@ -19,7 +21,7 @@ export class StaticImportStatement {
   public readonly indent: string
   public readonly maxColumn: number
   public readonly itemRank: Record<StaticImportOrExportStatItem['type'], number>
-  public readonly topModules: string[]
+  public readonly moduleRanks: ModuleRankItem[]
   public readonly staticImportOrExportRegex: RegExp
   public readonly topCommentRegex: RegExp
 
@@ -27,7 +29,7 @@ export class StaticImportStatement {
     quote = '\'',
     indent = '  ',
     maxColumn = 100,
-    topModules: string[] = [],
+    moduleRanks: ModuleRankItem[] = defaultModuleRankItems.concat(),
     staticImportOrExportRegex: RegExp = createStaticImportOrExportRegex('g'),
     topCommentRegex: RegExp = createCommentRegex(),
   ) {
@@ -46,7 +48,7 @@ export class StaticImportStatement {
       'import': 1,
       'export': 2,
     }
-    this.topModules = topModules
+    this.moduleRanks = moduleRanks
   }
 
   public process(content: string): string {
@@ -94,7 +96,7 @@ export class StaticImportStatement {
       return this.itemRank[x.type] - this.itemRank[y.type]
     }
     if (x.moduleName !== y.moduleName) {
-      return compareModulePath(x.moduleName, y.moduleName, this.topModules)
+      return compareModulePath(x.moduleName, y.moduleName, this.moduleRanks)
     }
     if (x.fullStatement === y.fullStatement) return 0
     return x.fullStatement < y.fullStatement ? -1 : 1
