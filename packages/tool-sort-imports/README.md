@@ -35,7 +35,6 @@
     --max-column <maxColumn>       maximum column width
     --indent <indent>              indent of source codes
     --quote <quote>                quotation marker surround the module path
-    -M, --top-module <moduleName>  top modules (default: [])
     -h, --help                     display help for command
   ```
 
@@ -53,9 +52,6 @@
 
   * `--quote <quote>`: Specify the quotation marker surround the module path. Default value is single quotes `'`
 
-  * `-M, --top-module <moduleName>`: Add fixed `topModules`. `topModules` are something that will always be fixed at the top of source file, and will not participate in the ordering of module names, their order depends on the order declared in the command line parameters. For example:
-    - `sort-imports . -M react -M vue -M fs -M path`: then the `import/export` statement with these modules (`react` / `vue` / `fs` / `path`) Will always be fixed on top of source file, and their order (line numbers appearing in the source file) are following rule: `react` < `vue` < `fs` < `path`
-
 ## Options in <cwd>/package.json
 
   You can also specify options in the `<cwd>/package.json`, for example:
@@ -66,13 +62,39 @@
         "src/**/*.{ts,tsx}",
         "test/**/*.{ts,tsx}"
       ],
-      "topModule": [
-        "react",
-        "vue",
-        "fs",
-        "fs-extra",
-        "path",
-        "glob"
+      "moduleRanks": [
+        {
+          "regex": "^(react|vue|angular)(?:[\/\\-][\\w\\-.\/]*)?$",
+          "rank": 1.1
+        },
+        {
+          "regex": "^mocha|chai(?:[\/][\\w\\-.\/]*)?$",
+          "rank": 1.2
+        },
+        {
+          "regex": "^[a-zA-Z\\d][\\w\\-.]*",
+          "rank": 1.3
+        },
+        {
+          "regex": "^@[a-zA-Z\\d][\\w\\-.]*\\/[a-zA-Z\\d][\\w\\-.]*",
+          "rank": 1.4
+        },
+        {
+          "regex": "^@\\/",
+          "rank": 2.1
+        },
+        {
+          "regex": "^(?:\\/|[a-zA-Z]:)",
+          "rank": 3.1
+        },
+        {
+          "regex": "^[.]{2}[\\/\\\\][^\\n]*",
+          "rank": 3.2
+        },
+        {
+          "regex": "^[.][\\/\\\\][^\\n]*",
+          "rank": 3.3
+        }
       ],
       "indent": "  ",
       "quote": "'",
@@ -80,3 +102,5 @@
     }
   }
   ```
+
+  * `moduleRanks` specified module rank when sort `import/export` statements. If a module path matches multiple items, only the first matched item is taken.
