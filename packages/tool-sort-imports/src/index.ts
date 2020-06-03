@@ -65,13 +65,14 @@ export class StaticImportStatement {
     regex.lastIndex = startIndex
     for (let m: RegExpExecArray | null; (m = regex.exec(content)) != null;) {
       if (!/^[;\s]*$/.test(content.substring(startIndex, m.index))) break
-      const { defaultExport, exportN: exportNStr, moduleName, type } = m.groups!
+      const { defaultExport, exportN: exportNStr, moduleName, type, remainOfLine } = m.groups!
       const exportN: string[] = exportNStr == null ? [] : exportNStr.split(/\s*,\s*/g)
       const item = {
         defaultExport,
         exportN: exportN.filter(x => /\S/.test(x)).sort(),
         moduleName: moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
         type: type as any,
+        remainOfLine: remainOfLine as string,
       } as StaticImportOrExportStatItem
       item.fullStatement = self.format(item)
       items.push(item)

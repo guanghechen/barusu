@@ -15,12 +15,14 @@ export function createStaticImportOrExportRegex(flags?: string): RegExp {
   const defaultExportRegex = /(?:\s+(?<defaultExport>[\w*]+(?:\s+as\s+[\w]+)?(?:\s*,\s*[\w*]+\s+as\s+[\w]+)?)(?:\s*,)?)/
   const exportNRegex = /(?:\s+\{\s*(?<exportN>(?:[\w]+(?:\s+as\s+[\w]+)?\s*,\s*)*[\w]+(?:\s+as\s+[\w]+)?(?:\s*,)?)\s*\})/
   const moduleNameRegex = /(?:\s+(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>)(?:\s*;+)?/
+  const remainOfLineRegex = /(?<remainOfLine>[^\n]*)/
   const regex = new RegExp(
     typeRegex.source
     + defaultExportRegex.source + '?'
     + exportNRegex.source + '?'
     + /(?:\s+from)/.source + '?'
     + moduleNameRegex.source
+    + remainOfLineRegex.source
     , flags)
   return regex
 }
@@ -130,6 +132,7 @@ export interface StaticImportOrExportStatItem {
   moduleName: string
   fullStatement: string
   exportN: string[]
+  remainOfLine: string
   defaultExport?: string
 }
 
@@ -165,7 +168,7 @@ export function formatImportOrExportStatItem(
     }
     result += ` ${ quote }${ item.moduleName }${ quote }`
     if (semicolon) result += ';'
-    return result
+    return result + item.remainOfLine
   }
 
   let result = assembleStatement(false)

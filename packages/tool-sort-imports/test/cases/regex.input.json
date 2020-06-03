@@ -11,7 +11,8 @@
         "type": "import",
         "defaultExport": "defaultExport",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -21,7 +22,8 @@
         "type": "import",
         "defaultExport": "* as name",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -31,7 +33,8 @@
         "type": "import",
         "exportN": "export",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -41,7 +44,8 @@
         "type": "import",
         "exportN": "export as alias",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -51,7 +55,8 @@
         "type": "import",
         "exportN": "export1 , export2",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -61,7 +66,8 @@
         "type": "import",
         "exportN": "foo , bar",
         "quote": "\"",
-        "moduleName": "module-name/path/to/specific/un-exported/file"
+        "moduleName": "module-name/path/to/specific/un-exported/file",
+        "remainOfLine": ""
       }
     },
     {
@@ -71,7 +77,8 @@
         "type": "import",
         "defaultExport": "defaultExport, * as name",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -80,7 +87,8 @@
       "answer": {
         "type": "import",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -90,7 +98,8 @@
         "type": "import",
         "exportN": "export1 , export2 as alias2, export3",
         "quote": "\"",
-        "moduleName": "module-name"
+        "moduleName": "module-name",
+        "remainOfLine": ""
       }
     },
     {
@@ -100,7 +109,8 @@
         "type": "import",
         "exportN": "StaticImportOrExportStatItem,\n  createStaticImportOrExportRegex,\n  formatImportOrExportStatItem,\n  compareModulePath,",
         "quote": "'",
-        "moduleName": "./util"
+        "moduleName": "./util",
+        "remainOfLine": ""
       }
     }
   ]
