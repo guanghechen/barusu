@@ -35,6 +35,7 @@
     --max-column <maxColumn>       maximum column width
     --indent <indent>              indent of source codes
     --quote <quote>                quotation marker surround the module path
+    ----semicolon                  whether to add a semicolon at the end of import/export statement
     -h, --help                     display help for command
   ```
 
@@ -51,6 +52,8 @@
   * `--indent <indent>`: Specify indent of source codes. Default value is two spaces `  `.
 
   * `--quote <quote>`: Specify the quotation marker surround the module path. Default value is single quotes `'`
+
+  * `--semicolon`: Specify whether to add a semicolon at the end of `import/export` statement. Default value is `false`
 
 ## Options in <cwd>/package.json
 
@@ -98,6 +101,7 @@
       ],
       "indent": "  ",
       "quote": "'",
+      "semicolon": false,
       "maxColumn": 100
     }
   }
