@@ -23,6 +23,7 @@ program
   .option('--max-column <maxColumn>', 'maximum column width')
   .option('--indent <indent>', 'indent of source codes')
   .option('--quote <quote>', 'quotation marker surround the module path')
+  .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
   .action(function (cmd, options: any) {
     const cwd: string = options.args[0] || path.resolve()
     const packageJsonPath = path.resolve(cwd, 'package.json')
@@ -34,6 +35,7 @@ program
       maxColumn: 100,
       indent: '  ',
       quote: '\'',
+      semicolon: false,
       moduleRanks: undefined,
     }
 
@@ -60,6 +62,7 @@ program
       logLevel = defaultOptions.logLevel,
       pattern = defaultOptions.pattern,
       quote = defaultOptions.quote,
+      semicolon = defaultOptions.semicolon,
       indent = defaultOptions.indent,
       encoding = defaultOptions.encoding,
       maxColumn = defaultOptions.maxColumn,
@@ -101,12 +104,14 @@ program
     logger.debug('packageJsonPath:', packageJsonPath)
     logger.debug('pattern:', pattern)
     logger.debug('quote:', quote)
+    logger.debug('semicolon:', semicolon)
     logger.debug('indent:', indent)
     logger.debug('encoding:', encoding)
     logger.debug('maxColumn:', maxColumn)
     logger.debug('moduleRanks:', moduleRanks)
 
-    const stat = new StaticImportStatement(quote, indent, Number.parseInt(maxColumn), moduleRanks)
+    const stat = new StaticImportStatement(
+      quote, indent, semicolon, Number.parseInt(maxColumn), moduleRanks)
     globby(pattern, {
       onlyFiles: true,
       expandDirectories: false,
