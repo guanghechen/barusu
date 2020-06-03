@@ -79,6 +79,7 @@
     ],
     "indent": "  ",
     "quote": "'",
+    "semicolon": false,
     "maxColumn": 100
   }
 }

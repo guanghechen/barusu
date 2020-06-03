@@ -14,13 +14,15 @@ export function createStaticImportOrExportRegex(flags?: string): RegExp {
   const typeRegex = /(?<type>import|export)/
   const defaultExportRegex = /(?:\s+(?<defaultExport>[\w*]+(?:\s+as\s+[\w]+)?(?:\s*,\s*[\w*]+\s+as\s+[\w]+)?)(?:\s*,)?)/
   const exportNRegex = /(?:\s+\{\s*(?<exportN>(?:[\w]+(?:\s+as\s+[\w]+)?\s*,\s*)*[\w]+(?:\s+as\s+[\w]+)?(?:\s*,)?)\s*\})/
-  const moduleNameRegex = /(?:\s+(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>)/
+  const moduleNameRegex = /(?:\s+(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>)(?:\s*;+)?/
+  const remainOfLineRegex = /(?<remainOfLine>[^\n]*)/
   const regex = new RegExp(
     typeRegex.source
     + defaultExportRegex.source + '?'
     + exportNRegex.source + '?'
     + /(?:\s+from)/.source + '?'
     + moduleNameRegex.source
+    + remainOfLineRegex.source
     , flags)
   return regex
 }
@@ -130,6 +132,7 @@ export interface StaticImportOrExportStatItem {
   moduleName: string
   fullStatement: string
   exportN: string[]
+  remainOfLine: string
   defaultExport?: string
 }
 
@@ -142,9 +145,10 @@ export interface StaticImportOrExportStatItem {
  */
 export function formatImportOrExportStatItem(
   item: Omit<StaticImportOrExportStatItem, 'fullStatement'>,
-  quote = '\'',
-  indent = ' ',
-  maxColumn = 100,
+  quote: string,
+  indent: string,
+  semicolon: boolean,
+  maxColumn: number,
 ): string {
   const assembleStatement = (multiline: boolean): string => {
     let result: string = item.type
@@ -163,7 +167,8 @@ export function formatImportOrExportStatItem(
       result += ' from'
     }
     result += ` ${ quote }${ item.moduleName }${ quote }`
-    return result
+    if (semicolon) result += ';'
+    return result + item.remainOfLine
   }
 
   let result = assembleStatement(false)

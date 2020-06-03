@@ -19,6 +19,7 @@ export {
 export class StaticImportStatement {
   public readonly quote: string
   public readonly indent: string
+  public readonly semicolon: boolean
   public readonly maxColumn: number
   public readonly itemRank: Record<StaticImportOrExportStatItem['type'], number>
   public readonly moduleRanks: ModuleRankItem[]
@@ -28,6 +29,7 @@ export class StaticImportStatement {
   public constructor(
     quote = '\'',
     indent = '  ',
+    semicolon = false,
     maxColumn = 100,
     moduleRanks: ModuleRankItem[] = defaultModuleRankItems.concat(),
     staticImportOrExportRegex: RegExp = createStaticImportOrExportRegex('g'),
@@ -41,6 +43,7 @@ export class StaticImportStatement {
 
     this.quote = quote
     this.indent = indent
+    this.semicolon = semicolon
     this.maxColumn = Number.isNaN(maxColumn) ? 100 : maxColumn,
     this.staticImportOrExportRegex = staticImportOrExportRegex
     this.topCommentRegex = new RegExp('^(' + topCommentRegex.source + '|\\s*)*')
@@ -62,13 +65,14 @@ export class StaticImportStatement {
     regex.lastIndex = startIndex
     for (let m: RegExpExecArray | null; (m = regex.exec(content)) != null;) {
       if (!/^[;\s]*$/.test(content.substring(startIndex, m.index))) break
-      const { defaultExport, exportN: exportNStr, moduleName, type } = m.groups!
+      const { defaultExport, exportN: exportNStr, moduleName, type, remainOfLine } = m.groups!
       const exportN: string[] = exportNStr == null ? [] : exportNStr.split(/\s*,\s*/g)
       const item = {
         defaultExport,
         exportN: exportN.filter(x => /\S/.test(x)).sort(),
         moduleName: moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
         type: type as any,
+        remainOfLine: remainOfLine as string,
       } as StaticImportOrExportStatItem
       item.fullStatement = self.format(item)
       items.push(item)
@@ -87,8 +91,8 @@ export class StaticImportStatement {
   }
 
   protected format(item: Omit<StaticImportOrExportStatItem, 'fullStatement'>): string {
-    const { quote, indent, maxColumn } = this
-    return formatImportOrExportStatItem(item, quote, indent, maxColumn)
+    const { quote, indent, semicolon, maxColumn } = this
+    return formatImportOrExportStatItem(item, quote, indent, semicolon, maxColumn)
   }
 
   protected compare(x: StaticImportOrExportStatItem, y: StaticImportOrExportStatItem): number {
