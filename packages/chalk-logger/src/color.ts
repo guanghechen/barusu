@@ -27,7 +27,7 @@ const brightColorKeywords = new Set([
 ])
 
 
-export function colorToChalk(color: Color, fg: boolean) {
+export function colorToChalk(color: Color, fg: boolean): Chalk {
   if (typeof color === 'string') {
     if (colorKeywords.has(color) || brightColorKeywords.has(color)) {
       if (!fg) {

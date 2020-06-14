@@ -4,7 +4,7 @@
  * @param size
  * @param defaultValue
  */
-export function resize<T>(arr: T[], size: number, defaultValue: T) {
+export function resize<T>(arr: T[], size: number, defaultValue: T): void {
   // Remove extra elements
   if (arr.length > size) {
     arr.splice(size, arr.length - size)

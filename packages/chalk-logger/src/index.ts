@@ -11,6 +11,7 @@ export class ColorfulChalkLogger extends Logger {
    * register to commander
    * @param program {commander.Command}
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public static registerToCommander(program: any) {
     // register into commander
     if (!registered) {
@@ -102,7 +103,7 @@ export class ColorfulChalkLogger extends Logger {
    * update logger's level
    * @param level
    */
-  public setLevel(level: Level) {
+  public setLevel(level: Level): void {
     (this.level as any) = level
   }
 
@@ -110,7 +111,7 @@ export class ColorfulChalkLogger extends Logger {
    * update logger's name
    * @param name
    */
-  public setName(name: string) {
+  public setName(name: string): void {
     this.name = name
   }
 }
