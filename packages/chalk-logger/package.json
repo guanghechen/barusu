@@ -46,6 +46,6 @@
     "@barusu/rollup-config": "^0.0.14",
     "commander": "^5.0.0",
     "cross-env": "^7.0.2",
-    "rollup": "2.6.1"
+    "rollup": "2.16.1"
   }
 }

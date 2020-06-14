@@ -34,8 +34,6 @@
       },
       commonjsOptions: {
         include: ['./node_modules/**'],
-        namedExports: {
-        },
       },
     }
   })
