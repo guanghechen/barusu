@@ -2,7 +2,7 @@ import { ColorfulChalk } from './color'
 
 
 export class Level {
-  public static valueOf(levelName: string) {
+  public static valueOf(levelName: string): Level | undefined {
     return Level.levels.get(levelName.toLowerCase())
   }
 

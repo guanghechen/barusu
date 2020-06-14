@@ -26,7 +26,7 @@ export class PackageManager {
   protected readonly packageMap: Map<string, string> = new Map()
   protected readonly dependencyMap: Map<string, DependencyItem> = new Map()
 
-  public async resolve (rootPackageJsonPath: string): Promise<void> {
+  public async resolve(rootPackageJsonPath: string): Promise<void> {
     if (!fs.existsSync(rootPackageJsonPath)) {
       throw new Error(`${ rootPackageJsonPath } is not found.`)
     }
@@ -70,7 +70,7 @@ export class PackageManager {
     self.checkPackageVersion()
   }
 
-  protected resolvePackageJSON (json: PackageJSON) {
+  protected resolvePackageJSON(json: PackageJSON): void {
     const self = this
     self.packageMap.set(json.name, json.version)
     const keys: (keyof PackageJSON)[] = [
@@ -129,7 +129,7 @@ export class PackageManager {
     checkFatalError(hasError)
   }
 
-  protected checkPackageVersion () {
+  protected checkPackageVersion(): void {
     const self = this
     let hasError = false
     for (const [packageName, version] of self.packageMap.entries()) {

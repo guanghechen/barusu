@@ -22,8 +22,6 @@ const baseConfig = createRollupConfig({
     },
     commonjsOptions: {
       include: ['../../node_modules/**'],
-      namedExports: {
-      },
     },
   }
 })

@@ -39,6 +39,7 @@ declare module 'rollup-plugin-eslint' {
      * Custom error formatter or the name of a built-in formatter.
      * @default 'stylish'
      */
+    // eslint-disable-next-line @typescript-eslint/ban-types
     formatter?: string | Function
   }
 

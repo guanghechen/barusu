@@ -35,6 +35,7 @@ export function cover<T>(defaultValue: T, value: T | null | undefined): T {
  * @param defaultValue
  * @param value
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function coverBoolean(defaultValue: boolean, value?: any): boolean {
   const v = convertToBoolean(value)
   return cover<boolean>(defaultValue, v)

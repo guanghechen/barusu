@@ -113,6 +113,7 @@ export class Logger {
   }
 
   // format a log record part message according its type.
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public formatSingleMessage(message: any): string {
     let text: string
     const { inline } = this.flags
@@ -137,12 +138,12 @@ export class Logger {
     return text
   }
 
-  public debug(messageFormat: string, ...messages: any[]) { this.log(DEBUG, messageFormat, ...messages) }
-  public verbose(messageFormat: string, ...messages: any[]) { this.log(VERBOSE, messageFormat, ...messages) }
-  public info(messageFormat: string, ...messages: any[]) { this.log(INFO, messageFormat, ...messages) }
-  public warn(messageFormat: string, ...messages: any[]) { this.log(WARN, messageFormat, ...messages) }
-  public error(messageFormat: string, ...messages: any[]) { this.log(ERROR, messageFormat, ...messages) }
-  public fatal(messageFormat: string, ...messages: any[]) { this.log(FATAL, messageFormat, ...messages) }
+  public debug(messageFormat: string, ...messages: any[]): void { this.log(DEBUG, messageFormat, ...messages) }
+  public verbose(messageFormat: string, ...messages: any[]): void { this.log(VERBOSE, messageFormat, ...messages) }
+  public info(messageFormat: string, ...messages: any[]): void { this.log(INFO, messageFormat, ...messages) }
+  public warn(messageFormat: string, ...messages: any[]): void { this.log(WARN, messageFormat, ...messages) }
+  public error(messageFormat: string, ...messages: any[]): void { this.log(ERROR, messageFormat, ...messages) }
+  public fatal(messageFormat: string, ...messages: any[]): void { this.log(FATAL, messageFormat, ...messages) }
 
   // write a log record.
   private log(level: Level, messageFormat: string, ...messages: any[]) {

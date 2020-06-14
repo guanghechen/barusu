@@ -24,7 +24,7 @@ export function processSourceMap(
   resolveContext: string,
   context: webpack.loader.LoaderContext,
   callback: (sourcemap: RawSourceMap) => void,
-) {
+): void {
   const {
     resolve,
     emitWarning,
