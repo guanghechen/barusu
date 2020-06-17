@@ -1,0 +1,58 @@
+{
+  "name": "@barusu/tool-cipher",
+  "version": "0.0.15",
+  "description": "cipher data",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/tool-cipher#readme",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "files": [
+    "lib/",
+    ".eslintrc.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "!lib/**/*.js.map",
+    "!lib/**/*.d.ts.map"
+  ],
+  "bin": {
+  },
+  "scripts": {
+    "start": "rollup -w -c rollup.config.js",
+    "prebuild": "rimraf lib/ && yarn test",
+    "build": "rollup -c rollup.config.js",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
+    "test": "mocha -r ts-node/register -r tsconfig-paths/register test/*.test.ts"
+  },
+  "dependencies": {
+    "@barusu/chalk-logger": "^0.0.15",
+    "@types/fs-extra": "^8.1.0",
+    "commander": "^5.0.0",
+    "fs-extra": "^8.1.0",
+    "globby": "^11.0.0"
+  },
+  "devDependencies": {
+    "@barusu/eslint-config": "^0.0.15",
+    "@barusu/rollup-config": "^0.0.15",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
+    "mocha": "^7.1.1",
+    "rollup": "2.16.1"
+  }
+}

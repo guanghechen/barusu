@@ -24,6 +24,7 @@
     "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes && yarn install",
     "rebuild": "lerna exec -- yarn build",
+    "exec:ts": "node -r ts-node/register -r tsconfig-path/register",
     "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent-packages/lib/cjs/cli.js --log-level=verbose",
     "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose"
   },
