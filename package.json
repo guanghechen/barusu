@@ -81,6 +81,6 @@
     "indent": "  ",
     "quote": "'",
     "semicolon": false,
-    "maxColumn": 100
+    "maxColumn": 80
   }
 }
