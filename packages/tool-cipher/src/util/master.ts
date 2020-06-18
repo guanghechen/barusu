@@ -12,14 +12,20 @@ interface CipherMasterParams {
    * Whether to print asterisks when entering a password
    */
   showAsterisk: boolean
+  /**
+   * the storage file of the secret for encrypt/decrypt workspaces
+   */
+  secretFilepath: string
 }
 
 
 export class CipherMaster {
   protected readonly showAsterisk: boolean
+  protected readonly secretFilepath: string
 
   public constructor(params: CipherMasterParams) {
     this.showAsterisk = params.showAsterisk
+    this.secretFilepath = params.secretFilepath
   }
 
   /**
@@ -96,17 +102,15 @@ export class CipherMaster {
 
   /**
    * encrypt files matched specified glob patterns
-   * @param secretFilepath      filepath of secret of the encryption algorithm
    * @param plainFilePatterns   glob patterns to match files to be encrypted
    * @param resolveDestPath     calc the output path of the encrypted content
    */
   public async encryptFiles(
-    secretFilepath: string,
     plainFilePatterns: string[],
     resolveDestPath: (plainFilepath: string) => string,
   ): Promise<void> {
     const self = this
-    const [iv, key] = await self.loadSecret(secretFilepath)
+    const [iv, key] = await self.loadSecret()
     const aesCipher = new AESCipher({ iv, key })
 
     try {
@@ -128,17 +132,15 @@ export class CipherMaster {
 
   /**
    * decrypt files matched specified glob patterns
-   * @param secretFilepath      filepath of secret of the decryption algorithm
    * @param cipherFilePatterns  glob patterns to match files to be decrypted
    * @param resolveDestPath     calc the output path of the decrypted content
    */
   public async decryptFiles(
-    secretFilepath: string,
     cipherFilePatterns: string[],
     resolveDestPath: (cipherFilepath: string) => string,
   ): Promise<void> {
     const self = this
-    const [iv, key] = await self.loadSecret(secretFilepath)
+    const [iv, key] = await self.loadSecret()
     const aesCipher = new AESCipher({ iv, key })
 
     try {
@@ -160,12 +162,11 @@ export class CipherMaster {
 
   /**
    * load AES iv/key from encrypted secret file
-   * @param secretFilepath      filepath of secret of the encryption/decryption algorithm
    */
-  public async loadSecret(secretFilepath: string): Promise<[Buffer, Buffer]> {
+  public async loadSecret(): Promise<[Buffer, Buffer]> {
     const self = this
-    if (!fs.existsSync(secretFilepath)) {
-      throw new Error(`cannot find secret file (${ secretFilepath })`)
+    if (!fs.existsSync(self.secretFilepath)) {
+      throw new Error(`cannot find secret file (${ self.secretFilepath })`)
     }
 
     let password: Buffer | null = null
@@ -185,7 +186,7 @@ export class CipherMaster {
 
     let iv: Buffer, key: Buffer, plainData: Buffer | null = null
     try {
-      const content: Buffer = await fs.readFile(secretFilepath)
+      const content: Buffer = await fs.readFile(self.secretFilepath)
       const aesCipher = new AESCipher({ iv: originalIv, key: originalKey })
       plainData = aesCipher.decrypt(content)
       iv = plainData.slice(0, 32)
@@ -200,9 +201,8 @@ export class CipherMaster {
 
   /**
    * create AES iv/key and stored in encrypted secret file
-   * @param secretFilepath        the storage file of the secret to be generated
    */
-  public async createSecret(secretFilepath: string): Promise<void> {
+  public async createSecret(): Promise<void> {
     const self = this
 
     let password: Buffer | null = null
@@ -237,10 +237,10 @@ export class CipherMaster {
       cipherSecret = aesCipher.encrypt(plainSecret)
 
       // mkdir dir if the ancient directories are not exists
-      if (!fs.existsSync(path.dirname(secretFilepath))) {
-        fs.mkdirpSync(path.dirname(secretFilepath))
+      if (!fs.existsSync(path.dirname(self.secretFilepath))) {
+        fs.mkdirpSync(path.dirname(self.secretFilepath))
       }
-      await fs.writeFile(secretFilepath, cipherSecret)
+      await fs.writeFile(self.secretFilepath, cipherSecret)
     } finally {
       destroyBuffer(originalIv)
       destroyBuffer(originalKey)
@@ -255,27 +255,25 @@ export class CipherMaster {
    * Change the secret.
    * Prior to this, the encrypted content will be decrypted using the old key,
    * and then the new key will be written to the key file.
-   * @param secretFilepath        the storage file of the secret to be generated
    * @param cipherFilePatterns
    * @param resolveDestPath
    */
   public async changeSecret(
-    secretFilepath: string,
     cipherFilePatterns: string[],
     resolveDestPath: (cipherFilepath: string) => string,
   ): Promise<void> {
     const self = this
-    if (!fs.existsSync(secretFilepath)) {
-      throw new Error(`cannot find secret file (${ secretFilepath })`)
+    if (!fs.existsSync(self.secretFilepath)) {
+      throw new Error(`cannot find secret file (${ self.secretFilepath })`)
     }
 
     // waiting for ciphered data with old secret to be decrypted
     if (cipherFilePatterns.length > 0) {
-      await self.decryptFiles(secretFilepath, cipherFilePatterns, resolveDestPath)
+      await self.decryptFiles(cipherFilePatterns, resolveDestPath)
     }
 
     // generate new secret
-    await self.createSecret(secretFilepath)
+    await self.createSecret()
   }
 
   /**

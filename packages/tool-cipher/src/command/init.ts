@@ -56,8 +56,8 @@ export function loadSubCommandInit(
       }
 
       try {
-        const master = new CipherMaster({ showAsterisk })
-        await master.createSecret(secretFilepath)
+        const master = new CipherMaster({ showAsterisk, secretFilepath })
+        await master.createSecret()
       } catch (error) {
         handleError(error)
       }
