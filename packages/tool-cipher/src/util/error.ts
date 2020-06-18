@@ -11,6 +11,10 @@ export enum ERROR_CODE {
    * Entered passwords differ
    */
   ENTERED_PASSWORD_DIFFER = 0x0302,
+  /**
+   * Multiple plain files associated  with a cipher file path at the same time
+   */
+  DUPLICATED_CIPHER_FILEPATH = 0x0501,
 }
 
 

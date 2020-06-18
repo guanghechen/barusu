@@ -3,6 +3,7 @@ import globby from 'globby'
 import path from 'path'
 import { AESCipher, createRandomIv, createRandomKey } from './aes-cipher'
 import { destroyBuffer } from './buffer'
+import { CatalogItem, WorkspaceCatalog } from './catalog'
 import { CustomError, ERROR_CODE } from './error'
 import * as io from './io'
 
@@ -13,7 +14,7 @@ interface CipherMasterParams {
    */
   showAsterisk: boolean
   /**
-   * the storage file of the secret for encrypt/decrypt workspaces
+   * The storage file of the secret for encrypt/decrypt workspaces
    */
   secretFilepath: string
 }
@@ -274,6 +275,50 @@ export class CipherMaster {
 
     // generate new secret
     await self.createSecret()
+  }
+
+  /**
+   *
+   */
+  public async loadIndex(
+    indexFilepath: string,
+  ): Promise<WorkspaceCatalog | null> {
+    if (!fs.existsSync(indexFilepath)) return null
+    const cipherData: Buffer = await fs.readFile(indexFilepath)
+
+    const self = this
+    let result: WorkspaceCatalog | null = null
+    let iv: Buffer | null = null, key: Buffer | null = null
+    try {
+      ; ([iv, key] = await self.loadSecret())
+      const aesCipher = new AESCipher({ iv, key })
+      const plainData: Buffer = aesCipher.decrypt(cipherData)
+      const plainContent = plainData.toString('utf-8')
+      const data = JSON.parse(plainContent)
+      result = new WorkspaceCatalog(data)
+    } finally {
+      destroyBuffer(iv)
+      destroyBuffer(key)
+    }
+    return result
+  }
+
+  public async createIndex(
+    indexFilepath: string,
+    items: CatalogItem[]
+  ): Promise<void> {
+    const self = this
+    let iv: Buffer | null = null, key: Buffer | null = null
+    try {
+      const plainData: Buffer = Buffer.from(JSON.stringify(items), 'utf-8')
+      ; ([iv, key] = await self.loadSecret())
+      const aesCipher = new AESCipher({ iv, key })
+      const cipherData = aesCipher.encrypt(plainData)
+      await fs.writeFile(indexFilepath, cipherData)
+    } finally {
+      destroyBuffer(iv)
+      destroyBuffer(key)
+    }
   }
 
   /**

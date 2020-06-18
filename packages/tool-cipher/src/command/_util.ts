@@ -1,7 +1,27 @@
 import fs from 'fs-extra'
 import { name } from '@barusu/tool-cipher/package.json'
+import { AESCipher } from '../util/aes-cipher'
+import { WorkspaceCatalog } from '../util/catalog'
 import { ERROR_CODE } from '../util/error'
 import { logger } from '../util/logger'
+import { CipherMaster } from '../util/master'
+
+
+/**
+ * create default options
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function createDefaultOptions(packageJsonPath: string) {
+  const defaultOptions = {
+    logLevel: undefined as unknown as string,
+    secretFilepath: '.barusu-secret',
+    indexFilepath: '.barusu-index',
+    showAsterisk: true,
+    plainFilepathPatterns: [],
+    cipherFilepathPatterns: [],
+  }
+  return flatDefaultOptions(defaultOptions, packageJsonPath)
+}
 
 
 export function parseOption<T>(

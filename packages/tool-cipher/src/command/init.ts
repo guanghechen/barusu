@@ -5,7 +5,7 @@ import { Level } from '@barusu/chalk-logger'
 import { convertToBoolean, isNotEmptyString } from '@barusu/option-util'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
-import { flatDefaultOptions, handleError, parseOption } from './_util'
+import { createDefaultOptions, handleError, parseOption } from './_util'
 
 
 /**
@@ -24,11 +24,7 @@ export function loadSubCommandInit(
 
       const cwd: string = workspace || path.resolve()
       const packageJsonPath = path.resolve(cwd, 'package.json')
-      const defaultOptions = flatDefaultOptions({
-        logLevel: undefined as any,
-        secretFilepath: 'barusu.secret.txt',
-        showAsterisk: true,
-      }, packageJsonPath)
+      const defaultOptions = createDefaultOptions(packageJsonPath)
 
       // reset log-level
       const logLevel = parseOption<string>(options.logLevel, defaultOptions.logLevel)
@@ -56,7 +52,10 @@ export function loadSubCommandInit(
       }
 
       try {
-        const master = new CipherMaster({ showAsterisk, secretFilepath })
+        const master = new CipherMaster({
+          showAsterisk,
+          secretFilepath,
+        })
         await master.createSecret()
       } catch (error) {
         handleError(error)
