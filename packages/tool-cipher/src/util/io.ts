@@ -1,87 +1,134 @@
-import { destroyBuffer, destroyBuffers } from './buffer'
+import { isNotEmptyString } from '@barusu/option-util'
+import { destroyBuffer } from './buffer'
+import { ERROR_CODE } from './error'
 
 
 /**
  * Get data from stdin
+ * @param question
+ * @param isValidAnswer
+ * @param hintOnInvalidAnswer
+ * @param maxRetryTimes
+ * @param showAsterisk
  */
-export function input(
+export async function input(
   question: string,
+  isValidAnswer?: (answer: Buffer) => boolean,
+  isValidCharacter?: (c: number) => boolean,
+  hintOnInvalidAnswer?: (answer: Buffer) => string,
+  maxRetryTimes = 5,
+  showAsterisk = true,
+): Promise<Buffer | null> {
+  let answer: Buffer | null = null
+  for (let i = Math.max(0, maxRetryTimes); i >= 0; --i) {
+    let questionWithHint: string = question
+    if (answer != null && hintOnInvalidAnswer != null) {
+      const hint = hintOnInvalidAnswer(answer)
+      if (isNotEmptyString(hint)) {
+        questionWithHint = `(${ hint }) ${ question }`
+      }
+    }
+
+    // destroy previous answer before read new answer
+    destroyBuffer(answer)
+    answer = null
+
+    answer = await inputOneLine(questionWithHint, isValidCharacter, showAsterisk)
+    if (!isValidAnswer || isValidAnswer(answer)) break
+  }
+  return answer
+}
+
+
+/**
+ * @param question
+ * @param isValidCharacter
+ * @param showAsterisk
+ */
+export function inputOneLine(
+  question?: string,
+  isValidCharacter?: (c: number) => boolean,
+  showAsterisk = true,
 ): Promise<Buffer> {
   return new Promise<Buffer>((resolve, reject) => {
     const stdin = process.stdin
     const stdout = process.stdout
-    const chunks: Buffer[] = []
+    let chunkAcc: Buffer | null = null
 
     // on fulfilled
     const onResolved = () => {
-      const data = Buffer.concat(chunks)
-      destroyBuffers(chunks)
-      resolve(data)
+      stdin.removeListener('data', onData)
+      stdin.removeListener('end', onResolved)
+      stdin.removeListener('error', onRejected)
+      resolve(chunkAcc!)
     }
 
     // on rejected
     const onRejected = (error: any) => {
-      destroyBuffers(chunks)
+      stdin.removeListener('data', onData)
+      stdin.removeListener('end', onResolved)
+      stdin.removeListener('error', onRejected)
+      destroyBuffer(chunkAcc)
       reject(error)
+    }
+
+    // on data
+    const onData = (chunk: Buffer) => {
+      let pieceTot: number = chunkAcc == null ? 0 : chunkAcc.length
+      const piece: Buffer = chunkAcc == null ? chunk : Buffer.concat([chunkAcc, chunk])
+      for (let i = 0; i < chunk.length; ++i) {
+        switch (chunk[i]) {
+          case 0x03:  // Ctrl-c
+            stdin.emit('error', {
+              code: ERROR_CODE.CANCELED,
+              message: 'cancelled (ctrl-c)',
+            })
+            break
+          case 0x7f:  // Backspace
+            if (pieceTot > 0) {
+              pieceTot -= 1
+              stdout.moveCursor(-1, 0)
+              stdout.clearLine(1)
+            }
+            break
+          case 0x04:  // Ctrl-d
+          case 0x0a:  // LF  (line feed)
+          case 0x0d:  // CR  (carriage return)
+            stdout.write('\n')
+            stdin.setRawMode(false)
+            stdin.pause()
+            onResolved()
+            return
+          default:
+            // ignore other invalid characters
+            if (isValidCharacter != null && !isValidCharacter(chunk[i])) break
+
+            piece[pieceTot] = chunk[i]
+            pieceTot += 1
+
+            if (showAsterisk) {
+              stdout.write('*')
+            }
+        }
+      }
+
+      // collect characters
+      if (chunkAcc == null || chunkAcc.length !== pieceTot) {
+        destroyBuffer(chunkAcc)
+        chunkAcc = Buffer.alloc(pieceTot)
+      }
+      piece.copy(chunkAcc, 0, 0, pieceTot)
+      destroyBuffer(piece)
     }
 
     stdin.resume()
     stdin.setRawMode(true)
-    stdout.write(question + ': ')
+    if (isNotEmptyString(question)) {
+      stdout.write(question)
+    }
 
-    stdin.on('readable', function () {
-      let chunk: Buffer
-      while ((chunk = stdin.read()) != null) {
-        // test whether is a valid character
-        const isValidCharacter = (i: number) => {
-          if (chunk[i] < 1 || chunk[i] > 127) return false
-          return true
-        }
-
-        let size = 0
-        const collectCharacters = () => {
-          if (size > 0) {
-            const chunkPiece = Buffer.alloc(size)
-            for (let i = 0, j = 0; i < chunk.length && j < size; ++i) {
-              if (isValidCharacter(i)) {
-                chunkPiece[j++] = chunk[i]
-              }
-            }
-            chunks.push(chunkPiece)
-          }
-          destroyBuffer(chunk)
-        }
-
-        for (let i = 0; i < chunk.length; ++i) {
-          if (chunk[i] < 1 || chunk[i] > 127) continue
-          if (
-            chunk[i] === 4 ||
-            chunk[i] === 10 ||
-            chunk[i] === 13
-          ) {
-            stdout.write('\n')
-            stdin.setRawMode(false)
-            stdin.emit('end')
-            collectCharacters()
-            return
-          }
-
-          if (isValidCharacter(i)) {
-            ++size
-            stdout.write('*')
-          }
-        }
-
-        collectCharacters()
-      }
-    })
-
-    stdin.on('end', function () {
-      onResolved()
-    })
-
-    stdin.on('error', function (error) {
-      onRejected(error)
-    })
+    stdin.on('data', onData)
+    stdin.on('end', onResolved)
+    stdin.on('error', onRejected)
   })
 }

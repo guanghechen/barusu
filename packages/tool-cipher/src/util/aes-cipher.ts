@@ -1,7 +1,6 @@
 import crypto from 'crypto'
 import fs from 'fs-extra'
-import { destroyBuffer, destroyBuffers } from './buffer'
-import { logger } from './logger'
+import { destroyBuffers } from './buffer'
 
 
 /**
@@ -38,18 +37,19 @@ export class AESCipher {
   /**
    * Encrypt plainData with AES-
    */
-  encrypt(plainData: Buffer): Buffer {
+  public encrypt(plainData: Buffer): Buffer {
     const { algorithm, key, iv } = this
     const encipher = crypto.createCipheriv(algorithm, key, iv)
-    const cipherDataPieces: Buffer[] = []
 
+    let cipherData: Buffer
+    const cipherDataPieces: Buffer[] = []
     try {
       // encrypt data
       cipherDataPieces.push(encipher.update(plainData))
       cipherDataPieces.push(encipher.final())
 
       // collect encrypted data pieces
-      const cipherData = Buffer.concat(cipherDataPieces)
+      cipherData = Buffer.concat(cipherDataPieces)
       return cipherData
     } finally {
       destroyBuffers(cipherDataPieces)
@@ -59,39 +59,64 @@ export class AESCipher {
   /**
    * Decrypt cipherData which encrypted with AES-
    */
-  decrypt(cipherData: Buffer): Buffer {
+  public decrypt(cipherData: Buffer): Buffer {
     const { algorithm, key, iv } = this
     const decipher = crypto.createCipheriv(algorithm, key, iv)
-    const plainDataPieces: Buffer[] = []
 
+    let plainData: Buffer
+    const plainDataPieces: Buffer[] = []
     try {
       // decrypt data
       plainDataPieces.push(decipher.update(cipherData))
       plainDataPieces.push(decipher.final())
 
       // collect decrypted data pieces
-      const plainData = Buffer.concat(plainDataPieces)
-      return plainData
+      plainData = Buffer.concat(plainDataPieces)
     } finally {
       destroyBuffers(plainDataPieces)
     }
+    return plainData
   }
 
   /**
    * Encrypt file with AES-
    */
-  encryptFile(plainFilePath: string): Buffer {
-    const plainData: Buffer = fs.readFileSync(plainFilePath)
-    const cipherData: Buffer = this.encrypt(plainData)
-    destroyBuffer(plainData)
-    return cipherData
+  public encryptFile(
+    plainFilepath: string,
+    cipherFilepath: string,
+  ): Promise<void> {
+    const { algorithm, key, iv } = this
+    const encipher = crypto.createCipheriv(algorithm, key, iv)
+    const rStream = fs.createReadStream(plainFilepath)
+    const wStream = fs.createWriteStream(cipherFilepath)
+
+    return new Promise((resolve, reject) => {
+      rStream
+        .pipe(encipher)
+        .pipe(wStream)
+        .on('finish', resolve)
+        .on('error', reject)
+    })
   }
 
   /**
    * Decrypt file which encrypted with AES-
    */
-  decryptFile(cipherFilePath: string): Buffer {
-    const cipherData: Buffer = fs.readFileSync(cipherFilePath)
-    return this.decrypt(cipherData)
+  public decryptFile(
+    cipherFilepath: string,
+    plainFilepath: string,
+  ): Promise<void> {
+    const { algorithm, key, iv } = this
+    const decipher = crypto.createCipheriv(algorithm, key, iv)
+    const rStream = fs.createReadStream(cipherFilepath)
+    const wStream = fs.createWriteStream(plainFilepath)
+
+    return new Promise((resolve, reject) => {
+      rStream
+        .pipe(decipher)
+        .pipe(wStream)
+        .on('finish', resolve)
+        .on('error', reject)
+    })
   }
 }

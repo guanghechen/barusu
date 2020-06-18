@@ -1,2 +1,6 @@
 export * from './util/aes-cipher'
+export * from './util/buffer'
+export * from './util/error'
+export * from './util/io'
 export * from './util/logger'
+export * from './util/master'
