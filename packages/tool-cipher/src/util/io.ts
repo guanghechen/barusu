@@ -13,19 +13,19 @@ import { ERROR_CODE } from './error'
  */
 export async function input(
   question: string,
-  isValidAnswer?: (answer: Buffer) => boolean,
+  isValidAnswer?: (answer: Buffer | null) => boolean,
   isValidCharacter?: (c: number) => boolean,
-  hintOnInvalidAnswer?: (answer: Buffer) => string,
+  hintOnInvalidAnswer?: (answer: Buffer | null) => string,
   maxRetryTimes = 5,
   showAsterisk = true,
 ): Promise<Buffer | null> {
   let answer: Buffer | null = null
-  for (let i = Math.max(0, maxRetryTimes); i >= 0; --i) {
+  for (let i = 0, end = Math.max(0, maxRetryTimes) + 1; i < end; ++i) {
     let questionWithHint: string = question
-    if (answer != null && hintOnInvalidAnswer != null) {
+    if (i > 0 && hintOnInvalidAnswer != null) {
       const hint = hintOnInvalidAnswer(answer)
       if (isNotEmptyString(hint)) {
-        questionWithHint = `(${ hint }) ${ question }`
+        questionWithHint = hint
       }
     }
 
@@ -110,6 +110,11 @@ export function inputOneLine(
               stdout.write('*')
             }
         }
+      }
+
+      if (pieceTot <= 0) {
+        destroyBuffer(chunkAcc)
+        chunkAcc = null
       }
 
       // collect characters

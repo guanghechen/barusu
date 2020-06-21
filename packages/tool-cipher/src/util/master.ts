@@ -38,8 +38,8 @@ export class CipherMaster {
     const self = this
 
     let hint: string
-    const isValidPassword = (password: Buffer): boolean => {
-      if (password.length < 16) {
+    const isValidPassword = (password: Buffer | null): boolean => {
+      if (password == null || password.length < 16) {
         hint = 'At least 16 ascii non-space characters needed'
         return false
       }
@@ -62,10 +62,10 @@ export class CipherMaster {
     }
 
     const password: Buffer | null = await io.input(
-      'Master Password: ',
+      question.padStart(20),
       isValidPassword,
       isValidCharacter,
-      () => hint,
+      () => `(${ hint }) ${question}`,
       3,
       self.showAsterisk,
     )
