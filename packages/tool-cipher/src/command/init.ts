@@ -2,10 +2,17 @@ import { CommanderStatic } from 'commander'
 import fs from 'fs-extra'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
-import { convertToBoolean, isNotEmptyString } from '@barusu/option-util'
+import {
+  convertToBoolean,
+  isNotEmptyString,
+  parseOption,
+} from '@barusu/option-util'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
-import { createDefaultOptions, handleError, parseOption } from './_util'
+import { createDefaultOptions, handleError } from './_util'
+
+
+const SUB_COMMAND_NAME = 'init'
 
 
 /**
@@ -16,18 +23,18 @@ export function loadSubCommandInit(
   program: CommanderStatic,
 ): void {
   program
-    .command('init <directory>')
+    .command(`${ SUB_COMMAND_NAME } <directory>`)
     .option('-S, --secret-filepath <secret filepath>', 'path of secret file')
     .option('--show-asterisk', 'whether to print password asterisks')
     .action(async function (workspace: string, options: any) {
-      logger.setName(`${ name } init`)
+      logger.setName(`${ name } ${ SUB_COMMAND_NAME }`)
 
       const cwd: string = workspace || path.resolve()
       const packageJsonPath = path.resolve(cwd, 'package.json')
-      const defaultOptions = createDefaultOptions(packageJsonPath)
+      const defaultOptions = createDefaultOptions(packageJsonPath, SUB_COMMAND_NAME)
 
       // reset log-level
-      const logLevel = parseOption<string>(options.logLevel, defaultOptions.logLevel)
+      const logLevel = parseOption<string>(defaultOptions.logLevel, options.logLevel)
       if (logLevel != null) {
         const level = Level.valueOf(logLevel)
         if (level != null) logger.setLevel(level)
@@ -35,11 +42,11 @@ export function loadSubCommandInit(
 
       // get secretFilepath
       const secretFilepath: string = path.resolve(cwd, parseOption<string>(
-        options.secretFilepath, defaultOptions.secretFilepath, isNotEmptyString))
+        defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
 
       // get showAsterisk
       const showAsterisk: boolean = parseOption<boolean>(
-        convertToBoolean(options.showAsterisk), defaultOptions.showAsterisk)
+        defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
 
       logger.debug('packageJsonPath:', packageJsonPath)
       logger.debug('secretFilepath:', secretFilepath)
