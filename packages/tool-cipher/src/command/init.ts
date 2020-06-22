@@ -10,7 +10,7 @@ import {
 } from '@barusu/option-util'
 import { mkdirsIfNotExists } from '../util/fs-util'
 import { logger } from '../util/logger'
-import { CipherMaster } from '../util/master'
+import { CipherMaster } from '../util/master/cipher'
 import { createDefaultOptions, handleError } from './_util'
 
 

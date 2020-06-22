@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import path from 'path'
-import { ERROR_CODE } from './error'
-import { logger } from './logger'
+import { ERROR_CODE } from '../error'
+import { logger } from '../logger'
 
 
 export interface CatalogItem {
