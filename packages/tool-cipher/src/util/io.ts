@@ -1,43 +1,6 @@
 import { isNotEmptyString } from '@barusu/option-util'
 import { destroyBuffer } from './buffer'
-import { ERROR_CODE } from './error'
-
-
-/**
- * Get data from stdin
- * @param question
- * @param isValidAnswer
- * @param hintOnInvalidAnswer
- * @param maxRetryTimes
- * @param showAsterisk
- */
-export async function input(
-  question: string,
-  isValidAnswer?: (answer: Buffer | null) => boolean,
-  isValidCharacter?: (c: number) => boolean,
-  hintOnInvalidAnswer?: (answer: Buffer | null) => string,
-  maxRetryTimes = 5,
-  showAsterisk = true,
-): Promise<Buffer | null> {
-  let answer: Buffer | null = null
-  for (let i = 0, end = Math.max(0, maxRetryTimes) + 1; i < end; ++i) {
-    let questionWithHint: string = question
-    if (i > 0 && hintOnInvalidAnswer != null) {
-      const hint = hintOnInvalidAnswer(answer)
-      if (isNotEmptyString(hint)) {
-        questionWithHint = hint
-      }
-    }
-
-    // destroy previous answer before read new answer
-    destroyBuffer(answer)
-    answer = null
-
-    answer = await inputOneLine(questionWithHint, isValidCharacter, showAsterisk)
-    if (!isValidAnswer || isValidAnswer(answer)) break
-  }
-  return answer
-}
+import { CustomError, ERROR_CODE } from './error'
 
 
 /**
@@ -136,4 +99,125 @@ export function inputOneLine(
     stdin.on('end', onResolved)
     stdin.on('error', onRejected)
   })
+}
+
+
+/**
+ * Get data from stdin
+ * @param question
+ * @param isValidAnswer
+ * @param hintOnInvalidAnswer
+ * @param maxRetryTimes
+ * @param showAsterisk
+ */
+export async function input(
+  question: string,
+  isValidAnswer?: (answer: Buffer | null) => boolean,
+  isValidCharacter?: (c: number) => boolean,
+  hintOnInvalidAnswer?: (answer: Buffer | null) => string,
+  maxRetryTimes = 5,
+  showAsterisk = true,
+): Promise<Buffer | null> {
+  let answer: Buffer | null = null
+  for (let i = 0, end = Math.max(0, maxRetryTimes) + 1; i < end; ++i) {
+    let questionWithHint: string = question
+    if (i > 0 && hintOnInvalidAnswer != null) {
+      const hint = hintOnInvalidAnswer(answer)
+      if (isNotEmptyString(hint)) {
+        questionWithHint = hint
+      }
+    }
+
+    // destroy previous answer before read new answer
+    destroyBuffer(answer)
+    answer = null
+
+    answer = await inputOneLine(questionWithHint, isValidCharacter, showAsterisk)
+    if (!isValidAnswer || isValidAnswer(answer)) break
+  }
+  return answer
+}
+
+
+/**
+ * Ask for a password from terminal
+ * @param showAsterisk
+ * @param minimumSize
+ * @param question
+ */
+export async function inputPassword(
+  showAsterisk: boolean,
+  minimumSize: number,
+  question = 'Password: ',
+): Promise<Buffer | never> {
+  let hint: string
+  const isValidPassword = (password: Buffer | null): boolean => {
+    if (password == null || password.length < minimumSize) {
+      hint = `At least ${ minimumSize } ascii non-space characters needed`
+      return false
+    }
+    if (password.length > 100) {
+      hint = 'It\'s too long, do not exceed 100 characters'
+      return false
+    }
+    return true
+  }
+
+  const isValidCharacter = (c: number): boolean => {
+    // ignore control characters or invalid ascii characters
+    if (c <= 0x20 || c >= 0x7F) return false
+
+    // ignore slash and backslash
+    if (c === 0x2f || c === 0x5c) return false
+
+    // others are valid
+    return true
+  }
+
+  const password: Buffer | null = await input(
+    question.padStart(20),
+    isValidPassword,
+    isValidCharacter,
+    () => `(${ hint }) ${ question }`,
+    3,
+    showAsterisk,
+  )
+
+  if (password == null) {
+    const error: CustomError = {
+      code: ERROR_CODE.BAD_PASSWORD,
+      message: `too many times failed to get answer of '${ question.replace(/^[\s:]*([\s\S]+?)[\s:]*$/, '$1') }'`,
+    }
+    throw error
+  }
+
+  return password
+}
+
+
+/**
+ * Ask for repeat password from terminal
+ * @param password
+ * @param showAsterisk
+ * @param minimumSize
+ * @param question
+ */
+export async function confirmPassword(
+  password: Buffer,
+  showAsterisk: boolean,
+  minimumSize: number,
+  question = 'Repeat Password: ',
+): Promise<boolean | never> {
+  const repeatedPassword: Buffer = await inputPassword(showAsterisk, minimumSize, question)
+  const isSame = (): boolean => {
+    if (repeatedPassword.length !== password.length) return false
+    for (let i = 0; i < password.length; ++i) {
+      if (password[i] !== repeatedPassword[i]) return false
+    }
+    return true
+  }
+
+  const result = isSame()
+  destroyBuffer(repeatedPassword)
+  return result
 }

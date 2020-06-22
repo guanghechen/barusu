@@ -13,14 +13,17 @@ import { logger } from '../util/logger'
 export function createDefaultOptions(
   packageJsonPath: string,
   subCommandName?: string,
+  subCommandDefaultOptions?: CommandOptionConfig,
 ): CommandOptionConfig {
   const defaultOptions: CommandOptionConfig = {
     logLevel: undefined as unknown as string,
     secretFilepath: '.barusu-secret',
     indexFilepath: '.barusu-index',
     showAsterisk: true,
+    miniumPasswordLength: 6,
     plainFilepathPatterns: [],
-    cipherFilepathPatterns: [],
+    outDir: 'out',
+    ...subCommandDefaultOptions,
   }
   return flatDefaultOptionsFromPackageJson(defaultOptions, packageJsonPath, name, subCommandName)
 }
@@ -33,7 +36,8 @@ export function handleError(error: Error | any): void {
   const code = error.code || 0
   switch (code) {
     case ERROR_CODE.CANCELED:
-      logger.error(error.message)
+      logger.info('canceled')
+      logger.debug('canceled. details:', error.message)
       process.exit(0)
       break
     case ERROR_CODE.BAD_PASSWORD:

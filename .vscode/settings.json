@@ -17,6 +17,7 @@
     "iife",
     "ioptions",
     "kase",
+    "mkdirs",
     "njsproj",
     "ntvs",
     "plopfile",

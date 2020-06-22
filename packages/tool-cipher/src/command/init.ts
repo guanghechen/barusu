@@ -4,9 +4,11 @@ import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import {
   convertToBoolean,
+  convertToNumber,
   isNotEmptyString,
   parseOption,
 } from '@barusu/option-util'
+import { mkdirsIfNotExists } from '../util/fs-util'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
 import { createDefaultOptions, handleError } from './_util'
@@ -26,11 +28,12 @@ export function loadSubCommandInit(
     .command(`${ SUB_COMMAND_NAME } <directory>`)
     .option('-S, --secret-filepath <secret filepath>', 'path of secret file')
     .option('--show-asterisk', 'whether to print password asterisks')
+    .option('--minimum-password-length', 'the minimum size required of password')
     .action(async function (workspace: string, options: any) {
       logger.setName(`${ name } ${ SUB_COMMAND_NAME }`)
 
-      const cwd: string = workspace || path.resolve()
-      const packageJsonPath = path.resolve(cwd, 'package.json')
+      const workspaceDir: string = workspace || path.resolve()
+      const packageJsonPath = path.resolve(workspaceDir, 'package.json')
       const defaultOptions = createDefaultOptions(packageJsonPath, SUB_COMMAND_NAME)
 
       // reset log-level
@@ -41,16 +44,27 @@ export function loadSubCommandInit(
       }
 
       // get secretFilepath
-      const secretFilepath: string = path.resolve(cwd, parseOption<string>(
+      const secretFilepath: string = path.resolve(workspaceDir, parseOption<string>(
         defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
 
       // get showAsterisk
       const showAsterisk: boolean = parseOption<boolean>(
         defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
 
+      // get miniumPasswordLength
+      const miniumPasswordLength: number = parseOption<number>(
+        defaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength)
+      )
+
+      // ensure paths exist
+      mkdirsIfNotExists(workspaceDir, true)
+      mkdirsIfNotExists(secretFilepath, false)
+
+      logger.debug('workspaceDir:', workspaceDir)
       logger.debug('packageJsonPath:', packageJsonPath)
       logger.debug('secretFilepath:', secretFilepath)
       logger.debug('showAsterisk:', showAsterisk)
+      logger.debug('miniumPasswordLength:', miniumPasswordLength)
 
       // Secret file is existed
       if (fs.existsSync(secretFilepath)) {
@@ -60,8 +74,10 @@ export function loadSubCommandInit(
 
       try {
         const master = new CipherMaster({
+          workspaceDir,
           showAsterisk,
           secretFilepath,
+          miniumPasswordLength,
         })
         await master.createSecret()
       } catch (error) {

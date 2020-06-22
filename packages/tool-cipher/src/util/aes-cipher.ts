@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import fs from 'fs-extra'
 import { destroyBuffers } from './buffer'
+import { mkdirsIfNotExists } from './fs-util'
 
 
 /**
@@ -87,6 +88,8 @@ export class AESCipher {
   ): Promise<void> {
     const { algorithm, key, iv } = this
     const encipher = crypto.createCipheriv(algorithm, key, iv)
+
+    mkdirsIfNotExists(cipherFilepath, false)
     const rStream = fs.createReadStream(plainFilepath)
     const wStream = fs.createWriteStream(cipherFilepath)
 
@@ -108,6 +111,8 @@ export class AESCipher {
   ): Promise<void> {
     const { algorithm, key, iv } = this
     const decipher = crypto.createCipheriv(algorithm, key, iv)
+
+    mkdirsIfNotExists(plainFilepath, false)
     const rStream = fs.createReadStream(cipherFilepath)
     const wStream = fs.createWriteStream(plainFilepath)
 

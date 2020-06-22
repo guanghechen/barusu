@@ -1,14 +1,18 @@
 import fs from 'fs-extra'
-import globby from 'globby'
 import path from 'path'
 import { AESCipher, createRandomIv, createRandomKey } from './aes-cipher'
 import { destroyBuffer } from './buffer'
-import { CatalogItem, WorkspaceCatalog } from './catalog'
-import { CustomError, ERROR_CODE } from './error'
+import { WorkspaceCatalog, WorkspaceCatalogData } from './catalog'
+import { ERROR_CODE } from './error'
 import * as io from './io'
+import { logger } from './logger'
 
 
 interface CipherMasterParams {
+  /**
+   *
+   */
+  workspaceDir: string
   /**
    * Whether to print asterisks when entering a password
    */
@@ -17,97 +21,48 @@ interface CipherMasterParams {
    * The storage file of the secret for encrypt/decrypt workspaces
    */
   secretFilepath: string
+  /**
+   * Minimum length of password
+   */
+  miniumPasswordLength: number
 }
 
 
 export class CipherMaster {
+  protected readonly workspaceDir: string
   protected readonly showAsterisk: boolean
   protected readonly secretFilepath: string
+  protected readonly minimumPasswordLength: number
+  protected readonly volatilePassword: Buffer | null
 
   public constructor(params: CipherMasterParams) {
+    this.workspaceDir = params.workspaceDir
     this.showAsterisk = params.showAsterisk
     this.secretFilepath = params.secretFilepath
+    this.minimumPasswordLength = params.miniumPasswordLength
+    this.volatilePassword = null
   }
 
   /**
    * Read password from terminal
    */
   public async inputPassword(
-    question = 'Password: ',
   ): Promise<Buffer | never> {
     const self = this
-
-    let hint: string
-    const isValidPassword = (password: Buffer | null): boolean => {
-      if (password == null || password.length < 16) {
-        hint = 'At least 16 ascii non-space characters needed'
-        return false
-      }
-      if (password.length > 100) {
-        hint = 'It\'s too long, do not exceed 100 characters'
-        return false
-      }
-      return true
-    }
-
-    const isValidCharacter = (c: number): boolean => {
-      // ignore control characters or invalid ascii characters
-      if (c <= 0x20 || c >= 0x7F) return false
-
-      // ignore slash and backslash
-      if (c === 0x2f || c === 0x5c) return false
-
-      // others are valid
-      return true
-    }
-
-    const password: Buffer | null = await io.input(
-      question.padStart(20),
-      isValidPassword,
-      isValidCharacter,
-      () => `(${ hint }) ${question}`,
-      3,
-      self.showAsterisk,
-    )
-
-    if (password == null) {
-      const error: CustomError = {
-        code: ERROR_CODE.BAD_PASSWORD,
-        message: `too many times failed to get answer of '${ question.replace(/^[\s:]*([\s\S]+?)[\s:]*$/, '$1') }'`,
-      }
-      throw error
-    }
-
+    const password: Buffer = await io.inputPassword(
+      self.showAsterisk, self.minimumPasswordLength)
     return password
-  }
-
-  public async confirmPassword(
-    password: Buffer,
-    question = 'Repeat Password: ',
-  ): Promise<boolean | never> {
-    const self = this
-    const repeatedPassword: Buffer = await self.inputPassword(question)
-
-    const isSame = (): boolean => {
-      if (repeatedPassword.length !== password.length) return false
-      for (let i = 0; i < password.length; ++i) {
-        if (password[i] !== repeatedPassword[i]) return false
-      }
-      return true
-    }
-
-    const result = isSame()
-    destroyBuffer(repeatedPassword)
-    return result
   }
 
   /**
    * encrypt files matched specified glob patterns
-   * @param plainFilePatterns   glob patterns to match files to be encrypted
+   * @param plainFilepaths
+   * @param outputRelativePath
    * @param resolveDestPath     calc the output path of the encrypted content
    */
   public async encryptFiles(
-    plainFilePatterns: string[],
+    plainFilepaths: string[],
+    outputRelativePath: string,
     resolveDestPath: (plainFilepath: string) => string,
   ): Promise<void> {
     const self = this
@@ -115,12 +70,15 @@ export class CipherMaster {
     const aesCipher = new AESCipher({ iv, key })
 
     try {
-      const tasks: Promise<void>[] = []
-      if (plainFilePatterns.length > 0) {
-        const paths = await globby(plainFilePatterns)
-        for (const plainFilepath of paths) {
-          const cipherFilepath = resolveDestPath(plainFilepath)
-          const task = aesCipher.encryptFile(plainFilepath, cipherFilepath)
+      if (plainFilepaths.length > 0) {
+        const tasks: Promise<void>[] = []
+        for (const plainFilepath of plainFilepaths) {
+          const cipherFilepath = path.join(outputRelativePath, resolveDestPath(plainFilepath))
+          logger.verbose(`encrypting (${ plainFilepath }) --> (${ cipherFilepath })`)
+
+          const task = aesCipher.encryptFile(
+            path.resolve(self.workspaceDir, plainFilepath),
+            path.resolve(self.workspaceDir, cipherFilepath))
           tasks.push(task)
         }
         await Promise.all(tasks)
@@ -133,11 +91,13 @@ export class CipherMaster {
 
   /**
    * decrypt files matched specified glob patterns
-   * @param cipherFilePatterns  glob patterns to match files to be decrypted
+   * @param cipherFilepaths
+   * @param outputRelativePath
    * @param resolveDestPath     calc the output path of the decrypted content
    */
   public async decryptFiles(
-    cipherFilePatterns: string[],
+    cipherFilepaths: string[],
+    outputRelativePath: string,
     resolveDestPath: (cipherFilepath: string) => string,
   ): Promise<void> {
     const self = this
@@ -146,11 +106,14 @@ export class CipherMaster {
 
     try {
       const tasks: Promise<void>[] = []
-      if (cipherFilePatterns.length > 0) {
-        const paths = await globby(cipherFilePatterns)
-        for (const cipherFilepath of paths) {
-          const plainFilepath = resolveDestPath(cipherFilepath)
-          const task = aesCipher.decryptFile(cipherFilepath, plainFilepath)
+      if (cipherFilepaths.length > 0) {
+        for (const cipherFilepath of cipherFilepaths) {
+          const plainFilepath = path.join(outputRelativePath, resolveDestPath(cipherFilepath))
+          logger.verbose(`decrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
+
+          const task = aesCipher.decryptFile(
+            path.resolve(self.workspaceDir, cipherFilepath),
+            path.resolve(self.workspaceDir, plainFilepath))
           tasks.push(task)
         }
         await Promise.all(tasks)
@@ -190,8 +153,10 @@ export class CipherMaster {
       const content: Buffer = await fs.readFile(self.secretFilepath)
       const aesCipher = new AESCipher({ iv: originalIv, key: originalKey })
       plainData = aesCipher.decrypt(content)
-      iv = plainData.slice(0, 32)
-      key = plainData.slice(32, 64)
+      iv = Buffer.alloc(32)
+      key = Buffer.alloc(32)
+      plainData.copy(iv, 0, 0, 32)
+      plainData.copy(key, 0, 32, 64)
     } finally {
       destroyBuffer(originalIv)
       destroyBuffer(originalKey)
@@ -210,7 +175,8 @@ export class CipherMaster {
     let originalIv: Buffer | null, originalKey: Buffer | null
     try {
       password = await self.inputPassword()
-      const confirmed = await self.confirmPassword(password)
+      const confirmed = await io.confirmPassword(
+        password, self.showAsterisk, self.minimumPasswordLength)
       if (!confirmed) {
         throw {
           code: ERROR_CODE.ENTERED_PASSWORD_DIFFER,
@@ -236,11 +202,6 @@ export class CipherMaster {
       const aesCipher = new AESCipher({ iv: originalIv, key: originalKey })
       plainSecret = Buffer.concat([iv, key])
       cipherSecret = aesCipher.encrypt(plainSecret)
-
-      // mkdir dir if the ancient directories are not exists
-      if (!fs.existsSync(path.dirname(self.secretFilepath))) {
-        fs.mkdirpSync(path.dirname(self.secretFilepath))
-      }
       await fs.writeFile(self.secretFilepath, cipherSecret)
     } finally {
       destroyBuffer(originalIv)
@@ -270,7 +231,7 @@ export class CipherMaster {
 
     // waiting for ciphered data with old secret to be decrypted
     if (cipherFilePatterns.length > 0) {
-      await self.decryptFiles(cipherFilePatterns, resolveDestPath)
+      await self.decryptFiles(cipherFilePatterns, `__source__${ Date.now() }`, resolveDestPath)
     }
 
     // generate new secret
@@ -282,20 +243,21 @@ export class CipherMaster {
    */
   public async loadIndex(
     indexFilepath: string,
+    cipherRelativeDir: string,
   ): Promise<WorkspaceCatalog | null> {
     if (!fs.existsSync(indexFilepath)) return null
-    const cipherData: Buffer = await fs.readFile(indexFilepath)
 
     const self = this
     let result: WorkspaceCatalog | null = null
     let iv: Buffer | null = null, key: Buffer | null = null
     try {
+      const cipherData: Buffer = await fs.readFile(indexFilepath)
       ; ([iv, key] = await self.loadSecret())
       const aesCipher = new AESCipher({ iv, key })
       const plainData: Buffer = aesCipher.decrypt(cipherData)
       const plainContent = plainData.toString('utf-8')
-      const data = JSON.parse(plainContent)
-      result = new WorkspaceCatalog(data)
+      const data: WorkspaceCatalogData = JSON.parse(plainContent)
+      result = new WorkspaceCatalog({ ...data, cipherRelativeDir })
     } finally {
       destroyBuffer(iv)
       destroyBuffer(key)
@@ -303,17 +265,18 @@ export class CipherMaster {
     return result
   }
 
-  public async createIndex(
+  public async saveIndex(
     indexFilepath: string,
-    items: CatalogItem[]
+    catalog: WorkspaceCatalog,
   ): Promise<void> {
     const self = this
     let iv: Buffer | null = null, key: Buffer | null = null
     try {
-      const plainData: Buffer = Buffer.from(JSON.stringify(items), 'utf-8')
+      const data: WorkspaceCatalogData = catalog.toData()
+      const plainContent: Buffer = Buffer.from(JSON.stringify(data), 'utf-8')
       ; ([iv, key] = await self.loadSecret())
       const aesCipher = new AESCipher({ iv, key })
-      const cipherData = aesCipher.encrypt(plainData)
+      const cipherData = aesCipher.encrypt(plainContent)
       await fs.writeFile(indexFilepath, cipherData)
     } finally {
       destroyBuffer(iv)
