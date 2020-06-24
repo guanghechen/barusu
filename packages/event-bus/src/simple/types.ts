@@ -1,52 +1,67 @@
+import {
+  Event,
+  EventHandler,
+  EventListener,
+  EventPayload,
+  EventSubscriber,
+  EventType,
+} from '../types'
+
+
 /**
- * Event
+ * Type of SimpleEvent
+ */
+export type SimpleEventType = EventType
+
+
+/**
+ * Payload of SimpleEvent
+ */
+export type SimpleEventPayload = EventPayload
+
+
+/**
+ * Simple event
  */
 export interface SimpleEvent<
-  T extends string | number | symbol,
-  P extends Record<string, any> = Record<string, any>,
-  > {
-  /**
-   * Type of Event
-   */
-  type: T
-  /**
-   * Payload of event
-   */
-  payload: P
+  T extends SimpleEventType = SimpleEventType,
+  P extends SimpleEventPayload = SimpleEventPayload,
+  > extends Event<T, P> {
+
 }
 
 
 /**
- * Event subscriber
+ * SimpleEvent handler
+ */
+export interface SimpleEventHandler<
+  T extends SimpleEventType = SimpleEventType,
+  P extends SimpleEventPayload = SimpleEventPayload,
+  E extends SimpleEvent<T, P> = SimpleEvent<T, P>,
+  > extends EventHandler<T, P, E> {
+
+}
+
+
+/**
+ * SimpleEvent subscriber
  */
 export interface SimpleEventSubscriber<
-  T extends string | number | symbol,
-  P extends Record<string, any> = Record<string, any>,
-  > {
-  /**
-   * Unregister from EventBus after first call
-   */
-  once: boolean
-  /**
-   * Called no matter what event emitted
-   */
-  handle(evt: Readonly<SimpleEvent<T, P>>): void | Promise<void>
+  T extends SimpleEventType = SimpleEventType,
+  P extends SimpleEventPayload = SimpleEventPayload,
+  E extends SimpleEvent<T, P> = SimpleEvent<T, P>,
+  > extends EventSubscriber<T, P, E> {
+
 }
 
 
 /**
- * Event listener
+ * SimpleEvent listener
  */
 export interface SimpleEventListener<
-  T extends string | number | symbol,
-  P extends Record<string, any> = Record<string, any>,
-  > {
-  /**
-   * Unregister from EventBus after first call
-   */
-  once: boolean
-  /**
-   * Called when an event with same type of `evt` emitted
-   */
-  handle(evt: Readonly<SimpleEvent<T, P>>): void | Promise<void>
+  T extends SimpleEventType = SimpleEventType,
+  P extends SimpleEventPayload = SimpleEventPayload,
+  E extends SimpleEvent<T, P> = SimpleEvent<T, P>,
+  > extends EventListener<T, P, E> {
+
 }

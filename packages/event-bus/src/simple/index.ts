@@ -1,14 +1,17 @@
 import {
   SimpleEvent,
+  SimpleEventHandler,
   SimpleEventListener,
   SimpleEventSubscriber,
+  SimpleEventType,
 } from './types'
+export * from './types'
 
 
 /**
  *
  */
-export class SimpleEventBus<T extends string | number | symbol> {
+export class SimpleEventBus<T extends SimpleEventType> {
   protected readonly listeners: Record<T, SimpleEventListener<T>[]>
   protected readonly subscribers: SimpleEventSubscriber<T>[]
 
@@ -18,63 +21,60 @@ export class SimpleEventBus<T extends string | number | symbol> {
   }
 
   /**
-   * Add event listener
+   * Add SimpleEvent listener
    * @param type
    * @param handle
    * @see this#addEventListener
    */
   public on(
     type: T,
-    handle: SimpleEventListener<T>['handle']
+    handle: SimpleEventHandler<T>['handle'],
   ): this {
     return this.addEventListener(type, handle, false)
   }
 
   /**
-   * Add event listener
+   * Add SimpleEvent listener
    * @param type
    * @param handle
    * @see this#addEventListener
    */
   public once(
     type: T,
-    handle: SimpleEventListener<T>['handle']
+    handle: SimpleEventHandler<T>['handle'],
   ): this {
     return this.addEventListener(type, handle, true)
   }
 
   /**
-   * Add event listener
+   * Add SimpleEvent listener
    * @param type
    * @param handle
    */
   public addEventListener(
     type: T,
-    handle: SimpleEventListener<T>['handle'],
+    handle: SimpleEventHandler<T>['handle'],
     once: boolean,
   ): this {
     const listeners = this.listeners[type] || []
-    const realListener: SimpleEventListener<T> = {
-      once,
-      handle: handle,
-    }
+    const realListener: SimpleEventListener<T> = { once, handle }
     listeners.push(realListener)
     this.listeners[type] = listeners
     return this
   }
 
   /**
-   * Remove event listener
+   * Remove SimpleEvent listener
    * @param type
    * @param handle
    */
   public removeEventListener(
     type: T,
-    handle: SimpleEventListener<T>['handle'],
+    handle: SimpleEventHandler<T>['handle'],
   ): this {
     const listeners = this.listeners[type]
     if (listeners != null) {
-      const index = listeners.findIndex(x => x.handle !== handle)
+      const index = listeners.findIndex(x => x.handle === handle)
       if (index >= 0) {
         listeners.splice(index, 1)
       }
@@ -83,17 +83,14 @@ export class SimpleEventBus<T extends string | number | symbol> {
   }
 
   /**
-   * Subscribe to the event
+   * Subscribe to the SimpleEvent
    * @param handle
    */
   public subscribe(
-    handle: SimpleEventSubscriber<T>['handle'],
+    handle: SimpleEventHandler<T>['handle'],
     once: boolean,
   ): this {
-    const realSubscriber: SimpleEventSubscriber<T> = {
-      once,
-      handle: handle
-    }
+    const realSubscriber: SimpleEventSubscriber<T> = { once, handle }
     this.subscribers.push(realSubscriber)
     return this
   }
@@ -102,8 +99,8 @@ export class SimpleEventBus<T extends string | number | symbol> {
    * Cancel Subscription
    * @param handle
    */
-  public unsubscribe(handle: SimpleEventSubscriber<T>['handle']): this {
-    const index = this.subscribers.findIndex(x => x.handle !== handle)
+  public unsubscribe(handle: SimpleEventHandler<T>['handle']): this {
+    const index = this.subscribers.findIndex(x => x.handle === handle)
     if (index >= 0) {
       this.subscribers.splice(index, 1)
     }
@@ -111,7 +108,7 @@ export class SimpleEventBus<T extends string | number | symbol> {
   }
 
   /**
-   * dispatch event & emit notification to subscribers and listeners
+   * dispatch SimpleEvent & emit notification to subscribers and listeners
    * @param evt
    */
   public dispatch(evt: Readonly<SimpleEvent<T>>): this {
@@ -136,6 +133,13 @@ export class SimpleEventBus<T extends string | number | symbol> {
         }
       }
     }
+    return this
+  }
+
+  public clear(): this {
+    const self = this as this & any
+    self.listeners = []
+    self.subscribers = {}
     return this
   }
 }
