@@ -37,12 +37,17 @@
     "prebuild": "rimraf lib/",
     "build": "rollup -c rollup.config.js",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
+    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
+    "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.15",
     "@barusu/rollup-config": "^0.0.15",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
     "cross-env": "^7.0.2",
+    "mocha": "^7.1.1",
     "rollup": "2.16.1"
   }
 }
