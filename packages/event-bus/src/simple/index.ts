@@ -9,7 +9,11 @@ export * from './types'
 
 
 /**
- *
+ * 仅提供简单的 发布/订阅 机制，事件总线不在意订阅者是否正确处理事件，
+ * 它只关心有没有将事件传递给它的订阅者；需要注意的是：
+ *  - 所有的订阅者处理都是并行的，尽管它们按照订阅的顺序接收到事件，
+ *    但并不提供前一个订阅者总是在下一个订阅者接收到事件前完成处理的保证；
+ *  - 当某个订阅者的处理函数抛出一个 Error 时，将中断总线的消息传递；
  */
 export class SimpleEventBus<T extends SimpleEventType> {
   protected readonly listeners: Record<T, SimpleEventListener<T>[]>
@@ -57,6 +61,12 @@ export class SimpleEventBus<T extends SimpleEventType> {
     once: boolean,
   ): this {
     const listeners = this.listeners[type] || []
+
+    // An event listener can only be registered once for each particular event
+    if (listeners.find(x => x.handle === handle)) {
+      return this
+    }
+
     const realListener: SimpleEventListener<T> = { once, handle }
     listeners.push(realListener)
     this.listeners[type] = listeners
@@ -90,8 +100,15 @@ export class SimpleEventBus<T extends SimpleEventType> {
     handle: SimpleEventHandler<T>['handle'],
     once: boolean,
   ): this {
+    const subscribers = this.subscribers
+
+    // A subscriber can only be registered once
+    if (subscribers.find(x => x.handle === handle)) {
+      return this
+    }
+
     const realSubscriber: SimpleEventSubscriber<T> = { once, handle }
-    this.subscribers.push(realSubscriber)
+    subscribers.push(realSubscriber)
     return this
   }
 
