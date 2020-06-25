@@ -212,7 +212,7 @@ describe('simple-bus', function () {
 
 function createEventHandler(): [
   SimpleEvent<EventTypes>[],
-  SimpleEventHandler<EventTypes>['handle']
+  SimpleEventHandler<EventTypes>,
 ] {
   const messages: SimpleEvent<EventTypes>[] = []
   const handle = (evt: SimpleEvent<EventTypes>) => messages.push(evt)

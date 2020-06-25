@@ -41,7 +41,7 @@ export interface EventHandler<
    *
    * @param evt
    */
-  handle(evt: Readonly<E>): void | Promise<void> | any | Promise<any>
+  (evt: Readonly<E>): void | Promise<void> | any | Promise<any>
 }
 
 
@@ -52,11 +52,15 @@ export interface EventSubscriber<
   T extends EventType = EventType,
   P extends EventPayload = EventPayload,
   E extends Event<T, P> = Event<T, P>,
-  > extends EventHandler<T, P, E> {
+  > {
   /**
    * An one-off subscriber which would be unregistered from EventBus after first called
    */
   once: boolean
+  /**
+   *
+   */
+  handle: EventHandler<T, P, E>
 }
 
 
@@ -67,9 +71,13 @@ export interface EventListener<
   T extends EventType = EventType,
   P extends EventPayload = EventPayload,
   E extends Event<T, P> = Event<T, P>,
-  > extends EventHandler<T, P, E> {
+  > {
   /**
    * An one-off subscriber which would be unregistered from EventBus after first called
    */
   once: boolean
+  /**
+   *
+   */
+  handle: EventHandler<T, P, E>
 }

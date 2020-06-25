@@ -32,7 +32,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    */
   public on(
     type: T,
-    handle: SimpleEventHandler<T>['handle'],
+    handle: SimpleEventHandler<T>,
   ): this {
     return this.addEventListener(type, handle, false)
   }
@@ -45,7 +45,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    */
   public once(
     type: T,
-    handle: SimpleEventHandler<T>['handle'],
+    handle: SimpleEventHandler<T>,
   ): this {
     return this.addEventListener(type, handle, true)
   }
@@ -57,7 +57,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    */
   public addEventListener(
     type: T,
-    handle: SimpleEventHandler<T>['handle'],
+    handle: SimpleEventHandler<T>,
     once: boolean,
   ): this {
     const listeners = this.listeners[type] || []
@@ -80,7 +80,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    */
   public removeEventListener(
     type: T,
-    handle: SimpleEventHandler<T>['handle'],
+    handle: SimpleEventHandler<T>,
   ): this {
     const listeners = this.listeners[type]
     if (listeners != null) {
@@ -97,7 +97,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * @param handle
    */
   public subscribe(
-    handle: SimpleEventHandler<T>['handle'],
+    handle: SimpleEventHandler<T>,
     once: boolean,
   ): this {
     const subscribers = this.subscribers
@@ -116,7 +116,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * Cancel Subscription
    * @param handle
    */
-  public unsubscribe(handle: SimpleEventHandler<T>['handle']): this {
+  public unsubscribe(handle: SimpleEventHandler<T>): this {
     const index = this.subscribers.findIndex(x => x.handle === handle)
     if (index >= 0) {
       this.subscribers.splice(index, 1)
