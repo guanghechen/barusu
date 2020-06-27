@@ -1,10 +1,6 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
-import {
-  SimpleEvent,
-  SimpleEventBus,
-  SimpleEventHandler,
-} from '../src'
+import { SimpleEvent, SimpleEventBus, SimpleEventHandler } from '../src'
 
 
 export enum EventTypes {
