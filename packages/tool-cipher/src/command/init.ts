@@ -8,9 +8,10 @@ import {
   isNotEmptyString,
   parseOption,
 } from '@barusu/option-util'
-import { mkdirsIfNotExists } from '../util/fs-util'
+import { EventTypes, eventBus } from '../util/event-bus'
+import { mkdirsIfNotExists } from '../util/fs'
 import { logger } from '../util/logger'
-import { CipherMaster } from '../util/master/cipher'
+import { CipherMaster } from '../util/master'
 import { createDefaultOptions, handleError } from './_util'
 
 
@@ -77,11 +78,12 @@ export function loadSubCommandInit(
           workspaceDir,
           showAsterisk,
           secretFilepath,
-          miniumPasswordLength,
+          minimumSize: miniumPasswordLength,
         })
         await master.createSecret()
       } catch (error) {
         handleError(error)
       }
+      eventBus.dispatch({ type: EventTypes.EXITING })
     })
 }

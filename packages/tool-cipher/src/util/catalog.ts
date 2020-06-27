@@ -1,16 +1,16 @@
 import crypto from 'crypto'
 import path from 'path'
-import { ERROR_CODE } from '../error'
-import { logger } from '../logger'
+import { ErrorCode } from './error'
+import { logger } from './logger'
 
 
 export interface CatalogItem {
   /**
-   *
+   * Filepath of plain data
    */
   plainFilepath: string
   /**
-   *
+   * Filepath of cipher data
    */
   cipherFilepath: string
 }
@@ -71,7 +71,7 @@ export class WorkspaceCatalog {
       const existedItem = this.cipherFilepathMap[item.cipherFilepath]
       if (item.plainFilepath === existedItem.plainFilepath) return
       throw {
-        code: ERROR_CODE.DUPLICATED_CIPHER_FILEPATH,
+        code: ErrorCode.DUPLICATED_CIPHER_FILEPATH,
         message: `Duplicated catalog item with same cipherFilepath (${ item.cipherFilepath })`
       }
     }

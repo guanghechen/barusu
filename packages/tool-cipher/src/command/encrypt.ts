@@ -9,10 +9,11 @@ import {
   isNotEmptyString,
   parseOption,
 } from '@barusu/option-util'
-import { WorkspaceCatalog } from '../util/master/catalog'
-import { mkdirsIfNotExists } from '../util/fs-util'
+import { WorkspaceCatalog } from '../util/catalog'
+import { EventTypes, eventBus } from '../util/event-bus'
+import { mkdirsIfNotExists } from '../util/fs'
 import { logger } from '../util/logger'
-import { CipherMaster } from '../util/master/cipher'
+import { CipherMaster } from '../util/master'
 import { createDefaultOptions, handleError } from './_util'
 
 
@@ -101,7 +102,7 @@ export function loadSubCommandEncrypt(
           workspaceDir,
           showAsterisk,
           secretFilepath,
-          miniumPasswordLength,
+          minimumSize: miniumPasswordLength,
         })
 
         const workspaceCatalog = (
@@ -121,5 +122,6 @@ export function loadSubCommandEncrypt(
       } catch (error) {
         handleError(error)
       }
+      eventBus.dispatch({ type: EventTypes.EXITING })
     })
 }

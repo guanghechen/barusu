@@ -3,7 +3,8 @@ import {
   flatDefaultOptionsFromPackageJson,
 } from '@barusu/option-util'
 import { name } from '@barusu/tool-cipher/package.json'
-import { ERROR_CODE } from '../util/error'
+import { ErrorCode } from '../util/error'
+import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'
 
 
@@ -35,18 +36,14 @@ export function createDefaultOptions(
 export function handleError(error: Error | any): void {
   const code = error.code || 0
   switch (code) {
-    case ERROR_CODE.CANCELED:
-      logger.info('canceled')
-      logger.debug('canceled. details:', error.message)
-      process.exit(0)
-      break
-    case ERROR_CODE.BAD_PASSWORD:
-    case ERROR_CODE.ENTERED_PASSWORD_DIFFER:
+    case ErrorCode.BAD_PASSWORD:
+    case ErrorCode.ENTERED_PASSWORD_DIFFER:
       logger.error(error.message)
-      process.exit(-1)
+      eventBus.dispatch({ type: EventTypes.EXITING })
       break
     default:
       logger.error('error:', error.stack || error.message || error)
-      process.exit(-1)
+      eventBus.dispatch({ type: EventTypes.EXITING })
+      break
   }
 }

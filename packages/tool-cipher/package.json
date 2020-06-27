@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.15",
+    "@barusu/event-bus": "^0.0.15",
     "@barusu/option-util": "^0.0.15",
     "@types/fs-extra": "^8.1.0",
     "commander": "^5.0.0",
