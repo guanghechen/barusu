@@ -45,7 +45,7 @@ export function loadSubCommandDecrypt(
       const defaultOptions = createDefaultOptions(packageJsonPath, SUB_COMMAND_NAME)
 
       // reset log-level
-      const logLevel = parseOption<string>(defaultOptions.logLevel, options.logLevel)
+      const logLevel = parseOption<string>(defaultOptions.logLevel, program.logLevel)
       if (logLevel != null) {
         const level = Level.valueOf(logLevel)
         if (level != null) logger.setLevel(level)
