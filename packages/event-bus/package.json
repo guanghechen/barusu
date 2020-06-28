@@ -1,6 +1,6 @@
 {
   "name": "@barusu/event-bus",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "simple event bus",
   "author": {
     "name": "lemon-clown",
@@ -41,8 +41,8 @@
     "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.16",
-    "@barusu/rollup-config": "^0.0.16",
+    "@barusu/eslint-config": "^0.0.17",
+    "@barusu/rollup-config": "^0.0.17",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",

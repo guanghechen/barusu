@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-cipher",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "cipher data",
   "author": {
     "name": "lemon-clown",
@@ -40,9 +40,9 @@
     "test": "echo 'no test yet.'"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.16",
-    "@barusu/event-bus": "^0.0.16",
-    "@barusu/option-util": "^0.0.16",
+    "@barusu/chalk-logger": "^0.0.17",
+    "@barusu/event-bus": "^0.0.17",
+    "@barusu/option-util": "^0.0.17",
     "@types/cli-progress": "^3.7.0",
     "@types/fs-extra": "^8.1.0",
     "cli-progress": "^3.8.2",
@@ -51,8 +51,8 @@
     "globby": "^11.0.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.16",
-    "@barusu/rollup-config": "^0.0.16",
+    "@barusu/eslint-config": "^0.0.17",
+    "@barusu/rollup-config": "^0.0.17",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",

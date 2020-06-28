@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-sort-imports",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "sort import/export statement",
   "author": {
     "name": "lemon-clown",
@@ -40,15 +40,15 @@
     "test": "mocha -r ts-node/register -r tsconfig-paths/register test/*.test.ts"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.16",
+    "@barusu/chalk-logger": "^0.0.17",
     "@types/fs-extra": "^8.1.0",
     "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.16",
-    "@barusu/rollup-config": "^0.0.16",
+    "@barusu/eslint-config": "^0.0.17",
+    "@barusu/rollup-config": "^0.0.17",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
