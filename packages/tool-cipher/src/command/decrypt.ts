@@ -1,4 +1,5 @@
 import { CommanderStatic } from 'commander'
+import globby from 'globby'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import {
@@ -6,6 +7,7 @@ import {
   convertToNumber,
   isNotEmptyString,
   parseOption,
+  isNotEmptyArray,
 } from '@barusu/option-util'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { mkdirsIfNotExists } from '../util/fs'
@@ -92,13 +94,18 @@ export function loadSubCommandDecrypt(
       )
       logger.debug('miniumPasswordLength:', miniumPasswordLength)
 
+      // get cipherFilepathPatterns
+      const cipherFilepathPatterns: string[] = parseOption<string[]>(
+        defaultOptions.cipherFilepathPatterns, options.cipherFilepathPattern, isNotEmptyArray)
+      logger.debug('cipherFilepathPatterns:', cipherFilepathPatterns)
+
       // calc cipherRelativeDir
       const cipherRelativeDir = path.relative(workspaceDir, cipherDir)
       logger.debug('cipherRelativeDir:', cipherRelativeDir)
 
-      // calc outputRelativeDir
-      const outputRelativeDir = path.relative(workspaceDir, outDir)
-      logger.debug('outputRelativeDir:', outputRelativeDir)
+      // calc outRelativeDir
+      const outRelativeDir = path.relative(workspaceDir, outDir)
+      logger.debug('outRelativeDir:', outRelativeDir)
 
       // ensure paths exist
       mkdirsIfNotExists(workspaceDir, true)
@@ -115,6 +122,7 @@ export function loadSubCommandDecrypt(
           minimumSize: miniumPasswordLength,
         })
 
+        // parse workspace
         const workspaceCatalog = await master.loadIndex(indexFilepath, cipherRelativeDir)
         if (workspaceCatalog == null) {
           throw new Error('[fix me] workspaceCatalog is null')
@@ -129,9 +137,12 @@ export function loadSubCommandDecrypt(
           return plainFilepath
         }
 
-        const cipherFilepaths = workspaceCatalog.toData()
-          .items.map(x => path.join(cipherRelativeDir, x.cipherFilepath))
-        await master.decryptFiles(cipherFilepaths, outputRelativeDir, resolveDestPath, force)
+        // If cipherFilepathPatterns is null, decrypt all files registered in workspace catalog,
+        // Otherwise, only decrypt files matched cipherFilepathPatterns.
+        const cipherFilepaths = cipherFilepathPatterns.length > 0
+          ? await globby(cipherFilepathPatterns, { cwd: workspaceDir })
+          : workspaceCatalog.toData().items.map(x => path.join(cipherRelativeDir, x.cipherFilepath))
+        await master.decryptFiles(cipherFilepaths, outRelativeDir, resolveDestPath, force)
       } catch (error) {
         handleError(error)
       }

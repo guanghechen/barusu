@@ -24,6 +24,7 @@ export function createDefaultOptions(
     showAsterisk: true,
     miniumPasswordLength: 6,
     plainFilepathPatterns: [],
+    cipherFilepathPatterns: [],
     outDir: 'out',
     ...subCommandDefaultOptions,
   }
