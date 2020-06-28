@@ -28,7 +28,9 @@
     "!lib/**/*.js.map",
     "!lib/**/*.d.ts.map"
   ],
-  "bin": {},
+  "bin": {
+    "barusu-cipher": "./lib/cjs/cli.js"
+  },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
     "prebuild": "rimraf lib/ && yarn test",
