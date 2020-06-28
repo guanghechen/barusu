@@ -11,8 +11,6 @@ import { logger } from './logger'
 export function mkdirsIfNotExists(filepath: string, isDir: boolean): void {
   const dirPath = isDir ? filepath : path.dirname(filepath)
   if (fs.existsSync(dirPath)) return
-  console.log()
   logger.verbose(`mkdirs: ${ dirPath }`)
-  console.log()
   fs.mkdirsSync(dirPath)
 }

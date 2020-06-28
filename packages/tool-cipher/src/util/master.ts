@@ -1,6 +1,6 @@
+import progress from 'cli-progress'
 import fs from 'fs-extra'
 import path from 'path'
-import progress from 'cli-progress'
 import { coverBoolean, coverNumber, coverString } from '@barusu/option-util'
 import { destroyBuffer } from './buffer'
 import { WorkspaceCatalog, WorkspaceCatalogData } from './catalog'
@@ -143,6 +143,8 @@ export class CipherMaster {
         },
         progress.Presets.shades_classic)
       processBar.start(plainFilepaths.length, 0)
+      logger.setMode('loose')
+
       const tasks: Promise<void>[] = []
       for (const plainFilepath of plainFilepaths) {
         const cipherFilepath = path.join(outputRelativePath, resolveDestPath(plainFilepath))
@@ -157,14 +159,10 @@ export class CipherMaster {
         task
           .then(() => {
             processBar.increment()
-            console.log()
             logger.verbose(`[encryptFiles] encrypted (${ plainFilepath }) --> (${ cipherFilepath })` + (skipped ? '. skipped' : ''))
-            console.log()
           })
           .catch(error => {
-            console.log()
             logger.error(`[encryptFiles] failed: encrypting (${ plainFilepath }) --> (${ cipherFilepath })`)
-            console.log()
             throw error
           })
         tasks.push(task)
@@ -174,6 +172,7 @@ export class CipherMaster {
         await Promise.all(tasks)
       } finally {
         processBar.stop()
+        logger.setMode('normal')
       }
     }
   }
@@ -205,6 +204,8 @@ export class CipherMaster {
         },
         progress.Presets.shades_classic)
       processBar.start(cipherFilepaths.length, 0)
+      logger.setMode('loose')
+
       const tasks: Promise<void>[] = []
       for (const cipherFilepath of cipherFilepaths) {
         const plainFilepath = path.join(outputRelativePath, resolveDestPath(cipherFilepath))
@@ -219,14 +220,10 @@ export class CipherMaster {
         task
           .then(() => {
             processBar.increment()
-            console.log()
             logger.verbose(`[decryptFiles] decrypted (${ cipherFilepath }) --> (${ plainFilepath })` + (skipped ? '. skipped' : ''))
-            console.log()
           })
           .catch(error => {
-            console.log()
             logger.error(`[decryptFiles] failed: decrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
-            console.log()
             throw error
           })
         tasks.push(task)
@@ -236,6 +233,7 @@ export class CipherMaster {
         await Promise.all(tasks)
       } finally {
         processBar.stop()
+        logger.setMode('normal')
       }
     }
   }

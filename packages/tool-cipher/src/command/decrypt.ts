@@ -5,9 +5,9 @@ import { Level } from '@barusu/chalk-logger'
 import {
   convertToBoolean,
   convertToNumber,
+  isNotEmptyArray,
   isNotEmptyString,
   parseOption,
-  isNotEmptyArray,
 } from '@barusu/option-util'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { mkdirsIfNotExists } from '../util/fs'
