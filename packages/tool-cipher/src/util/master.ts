@@ -1,3 +1,4 @@
+import progress from 'cli-progress'
 import fs from 'fs-extra'
 import path from 'path'
 import { coverBoolean, coverNumber, coverString } from '@barusu/option-util'
@@ -120,27 +121,59 @@ export class CipherMaster {
    * @param plainFilepaths
    * @param outputRelativePath
    * @param resolveDestPath     calc the output path of the encrypted content
+   * @param force               do encrypt event the target filepath has already exists.
    */
   public async encryptFiles(
     plainFilepaths: string[],
     outputRelativePath: string,
     resolveDestPath: (plainFilepath: string) => string,
+    force: boolean,
   ): Promise<void> {
     const self = this
     await self.loadSecret()
 
     if (plainFilepaths.length > 0) {
+      const processBar = new progress.SingleBar(
+        {
+          format: 'encrypting {bar} {percentage}% | {value}/{total}',
+          align: 'left',
+          barsize: 50,
+          stream: process.stdout,
+          stopOnComplete: true,
+        },
+        progress.Presets.shades_classic)
+      processBar.start(plainFilepaths.length, 0)
+      logger.setMode('loose')
+
       const tasks: Promise<void>[] = []
       for (const plainFilepath of plainFilepaths) {
         const cipherFilepath = path.join(outputRelativePath, resolveDestPath(plainFilepath))
-        logger.verbose(`encrypting (${ plainFilepath }) --> (${ cipherFilepath })`)
+        const absolutePlainFilepath = path.resolve(self.workspaceDir, plainFilepath)
+        const absoluteCipherFilepath = path.resolve(self.workspaceDir, cipherFilepath)
 
-        const task = self.cipher.encryptFile(
-          path.resolve(self.workspaceDir, plainFilepath),
-          path.resolve(self.workspaceDir, cipherFilepath))
+        const skipped = !force && fs.existsSync(absoluteCipherFilepath)
+        const task = skipped
+          ? Promise.resolve()
+          : self.cipher.encryptFile(absolutePlainFilepath, absoluteCipherFilepath)
+
+        task
+          .then(() => {
+            processBar.increment()
+            logger.verbose(`[encryptFiles] encrypted (${ plainFilepath }) --> (${ cipherFilepath })` + (skipped ? '. skipped' : ''))
+          })
+          .catch(error => {
+            logger.error(`[encryptFiles] failed: encrypting (${ plainFilepath }) --> (${ cipherFilepath })`)
+            throw error
+          })
         tasks.push(task)
       }
-      await Promise.all(tasks)
+
+      try {
+        await Promise.all(tasks)
+      } finally {
+        processBar.stop()
+        logger.setMode('normal')
+      }
     }
   }
 
@@ -149,27 +182,59 @@ export class CipherMaster {
    * @param cipherFilepaths
    * @param outputRelativePath
    * @param resolveDestPath     calc the output path of the decrypted content
+   * @param force               do decrypt event the target filepath has already exists.
    */
   public async decryptFiles(
     cipherFilepaths: string[],
     outputRelativePath: string,
     resolveDestPath: (cipherFilepath: string) => string,
+    force: boolean,
   ): Promise<void> {
     const self = this
     await self.loadSecret()
 
-    const tasks: Promise<void>[] = []
     if (cipherFilepaths.length > 0) {
+      const processBar = new progress.SingleBar(
+        {
+          format: 'decrypting {bar} {percentage}% | {value}/{total}',
+          align: 'left',
+          barsize: 50,
+          stream: process.stdout,
+          stopOnComplete: true,
+        },
+        progress.Presets.shades_classic)
+      processBar.start(cipherFilepaths.length, 0)
+      logger.setMode('loose')
+
+      const tasks: Promise<void>[] = []
       for (const cipherFilepath of cipherFilepaths) {
         const plainFilepath = path.join(outputRelativePath, resolveDestPath(cipherFilepath))
-        logger.verbose(`decrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
+        const absoluteCipherFilepath = path.resolve(self.workspaceDir, cipherFilepath)
+        const absolutePlainFilepath = path.resolve(self.workspaceDir, plainFilepath)
 
-        const task = self.cipher.decryptFile(
-          path.resolve(self.workspaceDir, cipherFilepath),
-          path.resolve(self.workspaceDir, plainFilepath))
+        const skipped = !force && fs.existsSync(absolutePlainFilepath)
+        const task = skipped
+          ? Promise.resolve()
+          : self.cipher.decryptFile(absoluteCipherFilepath, absolutePlainFilepath)
+
+        task
+          .then(() => {
+            processBar.increment()
+            logger.verbose(`[decryptFiles] decrypted (${ cipherFilepath }) --> (${ plainFilepath })` + (skipped ? '. skipped' : ''))
+          })
+          .catch(error => {
+            logger.error(`[decryptFiles] failed: decrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
+            throw error
+          })
         tasks.push(task)
       }
-      await Promise.all(tasks)
+
+      try {
+        await Promise.all(tasks)
+      } finally {
+        processBar.stop()
+        logger.setMode('normal')
+      }
     }
   }
 
@@ -191,7 +256,7 @@ export class CipherMaster {
 
     // waiting for ciphered data with old secret to be decrypted
     if (cipherFilePatterns.length > 0) {
-      await self.decryptFiles(cipherFilePatterns, `__source__${ Date.now() }`, resolveDestPath)
+      await self.decryptFiles(cipherFilePatterns, `__source__${ Date.now() }`, resolveDestPath, true)
     }
 
     // generate new secret

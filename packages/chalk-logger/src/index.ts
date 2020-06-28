@@ -19,6 +19,7 @@ export class ColorfulChalkLogger extends Logger {
       program
         .option('--log-level <level>', 'specify logger\'s level.')
         .option('--log-name <name>', 'specify logger\'s name.')
+        .option('--log-mode <\'normal\' | \'loose\'>', 'specify logger\'s name.')
         .option('--log-flag <option>', 'specify logger\' option. [[no-]<date|colorful|inline>]', () => { }, [])
         .option('--log-output <filepath>', 'specify logger\' output path.')
         .option('--log-encoding <encoding>', 'specify output file encoding.')
@@ -39,6 +40,7 @@ export class ColorfulChalkLogger extends Logger {
 
     const levelRegex = /^--log-level\s*[=\s]\s*(\w+)$/
     const nameRegex = /^--log-name\s*[=\s]\s*(\w+)$/
+    const modeRegex = /^--log-mode\s*[=\s]\s*(\w+)$/
     const flagRegex = /^--log-flag\s*[=\s]\s*(no-)?(date|inline|colorful)$/
     const outputRegex = /^--log-output\s*[=\s]\s*((['"])[\s\S]+\2|\S+)$/
     const encodingRegex = /^--log-encoding\s*[=\s]\s*([\w\-.]+)$/
@@ -88,6 +90,13 @@ export class ColorfulChalkLogger extends Logger {
         // eslint-disable-next-line no-param-reassign
         options!.name = nameString
       }
+      if (modeRegex.test(arg)) {
+        const [, modeString] = modeRegex.exec(arg) as string[]
+        if (modeString == null) return
+        if (!/^normal|loose$/i.test(modeString)) return
+        // eslint-disable-next-line no-param-reassign
+        options!.mode = modeString.toLowerCase() as 'normal' | 'loose'
+      }
     })
 
     return options
@@ -113,5 +122,13 @@ export class ColorfulChalkLogger extends Logger {
    */
   public setName(name: string): void {
     this.name = name
+  }
+
+  /**
+   * update logger's mode
+   * @param mode
+   */
+  public setMode(mode: 'normal' | 'loose'): void {
+    this.mode = mode
   }
 }

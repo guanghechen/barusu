@@ -1,9 +1,11 @@
 import { CommanderStatic } from 'commander'
+import globby from 'globby'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import {
   convertToBoolean,
   convertToNumber,
+  isNotEmptyArray,
   isNotEmptyString,
   parseOption,
 } from '@barusu/option-util'
@@ -31,6 +33,7 @@ export function loadSubCommandDecrypt(
     .option('-C, --cipher-filepath-pattern <glob pattern>', 'glob pattern of files have been encrypted', (val, acc: string[]) => acc.concat(val), [])
     .option('-o, --out-dir <outDir>', 'root dir of outputs')
     .option('--cipher-dir <cipherDir>', 'root dir of cipher files')
+    .option('-f, --force', 'do decrypt event the target filepath has already exists.')
     .option('--show-asterisk', 'whether to print password asterisks')
     .option('--minimum-password-length', 'the minimum size required of password')
     .action(async function (options: any) {
@@ -45,7 +48,7 @@ export function loadSubCommandDecrypt(
       const defaultOptions = createDefaultOptions(packageJsonPath, SUB_COMMAND_NAME)
 
       // reset log-level
-      const logLevel = parseOption<string>(defaultOptions.logLevel, options.logLevel)
+      const logLevel = parseOption<string>(defaultOptions.logLevel, program.logLevel)
       if (logLevel != null) {
         const level = Level.valueOf(logLevel)
         if (level != null) logger.setLevel(level)
@@ -75,6 +78,11 @@ export function loadSubCommandDecrypt(
           defaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
       logger.debug('indexFilepath:', indexFilepath)
 
+      // get force
+      const force: boolean = parseOption<boolean>(
+        defaultOptions.force, convertToBoolean(options.force))
+      logger.debug('force:', force)
+
       // get showAsterisk
       const showAsterisk: boolean = parseOption<boolean>(
         defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
@@ -86,13 +94,18 @@ export function loadSubCommandDecrypt(
       )
       logger.debug('miniumPasswordLength:', miniumPasswordLength)
 
+      // get cipherFilepathPatterns
+      const cipherFilepathPatterns: string[] = parseOption<string[]>(
+        defaultOptions.cipherFilepathPatterns, options.cipherFilepathPattern, isNotEmptyArray)
+      logger.debug('cipherFilepathPatterns:', cipherFilepathPatterns)
+
       // calc cipherRelativeDir
       const cipherRelativeDir = path.relative(workspaceDir, cipherDir)
       logger.debug('cipherRelativeDir:', cipherRelativeDir)
 
-      // calc outputRelativeDir
-      const outputRelativeDir = path.relative(workspaceDir, outDir)
-      logger.debug('outputRelativeDir:', outputRelativeDir)
+      // calc outRelativeDir
+      const outRelativeDir = path.relative(workspaceDir, outDir)
+      logger.debug('outRelativeDir:', outRelativeDir)
 
       // ensure paths exist
       mkdirsIfNotExists(workspaceDir, true)
@@ -109,6 +122,7 @@ export function loadSubCommandDecrypt(
           minimumSize: miniumPasswordLength,
         })
 
+        // parse workspace
         const workspaceCatalog = await master.loadIndex(indexFilepath, cipherRelativeDir)
         if (workspaceCatalog == null) {
           throw new Error('[fix me] workspaceCatalog is null')
@@ -123,9 +137,12 @@ export function loadSubCommandDecrypt(
           return plainFilepath
         }
 
-        const cipherFilepaths = workspaceCatalog.toData()
-          .items.map(x => path.join(cipherRelativeDir, x.cipherFilepath))
-        await master.decryptFiles(cipherFilepaths, outputRelativeDir, resolveDestPath)
+        // If cipherFilepathPatterns is null, decrypt all files registered in workspace catalog,
+        // Otherwise, only decrypt files matched cipherFilepathPatterns.
+        const cipherFilepaths = cipherFilepathPatterns.length > 0
+          ? await globby(cipherFilepathPatterns, { cwd: workspaceDir })
+          : workspaceCatalog.toData().items.map(x => path.join(cipherRelativeDir, x.cipherFilepath))
+        await master.decryptFiles(cipherFilepaths, outRelativeDir, resolveDestPath, force)
       } catch (error) {
         handleError(error)
       }

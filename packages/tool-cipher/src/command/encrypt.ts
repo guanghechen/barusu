@@ -33,6 +33,7 @@ export function loadSubCommandEncrypt(
     .option('-I, --index-filepath <cipher files index>', 'path of index of cipher files')
     .option('-P, --plain-filepath-pattern <glob pattern>', 'glob pattern of files to be encrypted', (val, acc: string[]) => acc.concat(val), [])
     .option('-o, --out-dir <outDir>', 'root dir of outputs')
+    .option('-f, --force', 'do encrypt event the target filepath has already exists.')
     .option('--show-asterisk', 'whether to print password asterisks')
     .option('--minimum-password-length', 'the minimum size required of password')
     .action(async function (workspace: string, options: any) {
@@ -47,7 +48,7 @@ export function loadSubCommandEncrypt(
       const defaultOptions = createDefaultOptions(packageJsonPath, SUB_COMMAND_NAME)
 
       // reset log-level
-      const logLevel = parseOption<string>(defaultOptions.logLevel, options.logLevel)
+      const logLevel = parseOption<string>(defaultOptions.logLevel, program.logLevel)
       if (logLevel != null) {
         const level = Level.valueOf(logLevel)
         if (level != null) logger.setLevel(level)
@@ -70,6 +71,11 @@ export function loadSubCommandEncrypt(
         parseOption<string>(
           defaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
       logger.debug('indexFilepath:', indexFilepath)
+
+      // get force
+      const force: boolean = parseOption<boolean>(
+        defaultOptions.force, convertToBoolean(options.force))
+      logger.debug('force:', force)
 
       // get showAsterisk
       const showAsterisk: boolean = parseOption<boolean>(
@@ -117,7 +123,7 @@ export function loadSubCommandEncrypt(
         }
 
         const plainFilepaths = await globby(plainFilepathPatterns, { cwd: workspaceDir })
-        await master.encryptFiles(plainFilepaths, outRelativeDir, resolveDestPath)
+        await master.encryptFiles(plainFilepaths, outRelativeDir, resolveDestPath, force)
         await master.saveIndex(indexFilepath, workspaceCatalog)
       } catch (error) {
         handleError(error)
