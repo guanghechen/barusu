@@ -77,6 +77,7 @@ Encrypt the working directory (Default algorithm: AES-256 gcm ).
     -I, --index-filepath <cipher files index>    path of index of cipher files
     -P, --plain-filepath-pattern <glob pattern>  glob pattern of files to be encrypted (default: [])
     -o, --out-dir <outDir>                       root dir of outputs
+    -f, --force                                  do decrypt event the target filepath has already exists.
     --show-asterisk                              whether to print password asterisks
     --minimum-password-length                    the minimum size required of password
     -h, --help                                   display help for command
@@ -94,6 +95,7 @@ Encrypt the working directory (Default algorithm: AES-256 gcm ).
     -C, --cipher-filepath-pattern <glob pattern>  glob pattern of files have been encrypted (default: [])
     -o, --out-dir <outDir>                        root dir of outputs
     --cipher-dir <cipherDir>                      root dir of cipher files
+    -f, --force                                   do encrypt event the target filepath has already exists.
     --show-asterisk                               whether to print password asterisks
     --minimum-password-length                     the minimum size required of password
     -h, --help                                    display help for command

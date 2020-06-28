@@ -20,6 +20,7 @@ export function createDefaultOptions(
     logLevel: undefined as unknown as string,
     secretFilepath: '.barusu-secret',
     indexFilepath: '.barusu-index',
+    force: false,
     showAsterisk: true,
     miniumPasswordLength: 6,
     plainFilepathPatterns: [],

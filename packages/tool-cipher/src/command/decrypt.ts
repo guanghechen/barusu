@@ -31,6 +31,7 @@ export function loadSubCommandDecrypt(
     .option('-C, --cipher-filepath-pattern <glob pattern>', 'glob pattern of files have been encrypted', (val, acc: string[]) => acc.concat(val), [])
     .option('-o, --out-dir <outDir>', 'root dir of outputs')
     .option('--cipher-dir <cipherDir>', 'root dir of cipher files')
+    .option('-f, --force', 'do decrypt event the target filepath has already exists.')
     .option('--show-asterisk', 'whether to print password asterisks')
     .option('--minimum-password-length', 'the minimum size required of password')
     .action(async function (options: any) {
@@ -74,6 +75,11 @@ export function loadSubCommandDecrypt(
         parseOption<string>(
           defaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
       logger.debug('indexFilepath:', indexFilepath)
+
+      // get force
+      const force: boolean = parseOption<boolean>(
+        defaultOptions.force, convertToBoolean(options.force))
+      logger.debug('force:', force)
 
       // get showAsterisk
       const showAsterisk: boolean = parseOption<boolean>(
@@ -125,7 +131,7 @@ export function loadSubCommandDecrypt(
 
         const cipherFilepaths = workspaceCatalog.toData()
           .items.map(x => path.join(cipherRelativeDir, x.cipherFilepath))
-        await master.decryptFiles(cipherFilepaths, outputRelativeDir, resolveDestPath)
+        await master.decryptFiles(cipherFilepaths, outputRelativeDir, resolveDestPath, force)
       } catch (error) {
         handleError(error)
       }
