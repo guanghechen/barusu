@@ -7,6 +7,7 @@ import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
 
 
 export interface Options {
+  mode?: 'normal' | 'loose'
   placeholderRegex?: RegExp
   name?: string
   level?: Level
@@ -28,6 +29,7 @@ export class Logger {
 
   private readonly write = (text: string) => { process.stdout.write(text) }
   public name: string
+  public mode: 'normal' | 'loose' = 'normal'
   public readonly level = Logger.defaultLevel
   public readonly dateChalk = Logger.defaultDateChalk
   public readonly nameChalk = Logger.defaultNameChalk
@@ -44,6 +46,7 @@ export class Logger {
 
     if (options.name != null) this.name = options.name
     const {
+      mode,
       level,
       date,
       inline,
@@ -56,6 +59,7 @@ export class Logger {
       placeholderRegex
     } = options
 
+    if (mode) this.mode = mode
     if (level) this.level = level
     if (date != null) this.flags.date = date
     if (inline != null) this.flags.inline = inline
@@ -138,15 +142,32 @@ export class Logger {
     return text
   }
 
-  public debug(messageFormat: string, ...messages: any[]): void { this.log(DEBUG, messageFormat, ...messages) }
-  public verbose(messageFormat: string, ...messages: any[]): void { this.log(VERBOSE, messageFormat, ...messages) }
-  public info(messageFormat: string, ...messages: any[]): void { this.log(INFO, messageFormat, ...messages) }
-  public warn(messageFormat: string, ...messages: any[]): void { this.log(WARN, messageFormat, ...messages) }
-  public error(messageFormat: string, ...messages: any[]): void { this.log(ERROR, messageFormat, ...messages) }
-  public fatal(messageFormat: string, ...messages: any[]): void { this.log(FATAL, messageFormat, ...messages) }
+  public debug(messageFormat: string, ...messages: any[]): void {
+    this.log(DEBUG, messageFormat, ...messages)
+  }
+
+  public verbose(messageFormat: string, ...messages: any[]): void {
+    this.log(VERBOSE, messageFormat, ...messages)
+  }
+
+  public info(messageFormat: string, ...messages: any[]): void {
+    this.log(INFO, messageFormat, ...messages)
+  }
+
+  public warn(messageFormat: string, ...messages: any[]): void {
+    this.log(WARN, messageFormat, ...messages)
+  }
+
+  public error(messageFormat: string, ...messages: any[]): void {
+    this.log(ERROR, messageFormat, ...messages)
+  }
+
+  public fatal(messageFormat: string, ...messages: any[]): void {
+    this.log(FATAL, messageFormat, ...messages)
+  }
 
   // write a log record.
-  private log(level: Level, messageFormat: string, ...messages: any[]) {
+  public log(level: Level, messageFormat: string, ...messages: any[]): void {
     if (!level || level.rank < this.level.rank) return
     const header = this.formatHeader(level, new Date())
     let newline = false
@@ -168,6 +189,15 @@ export class Logger {
     let message: string = messageFormat.replace(this.placeholderRegex, m => items[idx++] || m)
     if (idx < items.length) message += ' ' + items.slice(idx).join(' ')
     if (!newline && !message.endsWith('\n')) message += '\n'
-    this.write(this.format(level, header, message))
+
+    switch (this.mode) {
+      case 'loose':
+        this.write('\n' + this.format(level, header, message) + '\n')
+        break
+      case 'normal':
+      default:
+        this.write(this.format(level, header, message))
+        break
+    }
   }
 }

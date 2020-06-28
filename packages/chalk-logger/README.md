@@ -15,6 +15,7 @@
 ## cli-options
   * `--log-level <debug|verbose|info|warn|error|fatal>`: specify global logger level.
   * `--log-name <new logger name>`: specify global logger name.
+  * `--log-mode <'normal' | 'loose'>`: specify global logger mode.
   * `--log-flag <[no-](date|inline|colorful)>`: the prefix `no-` represent negation.
     - `date`: whether to print date. default value is false
     - `inline`: each log record output in one line. default value is false.
