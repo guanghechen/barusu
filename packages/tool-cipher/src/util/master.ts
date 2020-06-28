@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
+import progress from 'cli-progress'
 import { coverBoolean, coverNumber, coverString } from '@barusu/option-util'
 import { destroyBuffer } from './buffer'
 import { WorkspaceCatalog, WorkspaceCatalogData } from './catalog'
@@ -130,14 +131,35 @@ export class CipherMaster {
     await self.loadSecret()
 
     if (plainFilepaths.length > 0) {
+      const processBar = new progress.SingleBar(
+        {
+          format: 'encrypting {bar} {percentage}% | {value}/{total}',
+          align: 'left',
+          barsize: 50,
+          stream: process.stdout,
+          stopOnComplete: true,
+        },
+        progress.Presets.shades_classic)
+      processBar.start(plainFilepaths.length, 0)
       const tasks: Promise<void>[] = []
       for (const plainFilepath of plainFilepaths) {
         const cipherFilepath = path.join(outputRelativePath, resolveDestPath(plainFilepath))
-        logger.verbose(`encrypting (${ plainFilepath }) --> (${ cipherFilepath })`)
-
         const task = self.cipher.encryptFile(
           path.resolve(self.workspaceDir, plainFilepath),
-          path.resolve(self.workspaceDir, cipherFilepath))
+          path.resolve(self.workspaceDir, cipherFilepath)
+        )
+          .then(() => {
+            processBar.increment()
+            console.log()
+            logger.verbose(`[encryptFiles] encrypted (${ cipherFilepath }) --> (${ plainFilepath })`)
+            console.log()
+          })
+          .catch(error => {
+            console.log()
+            logger.error(`[encryptFiles] failed: encrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
+            console.log()
+            throw error
+          })
         tasks.push(task)
       }
       await Promise.all(tasks)
@@ -158,15 +180,36 @@ export class CipherMaster {
     const self = this
     await self.loadSecret()
 
-    const tasks: Promise<void>[] = []
     if (cipherFilepaths.length > 0) {
+      const processBar = new progress.SingleBar(
+        {
+          format: 'decrypting {bar} {percentage}% | {value}/{total}',
+          align: 'left',
+          barsize: 50,
+          stream: process.stdout,
+          stopOnComplete: true,
+        },
+        progress.Presets.shades_classic)
+      processBar.start(cipherFilepaths.length, 0)
+      const tasks: Promise<void>[] = []
       for (const cipherFilepath of cipherFilepaths) {
         const plainFilepath = path.join(outputRelativePath, resolveDestPath(cipherFilepath))
-        logger.verbose(`decrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
-
         const task = self.cipher.decryptFile(
           path.resolve(self.workspaceDir, cipherFilepath),
-          path.resolve(self.workspaceDir, plainFilepath))
+          path.resolve(self.workspaceDir, plainFilepath)
+        )
+          .then(() => {
+            processBar.increment()
+            console.log()
+            logger.verbose(`[decryptFiles] decrypted (${ cipherFilepath }) --> (${ plainFilepath })`)
+            console.log()
+          })
+          .catch(error => {
+            console.log()
+            logger.error(`[decryptFiles] failed: decrypting (${ cipherFilepath }) --> (${ plainFilepath })`)
+            console.log()
+            throw error
+          })
         tasks.push(task)
       }
       await Promise.all(tasks)

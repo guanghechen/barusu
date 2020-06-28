@@ -43,7 +43,9 @@
     "@barusu/chalk-logger": "^0.0.16",
     "@barusu/event-bus": "^0.0.16",
     "@barusu/option-util": "^0.0.16",
+    "@types/cli-progress": "^3.7.0",
     "@types/fs-extra": "^8.1.0",
+    "cli-progress": "^3.8.2",
     "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0"
