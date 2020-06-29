@@ -27,7 +27,7 @@
       "@barusu/tool-tsconfig-paths": [
         "./tools/tsconfig-paths/src"
       ],
-      "@barusu/blob-util": [
+      "@barusu/util-blob": [
         "./utils/blob/src"
       ],
       "@barusu/util-cli": [

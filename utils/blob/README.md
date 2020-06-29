@@ -1,13 +1,13 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/blob-util.svg)](https://www.npmjs.com/package/@barusu/blob-util)
-[![npm download](https://img.shields.io/npm/dm/@barusu/blob-util.svg)](https://www.npmjs.com/package/@barusu/blob-util)
-[![npm license](https://img.shields.io/npm/l/@barusu/blob-util.svg)](https://www.npmjs.com/package/@barusu/blob-util)
+[![npm version](https://img.shields.io/npm/v/@barusu/util-blob.svg)](https://www.npmjs.com/package/@barusu/util-blob)
+[![npm download](https://img.shields.io/npm/dm/@barusu/util-blob.svg)](https://www.npmjs.com/package/@barusu/util-blob)
+[![npm license](https://img.shields.io/npm/l/@barusu/util-blob.svg)](https://www.npmjs.com/package/@barusu/util-blob)
 
 
 # Usage
 
 ## Install
   ```shell
-  yarn add --dev @barusu/blob-util
+  yarn add --dev @barusu/util-blob
   ```
 
 ## Usage
