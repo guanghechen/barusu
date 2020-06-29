@@ -1,4 +1,3 @@
-
 /**
  * Type-level description
  * @additionalProperties true

@@ -1,5 +1,6 @@
-import { Color } from "./color";
-import { Text } from "./text";
+import { Color } from './color'
+import { Text } from './text'
+
 
 /** Description of MyObject */
 export interface MyObject {

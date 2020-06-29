@@ -1,12 +1,17 @@
 import ts from 'typescript'
-import { Definition } from '../types'
-import { resolveTupleType, extractLiteralValue, makeNullable, unique } from '../util'
 import { JsonSchemaContext } from '../schema-context'
-import { parseCommentsIntoDefinition } from './comment-definition'
-import { getUnionDefinition } from './union-definition'
-import { getIntersectionDefinition } from './intersection-definition'
-import { getEnumDefinition } from './enum-definition'
+import { Definition } from '../types'
+import {
+  extractLiteralValue,
+  makeNullable,
+  resolveTupleType,
+  unique,
+} from '../util'
 import { getClassDefinition } from './class-definition'
+import { parseCommentsIntoDefinition } from './comment-definition'
+import { getEnumDefinition } from './enum-definition'
+import { getIntersectionDefinition } from './intersection-definition'
+import { getUnionDefinition } from './union-definition'
 
 
 /**

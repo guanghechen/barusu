@@ -1,7 +1,7 @@
-import vm from 'vm'
 import ts from 'typescript'
-import { Definition } from '../types'
+import vm from 'vm'
 import { JsonSchemaContext } from '../schema-context'
+import { Definition } from '../types'
 import { getTypeDefinition } from './type-definition'
 
 

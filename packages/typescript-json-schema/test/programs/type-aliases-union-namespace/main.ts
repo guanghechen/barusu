@@ -1,4 +1,3 @@
-
 export namespace Cardinal {
     export const NORTH: "north" = "north";
     export const SOUTH: "south" = "south";

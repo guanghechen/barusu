@@ -1,9 +1,9 @@
-import Ajv from "ajv"
-import { assert } from "chai"
-import { readFileSync } from "fs"
-import { resolve } from "path"
+import { assert } from 'chai'
+import Ajv from 'ajv'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+import * as TJS from '../src'
 
-import * as TJS from "../src"
 
 const ajv = new Ajv()
 

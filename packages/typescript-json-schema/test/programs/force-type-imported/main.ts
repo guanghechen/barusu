@@ -1,4 +1,5 @@
-import { Widget } from "./widget";
+import { Widget } from './widget'
+
 
 export interface MyObject {
     name: string;

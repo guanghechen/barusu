@@ -1,14 +1,19 @@
 import ts from 'typescript'
-import { SchemaArgs, Definition, SymbolRef, ObjectMap } from './types'
 import { defaultValidationKeywords, getDefaultArgs } from './config'
-import { JsonSchemaContext } from './schema-context'
 import { getClassDefinition } from './definition/class-definition'
-import { getEnumDefinition } from './definition/enum-definition'
-import { getIntersectionDefinition } from './definition/intersection-definition'
-import { getDefinitionForProperty } from './definition/property-definition'
-import { getUnionDefinition } from './definition/union-definition'
-import { getDefinitionForRootType, getTypeDefinition } from './definition/type-definition'
 import { parseCommentsIntoDefinition } from './definition/comment-definition'
+import { getEnumDefinition } from './definition/enum-definition'
+import {
+  getIntersectionDefinition,
+} from './definition/intersection-definition'
+import { getDefinitionForProperty } from './definition/property-definition'
+import {
+  getDefinitionForRootType,
+  getTypeDefinition,
+} from './definition/type-definition'
+import { getUnionDefinition } from './definition/union-definition'
+import { JsonSchemaContext } from './schema-context'
+import { Definition, ObjectMap, SchemaArgs, SymbolRef } from './types'
 
 
 export class JsonSchemaGenerator {
@@ -95,4 +100,3 @@ export class JsonSchemaGenerator {
     parseCommentsIntoDefinition(this.context, symbol, definition, otherAnnotations)
   }
 }
-

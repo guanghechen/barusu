@@ -1,4 +1,4 @@
- interface MyObject {
+interface MyObject {
     FieldWithAnonType: {
         SubfieldA: number;
         SubfieldB: (string | number);

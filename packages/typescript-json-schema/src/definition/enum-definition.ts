@@ -1,6 +1,6 @@
 import ts from 'typescript'
-import { PrimitiveType, Definition } from '../types'
 import { JsonSchemaContext } from '../schema-context'
+import { Definition, PrimitiveType } from '../types'
 
 
 /**

@@ -1,4 +1,3 @@
-
 interface MyType {}
 
 interface MyMap1 {

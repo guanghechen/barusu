@@ -1,6 +1,12 @@
 import ts from 'typescript'
-import { SymbolRef, SchemaArgs, ValidationKeywords, Definition, ObjectMap } from './types'
 import { getTypeDefinition } from './definition/type-definition'
+import {
+  Definition,
+  ObjectMap,
+  SchemaArgs,
+  SymbolRef,
+  ValidationKeywords,
+} from './types'
 
 
 /**

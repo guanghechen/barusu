@@ -1,6 +1,6 @@
 import ts from 'typescript'
-import { parseJson } from '../util'
 import { JsonSchemaContext } from '../schema-context'
+import { parseJson } from '../util'
 
 
 /**

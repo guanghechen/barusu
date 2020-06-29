@@ -1,5 +1,6 @@
-import { assert } from "chai";
-import { exec, getDefaultArgs } from "../src";
+import { assert } from 'chai'
+import { exec, getDefaultArgs } from '../src'
+
 
 describe("error", () => {
     it("error-check", () => {

@@ -1,4 +1,3 @@
-
 /** @nullable */
 type MyType1 = string;
 

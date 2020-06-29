@@ -1,6 +1,6 @@
 import ts from 'typescript'
-import { Definition } from '../types'
 import { JsonSchemaContext } from '../schema-context'
+import { Definition } from '../types'
 import { getTypeDefinition } from './type-definition'
 
 

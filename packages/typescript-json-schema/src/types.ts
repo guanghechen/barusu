@@ -1,5 +1,5 @@
-import ts from 'typescript'
 import { JSONSchema7 } from 'json-schema'
+import ts from 'typescript'
 
 
 export type ObjectMap<T> = { [key: string]: T }

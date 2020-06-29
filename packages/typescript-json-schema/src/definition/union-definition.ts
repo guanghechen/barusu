@@ -1,7 +1,7 @@
 import ts from 'typescript'
+import { JsonSchemaContext } from '../schema-context'
 import { Definition, PrimitiveType } from '../types'
 import { extractLiteralValue } from '../util'
-import { JsonSchemaContext } from '../schema-context'
 import { getTypeDefinition } from './type-definition'
 
 

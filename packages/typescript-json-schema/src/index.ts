@@ -1,16 +1,16 @@
 import fs from 'fs'
-import path from 'path'
 import glob from 'glob'
 import stringify from 'json-stable-stringify'
+import path from 'path'
 import ts from 'typescript'
-import { SymbolRef, Definition, PartialArgs } from './types'
 import { getDefaultArgs } from './config'
-import { generateHashOfNode, normalizeFileName } from './util'
 import { JsonSchemaGenerator } from './schema-generator'
+import { Definition, PartialArgs, SymbolRef } from './types'
+import { generateHashOfNode, normalizeFileName } from './util'
 export { CompilerOptions, Program, Symbol } from 'typescript'
-export { Definition, PartialArgs, SymbolRef } from './types'
-export { JsonSchemaGenerator } from './schema-generator'
 export { getDefaultArgs } from './config'
+export { JsonSchemaGenerator } from './schema-generator'
+export { Definition, PartialArgs, SymbolRef } from './types'
 
 
 export function getProgramFromFiles(files: string[], jsonCompilerOptions: any = {}, basePath = './'): ts.Program {

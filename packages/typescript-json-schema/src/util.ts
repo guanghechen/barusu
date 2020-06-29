@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import ts from 'typescript'
-import { PrimitiveType, Definition } from './types'
+import { Definition, PrimitiveType } from './types'
 
 
 /**

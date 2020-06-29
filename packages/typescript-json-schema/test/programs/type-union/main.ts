@@ -1,4 +1,3 @@
-
 // Simple union (generates "type": [...])
 type MyType1 = string | number;
 

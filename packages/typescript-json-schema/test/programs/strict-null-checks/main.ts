@@ -1,4 +1,3 @@
-
 class MyObject {
      val: number;
      valNullable: number | null;
