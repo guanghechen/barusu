@@ -1,4 +1,4 @@
-import { isNotEmptyString } from '@barusu/option-util'
+import { isNotEmptyString } from '@barusu/util-option'
 import { destroyBuffer } from '../buffer'
 import { EventTypes, eventBus } from '../event-bus'
 

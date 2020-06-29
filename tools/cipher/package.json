@@ -42,8 +42,8 @@
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.17",
     "@barusu/event-bus": "^0.0.17",
-    "@barusu/option-util": "^0.0.17",
     "@barusu/util-cli": "^0.0.17",
+    "@barusu/util-option": "^0.0.17",
     "@types/cli-progress": "^3.7.0",
     "@types/fs-extra": "^8.1.0",
     "cli-progress": "^3.8.2",

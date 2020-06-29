@@ -1,7 +1,7 @@
 import progress from 'cli-progress'
 import fs from 'fs-extra'
 import path from 'path'
-import { coverBoolean, coverNumber, coverString } from '@barusu/option-util'
+import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
 import { destroyBuffer } from './buffer'
 import { WorkspaceCatalog, WorkspaceCatalogData } from './catalog'
 import { AESCipher, Cipher } from './cipher'

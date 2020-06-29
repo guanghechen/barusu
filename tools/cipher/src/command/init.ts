@@ -2,12 +2,12 @@ import { CommanderStatic } from 'commander'
 import fs from 'fs-extra'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
-import { parseOption, mkdirsIfNotExists  } from '@barusu/util-cli'
+import { mkdirsIfNotExists, parseOption } from '@barusu/util-cli'
 import {
   convertToBoolean,
   convertToNumber,
   isNotEmptyString,
-} from '@barusu/option-util'
+} from '@barusu/util-option'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'

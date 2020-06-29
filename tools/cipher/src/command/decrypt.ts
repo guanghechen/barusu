@@ -8,7 +8,7 @@ import {
   convertToNumber,
   isNotEmptyArray,
   isNotEmptyString,
-} from '@barusu/option-util'
+} from '@barusu/util-option'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'

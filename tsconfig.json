@@ -33,7 +33,7 @@
       "@barusu/util-cli": [
         "./utils/cli/src"
       ],
-      "@barusu/option-util": [
+      "@barusu/util-option": [
         "./utils/option/src"
       ],
     }

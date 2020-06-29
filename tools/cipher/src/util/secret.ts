@@ -1,5 +1,5 @@
 import fs from 'fs-extra'
-import { coverBoolean, coverNumber, coverString } from '@barusu/option-util'
+import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
 import { calcMac, destroyBuffer } from './buffer'
 import { Cipher } from './cipher'
 import { ErrorCode } from './error'

@@ -8,7 +8,7 @@ import {
   convertToNumber,
   isNotEmptyArray,
   isNotEmptyString,
-} from '@barusu/option-util'
+} from '@barusu/util-option'
 import { WorkspaceCatalog } from '../util/catalog'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'
