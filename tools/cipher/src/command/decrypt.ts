@@ -2,15 +2,14 @@ import { CommanderStatic } from 'commander'
 import globby from 'globby'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
+import { mkdirsIfNotExists, parseOption } from '@barusu/util-cli'
 import {
   convertToBoolean,
   convertToNumber,
   isNotEmptyArray,
   isNotEmptyString,
-  parseOption,
 } from '@barusu/option-util'
 import { EventTypes, eventBus } from '../util/event-bus'
-import { mkdirsIfNotExists } from '../util/fs'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
 import { createDefaultOptions, handleError } from './_util'
@@ -108,11 +107,11 @@ export function loadSubCommandDecrypt(
       logger.debug('outRelativeDir:', outRelativeDir)
 
       // ensure paths exist
-      mkdirsIfNotExists(workspaceDir, true)
-      mkdirsIfNotExists(cipherDir, true)
-      mkdirsIfNotExists(outDir, true)
-      mkdirsIfNotExists(secretFilepath, false)
-      mkdirsIfNotExists(indexFilepath, false)
+      mkdirsIfNotExists(workspaceDir, true, logger)
+      mkdirsIfNotExists(cipherDir, true, logger)
+      mkdirsIfNotExists(outDir, true, logger)
+      mkdirsIfNotExists(secretFilepath, false, logger)
+      mkdirsIfNotExists(indexFilepath, false, logger)
 
       try {
         const master = new CipherMaster({

@@ -1,8 +1,8 @@
+import { name } from '@barusu/tool-cipher/package.json'
 import {
   CommandOptionConfig,
   flatDefaultOptionsFromPackageJson,
-} from '@barusu/option-util'
-import { name } from '@barusu/tool-cipher/package.json'
+} from '@barusu/util-cli'
 import { ErrorCode } from '../util/error'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'

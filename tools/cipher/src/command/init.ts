@@ -2,14 +2,13 @@ import { CommanderStatic } from 'commander'
 import fs from 'fs-extra'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
+import { parseOption, mkdirsIfNotExists  } from '@barusu/util-cli'
 import {
   convertToBoolean,
   convertToNumber,
   isNotEmptyString,
-  parseOption,
 } from '@barusu/option-util'
 import { EventTypes, eventBus } from '../util/event-bus'
-import { mkdirsIfNotExists } from '../util/fs'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
 import { createDefaultOptions, handleError } from './_util'
@@ -58,8 +57,8 @@ export function loadSubCommandInit(
       )
 
       // ensure paths exist
-      mkdirsIfNotExists(workspaceDir, true)
-      mkdirsIfNotExists(secretFilepath, false)
+      mkdirsIfNotExists(workspaceDir, true, logger)
+      mkdirsIfNotExists(secretFilepath, false, logger)
 
       logger.debug('workspaceDir:', workspaceDir)
       logger.debug('packageJsonPath:', packageJsonPath)

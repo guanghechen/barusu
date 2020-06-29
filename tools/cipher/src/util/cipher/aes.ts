@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import fs from 'fs-extra'
+import { mkdirsIfNotExists } from '@barusu/util-cli'
 import {
   createRandomIv,
   createRandomKey,
@@ -7,7 +8,7 @@ import {
   destroyBuffers,
 } from '../buffer'
 import { ErrorCode } from '../error'
-import { mkdirsIfNotExists } from '../fs'
+import { logger } from '../logger'
 import { BaseCipher, Cipher } from './_base'
 
 
@@ -170,7 +171,7 @@ export class AESCipher extends BaseCipher implements Cipher {
       }
     }
 
-    mkdirsIfNotExists(cipherFilepath, false)
+    mkdirsIfNotExists(cipherFilepath, false, logger)
     const rStream = fs.createReadStream(plainFilepath)
     const wStream = fs.createWriteStream(cipherFilepath)
     const encipher = crypto.createCipheriv(algorithm, key, iv)
