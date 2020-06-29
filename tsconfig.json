@@ -24,9 +24,6 @@
       "@barusu/tool-find-inconsistent-packages": [
         "./packages/tool-find-inconsistent-packages/src"
       ],
-      "@barusu/tool-tsconfig-paths": [
-        "./packages/tool-tsconfig-paths/src"
-      ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
       ],
@@ -35,6 +32,9 @@
       ],
       "@barusu/tool-sort-imports": [
         "./tools/sort-imports/src"
+      ],
+      "@barusu/tool-tsconfig-paths": [
+        "./tools/tsconfig-paths/src"
       ],
     }
   }
