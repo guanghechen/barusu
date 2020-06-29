@@ -24,9 +24,6 @@
       "@barusu/tool-find-inconsistent-packages": [
         "./packages/tool-find-inconsistent-packages/src"
       ],
-      "@barusu/tool-sort-imports": [
-        "./packages/tool-sort-imports/src"
-      ],
       "@barusu/tool-tsconfig-paths": [
         "./packages/tool-tsconfig-paths/src"
       ],
@@ -35,6 +32,9 @@
       ],
       "@barusu/tool-cipher": [
         "./tools/cipher/src"
+      ],
+      "@barusu/tool-sort-imports": [
+        "./tools/sort-imports/src"
       ],
     }
   }

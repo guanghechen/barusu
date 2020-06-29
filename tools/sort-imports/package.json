@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/tool-sort-imports#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/sort-imports#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
