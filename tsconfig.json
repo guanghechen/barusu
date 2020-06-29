@@ -21,14 +21,14 @@
       "@barusu/rollup-config": [
         "./packages/rollup-config/src"
       ],
-      "@barusu/tool-find-inconsistent-packages": [
-        "./packages/tool-find-inconsistent-packages/src"
-      ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
       ],
       "@barusu/tool-cipher": [
         "./tools/cipher/src"
+      ],
+      "@barusu/tool-find-inconsistent-packages": [
+        "./tools/find-inconsistent-packages/src"
       ],
       "@barusu/tool-sort-imports": [
         "./tools/sort-imports/src"
