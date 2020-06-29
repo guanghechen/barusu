@@ -33,6 +33,9 @@
       "@barusu/tool-tsconfig-paths": [
         "./tools/tsconfig-paths/src"
       ],
+      "@barusu/util-cli": [
+        "./utils/cli/src"
+      ],
       "@barusu/option-util": [
         "./utils/option/src"
       ],
