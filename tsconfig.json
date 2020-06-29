@@ -12,9 +12,6 @@
       "@barusu/event-bus": [
         "./packages/event-bus/src"
       ],
-      "@barusu/package-util": [
-        "./packages/package-util/src"
-      ],
       "@barusu/rollup-config": [
         "./packages/rollup-config/src"
       ],
