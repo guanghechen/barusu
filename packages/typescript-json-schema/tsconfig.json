@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015"
+  },
+  "include": [
+    "demo",
+    "example",
+    "src",
+    "script",
+    "test"
+  ]
+}

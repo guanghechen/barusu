@@ -12,6 +12,9 @@
       "@barusu/rollup-config": [
         "./packages/rollup-config/src"
       ],
+      "@barusu/typescript-json-schema": [
+        "./packages/typescript-json-schema/src"
+      ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
       ],
