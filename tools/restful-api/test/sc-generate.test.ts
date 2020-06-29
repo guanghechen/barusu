@@ -1,7 +1,7 @@
-import path from 'path'
-import chalk from 'chalk'
 import { describe, it } from 'mocha'
-import { execCommand, GenerateCommand, SubCommandHook } from '../src'
+import chalk from 'chalk'
+import path from 'path'
+import { GenerateCommand, SubCommandHook, execCommand } from '../src'
 import { CommandTestCaseMaster } from './util/command-case-util'
 
 

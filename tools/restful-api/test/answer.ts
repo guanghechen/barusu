@@ -1,6 +1,11 @@
-import path from 'path'
 import chalk from 'chalk'
-import { ApiItemParser, execCommand, GenerateCommand, SubCommandHook } from '../src'
+import path from 'path'
+import {
+  ApiItemParser,
+  GenerateCommand,
+  SubCommandHook,
+  execCommand,
+} from '../src'
 import { ApiItemParserTestCaseMaster } from './util/api-parser-case-util'
 import { CommandTestCaseMaster } from './util/command-case-util'
 

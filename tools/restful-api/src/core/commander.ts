@@ -1,11 +1,18 @@
-import path from 'path'
 import commander from 'commander'
-import { OptionMaster, TDSchema, CoverOperationFunc, coverString, coverBoolean, coverNumber } from 'option-master'
-import { GlobalCmdOptions, CmdOptions } from './types/option'
-import { AppContextConfig, GlobalContextConfig } from './types/context'
+import {
+  CoverOperationFunc,
+  OptionMaster,
+  TDSchema,
+  coverBoolean,
+  coverNumber,
+  coverString,
+} from 'option-master'
+import path from 'path'
 import { SubCommand } from './types/commander'
+import { AppContextConfig, GlobalContextConfig } from './types/context'
+import { CmdOptions, GlobalCmdOptions } from './types/option'
 import { loadConfigSchema, loadContextConfig } from './util/context-util'
-import { updateLogLevel, logger } from './util/logger'
+import { logger, updateLogLevel } from './util/logger'
 
 
 /**
@@ -81,6 +88,7 @@ export class Commander {
 
     // calculate global context configuration
     const calcGlobalContextConfig = (projectDir: string): GlobalContextConfig => {
+      // eslint-disable-next-line no-param-reassign
       projectDir = path.resolve(globalOptions.cwd.value, projectDir)
       const globalContextConfig: GlobalContextConfig = self.loadConfig(
         'globalOptions', projectDir, globalOptions, ['configPath', 'version'])
@@ -101,6 +109,7 @@ export class Commander {
 
     // calculate sub-command context configuration
     const calcContextConfig = (projectDir: string, cmdOptions: CmdOptions, ignoredKeys: (keyof CmdOptions)[] = []) => {
+      // eslint-disable-next-line no-param-reassign
       projectDir = path.resolve(globalOptions.cwd.value, projectDir)
       ignoredKeys.push('configPath', 'cwd', 'logLevel', 'version')
       return this.loadConfig(subCommand.name, projectDir, cmdOptions, ignoredKeys)
@@ -120,7 +129,7 @@ export class Commander {
    * parse cli-parameters and stop registration sub-command to generate cli program
    * @param args
    */
-  public run(args: string[]) {
+  public run(args: string[]): void {
     if (this.archived) return
     this.archived = true
     this.program.parse(args)

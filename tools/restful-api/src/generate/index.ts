@@ -1,8 +1,15 @@
-import path from 'path'
 import commander from 'commander'
-import { GenerateCmdOptions, CmdOptions, GlobalCmdOptions } from '../core/types/option'
-import { GlobalContextConfig, GenerateContextConfig } from '../core/types/context'
+import path from 'path'
 import { SubCommand, SubCommandHook } from '../core/types/commander'
+import {
+  GenerateContextConfig,
+  GlobalContextConfig,
+} from '../core/types/context'
+import {
+  CmdOptions,
+  GenerateCmdOptions,
+  GlobalCmdOptions,
+} from '../core/types/option'
 import { logger, updateLogName } from '../core/util/logger'
 import { RestfulApiToolGeneratorContext } from './context'
 import { RestfulApiToolGenerator } from './generator'
@@ -49,7 +56,7 @@ export class GenerateCommand implements SubCommand<'generate', GenerateCmdOption
       cmdOptions: CmdOptions,
       ignoredKeys?: (keyof CmdOptions)[],
     ) => GenerateContextConfig,
-  ) {
+  ): void {
     const self = this
     const generateOptions = self.defaultOptions
     const coverGenerateOption = (key: keyof GenerateCmdOptions, value: any) => {
@@ -82,6 +89,7 @@ export class GenerateCommand implements SubCommand<'generate', GenerateCmdOption
         logger.debug('[generateOptions] ignoreMissingModels:', generateOptions.ignoreMissingModels)
         logger.debug('[generateOptions] clean:', generateOptions.clean)
 
+        // eslint-disable-next-line no-param-reassign
         projectDir = path.resolve(globalCmdOptions.cwd.value, projectDir || '')
         const globalContextConfig = calcGlobalContextConfig(projectDir)
         const contextConfig: GenerateContextConfig = calcContextConfig(projectDir, {

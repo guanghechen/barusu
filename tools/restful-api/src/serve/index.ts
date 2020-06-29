@@ -1,14 +1,19 @@
-import path from 'path'
 import commander from 'commander'
-import { coverString, CoverOperationFunc, coverInteger } from 'option-master'
-import { ServeCmdOptions, CmdOptions, GlobalCmdOptions } from '../core/types/option'
-import { GlobalContextConfig, ServeContextConfig } from '../core/types/context'
+import { CoverOperationFunc, coverInteger, coverString } from 'option-master'
+import path from 'path'
 import { SubCommand, SubCommandHook } from '../core/types/commander'
+import { GlobalContextConfig, ServeContextConfig } from '../core/types/context'
+import {
+  CmdOptions,
+  GlobalCmdOptions,
+  ServeCmdOptions,
+} from '../core/types/option'
 import { logger, updateLogName } from '../core/util/logger'
 import { RestfulApiToolServerContext } from './context'
 import { RestfulApiToolServer } from './server'
 export * from './context'
 export * from './server'
+
 
 export type ServeCommandAfterTriggeredHook = (
   projectDir: string, options: ServeCmdOptions
@@ -49,7 +54,7 @@ export class ServeCommand implements SubCommand<'serve', ServeCmdOptions> {
       cmdOptions: CmdOptions,
       ignoredKeys?: (keyof CmdOptions)[],
     ) => ServeContextConfig,
-  ) {
+  ): void {
     const self = this
     const serveOptions = self.defaultOptions
     const coverServeOption = (key: keyof ServeCmdOptions, value: any) => {
@@ -95,6 +100,7 @@ export class ServeCommand implements SubCommand<'serve', ServeCmdOptions> {
         logger.debug('[serveOptions] mockDataFileFirst:', serveOptions.mockDataFileFirst)
         logger.debug('[serveOptions] mockDataFileRootPath:', serveOptions.mockDataFileRootPath)
 
+        // eslint-disable-next-line no-param-reassign
         projectDir = path.resolve(globalCmdOptions.cwd.value, projectDir || '')
         const globalContextConfig = calcGlobalContextConfig(projectDir)
         const contextConfig: ServeContextConfig = calcContextConfig(projectDir, {

@@ -1,9 +1,16 @@
+import {
+  OptionMaster,
+  TDSchema,
+  coverString,
+  isObject,
+  toKebabCase,
+  toPascalCase,
+} from 'option-master'
 import path from 'path'
-import { coverString, isObject, toPascalCase, toKebabCase, OptionMaster, TDSchema } from 'option-master'
+import { ApiConfig, ApiConfigContext, RawApiConfig } from './types/api-config'
+import { ApiItem, HttpVerb, RawApiItem } from './types/api-item'
 import { ApiItemGroup, RawApiItemGroup } from './types/api-item-group'
-import { RawApiItem, ApiItem, HttpVerb } from './types/api-item'
-import { RawApiConfig, ApiConfig, ApiConfigContext } from './types/api-config'
-import { loadContextConfig, loadConfigSchema } from './util/context-util'
+import { loadConfigSchema, loadContextConfig } from './util/context-util'
 import { logger } from './util/logger'
 
 
@@ -15,6 +22,7 @@ export class ApiItemParser {
 
   public constructor(schemaRootDir?: string, optionMaster?: OptionMaster) {
     if (optionMaster == null) {
+      // eslint-disable-next-line no-param-reassign
       optionMaster = new OptionMaster()
       optionMaster.registerDefaultSchemas()
     }
@@ -178,10 +186,20 @@ export class ApiItemParser {
    */
   public extractRawApiItem(data: RawApiItem, context: ApiConfigContext, group?: ApiItemGroup): ApiItem {
     // preprocess
-    if (typeof data.request === 'string') data.request = { fullModelName: data.request }
-    else if (data.request == null) data.request = {}
-    if (typeof data.response === 'string') data.response = { fullModelName: data.response }
-    else if (data.response == null) data.request = {}
+    if (typeof data.request === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      data.request = { fullModelName: data.request }
+    } else if (data.request == null) {
+      // eslint-disable-next-line no-param-reassign
+      data.request = {}
+    }
+    if (typeof data.response === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      data.response = { fullModelName: data.response }
+    } else if (data.response == null) {
+      // eslint-disable-next-line no-param-reassign
+      data.request = {}
+    }
 
     const { schemaDir } = context
     const fullGroupName = group != null ? toPascalCase(group.fullName.replace(/\//g, '-')) : ''
@@ -190,6 +208,7 @@ export class ApiItemParser {
 
     // calc schema path
     const resolveSchemaPath = (modelName: string) => {
+      // eslint-disable-next-line no-param-reassign
       modelName = toKebabCase(modelName)
       const p = path.join(group != null ? group.fullName : '', modelName + '.json')
       return path.normalize(path.resolve(schemaDir, p))
@@ -244,12 +263,21 @@ export class ApiItemParser {
    *
    * @param rawGroups
    */
-  private normalizeGroups<T extends RawApiItemGroup>(rawGroups: T[] | { [name: string]: Omit<T, 'name'> }): T[] {
+  private normalizeGroups<T extends RawApiItemGroup>(
+    rawGroups: T[] | { [name: string]: Omit<T, 'name'> }
+  ): T[] {
     const self = this
+    // eslint-disable-next-line no-param-reassign
     rawGroups = this.normalizeItems(rawGroups)
     return rawGroups.map(g => {
-      if (g.items != null) g.items = self.normalizeItems<RawApiItem>(g.items)
-      if (g.subGroups != null) g.subGroups = self.normalizeGroups<RawApiItemGroup>(g.subGroups)
+      if (g.items != null) {
+        // eslint-disable-next-line no-param-reassign
+        g.items = self.normalizeItems<RawApiItem>(g.items)
+      }
+      if (g.subGroups != null) {
+        // eslint-disable-next-line no-param-reassign
+        g.subGroups = self.normalizeGroups<RawApiItemGroup>(g.subGroups)
+      }
       return g
     })
   }

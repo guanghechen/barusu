@@ -1,6 +1,6 @@
-import path from 'path'
 import chalk from 'chalk'
-import { execCommand, Router, ServeCommand, SubCommandHook } from '../src'
+import path from 'path'
+import { Router, ServeCommand, SubCommandHook, execCommand } from '../src'
 
 
 async function testServeCommand (caseDir: string) {

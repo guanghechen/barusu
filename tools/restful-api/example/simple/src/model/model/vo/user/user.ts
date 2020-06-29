@@ -1,5 +1,5 @@
-import { User } from '../../user/user'
 import { ResponseResult } from '../../../core/response'
+import { User } from '../../user/user'
 
 
 /**

@@ -1,4 +1,4 @@
-import { HttpVerb, RawApiItem, ApiItem } from './api-item'
+import { ApiItem, HttpVerb, RawApiItem } from './api-item'
 
 
 /**

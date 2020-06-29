@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import fs from 'fs-extra'
-import Koa from 'koa'
-import http from 'http'
 import chalk from 'chalk'
-import Router from 'koa-router'
+import fs from 'fs-extra'
+import http from 'http'
+import Koa from 'koa'
 import koaJson from 'koa-json'
+import Router from 'koa-router'
 import { isFile } from '../core/util/fs-util'
 import { logger } from '../core/util/logger'
+import { RestfulApiToolServerContext } from './context'
 import { accessLog } from './middleware/access-log'
 import { dataFileMock } from './middleware/data-file-mock'
-import { RestfulApiToolServerContext } from './context'
+
+
 const koaCors = require('@koa/cors')
 const jsf = require('json-schema-faker')
 
@@ -52,7 +54,7 @@ export class RestfulApiToolServer {
   /**
    * start server
    */
-  public async start() {
+  public async start(): Promise<void> {
     const { host, port, prefixUrl, mockDataFileFirst, mockDataFileRootPath } = this.context
     const app = new Koa()
 
@@ -115,7 +117,7 @@ export class RestfulApiToolServer {
    * register custom router
    * @param router
    */
-  public registerRouter (router: Router) {
+  public registerRouter (router: Router): void {
     if (this.running) {
       logger.warn('mock server has been started, reject new routes')
       return
@@ -140,6 +142,7 @@ export class RestfulApiToolServer {
           const schemaContent: string = await fs.readFile(schemaPath, encoding)
           const schema = JSON.parse(schemaContent)
           const data = jsf.generate(schema)
+          // eslint-disable-next-line no-param-reassign
           ctx.body = data
         }
       ])

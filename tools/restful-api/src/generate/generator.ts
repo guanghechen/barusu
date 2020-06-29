@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
-import path from 'path'
 import { isArray, isObject } from 'option-master'
-import * as TJS from '@lemon-clown/typescript-json-schema'
+import path from 'path'
+import * as TJS from '@barusu/typescript-json-schema'
 import { logger } from '../core/util/logger'
 import { RestfulApiToolGeneratorContext } from './context'
 
@@ -28,7 +28,7 @@ export class RestfulApiToolGenerator {
   /**
    * 生成 schemas
    */
-  public async generate() {
+  public async generate(): Promise<void> {
     const { context } = this
 
     // 在生成 JSON-SCHEMA 前，做一些清理操作
@@ -98,7 +98,7 @@ export class RestfulApiToolGenerator {
     if (isArray(json)) {
       return json
         .map((d: any) => this.removeIgnoredDataTypes(d))
-        .filter((d: any) => d !== undefined)
+        .filter((d: any) => d !== undefined) as T
     }
     if (isObject(json)) {
       if (this.context.ignoredDataTypes.includes(json['type'])) return undefined

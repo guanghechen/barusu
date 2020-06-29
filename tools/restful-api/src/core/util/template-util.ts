@@ -1,7 +1,14 @@
-import fs from 'fs-extra'
-import { toCamelCase, toSnakeCase, toKebabCase, toLowerCase, toConstantCase, toPascalCase } from 'option-master'
-import { titleCase } from 'title-case'
 import * as changeCase from 'change-case'
+import fs from 'fs-extra'
+import {
+  toCamelCase,
+  toConstantCase,
+  toKebabCase,
+  toLowerCase,
+  toPascalCase,
+  toSnakeCase,
+} from 'option-master'
+import { titleCase } from 'title-case'
 
 
 export type TemplateData = { [key: string]: string }

@@ -1,4 +1,7 @@
-import { PaginationResponseResult, ResponseResult } from '../../../core/response'
+import {
+  PaginationResponseResult,
+  ResponseResult,
+} from '../../../core/response'
 import { Article } from '../../blog/article'
 
 

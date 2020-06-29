@@ -1,13 +1,16 @@
 import path from 'path'
 import ts from 'typescript'
-import * as TJS from '@lemon-clown/typescript-json-schema'
+import * as TJS from '@barusu/typescript-json-schema'
 import { ApiItemParser } from '../core/api-parser'
 import { ApiItem } from '../core/types/api-item'
-import { GlobalContextConfig, GenerateContextConfig } from '../core/types/context'
+import {
+  GenerateContextConfig,
+  GlobalContextConfig,
+} from '../core/types/context'
 import { extractApiItemPath } from '../core/util/context-util'
 import { ensureFilePathSync } from '../core/util/fs-util'
-import { stringify } from '../core/util/type-util'
 import { logger } from '../core/util/logger'
+import { stringify } from '../core/util/type-util'
 
 
 /**

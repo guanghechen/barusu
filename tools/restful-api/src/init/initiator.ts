@@ -1,12 +1,15 @@
-import fs from 'fs-extra'
-import path from 'path'
 import execa from 'execa'
+import fs from 'fs-extra'
 import inquirer from 'inquirer'
 import { toLowerCase } from 'option-master'
-import { logger } from '../core/util/logger'
-import { isNonExistentOrEmpty } from '../core/util/fs-util'
-import { renderTemplateFileAndOutput, TemplateData } from '../core/util/template-util'
+import path from 'path'
 import { calcConfigFilePath } from '../core/util/context-util'
+import { isNonExistentOrEmpty } from '../core/util/fs-util'
+import { logger } from '../core/util/logger'
+import {
+  TemplateData,
+  renderTemplateFileAndOutput,
+} from '../core/util/template-util'
 import { RestfulApiToolInitiatorContext } from './context'
 
 
@@ -31,14 +34,14 @@ export class RestfulApiToolInitiator {
   /**
    *
    */
-  public async init() {
+  public async init(): Promise<void> {
     const { context } = this
 
     // ensure target path is empty
     if (!isNonExistentOrEmpty(context.projectRootPath)) {
       const relativeProjectPath = path.relative(context.cwd, context.projectRootPath)
       logger.error(`${ relativeProjectPath } is not a non-empty directory path`)
-      return -1
+      return
     }
 
     await this.renderTemplates()
@@ -76,6 +79,7 @@ export class RestfulApiToolInitiator {
       }
 
       if (outputFile.endsWith('.plop')) {
+        // eslint-disable-next-line no-param-reassign
         outputFile = outputFile.substr(0, outputFile.length - 5)
       }
       const outputFilePath: string = path.resolve(context.projectRootPath, outputFile)

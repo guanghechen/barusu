@@ -1,5 +1,5 @@
+import { before, it } from 'mocha'
 import path from 'path'
-import { it, before } from 'mocha'
 import { ApiItemParser } from '../src'
 import { ApiItemParserTestCaseMaster } from './util/api-parser-case-util'
 

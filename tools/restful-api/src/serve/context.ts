@@ -3,8 +3,8 @@ import { ApiItemParser } from '../core/api-parser'
 import { ApiItem } from '../core/types/api-item'
 import { GlobalContextConfig, ServeContextConfig } from '../core/types/context'
 import { extractApiItemPath } from '../core/util/context-util'
-import { stringify } from '../core/util/type-util'
 import { logger } from '../core/util/logger'
+import { stringify } from '../core/util/type-util'
 
 
 /**

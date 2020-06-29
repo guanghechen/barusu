@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
-import path from 'path'
 import yaml from 'js-yaml'
-import { OptionMaster, optionMaster, DSchema } from 'option-master'
+import { DSchema, OptionMaster, optionMaster } from 'option-master'
+import path from 'path'
 import { CmdOptions } from '../types/option'
 import { ensureFilePathSync } from './fs-util'
 import { logger } from './logger'
@@ -29,7 +29,7 @@ export function extractApiItemPath(apiItemConfigPath: string): string[] {
  * @param config
  * @param options
  */
-export function coverConfigWithCmdOptions<T extends object> (config: T, options: CmdOptions): T {
+export function coverConfigWithCmdOptions<T> (config: T, options: CmdOptions): T {
   const result: T = { ...config }
   for (const key of Object.getOwnPropertyNames(options)) {
     const item = options[key]
@@ -57,7 +57,7 @@ export function calcConfigFilePath (...filePath: string[]): string {
  */
 export function loadConfigSchema(optionMaster: OptionMaster, schemaName: string): any {
   const schemaPath: string = calcConfigFilePath(`${ schemaName }.schema.json`)
-  const schemaContent: object = fs.readJSONSync(schemaPath)
+  const schemaContent = fs.readJSONSync(schemaPath)
   const schema = optionMaster.parseJSON(schemaContent)
   return schema
 }
@@ -72,7 +72,7 @@ export function loadConfigSchema(optionMaster: OptionMaster, schemaName: string)
  *  - encoding      配置文件的文件编码
  *  - preParse      对配置文件中的内容做预处理的函数
  */
-export function loadContextConfig<R extends object, T extends object> (params: {
+export function loadContextConfig<R, T> (params: {
   optionMaster: OptionMaster,
   schema: DSchema,
   configPath: string,
@@ -95,7 +95,7 @@ export function loadContextConfig<R extends object, T extends object> (params: {
         break
       case '.yml':
       case '.yaml':
-        json = yaml.safeLoad(content)
+        json = yaml.safeLoad(content) as any
         break
       default:
         throw new Error(

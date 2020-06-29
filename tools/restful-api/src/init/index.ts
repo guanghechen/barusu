@@ -1,8 +1,12 @@
-import path from 'path'
 import commander from 'commander'
-import { InitCmdOptions, CmdOptions, GlobalCmdOptions } from '../core/types/option'
-import { GlobalContextConfig, InitContextConfig } from '../core/types/context'
+import path from 'path'
 import { SubCommand, SubCommandHook } from '../core/types/commander'
+import { GlobalContextConfig, InitContextConfig } from '../core/types/context'
+import {
+  CmdOptions,
+  GlobalCmdOptions,
+  InitCmdOptions,
+} from '../core/types/option'
 import { logger, updateLogName } from '../core/util/logger'
 import { RestfulApiToolInitiatorContext } from './context'
 import { RestfulApiToolInitiator } from './initiator'
@@ -49,7 +53,7 @@ export class InitCommand implements SubCommand<'init', InitCmdOptions> {
       cmdOptions: CmdOptions,
       ignoredKeys?: (keyof CmdOptions)[],
     ) => InitContextConfig,
-  ) {
+  ): void {
     const self = this
     const initOptions = self.defaultOptions
 
@@ -68,6 +72,7 @@ export class InitCommand implements SubCommand<'init', InitCmdOptions> {
         // debug logger
         logger.debug('projectDir:', projectDir)
 
+        // eslint-disable-next-line no-param-reassign
         projectDir = path.resolve(globalCmdOptions.cwd.value, projectDir || '')
         const globalContextConfig = calcGlobalContextConfig(projectDir)
         const contextConfig: InitContextConfig = calcContextConfig(projectDir, {

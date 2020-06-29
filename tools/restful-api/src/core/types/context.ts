@@ -1,5 +1,5 @@
 import ts from 'typescript'
-import * as TJS from '@lemon-clown/typescript-json-schema'
+import * as TJS from '@barusu/typescript-json-schema'
 
 
 /**
