@@ -1,0 +1,16 @@
+{
+  "name": "restful-api-tool---demo-simple",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build:schemas": "rapit generate .",
+    "serve:cli": "nodemon --exec \"yarn build:schemas && rapit serve .\"",
+    "serve:program": "nodemon --exec \"yarn build:schemas && node -r ts-node/register script/serve.ts\""
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "restful-api-tool": "^0.0.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  }
+}

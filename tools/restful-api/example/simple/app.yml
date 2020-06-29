@@ -1,0 +1,21 @@
+globalOptions:
+  encoding: utf-8
+  logLevel: debug
+
+generate:
+  clean: true
+  ignoreMissingModels: true
+  ignoredDataTypes:
+    - 'undefined'
+  schemaArgs:
+    ref: false
+    required: true
+
+serve:
+  host: '0.0.0.0'
+  port: 8091
+  prefixUrl: /mock
+  mockDataFileFirst: true
+  mockDataFileRootPath: data/
+  mockOptionalsAlways: true
+  mockOptionalsProbability: 0.7

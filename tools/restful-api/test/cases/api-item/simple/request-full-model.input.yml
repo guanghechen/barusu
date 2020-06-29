@@ -1,0 +1,21 @@
+schemaDir: test/cases/schemas
+api:
+  user:
+    path: /api/user
+    response:
+      headers:
+        Content-Type: application/json; UTF-8
+        Authorize: <token>
+    items:
+      me:
+        path: /me
+        method: GET
+        title: 获取当前用户信息
+        request: CurrentUserInfoRequestModel
+        response: CurrentUserInfoResponseModel
+      u:
+        path: /:id
+        name: UserInfo
+        method: GET
+        title: 获取指定用户信息
+

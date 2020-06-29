@@ -1,0 +1,37 @@
+schemaDir: test/cases/schemas
+api:
+  user:
+    path: /api/user
+    response:
+      headers:
+        Content-Type: application/json; UTF-8
+    items:
+      login:
+        path: /login
+        method: POST
+        title: 登录
+      logout:
+        path: /logout
+        method: POST
+        title: 退出登录
+    subGroups:
+      info:
+        response:
+          modelNamePrefix: Xx
+          headers:
+            Authorize: <token>
+        items:
+          me:
+            path: /me
+            method: GET
+            title: 获取当前用户信息
+            request:
+              fullModelName: CurrentUserInfoRequestModel
+            response:
+              fullModelName: CurrentUserInfoResponseModel
+          u:
+            path: /:id
+            name: UserInfo
+            method: GET
+            title: 获取指定用户信息
+

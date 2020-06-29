@@ -1,0 +1,296 @@
+{
+  "type": "object",
+  "required": true,
+  "requiredProperties": [],
+  "allowAdditionalProperties": false,
+  "silentIgnore": false,
+  "properties": {
+    "globalOptions": {
+      "type": "ref",
+      "required": false,
+      "$ref": "#/definitions/GlobalContextConfig"
+    },
+    "generate": {
+      "type": "ref",
+      "required": false,
+      "$ref": "#/definitions/GenerateContextConfig"
+    },
+    "serve": {
+      "type": "ref",
+      "required": false,
+      "$ref": "#/definitions/ServeContextConfig"
+    },
+    "init": {
+      "type": "ref",
+      "required": false,
+      "$ref": "#/definitions/InitContextConfig"
+    }
+  },
+  "definitions": {
+    "GlobalContextConfig": {
+      "type": "object",
+      "required": false,
+      "requiredProperties": [],
+      "allowAdditionalProperties": false,
+      "silentIgnore": false,
+      "properties": {
+        "cwd": {
+          "type": "string",
+          "required": false
+        },
+        "apiConfigPath": {
+          "type": "string",
+          "required": false
+        },
+        "schemaRootPath": {
+          "type": "string",
+          "required": false
+        },
+        "encoding": {
+          "type": "string",
+          "required": false
+        },
+        "logLevel": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "debug",
+            "error",
+            "info",
+            "verbose",
+            "warn"
+          ]
+        }
+      }
+    },
+    "GenerateContextConfig": {
+      "type": "object",
+      "required": false,
+      "requiredProperties": [
+        "tsconfigPath",
+        "ignoreMissingModels",
+        "clean"
+      ],
+      "allowAdditionalProperties": false,
+      "silentIgnore": false,
+      "properties": {
+        "tsconfigPath": {
+          "type": "string",
+          "required": true
+        },
+        "ignoreMissingModels": {
+          "type": "boolean",
+          "required": true
+        },
+        "clean": {
+          "type": "boolean",
+          "required": true
+        },
+        "ignoredDataTypes": {
+          "type": "array",
+          "required": false,
+          "unique": false,
+          "items": {
+            "type": "string",
+            "required": true
+          }
+        },
+        "apiConfigPath": {
+          "type": "string",
+          "required": false
+        },
+        "schemaRootPath": {
+          "type": "string",
+          "required": false
+        },
+        "encoding": {
+          "type": "string",
+          "required": false
+        },
+        "schemaArgs": {
+          "type": "object",
+          "required": false,
+          "requiredProperties": [],
+          "allowAdditionalProperties": false,
+          "silentIgnore": false,
+          "properties": {
+            "ref": {
+              "type": "boolean",
+              "required": false
+            },
+            "aliasRef": {
+              "type": "boolean",
+              "required": false
+            },
+            "topRef": {
+              "type": "boolean",
+              "required": false
+            },
+            "titles": {
+              "type": "boolean",
+              "required": false
+            },
+            "defaultProps": {
+              "type": "boolean",
+              "required": false
+            },
+            "noExtraProps": {
+              "type": "boolean",
+              "required": false
+            },
+            "propOrder": {
+              "type": "boolean",
+              "required": false
+            },
+            "typeOfKeyword": {
+              "type": "boolean",
+              "required": false
+            },
+            "required": {
+              "type": "boolean",
+              "required": false
+            },
+            "strictNullChecks": {
+              "type": "boolean",
+              "required": false
+            },
+            "ignoreErrors": {
+              "type": "boolean",
+              "required": false
+            },
+            "out": {
+              "type": "string",
+              "required": false
+            },
+            "validationKeywords": {
+              "type": "array",
+              "required": false,
+              "unique": false,
+              "items": {
+                "type": "string",
+                "required": false
+              }
+            },
+            "include": {
+              "type": "array",
+              "required": false,
+              "unique": false,
+              "items": {
+                "type": "string",
+                "required": false
+              }
+            },
+            "excludePrivate": {
+              "type": "boolean",
+              "required": false
+            },
+            "uniqueNames": {
+              "type": "boolean",
+              "required": false
+            },
+            "rejectDateType": {
+              "type": "boolean",
+              "required": false
+            },
+            "id": {
+              "type": "string",
+              "required": false
+            },
+            "defaultNumberType": {
+              "type": "string",
+              "required": false,
+              "enum": [
+                "integer",
+                "number"
+              ]
+            }
+          }
+        },
+        "additionalCompilerOptions": {
+          "type": "object",
+          "required": false,
+          "requiredProperties": [],
+          "allowAdditionalProperties": true,
+          "silentIgnore": false
+        }
+      }
+    },
+    "ServeContextConfig": {
+      "type": "object",
+      "required": false,
+      "requiredProperties": [
+        "host",
+        "port",
+        "prefixUrl",
+        "mockRequiredOnly",
+        "mockOptionalsAlways",
+        "mockOptionalsProbability",
+        "mockDataFileFirst"
+      ],
+      "allowAdditionalProperties": false,
+      "silentIgnore": false,
+      "properties": {
+        "host": {
+          "type": "string",
+          "default": "127.0.0.1",
+          "required": true
+        },
+        "port": {
+          "type": "number",
+          "default": 8080,
+          "required": true,
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "prefixUrl": {
+          "type": "string",
+          "default": "",
+          "required": true
+        },
+        "apiConfigPath": {
+          "type": "string",
+          "required": false
+        },
+        "schemaRootPath": {
+          "type": "string",
+          "required": false
+        },
+        "encoding": {
+          "type": "string",
+          "required": false
+        },
+        "mockRequiredOnly": {
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        "mockOptionalsAlways": {
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        "mockOptionalsProbability": {
+          "type": "number",
+          "default": 0.8,
+          "required": true
+        },
+        "mockDataFileFirst": {
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        "mockDataFileRootPath": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "InitContextConfig": {
+      "type": "object",
+      "required": false,
+      "requiredProperties": [],
+      "allowAdditionalProperties": false,
+      "silentIgnore": false
+    }
+  }
+}

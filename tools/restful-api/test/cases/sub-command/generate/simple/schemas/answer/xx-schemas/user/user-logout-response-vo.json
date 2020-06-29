@@ -1,0 +1,26 @@
+{
+  "description": "响应数据",
+  "type": "object",
+  "properties": {
+    "code": {
+      "$ref": "#/definitions/ResponseCode",
+      "description": "响应码",
+      "default": 200
+    },
+    "message": {
+      "description": "响应消息",
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "ResponseCode": {
+      "description": "200 OK",
+      "type": "number",
+      "enum": [
+        200
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UserLogoutResponseVo"
+}
