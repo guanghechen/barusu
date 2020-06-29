@@ -33,6 +33,9 @@
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
       ],
+      "@barusu/tool-cipher": [
+        "./tools/cipher/src"
+      ],
     }
   }
 }

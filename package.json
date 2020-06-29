@@ -29,7 +29,8 @@
     "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "tools/*"
   ],
   "devDependencies": {
     "cross-env": "^7.0.2",
@@ -42,7 +43,9 @@
   "@barusu/tool-sort-imports": {
     "pattern": [
       "packages/**/src/**/*.{ts,tsx}",
-      "packages/**/test/**/*.{ts,tsx}"
+      "packages/**/test/**/*.{ts,tsx}",
+      "tools/**/src/**/*.{ts,tsx}",
+      "tools/**/test/**/*.{ts,tsx}"
     ],
     "moduleRanks": [
       {
