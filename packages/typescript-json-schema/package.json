@@ -38,23 +38,19 @@
     "test": "TS_NODE_PROJECT='./tsconfig.test.json'  mocha -t 5000 -r ts-node/register test/**.test.ts"
   },
   "dependencies": {
-    "@types/glob": "^7.1.1",
-    "@types/json-schema": "^7.0.3",
+    "@types/json-schema": "^7.0.5",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/node": "^12.7.3",
-    "glob": "^7.1.4",
     "json-stable-stringify": "^1.0.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.8.2"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.17",
     "@barusu/rollup-config": "^0.0.17",
-    "@types/chai": "^4.2.1",
-    "@types/mocha": "^5.2.7",
-    "ajv": "^6.10.2",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "ajv": "^6.12.2",
     "chai": "^4.2.0",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.19.1",
+    "mocha": "^7.1.1",
     "rollup": "2.16.1"
   }
 }
