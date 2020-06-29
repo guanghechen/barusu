@@ -3,9 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@barusu/blob-util": [
-        "./packages/blob-util/src"
-      ],
       "@barusu/chalk-logger": [
         "./packages/chalk-logger/src"
       ],
@@ -29,6 +26,9 @@
       ],
       "@barusu/tool-tsconfig-paths": [
         "./tools/tsconfig-paths/src"
+      ],
+      "@barusu/blob-util": [
+        "./utils/blob/src"
       ],
       "@barusu/util-cli": [
         "./utils/cli/src"
