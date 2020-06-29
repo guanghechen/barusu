@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/option-util#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/utils/option#readme",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",

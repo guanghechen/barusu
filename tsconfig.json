@@ -12,9 +12,6 @@
       "@barusu/event-bus": [
         "./packages/event-bus/src"
       ],
-      "@barusu/option-util": [
-        "./packages/option-util/src"
-      ],
       "@barusu/package-util": [
         "./packages/package-util/src"
       ],
@@ -35,6 +32,9 @@
       ],
       "@barusu/tool-tsconfig-paths": [
         "./tools/tsconfig-paths/src"
+      ],
+      "@barusu/option-util": [
+        "./utils/option/src"
       ],
     }
   }
