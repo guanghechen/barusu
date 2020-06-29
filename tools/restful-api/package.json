@@ -1,6 +1,6 @@
 {
   "name": "restful-api-tool",
-  "version": "0.0.7",
+  "version": "0.0.17",
   "description": "quickly create restful style mock server.",
   "author": {
     "name": "lemon-clown",
