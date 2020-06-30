@@ -12,7 +12,39 @@
   yarn add @barusu/chalk-logger
   ```
 
-## cli-options
+## Options
+   Name               | Type                    | Required  | Default           |  Desc
+  :------------------:|:-----------------------:|:---------:|:-----------------:|:------------------:
+   `basename`         | string \| `null`        | `false`   | `null`            | [see below](#option-details)
+   `mode`             | `'normal'` \| `'loose'` | `false`   | `normal`          | [see below](#option-details)
+   `placeholderRegex` | RegExp                  | `false`   | `/(?<!\\)\{\}/g`  | string formatter placeholder regex
+   `name`             | string                  | `false`   | -                 | name of logger
+   `level`            | Level                   | `false`   | `Level.INFO`      | verbosity level of the logging output
+   `date`             | boolean                 | `false`   | `false`           | whether to print the date
+   `inline`           | boolean                 | `false`   | `false`           | whether to print each log on one line
+   `colorful`         | boolean                 | `false`   | `true`            | whether to print log surrounded with color
+   `encoding`         | string                  | `false`   | `utf-8`           | [see below](#option-details)
+   `filepath`         | string                  | `false`   | -                 | [see below](#option-details)
+   `write`            | (text: string) => void  | `false`   | `process.stdout`  | [see below](#option-details)
+   `dateChalk`        | Chalk \| Color          | `false`   | `chalk.gray`      | color of date string
+   `nameChalk`        | Chalk \| Color          | `false`   | `chalk.gray`      | color of logger name string
+
+### Option Details
+  * `basename`: Base of the logger name, when you change logger name according `setName` function, the basename will be prefixed of the logger name
+
+  * `mode`
+    - `normal`: Print log only
+    - `loose`: Print a newline before and after the log
+
+  * `encoding`: Specifying the file encoding of `filepath`, only works if `filepath` is specified
+
+  * `filepath`: Log output file
+
+  * `write`: If `filepath` is specified, the log is output to `filepath` by default, otherwise to the `process.stdout`.
+    You can specify your own write function to customize the output behavior of the log
+
+
+## Cli-options
   * `--log-level <debug|verbose|info|warn|error|fatal>`: specify global logger level.
   * `--log-name <new logger name>`: specify global logger name.
   * `--log-mode <'normal' | 'loose'>`: specify global logger mode.

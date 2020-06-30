@@ -27,14 +27,14 @@ export class Logger {
   private static get defaultDateChalk() { return chalk.gray.bind(chalk) }
   private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
 
-  private readonly write = (text: string) => { process.stdout.write(text) }
-  public name: string
-  public mode: 'normal' | 'loose' = 'normal'
-  public readonly level = Logger.defaultLevel
-  public readonly dateChalk = Logger.defaultDateChalk
-  public readonly nameChalk = Logger.defaultNameChalk
-  private readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
-  public readonly flags = {
+  protected name: string
+  protected mode: 'normal' | 'loose' = 'normal'
+  protected level = Logger.defaultLevel
+  protected readonly write = (text: string): void => { process.stdout.write(text) }
+  protected readonly dateChalk = Logger.defaultDateChalk
+  protected readonly nameChalk = Logger.defaultNameChalk
+  protected readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
+  protected readonly flags = {
     date: false,
     inline: false,
     colorful: true,
