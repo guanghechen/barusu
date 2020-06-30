@@ -6,6 +6,9 @@
       "@barusu/chalk-logger": [
         "./packages/chalk-logger/src"
       ],
+      "@barusu/commander": [
+        "./packages/commander/src"
+      ],
       "@barusu/event-bus": [
         "./packages/event-bus/src"
       ],
