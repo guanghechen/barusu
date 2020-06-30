@@ -1,51 +1,59 @@
+import { isNumber, isString } from './is'
+
+
 /**
- * 转换成布尔值
- *  - 若 @value 为 null/undefined，返回 undefined
- *  - 若 @value 为 string，则只有 true/false 才是有效值，其它值视为 undefined
- *  - 否则，返回 Boolean(@value)
- * @param value
+ * Convert to boolean
+ *  - If v is null / undefined, return undefined
+ *  - If v is string, only true/false is a valid value,
+ *    other values are regarded as undefined
+ *  - Otherwise, return Boolean(v)
+ *
+ * @param v
  */
-export function convertToBoolean(value?: string | boolean | any): boolean | undefined {
-  if (value == null) return undefined
-  if (typeof value === 'string') {
-    switch (value.toLowerCase()) {
+export function convertToBoolean(v: string | boolean | any): boolean | undefined {
+  if (v == null) return undefined
+  if (isString(v)) {
+    switch (v.toLowerCase()) {
       case 'false': return false
       case 'true': return true
     }
     return undefined
   }
-  return Boolean(value)
+  return Boolean(v)
 }
 
 
 /**
- * 转换成数字
- *  - 若 @value 为 null/undefined，返回 undefined
- *  - 若 @value 为 string，先转为数字，若为 NaN，则视为 undefined，否则返回该数字
- *  - 若 @value 为 number，返回 @value
- *  - 否则，返回 undefined
- * @param value
+ * Convert to number
+ *  - If v is null / undefined, return undefined
+ *  - If v is string, it is converted to a number first, if it is NaN,
+ *    it is regarded as undefined, otherwise the number is returned
+ *  - If v is number, return v
+ *  - Otherwise, return undefined
+ *
+ * @param v
  */
-export function convertToNumber(value?: number | string | any): number | undefined {
-  if (value == null) return undefined
-  if (typeof value === 'string') {
-    const v = Number(value)
-    return Number.isNaN(v) ? undefined : v
+export function convertToNumber(v: number | string | unknown): number | undefined {
+  if (v == null) return undefined
+  if (isString(v)) {
+    const x = Number(v)
+    return Number.isNaN(x) ? undefined : x
   }
-  if (typeof value === 'number') return value
+  if (isNumber(v)) return v
   return undefined
 }
 
 
 /**
- * 转换成字符串
- *  - 若 @value 为 null/undefined，返回 undefined
- *  - 若 @value 为 string，返回 @value
- *  - 否则，返回 undefined
- * @param value
+ * Convert to string
+ *  - If v is null / undefined, return undefined
+ *  - If v is a string, return v
+ *  - Otherwise, return undefined
+ *
+ * @param v
  */
-export function convertToString(value?: string | any): string | undefined {
-  if (value == null) return undefined
-  if (typeof value === 'string') return value
+export function convertToString(v: string | unknown): string | undefined {
+  if (v == null) return undefined
+  if (isString(v)) return v
   return undefined
 }
