@@ -1,5 +1,5 @@
 {
-  "name": "restful-api-tool",
+  "name": "@barusu/tool-restful-api",
   "version": "0.0.17",
   "description": "quickly create restful style mock server.",
   "author": {
@@ -45,8 +45,8 @@
     "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
   },
   "dependencies": {
+    "@barusu/typescript-json-schema": "^0.0.17",
     "@koa/cors": "^3.0.0",
-    "@barusu/typescript-json-schema": "^0.42.4",
     "@types/fs-extra": "^8.0.0",
     "@types/inquirer": "^6.5.0",
     "@types/js-yaml": "^3.12.1",
@@ -54,7 +54,6 @@
     "@types/koa-json": "^2.0.18",
     "@types/koa-router": "^7.0.42",
     "@types/mockjs": "^1.0.2",
-    "@types/node": "^12.7.3",
     "change-case": "^4.1.1",
     "colorful-chalk-logger": "^0.4.2",
     "commander": "^4.0.1",
