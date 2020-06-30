@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
-import { isArray, isObject } from 'option-master'
 import path from 'path'
 import * as TJS from '@barusu/typescript-json-schema'
+import { isArray, isObject } from '@barusu/util-option'
 import { logger } from '../core/util/logger'
 import { RestfulApiToolGeneratorContext } from './context'
 

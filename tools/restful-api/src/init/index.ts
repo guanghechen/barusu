@@ -7,7 +7,7 @@ import {
   GlobalCmdOptions,
   InitCmdOptions,
 } from '../core/types/option'
-import { logger, updateLogName } from '../core/util/logger'
+import { logger } from '../core/util/logger'
 import { RestfulApiToolInitiatorContext } from './context'
 import { RestfulApiToolInitiator } from './initiator'
 export * from './context'
@@ -62,7 +62,7 @@ export class InitCommand implements SubCommand<'init', InitCmdOptions> {
       .command('init <project-dir>')
       .alias('i')
       .action(async function (projectDir: string, options: InitCmdOptions) {
-        updateLogName(self.name)
+        logger.setName(self.name)
 
         // execute hook after action triggered
         for (const hook of self.afterTriggeredHooks) {

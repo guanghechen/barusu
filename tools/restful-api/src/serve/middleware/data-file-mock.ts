@@ -24,7 +24,8 @@ interface Params {
  * 以 <dataFileRootPath> 下的 json 文件作为优先数据源
  */
 export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPath }: Params) {
-  return async function (ctx: Koa.Context, next: Function) {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  return async function (ctx: Koa.Context, next: Function): Promise<any> {
     // 以数据文件作为 mock 数据源
     const loadFromDataFile = async () => {
       let u = ctx.path.startsWith(prefixUrl) ? ctx.path.slice(prefixUrl.length) : ctx.path
@@ -47,6 +48,7 @@ export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPat
     for (const method of methods) {
       const data = await method()
       if (data != null) {
+        // eslint-disable-next-line no-param-reassign
         ctx.body = data
         return
       }

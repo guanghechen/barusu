@@ -1,14 +1,16 @@
-import * as changeCase from 'change-case'
 import fs from 'fs-extra'
 import {
   toCamelCase,
   toConstantCase,
+  toDotCase,
   toKebabCase,
   toLowerCase,
   toPascalCase,
+  toPathCase,
+  toSentenceCase,
   toSnakeCase,
-} from 'option-master'
-import { titleCase } from 'title-case'
+  toTitleCase,
+} from '@barusu/util-option'
 
 
 export type TemplateData = { [key: string]: string }
@@ -31,14 +33,14 @@ export function renderTemplate(content: string, data: TemplateData): string {
       case 'snakecase': return toSnakeCase(val)
       case 'dashcase':
       case 'kebabcase': return toKebabCase(val)
-      case 'dotcase': return changeCase.dotCase(val)
-      case 'pathcase': return changeCase.pathCase(val)
+      case 'dotcase': return toDotCase(val)
+      case 'pathcase': return toPathCase(val)
       case 'propercase':
       case 'pascalcase': return toPascalCase(val)
       case 'lowercase': return toLowerCase(val)
-      case 'sentencecase': return changeCase.sentenceCase(val)
+      case 'sentencecase': return toSentenceCase(val)
       case 'constantcase': return toConstantCase(val)
-      case 'titlecase': return titleCase(val)
+      case 'titlecase': return toTitleCase(val)
       default: return matched
     }
   })

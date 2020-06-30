@@ -8,7 +8,7 @@ import {
   GlobalCmdOptions,
   ServeCmdOptions,
 } from '../core/types/option'
-import { logger, updateLogName } from '../core/util/logger'
+import { logger } from '../core/util/logger'
 import { RestfulApiToolServerContext } from './context'
 import { RestfulApiToolServer } from './server'
 export * from './context'
@@ -75,7 +75,7 @@ export class ServeCommand implements SubCommand<'serve', ServeCmdOptions> {
       .option('--mock-use-data-file-first <mockDataFileRootPath>', 'specify the mock data file root path.')
       .option('--mock-data-file-first', 'preferred use data file as mock data source.')
       .action(async function (projectDir: string, options: ServeCmdOptions) {
-        updateLogName(self.name)
+        logger.setName(self.name)
 
         // execute hook after action triggered
         for (const hook of self.afterTriggeredHooks) {

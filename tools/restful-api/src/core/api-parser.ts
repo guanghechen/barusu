@@ -1,12 +1,11 @@
+import { OptionMaster, TDSchema } from 'option-master'
+import path from 'path'
 import {
-  OptionMaster,
-  TDSchema,
   coverString,
   isObject,
   toKebabCase,
   toPascalCase,
-} from 'option-master'
-import path from 'path'
+} from '@barusu/util-option'
 import { ApiConfig, ApiConfigContext, RawApiConfig } from './types/api-config'
 import { ApiItem, HttpVerb, RawApiItem } from './types/api-item'
 import { ApiItemGroup, RawApiItemGroup } from './types/api-item-group'
@@ -119,18 +118,18 @@ export class ApiItemParser {
     // calc request model name
     const requestModelNamePrefix: string = coverString(
       parent != null ? parent.request.modelNamePrefix : '',
-      data.request.modelNamePrefix).value!
+      data.request.modelNamePrefix)
     const requestModelNameSuffix: string = coverString(
       parent != null ? parent.request.modelNameSuffix : 'RequestVo',
-      data.request.modelNameSuffix).value!
+      data.request.modelNameSuffix)
 
     // calc response model name
     const responseModelNamePrefix: string = coverString(
       parent != null ? parent.response.modelNamePrefix : '',
-      data.response.modelNamePrefix).value!
+      data.response.modelNamePrefix)
     const responseModelNameSuffix: string = coverString(
       parent != null ? parent.response.modelNameSuffix : 'ResponseVo',
-      data.response.modelNameSuffix).value!
+      data.response.modelNameSuffix)
 
     // calc response headers
     const responseHeaders = ((parent != null && parent.response.headers != null) || (data.response.headers != null))
@@ -140,10 +139,10 @@ export class ApiItemParser {
     const group: ApiItemGroup = {
       name: data.name,
       fullName: toKebabCase(parent != null ? parent.fullName + '/' + data.name : data.name),
-      title: coverString(data.name, data.title).value!,
+      title: coverString(data.name, data.title),
       description: data.description,
       path: (parent != null ? parent.path : '') + data.path,
-      method: coverString(defaultMethod, data.method).value as HttpVerb,
+      method: coverString(defaultMethod as any, data.method) as HttpVerb,
       request: {
         modelNamePrefix: requestModelNamePrefix,
         modelNameSuffix: requestModelNameSuffix,
@@ -217,21 +216,21 @@ export class ApiItemParser {
     // calc request model name
     const requestModelNameMiddle: string = coverString(
       group != null ? fullGroupName + '-' + data.name : data.name,
-      data.request.model).value!
+      data.request.model)
     const defaultRequestModelName: string = (group != null)
       ? group.request.modelNamePrefix + '-' + requestModelNameMiddle + '-' + group.request.modelNameSuffix
       : requestModelNameMiddle
-    const requestModelName = toPascalCase(coverString(defaultRequestModelName, data.request.fullModelName).value!)
+    const requestModelName = toPascalCase(coverString(defaultRequestModelName, data.request.fullModelName))
     const requestSchemaPath = resolveSchemaPath(requestModelName)
 
     // calc response model name
     const responseModelNameMiddle: string = coverString(
       group != null ? fullGroupName + '-' + data.name : data.name,
-      data.response.model).value!
+      data.response.model)
     const defaultResponseModelName: string = (group != null)
       ? group.response.modelNamePrefix + '-' + responseModelNameMiddle + '-' + group.response.modelNameSuffix
       : responseModelNameMiddle
-    const responseModelName = toPascalCase(coverString(defaultResponseModelName, data.response.fullModelName).value!)
+    const responseModelName = toPascalCase(coverString(defaultResponseModelName, data.response.fullModelName))
     const responseSchemaPath = resolveSchemaPath(responseModelName)
 
     // calc response headers
@@ -241,10 +240,10 @@ export class ApiItemParser {
 
     const apiItem: ApiItem = {
       name: data.name,
-      title: coverString(data.name, data.title).value!,
+      title: coverString(data.name, data.title),
       description: data.description,
-      path: coverString(defaultPath, data.fullPath).value!,
-      method: coverString(defaultMethod, data.method).value as HttpVerb,
+      path: coverString(defaultPath, data.fullPath),
+      method: coverString(defaultMethod, data.method) as HttpVerb,
       request: {
         model: requestModelName,
         schema: requestSchemaPath,
@@ -293,7 +292,7 @@ export class ApiItemParser {
     if (rawItems == undefined) return items
     if (isObject(rawItems)) {
       for (const name of Object.getOwnPropertyNames(rawItems)) {
-        items.push({ name, ...rawItems[name] })
+        items.push({ name, ...rawItems[name] } as T)
       }
     } else {
       items.push(...rawItems as T[])

@@ -8,11 +8,12 @@ import {
   coverString,
 } from 'option-master'
 import path from 'path'
+import { Level } from '@barusu/chalk-logger'
 import { SubCommand } from './types/commander'
 import { AppContextConfig, GlobalContextConfig } from './types/context'
 import { CmdOptions, GlobalCmdOptions } from './types/option'
 import { loadConfigSchema, loadContextConfig } from './util/context-util'
-import { logger, updateLogLevel } from './util/logger'
+import { logger } from './util/logger'
 
 
 /**
@@ -57,7 +58,7 @@ export class Commander {
       .on('option:schema-root-path', coverGlobalOption('schemaRootPath'))
       .on('option:log-level', (t: string) => {
         coverGlobalOption('logLevel')(t)
-        updateLogLevel(t)
+        logger.setLevel(Level.valueOf(globalOptions.logLevel.value))
       })
 
     // debug logger

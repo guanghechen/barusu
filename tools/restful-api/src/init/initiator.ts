@@ -1,10 +1,10 @@
 import execa from 'execa'
 import fs from 'fs-extra'
 import inquirer from 'inquirer'
-import { toLowerCase } from 'option-master'
 import path from 'path'
+import { isNonExistentOrEmpty } from '@barusu/util-cli'
+import { toLowerCase } from '@barusu/util-option'
 import { calcConfigFilePath } from '../core/util/context-util'
-import { isNonExistentOrEmpty } from '../core/util/fs-util'
 import { logger } from '../core/util/logger'
 import {
   TemplateData,

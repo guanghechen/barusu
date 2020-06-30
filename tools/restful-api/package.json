@@ -36,16 +36,19 @@
     "rapit": "lib/command.js"
   },
   "scripts": {
-    "generate:schema": "cross-env node -r ts-node/register script/generate.ts",
-    "answer": "cross-env node -r ts-node/register test/answer.ts",
-    "test": "mocha -r ts-node/register test/**/*.test.ts",
-    "build": "rimraf lib/ && tsc -b tsconfig.json",
-    "postbuild": "rimraf lib/package.json lib/test && mv lib/src/* lib && cp -rf src/core/config lib/core/ && rimraf lib/src/ lib/core/config/*.raw.schema.json lib/**/*.tsbuildinfo",
+    "prebuild": "rimraf lib/",
+    "build": "rollup -c rollup.config.js",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
+    "prepublishOnly": "yarn lint:fix && yarn test && yarn build",
+    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "generate:schema": "cross-env node -r ts-node/register script/generate.ts",
+    "answer": "cross-env node -r ts-node/register test/answer.ts"
   },
   "dependencies": {
+    "@barusu/chalk-logger": "^0.0.17",
     "@barusu/typescript-json-schema": "^0.0.17",
+    "@barusu/util-cli": "^0.0.17",
+    "@barusu/util-option": "^0.0.17",
     "@koa/cors": "^3.0.0",
     "@types/fs-extra": "^8.0.0",
     "@types/inquirer": "^6.5.0",
@@ -54,8 +57,6 @@
     "@types/koa-json": "^2.0.18",
     "@types/koa-router": "^7.0.42",
     "@types/mockjs": "^1.0.2",
-    "change-case": "^4.1.1",
-    "colorful-chalk-logger": "^0.4.2",
     "commander": "^4.0.1",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
@@ -67,7 +68,6 @@
     "koa-router": "^7.4.0",
     "mockjs": "^1.1.0",
     "option-master": "^0.0.16",
-    "title-case": "^3.0.2",
     "typescript": "^3.8.2"
   },
   "devDependencies": {
@@ -78,6 +78,7 @@
     "@types/mocha": "^7.0.2",
     "cross-env": "^7.0.2",
     "chai": "^4.2.0",
-    "mocha": "^7.1.1"
+    "mocha": "^7.1.1",
+    "rollup": "2.16.1"
   }
 }

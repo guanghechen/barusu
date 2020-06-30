@@ -56,5 +56,6 @@ export interface SubCommand<T extends keyof AppContextConfig, O extends CmdOptio
    * @param type
    * @param task
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   onHook(type: SubCommandHook, task: Function): this
 }

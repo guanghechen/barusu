@@ -2,8 +2,8 @@ import fs from 'fs-extra'
 import yaml from 'js-yaml'
 import { DSchema, OptionMaster, optionMaster } from 'option-master'
 import path from 'path'
+import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import { CmdOptions } from '../types/option'
-import { ensureFilePathSync } from './fs-util'
 import { logger } from './logger'
 
 
@@ -82,7 +82,7 @@ export function loadContextConfig<R, T> (params: {
 }): T | never {
   let json: R
   if (params.fallbackData == null) {
-    ensureFilePathSync(params.configPath)
+    ensureCriticalFilepathExistsSync(params.configPath, logger)
   }
 
   if (params.fallbackData == null || fs.existsSync(params.configPath)) {

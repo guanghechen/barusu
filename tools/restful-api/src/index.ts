@@ -1,7 +1,7 @@
 import program from 'commander'
 import Router from 'koa-router'
 import { optionMaster } from 'option-master'
-import manifest from '../package.json'
+import { version } from '@barusu/tool-restful-api/package.json'
 import { Commander } from './core/commander'
 import { GenerateCommand } from './generate'
 import { InitCommand } from './init'
@@ -16,7 +16,6 @@ export * from './core/types/commander'
 export * from './core/types/context'
 export * from './core/types/option'
 export * from './core/util/context-util'
-export * from './core/util/fs-util'
 export * from './core/util/logger'
 export * from './core/util/type-util'
 export * from './core/api-parser'
@@ -38,14 +37,23 @@ export function execCommand(args?: string[], subCommands: {
   init?: InitCommand,
 } = {}): Commander {
   const commander = new Commander(
-    manifest.version,
+    version,
     program,
     optionMaster,
   )
 
-  if (subCommands.generate == null) subCommands.generate = new GenerateCommand()
-  if (subCommands.serve == null) subCommands.serve = new ServeCommand()
-  if (subCommands.init == null) subCommands.init = new InitCommand()
+  if (subCommands.generate == null) {
+    // eslint-disable-next-line no-param-reassign
+    subCommands.generate = new GenerateCommand()
+  }
+  if (subCommands.serve == null) {
+    // eslint-disable-next-line no-param-reassign
+    subCommands.serve = new ServeCommand()
+  }
+  if (subCommands.init == null) {
+    // eslint-disable-next-line no-param-reassign
+    subCommands.init = new InitCommand()
+  }
 
   // register sub-command
   commander

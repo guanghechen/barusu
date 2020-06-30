@@ -10,7 +10,7 @@ import {
   GenerateCmdOptions,
   GlobalCmdOptions,
 } from '../core/types/option'
-import { logger, updateLogName } from '../core/util/logger'
+import { logger } from '../core/util/logger'
 import { RestfulApiToolGeneratorContext } from './context'
 import { RestfulApiToolGenerator } from './generator'
 export * from './context'
@@ -72,7 +72,7 @@ export class GenerateCommand implements SubCommand<'generate', GenerateCmdOption
       .option('-I, --ignore-missing-models', 'ignore missing model.')
       .option('--clean', 'clean schema folders before generate.')
       .action(async function (projectDir: string, options: GenerateCmdOptions) {
-        updateLogName(self.name)
+        logger.setName(self.name)
 
         // execute hook after action triggered
         for (const hook of self.afterTriggeredHooks) {

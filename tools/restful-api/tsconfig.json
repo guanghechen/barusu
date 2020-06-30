@@ -1,40 +1,12 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "jsx": "react",
-    "strict": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": false,
-    "alwaysStrict": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "newLine": "LF",
-    "noEmitOnError": true,
-    "removeComments": false,
-    "declaration": true,
-    "sourceMap": false,
-    "pretty": false,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
-    "lib": [
-      "es2015",
-      "dom"
-    ],
-    "outDir": "lib",
     "module": "commonjs",
-    "target": "es6",
-    "rootDir": "."
+    "target": "es2015"
   },
   "include": [
     "src",
-    "test",
-    "package.json"
+    "script",
+    "test"
   ]
 }

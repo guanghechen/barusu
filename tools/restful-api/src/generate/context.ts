@@ -1,6 +1,7 @@
 import path from 'path'
 import ts from 'typescript'
 import * as TJS from '@barusu/typescript-json-schema'
+import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import { ApiItemParser } from '../core/api-parser'
 import { ApiItem } from '../core/types/api-item'
 import {
@@ -8,7 +9,6 @@ import {
   GlobalContextConfig,
 } from '../core/types/context'
 import { extractApiItemPath } from '../core/util/context-util'
-import { ensureFilePathSync } from '../core/util/fs-util'
 import { logger } from '../core/util/logger'
 import { stringify } from '../core/util/type-util'
 
@@ -65,7 +65,7 @@ export class RestfulApiToolGeneratorContext {
     apiConfigPath = path.resolve(projectRootPath, apiConfigPath)
 
     // ensure tsconfigPath is valid.
-    ensureFilePathSync(tsconfigPath)
+    ensureCriticalFilepathExistsSync(tsconfigPath, logger)
 
     this.cwd = cwd
     this.projectRootPath = projectRootPath
