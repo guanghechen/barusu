@@ -32,6 +32,7 @@
     "prebuild",
     "rapit",
     "readdir",
+    "recognised",
     "rimraf",
     "rollup",
     "sourcemap",

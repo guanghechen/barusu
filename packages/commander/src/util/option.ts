@@ -1,11 +1,11 @@
-import { CustomError, ErrorCode } from './types'
+import { CommandError, CommandErrorCode } from './error'
 
 
 /**
  * -x, -xxxx [args]
  * -x, -xxxx <args>
  */
-export const optionStatementRegex = new RegExp(
+export const optionFlagsRegex = new RegExp(
   /^\s*/.source +
   /(\-[a-zA-Z])?/.source +                                          // short
   /([, |]\s*)?/.source +
@@ -25,23 +25,10 @@ export function transformOptionArgToCamelCase(optionArg: string): string {
 }
 
 
-/**
- * @member name           Option name
- * @member argName        Option arg name
- * @member statement      Raw option declaration statement
- * @member mandatory      Is a required option
- * @member description    Option description
- * @member negate         Negative option
- * @member required       Has a required parameter
- * @member optional       Has a optional parameter
- * @member short          Short name of option
- * @member long           Long / Full name of option
- * @member defaultValue   Option default value
- */
-export class Option<T = unknown> {
+export class Option<T = unknown> implements Option<T> {
   public readonly name: string
   public readonly argName: string
-  public readonly statement: string
+  public readonly flags: string
   public readonly mandatory: boolean
   public readonly description: string
   public readonly negate: boolean
@@ -53,30 +40,30 @@ export class Option<T = unknown> {
   public value?: T
 
   public constructor(
-    statement: string,
+    flags: string,
     mandatory: boolean,
     description?: string,
     defaultValue?: T
   ) {
-    const match = optionStatementRegex.exec(statement)
+    const match = optionFlagsRegex.exec(flags)
     if (match == null) {
-      const err: CustomError = {
-        code: ErrorCode.BAD_OPTION,
-        message: `Not a valid option flags(${ statement })`
-      }
-      throw err
+      throw new CommandError(
+        -1,
+        CommandErrorCode.COMMAND_OPTION_BAD,
+        `Not a valid option flags(${ flags })`
+      )
     }
 
     const [, short, , long, optionArg] = match
     if (short == null && long == null) {
-      const err: CustomError = {
-        code: ErrorCode.BAD_OPTION,
-        message: `Not a valid option flags(${ statement }). Bad option name`
-      }
-      throw err
+      throw new CommandError(
+        -1,
+        CommandErrorCode.COMMAND_OPTION_BAD,
+        `Not a valid option flags(${ flags }). Bad option name`
+      )
     }
 
-    this.statement = statement
+    this.flags = flags
     this.mandatory = mandatory
     this.description = description || ''
     this.defaultValue = defaultValue
@@ -97,4 +84,64 @@ export class Option<T = unknown> {
   public is(arg: string): boolean {
     return this.short === arg || this.long === arg
   }
+}
+
+
+/**
+ *
+ */
+export interface Option<T = unknown> {
+  /**
+   * Raw option declaration flags
+   */
+  readonly flags: string
+  /**
+   * Option name
+   */
+  readonly name: string
+  /**
+   * Option arg name
+   */
+  readonly argName: string
+  /**
+   * Is a required option
+   */
+  readonly mandatory: boolean
+  /**
+   * Option description
+   */
+  readonly description: string
+  /**
+   * Negative option
+   */
+  readonly negate: boolean
+  /**
+   * Has a required parameter
+   */
+  readonly required: boolean
+  /**
+   * Has a optional parameter
+   */
+  readonly optional: boolean
+  /**
+   * Short name of option
+   */
+  readonly short?: string
+  /**
+   * Long / Full name of option
+   */
+  readonly long?: string
+  /**
+   * Option default value
+   */
+  readonly defaultValue?: T
+  /**
+   *
+   */
+  value?: T
+  /**
+   *
+   * @param arg
+   */
+  is(arg: string): boolean
 }
