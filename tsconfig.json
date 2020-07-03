@@ -12,6 +12,9 @@
       "@barusu/event-bus": [
         "./packages/event-bus/src"
       ],
+      "@barusu/redux-actions": [
+        "./packages/redux-actions/src"
+      ],
       "@barusu/rollup-config": [
         "./packages/rollup-config/src"
       ],
