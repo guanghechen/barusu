@@ -1,21 +1,10 @@
+import { spawn } from 'child_process'
 import { EventEmitter } from 'events'
+import fs from 'fs'
+import path from 'path'
 import { Argument, parseArgument } from './util/argument'
-import { CommandError, CommandErrorCode } from './util/error'
+import { CommandError } from './util/error'
 import { Option } from './util/option'
-
-
-/**
- * Process option value
- * @param newVal  new option value
- * @param oldVal  old option value
- */
-export type OptionValueProcessor<T> = (newVal: string, oldVal?: T) => T | undefined
-
-
-/**
- * Handling exit event
- */
-export type CommandExitEventHandler = (error: CommandError) => void | never
 
 
 export class Command extends EventEmitter implements Command {
@@ -24,6 +13,7 @@ export class Command extends EventEmitter implements Command {
   public readonly options: Option[] = []
   public readonly commands: Command[] = []
 
+  protected _rawArgs: string[] = []
   protected _name = ''
   protected _aliases: string[] = []
   protected _version = ''
@@ -32,17 +22,33 @@ export class Command extends EventEmitter implements Command {
   protected _argsDescription: Record<string, string> | null = null
   protected _usage: string | null = null
   protected _allowUnknownOption = false
+  protected _actionResults: unknown[] = []
+  protected _defaultCommandName: string | null = null
+  protected _hasExecutableHandler = false
+  protected _executableFile: string | null = null     // custom name for executable
   protected _helpShortFlag = '-h'
   protected _helpLongFlag = '--help'
   protected _helpFlags = '-h, --help'
   protected _helpCommandName = 'help'
   protected _helpCommandNameAndArgs = 'help [command]'
   protected _helpDescription = 'display help for command'
-  protected _exitCallback: CommandExitEventHandler | null = null
+  protected _exitCallback: CommandExitEventCallback | null = null
+  protected _actionHandler: ((args: string[]) => void) | null = null
 
   public constructor(parent?: Command) {
     super()
-    if (parent != null) this.parent = parent
+    if (parent != null) {
+      this.parent = parent
+      this._helpFlags = parent._helpFlags
+      this._helpDescription = parent._helpDescription
+      this._helpShortFlag = parent._helpShortFlag
+      this._helpLongFlag = parent._helpLongFlag
+      this._helpCommandName = parent._helpCommandName
+      this._helpCommandNameAndArgs = parent._helpCommandNameAndArgs
+      this._helpDescription = parent._helpDescription
+      this._exitCallback = parent._exitCallback
+      this.parent.commands.push(this)
+    }
   }
 
   // @override
@@ -121,6 +127,81 @@ export class Command extends EventEmitter implements Command {
   }
 
   // @override
+  public command(
+    nameAndArgs: string,
+    execOptsOrExecDesc?: string | CommandExecOption,
+    execOpts?: CommandExecOption,
+  ): Command | this {
+    const self = this
+
+    let desc: string | null | undefined = execOptsOrExecDesc as string | undefined
+    let opts: CommandExecOption = execOpts || {}
+    if (typeof desc === 'object' && desc !== null) {
+      opts = desc
+      desc = null
+    }
+
+    const args = nameAndArgs.split(/[\s]+/)
+    const subCommand = new Command(self)
+    subCommand.name(args.shift())
+    subCommand._consumeCommandArguments(args)
+    subCommand._visible = !Boolean(opts.hidden)
+    subCommand._executableFile = opts.executableFile || null
+
+    if (opts.isDefault) {
+      self._defaultCommandName = subCommand._name
+    }
+
+    if (desc) {
+      subCommand.description(desc)
+      subCommand._hasExecutableHandler = true
+    }
+
+    return desc == null ? subCommand : this
+  }
+
+  // @override
+  public addCommand(cmd: Command, opts: CommandExecOption = {}): this | never {
+    if (!cmd._name) {
+      this._exit(
+        1,
+        'command.addCommand',
+        'Command passed to .addCommand() must have a name')
+    }
+
+    const self = this
+
+    // To keep things simple, block automatic name generation for deeply nested executables.
+    // Fail fast and detect when adding rather than later when parsing.
+    function checkExplicitNames(commands: Command[]): void | never {
+      for (const cmd of commands) {
+        if (cmd._hasExecutableHandler && !cmd._executableFile) {
+          self._exit(
+            1,
+            'command.addCommand',
+            `Must specify executableFile for deeply nested executable: ${ cmd.name() }`)
+        }
+        checkExplicitNames(cmd.commands)
+      }
+    }
+    checkExplicitNames(cmd.commands)
+
+    if (opts.isDefault) {
+      this._defaultCommandName = cmd._name
+    }
+
+    if (opts.hidden) {
+      // eslint-disable-next-line no-param-reassign
+      cmd._visible = false  // modifying passed command due to existing implementation
+    }
+
+    // eslint-disable-next-line no-param-reassign
+    ; (cmd as any).parent = self
+    self.commands.push(cmd)
+    return self
+  }
+
+  // @override
   public arguments(flags: string): this {
     const self = this
     self._consumeCommandArguments(flags.split(/[\s]+/))
@@ -186,7 +267,7 @@ export class Command extends EventEmitter implements Command {
         if (option != null) {
           if (option.required) {
             const value = args.shift()
-            if (value === undefined) self._optionMissingArgument(option)
+            if (value === undefined) self._missingOptionArgument(option)
             self.emit(`option:${ option.name }`, value)
           } else if (option.optional) {
             let value = null
@@ -194,9 +275,9 @@ export class Command extends EventEmitter implements Command {
             if (args.length > 0 && !isPotentialOption(args[0])) {
               value = args.shift()
             }
-            this.emit(`option:${option.name}`, value)
+            this.emit(`option:${ option.name }`, value)
           } else { // boolean flag
-            this.emit(`option:${option.name}`)
+            this.emit(`option:${ option.name }`)
           }
           continue
         }
@@ -240,30 +321,115 @@ export class Command extends EventEmitter implements Command {
     return { operands, unknown }
   }
 
-  public command(): Command {
+  // @override
+  public opts(): Record<string, unknown> {
     const self = this
-    const subCommand = new Command(self)
-    subCommand._exitCallback = self._exitCallback
-    return subCommand
+    const options: Record<string, unknown> = {}
+    const nodes: Command[] = [self]
+    for (let parent = self.parent; parent != null; parent = parent.parent) {
+      nodes.push(parent)
+    }
+
+    for (let i = nodes.length - 1; i >= 0; --i) {
+      const o = nodes[i]
+      for (const option of o.options) {
+        options[option.name] = option.value
+      }
+    }
+
+    return options
   }
 
-  /**
-   * Register callback to use as replacement for calling process.exit
-   * @param exitCallback
-   */
-  public exitOverride(exitCallback: CommandExitEventHandler): this {
+  // @override
+  public action(fn: CommandActionCallback): this {
+    const self = this
+    const listener = (args: string[]): void => {
+      // The .action callback takes an extra parameter which is the command or options.
+      const expectedArgsCount = this.args.length
+
+      // const actionArgs: (string | Record<string, unknown> | string[])[] = [
+      const actionArgs: [string[], Record<string, unknown>, string[]] = [
+        // Command arguments
+        args.slice(0, expectedArgsCount),
+
+        // Command options
+        self.opts(),
+
+        // Extra arguments so available too.
+        args.slice(expectedArgsCount)
+      ]
+
+      const actionResult = fn.apply(this, actionArgs)
+
+      // Remember result in case it is async. Assume parseAsync getting called on root.
+      let rootCommand: Command | null = this
+      while (rootCommand.parent) {
+        rootCommand = rootCommand.parent
+      }
+      rootCommand._actionResults.push(actionResult)
+    }
+    self._actionHandler = listener
+    return self
+  }
+
+  // @override
+  public parse(argv: string[], parseOptions: CommandParseOption = {}): this {
+    const self = this
+    if (argv === undefined || !Array.isArray(argv)) {
+      self._exit(1, 'command.parse', 'first parameter to parse must be array')
+    }
+
+    // make it a little easier for callers by supporting various argv conventions
+    let userArgs: string[]
+    let scriptPath: string | null = null
+    switch (parseOptions.from) {
+      case undefined:
+      case 'node':
+        scriptPath = argv[1]
+        userArgs = argv.slice(2)
+        break
+      case 'electron':
+        if ((process as any).defaultApp) {
+          scriptPath = argv[1]
+          userArgs = argv.slice(2)
+        } else {
+          userArgs = argv.slice(1)
+        }
+        break
+      case 'user':
+        userArgs = argv.slice(0)
+        break
+      default:
+        throw new Error(`unexpected parse option { from: '${parseOptions.from}' }`)
+    }
+
+    if (scriptPath != null && process.mainModule) {
+      scriptPath = process.mainModule.filename
+    }
+
+    // Guess name, used in usage in help.
+    if (self._name == null && scriptPath != null) {
+      self._name = path.basename(scriptPath, path.extname(scriptPath))
+    }
+
+    return self
+  }
+
+  // override
+  public exitOverride(exitCallback: CommandExitEventCallback): this | never {
+    const self = this
     if (exitCallback) {
-      this._exitCallback = exitCallback
+      self._exitCallback = exitCallback
     } else {
-      this._exitCallback = (err) => {
-        if (err.code !== CommandErrorCode.SUB_COMMAND_EXECUTE_ASYNC) {
+      self._exitCallback = (err) => {
+        if (err.code !== 'commander.executeSubCommandAsync') {
           throw err
         } else {
           // Async callback from spawn events, not useful to throw.
         }
       }
     }
-    return this
+    return self
   }
 
   /**
@@ -283,38 +449,6 @@ export class Command extends EventEmitter implements Command {
         ]
       })
     return commandDetails
-  }
-
-  /**
-   * Find command by name
-   *
-   * @param name
-   */
-  protected _findCommand(name: string): Command | undefined {
-    return this.commands.find(cmd => cmd._name === name || cmd._aliases.includes(name))
-  }
-
-  /**
-   * Unknown command.
-   */
-  protected _unknownCommand(): never {
-    const partCommands = [this.name()]
-    for (let parentCmd = this.parent; parentCmd; parentCmd = parentCmd.parent) {
-      partCommands.unshift(parentCmd.name())
-    }
-    const fullCommand = partCommands.join(' ')
-    const message = `error: unknown command '${ this.args[0] }'. See '${ fullCommand } ${ this._helpLongFlag }'.`
-    console.error(message)
-    this._exit(1, CommandErrorCode.COMMAND_UNKNOWN, message)
-  }
-
-  /**
-   * Find option matching `arg` if any
-   *
-   * @param name
-   */
-  protected _findOption(arg: string): Option | undefined {
-    return this.options.find(option => option.is(arg))
   }
 
   /**
@@ -392,6 +526,39 @@ export class Command extends EventEmitter implements Command {
   }
 
   /**
+   * Find command by name
+   *
+   * @param name
+   */
+  protected _findCommand(name: string): Command | undefined {
+    return this.commands.find(cmd => cmd._name === name || cmd._aliases.includes(name))
+  }
+
+  /**
+   * Find option matching `arg` if any
+   *
+   * @param name
+   */
+  protected _findOption(arg: string): Option | undefined {
+    return this.options.find(option => option.is(arg))
+  }
+
+  /**
+   * Unknown command.
+   */
+  protected _unknownCommand(): never {
+    const partCommands = [this.name()]
+    for (let parentCmd = this.parent; parentCmd; parentCmd = parentCmd.parent) {
+      partCommands.unshift(parentCmd.name())
+    }
+    const fullCommand = partCommands.join(' ')
+    const message = `error: unknown command '${ this._rawArgs[0] }'.` +
+      ` See '${ fullCommand } ${ this._helpLongFlag }'.`
+    console.error(message)
+    this._exit(1, 'command._unknownCommand', message)
+  }
+
+  /**
    * Unknown option `flags`
    * @param flags
    */
@@ -400,7 +567,16 @@ export class Command extends EventEmitter implements Command {
     if (self._allowUnknownOption) return
     const message = `error: unknown option '${ flags }'`
     console.error(message)
-    self._exit(1, CommandErrorCode.COMMAND_OPTION_UNKNOWN, message)
+    self._exit(1, 'command._unknownOption', message)
+  }
+
+  /**
+   * Argument `name` is missing.
+   */
+  protected _missingCommandArgument(name: string): never {
+    const message = `error: missing required argument '${ name }'`
+    console.error(message)
+    this._exit(1, 'command._missingCommandArgument', message)
   }
 
   /**
@@ -408,11 +584,23 @@ export class Command extends EventEmitter implements Command {
    *
    * @param option
    */
-  protected _optionMissingArgument(option: Option): never {
+  protected _missingOptionArgument(option: Option): never {
     const message = `error: option '${ option.flags }' argument missing`
     console.error(message)
-    this._exit(1, CommandErrorCode.COMMAND_OPTION_MISSING_ARGUMENT, message)
+    this._exit(1, 'command._missingOptionArgument', message)
   }
+
+  /**
+   * `Option` does not have a value, and is a mandatory option.
+   *
+   * @param option
+   */
+  protected _missingMandatoryOptionValue(option: Option): never {
+    const message = `error: required option '${option.flags}' not specified`
+    console.error(message)
+    this._exit(1, 'command._missingMandatoryOptionValue', message)
+  }
+
 
   /**
    * Parse expected `args`.
@@ -436,7 +624,7 @@ export class Command extends EventEmitter implements Command {
       if (arg.variadic && i < self.args.length) {
         throw new CommandError(
           -1,
-          CommandErrorCode.COMMAND_ARGUMENT_BAD,
+          'command._consumeCommandArguments',
           `Only the last argument can be variadic '${ arg.name }'`)
       }
     }
@@ -448,7 +636,7 @@ export class Command extends EventEmitter implements Command {
    * @param code      an id string representing the error
    * @param message   human-readable description of the error
    */
-  protected _exit(exitCode: number, code: CommandErrorCode, message: string): never {
+  protected _exit(exitCode: number, code: string, message: string): never {
     const self = this
     if (self._exitCallback != null) {
       const error = new CommandError(exitCode, code, message)
@@ -457,6 +645,64 @@ export class Command extends EventEmitter implements Command {
     process.exit(exitCode)
   }
 }
+
+
+/**
+ * Process option value
+ * @param newVal  new option value
+ * @param oldVal  old option value
+ */
+export type OptionValueProcessor<T> = (newVal: string, oldVal?: T) => T | undefined
+
+
+/**
+ * Callback for handling the exiting event
+ */
+export type CommandExitEventCallback = (error: CommandError) => void | never
+
+
+/**
+ *
+ */
+export interface CommandParseOption {
+  /**
+   *
+   */
+  from?: string
+}
+
+
+/**
+ * Configuration options that affect Command execution
+ */
+export interface CommandExecOption {
+  /**
+   * If true, this command won't shown in the help document
+   */
+  hidden?: boolean
+  /**
+   * Supply a custom executable name
+   */
+  executableFile?: string
+  /**
+   * Is the default command
+   */
+  isDefault?: boolean
+}
+
+
+/**
+ * Callback for handling the command
+ *
+ * @param args    command arguments
+ * @param options command options
+ * @param extra   extra args (neither declared command arguments nor command options)
+ */
+export type CommandActionCallback = (
+  args: string[],
+  options: Record<string, unknown>,
+  extra: string[],
+) => void | Promise<void> | never
 
 
 export interface Command extends EventEmitter {
@@ -513,6 +759,49 @@ export interface Command extends EventEmitter {
    */
   usage(): string
   usage(usage: string): this
+
+  /**
+   * Define a command.
+   *
+   * There are two styles of command: pay attention to where to put the description.
+   *
+   * Examples:
+   *
+   *      // Command implemented using action handler (description is supplied
+   *      // separately to `.command`)
+   *      program
+   *        .command('clone <source> [destination]')
+   *        .description('clone a repository into a newly created directory')
+   *        .action(([source, destination]) => {
+   *          console.log('clone command called');
+   *        });
+   *
+   *      // Command implemented using separate executable file (description is
+   *      // second parameter to `.command`)
+   *      program
+   *        .command('start <service>', 'start named service')
+   *        .command('stop [service]', 'stop named service, or all if no name supplied');
+   *
+   * @param nameAndArgs
+   * @param execOptsOrExecDesc
+   * @param execOpts
+   */
+  command(
+    nameAndArgs: string,
+    execOptsOrExecDesc?: string | CommandExecOption,
+    execOpts?: CommandExecOption,
+  ): Command | this
+
+  /**
+   * Add a prepared sub-command.
+   *
+   * See .command() for creating an attached sub-command which inherits settings
+   * from its parent.
+   *
+   * @param cmd
+   * @param opts
+   */
+  addCommand(cmd: Command, opts?: CommandExecOption): this | never
 
   /**
    * Define argument syntax for the command.
@@ -601,4 +890,53 @@ export interface Command extends EventEmitter {
    * @param argv
    */
   parseOptions(argv: string[]): { operands: string[], unknown: string[] }
+
+  /**
+   * Return an object containing options as key-value pairs
+   */
+  opts(): Record<string, unknown>
+
+  /**
+   * Register callback `fn` for the command.
+   *
+   *    fn([cmdArg1, cmdArg2, ...], options, unknownArgs)
+   *
+   * Examples:
+   *
+   *      program
+   *        .command('help <hhh>, <iii>')
+   *        .description('display verbose help')
+   *        .option('-p, --pepper')
+   *        .action(function([hhh, iii], { pepper }) {
+   *           // output help here
+   *        })
+   *
+   * @param fn
+   */
+  action(fn: CommandActionCallback): this
+
+  /**
+   * Parse `argv`, setting options and invoking commands when defined.
+   *
+   * The default expectation is that the arguments are from node and have the application as argv[0]
+   * and the script being run in argv[1], with user parameters after that.
+   *
+   * Unlike commander.js, you need to specify args explicitly
+   *
+   * Examples:
+   *
+   *      program.parse(process.argv);
+   *      program.parse(my-args, { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
+   *
+   * @param argv
+   * @param parseOptions
+   */
+  parse(argv: string[], parseOptions?: CommandParseOption): this
+
+  /**
+   * Register callback to use as replacement for calling process.exit
+   *
+   * @param exitCallback
+   */
+  exitOverride(exitCallback: CommandExitEventCallback): this | never
 }
