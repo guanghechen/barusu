@@ -37,6 +37,7 @@
     "rollup",
     "sourcemap",
     "styl",
-    "tsbuildinfo"
+    "tsbuildinfo",
+    "typeof"
   ]
 }
