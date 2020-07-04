@@ -1,0 +1,62 @@
+[
+  {
+    "name": "user",
+    "fullName": "user",
+    "title": "user",
+    "description": "",
+    "path": "/api/user",
+    "request": {
+      "modelNamePrefix": "",
+      "modelNameSuffix": "RequestVo"
+    },
+    "response": {
+      "modelNamePrefix": "",
+      "modelNameSuffix": "ResponseVo",
+      "headers": {
+        "Content-Type": "application/json; UTF-8",
+        "Authorize": "<token>"
+      }
+    },
+    "items": [
+      {
+        "name": "me",
+        "title": "获取当前用户信息",
+        "description": "",
+        "path": "/api/user/me",
+        "method": "GET",
+        "request": {
+          "model": "CurrentUserInfoRequestModel",
+          "schema": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-request-model.json"
+        },
+        "response": {
+          "model": "CurrentUserInfoResponseModel",
+          "schema": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-response-model.json",
+          "headers": {
+            "Content-Type": "application/json; UTF-8",
+            "Authorize": "<token>"
+          }
+        }
+      },
+      {
+        "name": "UserInfo",
+        "title": "获取指定用户信息",
+        "description": "",
+        "path": "/api/user/:id",
+        "method": "GET",
+        "request": {
+          "model": "UserUserInfoRequestVo",
+          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-request-vo.json"
+        },
+        "response": {
+          "model": "UserUserInfoResponseVo",
+          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-response-vo.json",
+          "headers": {
+            "Content-Type": "application/json; UTF-8",
+            "Authorize": "<token>"
+          }
+        }
+      }
+    ],
+    "subGroups": []
+  }
+]

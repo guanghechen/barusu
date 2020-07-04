@@ -1,0 +1,84 @@
+{
+  "name": "@barusu/tool-restful-api",
+  "version": "0.0.17",
+  "description": "quickly create restful style mock server.",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/restful-api#readme",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "keywords": [
+    "restful mock server",
+    "typescript/json-schema to mock server"
+  ],
+  "files": [
+    "lib/",
+    ".eslintrc.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "!lib/**/*.js.map",
+    "!lib/**/*.d.ts.map"
+  ],
+  "bin": {
+    "rapit": "lib/command.js"
+  },
+  "scripts": {
+    "prebuild": "rimraf lib/",
+    "build": "rollup -c rollup.config.js",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "prepublishOnly": "yarn lint:fix && yarn test && yarn build",
+    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "generate:schema": "cross-env node -r ts-node/register script/generate.ts",
+    "answer": "cross-env node -r ts-node/register test/answer.ts"
+  },
+  "dependencies": {
+    "@barusu/chalk-logger": "^0.0.17",
+    "@barusu/typescript-json-schema": "^0.0.17",
+    "@barusu/util-cli": "^0.0.17",
+    "@barusu/util-option": "^0.0.17",
+    "@koa/cors": "^3.0.0",
+    "@types/fs-extra": "^8.0.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/js-yaml": "^3.12.1",
+    "@types/koa": "^2.11.0",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-router": "^7.0.42",
+    "@types/mockjs": "^1.0.2",
+    "commander": "^4.0.1",
+    "execa": "^4.0.0",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.0.1",
+    "js-yaml": "^3.13.1",
+    "json-schema-faker": "^0.5.0-rc23",
+    "koa": "^2.11.0",
+    "koa-json": "^2.0.2",
+    "koa-router": "^7.4.0",
+    "mockjs": "^1.1.0",
+    "option-master": "^0.0.16",
+    "typescript": "^3.8.2"
+  },
+  "devDependencies": {
+    "@barusu/eslint-config": "^0.0.17",
+    "@barusu/rollup-config": "^0.0.17",
+    "@lemon-clown/mocha-test-master": "^0.0.1",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "cross-env": "^7.0.2",
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "rollup": "2.16.1"
+  }
+}

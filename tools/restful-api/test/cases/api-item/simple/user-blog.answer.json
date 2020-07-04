@@ -1,0 +1,177 @@
+[
+  {
+    "name": "user",
+    "fullName": "user",
+    "title": "user",
+    "description": "basic api",
+    "path": "/api/user",
+    "request": {
+      "modelNamePrefix": "",
+      "modelNameSuffix": "RequestVo"
+    },
+    "response": {
+      "modelNamePrefix": "",
+      "modelNameSuffix": "ResponseVo"
+    },
+    "items": [
+      {
+        "name": "query",
+        "title": "get current user information",
+        "description": "",
+        "path": "/api/user/me",
+        "method": "GET",
+        "request": {
+          "model": "UserQueryRequestVo",
+          "schema": "<PROJECT_DIR>/user/user-query-request-vo.json"
+        },
+        "response": {
+          "model": "QueryCurrentUserResponseVo",
+          "schema": "<PROJECT_DIR>/user/query-current-user-response-vo.json"
+        }
+      },
+      {
+        "name": "update",
+        "title": "update current user information",
+        "description": "",
+        "path": "/api/user/me",
+        "method": "POST",
+        "request": {
+          "model": "UpdateCurrentUserRequestVo",
+          "schema": "<PROJECT_DIR>/user/update-current-user-request-vo.json"
+        },
+        "response": {
+          "model": "UpdateCurrentUserResponseVo",
+          "schema": "<PROJECT_DIR>/user/update-current-user-response-vo.json"
+        }
+      },
+      {
+        "name": "login",
+        "title": "login",
+        "description": "",
+        "path": "/api/user/login",
+        "method": "POST",
+        "request": {
+          "model": "UserLoginRequestVo",
+          "schema": "<PROJECT_DIR>/user/user-login-request-vo.json"
+        },
+        "response": {
+          "model": "UserLoginResponseVo",
+          "schema": "<PROJECT_DIR>/user/user-login-response-vo.json"
+        }
+      }
+    ],
+    "subGroups": []
+  },
+  {
+    "name": "blog",
+    "fullName": "blog",
+    "title": "blog",
+    "description": "the user's blog",
+    "path": "/api/blog",
+    "request": {
+      "modelNamePrefix": "",
+      "modelNameSuffix": "RequestVo"
+    },
+    "response": {
+      "modelNamePrefix": "",
+      "modelNameSuffix": "PaginationResponseVo"
+    },
+    "items": [
+      {
+        "name": "query-articles",
+        "title": "query articles under the blog",
+        "description": "",
+        "path": "/api/blog/articles",
+        "method": "GET",
+        "request": {
+          "model": "BlogQueryArticlesRequestVo",
+          "schema": "<PROJECT_DIR>/blog/blog-query-articles-request-vo.json"
+        },
+        "response": {
+          "model": "BlogQueryArticlesPaginationResponseVo",
+          "schema": "<PROJECT_DIR>/blog/blog-query-articles-pagination-response-vo.json"
+        }
+      },
+      {
+        "name": "create-article",
+        "title": "create an article",
+        "description": "",
+        "path": "/api/blog/articles",
+        "method": "POST",
+        "request": {
+          "model": "BlogCreateArticleRequestVo",
+          "schema": "<PROJECT_DIR>/blog/blog-create-article-request-vo.json"
+        },
+        "response": {
+          "model": "BlogCreateArticleResponseVo",
+          "schema": "<PROJECT_DIR>/blog/blog-create-article-response-vo.json"
+        }
+      }
+    ],
+    "subGroups": [
+      {
+        "name": "article",
+        "fullName": "blog-article",
+        "title": "article",
+        "description": "blog articles",
+        "path": "/api/blog/article/:articleId",
+        "request": {
+          "modelNamePrefix": "",
+          "modelNameSuffix": "RequestVo"
+        },
+        "response": {
+          "modelNamePrefix": "",
+          "modelNameSuffix": "ResponseVo"
+        },
+        "items": [
+          {
+            "name": "query",
+            "title": "get article with specified `articleId`",
+            "description": "",
+            "path": "/api/blog/article/:articleId",
+            "method": "GET",
+            "request": {
+              "model": "BlogArticleQueryRequestVo",
+              "schema": "<PROJECT_DIR>/blog-article/blog-article-query-request-vo.json"
+            },
+            "response": {
+              "model": "BlogArticleQueryResponseVo",
+              "schema": "<PROJECT_DIR>/blog-article/blog-article-query-response-vo.json"
+            }
+          },
+          {
+            "name": "update",
+            "title": "update article with specified `articleId`",
+            "description": "",
+            "path": "/api/blog/article/:articleId",
+            "method": "POST",
+            "request": {
+              "model": "BlogArticleUpdateRequestVo",
+              "schema": "<PROJECT_DIR>/blog-article/blog-article-update-request-vo.json"
+            },
+            "response": {
+              "model": "BlogArticleUpdateResponseVo",
+              "schema": "<PROJECT_DIR>/blog-article/blog-article-update-response-vo.json"
+            }
+          },
+          {
+            "name": "delete",
+            "title": "delete an article with specified `articleId`",
+            "description": "",
+            "path": "/api/blog/article/:articleId",
+            "method": "DELETE",
+            "request": {
+              "model": "BlogArticleDeleteRequestVo",
+              "schema": "<PROJECT_DIR>/blog-article/blog-article-delete-request-vo.json"
+            },
+            "response": {
+              "model": "BlogArticleDeleteResponseVo",
+              "schema": "<PROJECT_DIR>/blog-article/blog-article-delete-response-vo.json"
+            }
+          }
+        ],
+        "subGroups": []
+      }
+    ]
+  }
+]

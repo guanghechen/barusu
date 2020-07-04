@@ -1,0 +1,8 @@
+import { User } from '../model/user'
+import { ResponseResult } from '../core/response'
+
+
+/**
+ * get current user information
+ */
+export type QueryCurrentUserResponseVo = ResponseResult<User>

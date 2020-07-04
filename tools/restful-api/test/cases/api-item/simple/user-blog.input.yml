@@ -1,0 +1,56 @@
+api:
+  user:
+    path: /api/user
+    description: basic api
+    items:
+      query:
+        path: /me
+        method: GET
+        title: get current user information
+        response:
+          fullModelName: QueryCurrentUserResponseVo
+      update:
+        path: /me
+        method: POST
+        title: update current user information
+        request:
+          fullModelName: UpdateCurrentUserRequestVo
+        response:
+          fullModelName: UpdateCurrentUserResponseVo
+      login:
+        path: /login
+        method: POST
+
+  # demo for sub-group
+  blog:
+    path: /api/blog
+    description: the user's blog
+    response:
+      modelNameSuffix: PaginationResponseVo
+    items:
+      query-articles:
+        path: /articles
+        title: query articles under the blog
+        method: GET
+      create-article:
+        path: /articles
+        method: POST
+        title: create an article
+        response:
+          fullModelName: BlogCreateArticleResponseVo
+    subGroups:
+      article:
+        path: /article/:articleId
+        description: blog articles
+        response:
+          modelNameSuffix: ResponseVo
+        items:
+          query:
+            method: GET
+            title: get article with specified `articleId`
+          update:
+            method: POST
+            title: update article with specified `articleId`
+          delete:
+            method: DELETE
+            title: delete an article with specified `articleId`

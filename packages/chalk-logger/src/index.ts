@@ -8,6 +8,11 @@ let registered = false
 
 export class ColorfulChalkLogger extends Logger {
   /**
+   * prefix of logger.name
+   */
+  protected basename: string | null = null
+
+  /**
    * register to commander
    * @param program {commander.Command}
    */
@@ -104,16 +109,18 @@ export class ColorfulChalkLogger extends Logger {
 
   public readonly registerToCommander = ColorfulChalkLogger.registerToCommander
 
-  constructor(name: string, options?: Options, args?: string[]) {
-    super(name, ColorfulChalkLogger.generateOptions(options, args))
+  constructor(basename: string, options?: Options, args?: string[]) {
+    super(basename, ColorfulChalkLogger.generateOptions(options, args))
+    this.setBaseName(basename)
   }
 
   /**
    * update logger's level
    * @param level
    */
-  public setLevel(level: Level): void {
-    (this.level as any) = level
+  public setLevel(level: Level | null | undefined): void {
+    if (level == null) return
+    this.level = level
   }
 
   /**
@@ -121,7 +128,18 @@ export class ColorfulChalkLogger extends Logger {
    * @param name
    */
   public setName(name: string): void {
-    this.name = name
+    const resolvedName: string = [this.basename, name]
+      .filter((x): x is string => x != null && x.length > 0)
+      .join(' ')
+    this.name = resolvedName
+  }
+
+  /**
+   * update basename of logger
+   * @param basename
+   */
+  public setBaseName(basename: string | null): void {
+    this.basename = basename
   }
 
   /**

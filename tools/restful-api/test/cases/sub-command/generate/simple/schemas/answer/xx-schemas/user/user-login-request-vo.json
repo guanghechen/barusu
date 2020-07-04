@@ -1,0 +1,16 @@
+{
+  "description": "登录请求对象",
+  "type": "object",
+  "properties": {
+    "username": {
+      "description": "登录账号",
+      "type": "string"
+    },
+    "password": {
+      "description": "登录密码",
+      "type": "string"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UserLoginRequestVo"
+}

@@ -1,0 +1,13 @@
+{
+  "description": "获取指定用户信息的请求对象",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "description": "用户 id",
+      "type": "string"
+    }
+  },
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UserInfoOoRequestVo"
+}

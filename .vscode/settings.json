@@ -9,9 +9,11 @@
     "cacheable",
     "colorette",
     "cond",
+    "dirpath",
     "downlevel",
     "editorconfig",
     "eslintconfig",
+    "execa",
     "filepath",
     "flexbugs",
     "globby",
@@ -20,6 +22,7 @@
     "kase",
     "linewrap",
     "mkdirs",
+    "mockjs",
     "njsproj",
     "ntvs",
     "plopfile",
@@ -27,11 +30,14 @@
     "postbuild",
     "postcss",
     "prebuild",
+    "rapit",
     "readdir",
+    "recognised",
     "rimraf",
     "rollup",
     "sourcemap",
     "styl",
-    "tsbuildinfo"
+    "tsbuildinfo",
+    "typeof"
   ]
 }

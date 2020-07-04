@@ -1,0 +1,10 @@
+api:
+  user:
+    path: /api/user
+    description: basic api
+    items:
+      query:
+        path: /me
+        method: GET
+        title: get current user information
+        response: QueryCurrentUserResponseVo

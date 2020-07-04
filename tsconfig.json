@@ -3,35 +3,47 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@barusu/blob-util": [
-        "./packages/blob-util/src"
-      ],
       "@barusu/chalk-logger": [
         "./packages/chalk-logger/src"
+      ],
+      "@barusu/commander": [
+        "./packages/commander/src"
       ],
       "@barusu/event-bus": [
         "./packages/event-bus/src"
       ],
-      "@barusu/option-util": [
-        "./packages/option-util/src"
-      ],
-      "@barusu/package-util": [
-        "./packages/package-util/src"
+      "@barusu/redux-actions": [
+        "./packages/redux-actions/src"
       ],
       "@barusu/rollup-config": [
         "./packages/rollup-config/src"
       ],
-      "@barusu/tool-find-inconsistent-packages": [
-        "./packages/tool-find-inconsistent-packages/src"
-      ],
-      "@barusu/tool-sort-imports": [
-        "./packages/tool-sort-imports/src"
-      ],
-      "@barusu/tool-tsconfig-paths": [
-        "./packages/tool-tsconfig-paths/src"
+      "@barusu/typescript-json-schema": [
+        "./packages/typescript-json-schema/src"
       ],
       "@barusu/webpack-source-map-loader": [
         "./packages/webpack-source-map-loader/src"
+      ],
+      "@barusu/tool-cipher": [
+        "./tools/cipher/src"
+      ],
+      "@barusu/tool-find-inconsistent-packages": [
+        "./tools/find-inconsistent-packages/src"
+      ],
+      "@barusu/tool-sort-imports": [
+        "./tools/sort-imports/src"
+      ],
+      "@barusu/tool-tsconfig-paths": [
+        "./tools/tsconfig-paths/src"
+      ],
+      "@barusu/util-blob": [
+        "./utils/blob/src"
+      ],
+      "@barusu/util-cli": [
+        "./utils/cli/src"
+      ],
+      "@barusu/util-option": [
+        "./utils/option/src"
       ],
     }
   }
