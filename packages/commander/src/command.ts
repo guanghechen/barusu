@@ -1,6 +1,4 @@
-import { spawn } from 'child_process'
 import { EventEmitter } from 'events'
-import fs from 'fs'
 import path from 'path'
 import { Argument, parseArgument } from './util/argument'
 import { CommandError } from './util/error'
@@ -397,6 +395,7 @@ export class Command extends EventEmitter implements Command {
         }
         break
       case 'user':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         userArgs = argv.slice(0)
         break
       default:

@@ -1,4 +1,4 @@
-import { CommandError, CommandErrorCode } from './error'
+import { CommandError } from './error'
 
 
 /**
@@ -49,7 +49,7 @@ export class Option<T = unknown> implements Option<T> {
     if (match == null) {
       throw new CommandError(
         -1,
-        CommandErrorCode.COMMAND_OPTION_BAD,
+        'Option.constructor:illegal option',
         `Not a valid option flags(${ flags })`
       )
     }
@@ -58,7 +58,7 @@ export class Option<T = unknown> implements Option<T> {
     if (short == null && long == null) {
       throw new CommandError(
         -1,
-        CommandErrorCode.COMMAND_OPTION_BAD,
+        'Option.constructor:illegal option',
         `Not a valid option flags(${ flags }). Bad option name`
       )
     }
@@ -68,7 +68,7 @@ export class Option<T = unknown> implements Option<T> {
     this.description = description || ''
     this.defaultValue = defaultValue
     this.name = long != null ? long.replace(/^--/, '') : short.replace(/^-/, '')
-    this.argName = transformOptionArgToCamelCase(this.name.replace(/^no-([^\-]))?/, '$1'))
+    this.argName = transformOptionArgToCamelCase(this.name.replace(/^(no-([^\-]))?/, '$1'))
     this.negate = long == null || /^--(?:no-([^\-]))?/.test(long)
     this.required = optionArg != null && optionArg[0] === '<'
     this.optional = optionArg != null && optionArg[0] === '['

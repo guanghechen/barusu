@@ -1,6 +1,6 @@
 {
   "name": "@barusu/commander",
-  "version": "0.0.17",
+  "version": "0.0.0",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -14,6 +14,7 @@
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
   "license": "MIT",
+  "private": true,
   "engines": {
     "node": ">= 12.16.0"
   },
