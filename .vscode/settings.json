@@ -26,6 +26,7 @@
     "mockjs",
     "njsproj",
     "ntvs",
+    "parastic",
     "plopfile",
     "plusplus",
     "postbuild",
@@ -39,6 +40,7 @@
     "sourcemap",
     "styl",
     "tsbuildinfo",
-    "typeof"
+    "typeof",
+    "ymal"
   ]
 }

@@ -1,67 +1,105 @@
-import fs from 'fs-extra'
+import {
+  MergeStrategy,
+  defaultMergeStrategies,
+  isNotEmptyArray,
+  isNotEmptyObject,
+  isNotEmptyString,
+  merge,
+} from '@barusu/util-option'
+import { loadJsonOrYamlSync } from './fs'
 
 
-export interface CommandOptionConfig {
-  [key: string]: any
+export interface BaseCommandOption {
+  /**
+   * Path of currently executing command
+   */
+  readonly cwd: string
+  /**
+   * Working directory
+   */
+  readonly workspace: string
+  /**
+   * Filepath of configs, only *.yml, *.yaml and *.json are supported.
+   * Each configuration file can specify the same options, the configuration
+   * file specified later can override the configuration specified previous.
+   * @default []
+   */
+  readonly configFilepath?: string[]
+  /**
+   * Filepath of parastic config,
+   */
+  readonly parasticConfig?: string
+  /**
+   *
+   */
+  readonly parasticEntry?: string
 }
 
 
-export interface CommandConfig {
+export type CommandOptionConfig = Record<string, unknown>
+
+
+export interface CommandConfig<C extends CommandOptionConfig> {
   /**
    * Global options shared by all sub-commands
    */
-  __globalOptions__: CommandOptionConfig
+  __globalOptions__: C
   /**
    * Sub-command specific options
    */
-  [subCommand: string]: CommandOptionConfig
+  [subCommand: string]: C
 }
 
 
 /**
  * Flat defaultOptions with configs from package.json
  */
-export function flatDefaultOptionsFromPackageJson(
-  defaultOptions: CommandOptionConfig,
-  packageJsonPath: string,
-  packageName: string,
+export function flagDefaultOptions<C extends CommandOptionConfig>(
+  defaultOptions: C,
+  opts: BaseCommandOption,
+  strategies: Partial<Record<keyof C, MergeStrategy>> = {},
   subCommandName?: string,
-): typeof defaultOptions & CommandOptionConfig {
-  if (!fs.existsSync(packageJsonPath)) return defaultOptions
+): C {
+  let resolvedConfig = {} as CommandConfig<C>
 
-  // load command config from package.json
-  const packageJson = fs.readJSONSync(packageJsonPath)
-  const commandConfig: CommandConfig = packageJson[packageName]
-  if (commandConfig == null || typeof commandConfig !== 'object') {
-    return defaultOptions
+  // load configs
+  if (isNotEmptyArray(opts.configFilepath)) {
+    const configs: CommandConfig<C>[] = []
+    for (const filepath of opts.configFilepath) {
+      const config = loadJsonOrYamlSync(filepath) as CommandConfig<C>
+      configs.push(config)
+    }
+    resolvedConfig = merge<CommandConfig<C>>(configs, {}, defaultMergeStrategies.replace)
+  } else { // otherwise, load from parastic config
+    if (
+      isNotEmptyString(opts.parasticConfig) &&
+      isNotEmptyString(opts.parasticEntry)
+    ) {
+      const config = loadJsonOrYamlSync(opts.parasticConfig) as any
+      resolvedConfig = config[opts.parasticEntry] as CommandConfig<C>
+    }
   }
 
-  let result = defaultOptions
+  let result: C = defaultOptions
 
   // merge globalOptions
-  if (typeof commandConfig.__globalOptions__ === 'object') {
-    result = { ...result, ...commandConfig.__globalOptions__ }
+  if (isNotEmptyObject(resolvedConfig.__globalOptions__)) {
+    result = merge<C>(
+      [result, resolvedConfig.__globalOptions__],
+      strategies,
+      defaultMergeStrategies.replace)
   }
 
   // merge specified sub-command option
   if (
     subCommandName != null &&
-    typeof commandConfig[subCommandName] == 'object'
+    typeof resolvedConfig[subCommandName] == 'object'
   ) {
-    result = { ...result, ...commandConfig[subCommandName] }
+    result = merge<C>(
+      [result, resolvedConfig[subCommandName]],
+      strategies,
+      defaultMergeStrategies.replace)
   }
 
   return result
-}
-
-
-export function parseOption<T>(
-  defaultValue: T,
-  optionValue: T | null | undefined,
-  isOptionValueValid?: (t: T | null | undefined) => boolean,
-): T {
-  const valid = isOptionValueValid != null
-    ? isOptionValueValid(optionValue)
-    : optionValue != null
-  return valid ? optionValue! : defaultValue
 }

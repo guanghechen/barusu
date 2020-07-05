@@ -1,4 +1,5 @@
 import fs from 'fs-extra'
+import yaml from 'js-yaml'
 import path from 'path'
 import { Logger } from './types'
 
@@ -130,4 +131,87 @@ export function ensureCriticalFilepathExistsSync(
     logger.error(errMsg)
     process.exit(-1)
   }
+}
+
+
+/**
+ * Load configuration file with format .json / .yml / .yaml
+ *
+ * @param filepath
+ * @param logger
+ */
+export async function loadJsonOrYaml(filepath: string, encoding = 'utf-8'): Promise<unknown | never> {
+  const extname = path.extname(filepath)
+
+  let __content: string | null = null
+  const loadContent = async (): Promise<string> => {
+    if (__content != null) return __content
+    if (!(await isFile(filepath))) {
+      throw new Error(`${ filepath } is an invalid file path`)
+    }
+    __content = fs.readFileSync(filepath, encoding)
+    return __content
+  }
+
+  let result: unknown
+  switch (extname) {
+    case '.json':
+      {
+        const content: string = await loadContent()
+        result = JSON.parse(content)
+      }
+      break
+    case '.yml':
+    case '.yaml':
+      {
+        const content: string = await loadContent()
+        result = yaml.safeLoad(content, { filename: filepath, json: true })
+      }
+      break
+    default:
+      throw new Error(`Only files in .json / .yml / .ymal format are supported. filepath(${ filepath }`)
+  }
+  return result
+}
+
+
+
+/**
+ * Load configuration file with format .json / .yml / .yaml  (synchronizing)
+ *
+ * @param filepath
+ * @param logger
+ */
+export function loadJsonOrYamlSync(filepath: string, encoding = 'utf-8'): unknown | never {
+  const extname = path.extname(filepath)
+
+  let __content: string | null = null
+  const loadContent = (): string => {
+    if (__content != null) return __content
+    if (!isFileSync(filepath)) {
+      throw new Error(`${ filepath } is an invalid file path`)
+    }
+    __content = fs.readFileSync(filepath, encoding)
+    return __content
+  }
+
+  let result: unknown
+  switch (extname) {
+    case '.json':
+      {
+        const content: string = loadContent()
+        result = JSON.parse(content)
+      }
+      break
+    case '.yml':
+    case '.yaml':
+      {
+        const content: string = loadContent()
+        result = yaml.safeLoad(content, { filename: filepath, json: true })
+      }
+      break
+    default:
+      throw new Error(`Only files in .json / .yml / .ymal format are supported. filepath(${ filepath }`)
+  }
+  return result
 }
