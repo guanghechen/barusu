@@ -61,13 +61,16 @@ export const defaultMergeStrategies = {
 export function merge<O extends Record<string, unknown>>(
   options: O[],
   strategies: Partial<Record<keyof O, MergeStrategy>> = {},
+  defaultStrategy: MergeStrategy = defaultMergeStrategies.replace,
 ): O {
   const result = {} as O
   for (const option of options) {
     for (const key of Object.keys(option)) {
-      const strategy: MergeStrategy = strategies[key] || defaultMergeStrategies.replace
+      const strategy: MergeStrategy = strategies[key] || defaultStrategy
       if (result[key] != null) {
         result[key as keyof O] = strategy(result[key], option[key]) as O[keyof O]
+      } else {
+        result[key as keyof O] = option[key] as O[keyof O]
       }
     }
   }
