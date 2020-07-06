@@ -2,7 +2,7 @@ import program from 'commander'
 import path from 'path'
 import { version } from '@barusu/tool-find-inconsistent/package.json'
 import { PackageManager } from './index'
-import { logger, COMMAND_NAME } from './util'
+import { COMMAND_NAME, logger } from './util'
 
 
 program
