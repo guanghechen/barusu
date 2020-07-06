@@ -60,7 +60,7 @@ export const defaultMergeStrategies = {
  */
 export function merge<O extends Record<string, unknown>>(
   options: O[],
-  strategies: Partial<Record<keyof O, MergeStrategy>> = {},
+  strategies: Partial<Record<keyof O, MergeStrategy<any>>> = {},
   defaultStrategy: MergeStrategy = defaultMergeStrategies.replace,
 ): O {
   const result = {} as O
