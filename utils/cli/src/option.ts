@@ -9,7 +9,7 @@ import {
 import { loadJsonOrYamlSync } from './fs'
 
 
-export interface BaseCommandOption {
+export interface ConfigFlatOpts {
   /**
    * Path of currently executing command
    */
@@ -24,19 +24,35 @@ export interface BaseCommandOption {
    * file specified later can override the configuration specified previous.
    * @default []
    */
-  readonly configFilepath?: string[]
+  readonly configPath?: string[]
   /**
    * Filepath of parastic config,
    */
-  readonly parasticConfig?: string
+  readonly parasticConfigPath?: string | null
   /**
-   *
+   * The entry key of options in the parasitic configuration file
    */
-  readonly parasticEntry?: string
+  readonly parasticConfigEntry?: string | null
 }
 
 
-export type CommandOptionConfig = Record<string, unknown>
+export interface CommandOptionConfig extends Record<string, unknown> {
+  /**
+   * Filepath of configs, only *.yml, *.yaml and *.json are supported.
+   * Each configuration file can specify the same options, the configuration
+   * file specified later can override the configuration specified previous.
+   * @default []
+   */
+  readonly configPath?: string[]
+  /**
+   * Filepath of parastic config,
+   */
+  readonly parasticConfigPath?: string | null
+  /**
+   * The entry key of options in the parasitic configuration file
+   */
+  readonly parasticConfigEntry?: string | null
+}
 
 
 export interface CommandConfig<C extends CommandOptionConfig> {
@@ -56,49 +72,55 @@ export interface CommandConfig<C extends CommandOptionConfig> {
  */
 export function flagDefaultOptions<C extends CommandOptionConfig>(
   defaultOptions: C,
-  opts: BaseCommandOption,
+  flatOpts: ConfigFlatOpts,
+  subCommandName: string | false,
   strategies: Partial<Record<keyof C, MergeStrategy>> = {},
-  subCommandName?: string,
 ): C {
   let resolvedConfig = {} as CommandConfig<C>
 
   // load configs
-  if (isNotEmptyArray(opts.configFilepath)) {
+  if (isNotEmptyArray(flatOpts.configPath)) {
     const configs: CommandConfig<C>[] = []
-    for (const filepath of opts.configFilepath) {
+    for (const filepath of flatOpts.configPath) {
       const config = loadJsonOrYamlSync(filepath) as CommandConfig<C>
       configs.push(config)
     }
     resolvedConfig = merge<CommandConfig<C>>(configs, {}, defaultMergeStrategies.replace)
   } else { // otherwise, load from parastic config
     if (
-      isNotEmptyString(opts.parasticConfig) &&
-      isNotEmptyString(opts.parasticEntry)
+      isNotEmptyString(flatOpts.parasticConfigPath) &&
+      isNotEmptyString(flatOpts.parasticConfigEntry)
     ) {
-      const config = loadJsonOrYamlSync(opts.parasticConfig) as any
-      resolvedConfig = config[opts.parasticEntry] as CommandConfig<C>
+      const config = loadJsonOrYamlSync(flatOpts.parasticConfigPath) as any
+      resolvedConfig = config[flatOpts.parasticConfigEntry] as CommandConfig<C>
     }
   }
 
   let result: C = defaultOptions
 
-  // merge globalOptions
-  if (isNotEmptyObject(resolvedConfig.__globalOptions__)) {
-    result = merge<C>(
-      [result, resolvedConfig.__globalOptions__],
+  if (subCommandName === false) {
+    result = merge<C>([result, resolvedConfig as unknown as C],
       strategies,
       defaultMergeStrategies.replace)
-  }
+  } else {
+    // merge globalOptions
+    if (isNotEmptyObject(resolvedConfig.__globalOptions__)) {
+      result = merge<C>(
+        [result, resolvedConfig.__globalOptions__],
+        strategies,
+        defaultMergeStrategies.replace)
+    }
 
-  // merge specified sub-command option
-  if (
-    subCommandName != null &&
-    typeof resolvedConfig[subCommandName] == 'object'
-  ) {
-    result = merge<C>(
-      [result, resolvedConfig[subCommandName]],
-      strategies,
-      defaultMergeStrategies.replace)
+    // merge specified sub-command option
+    if (
+      isNotEmptyString(subCommandName) &&
+      typeof resolvedConfig[subCommandName] == 'object'
+    ) {
+      result = merge<C>(
+        [result, resolvedConfig[subCommandName]],
+        strategies,
+        defaultMergeStrategies.replace)
+    }
   }
 
   return result
