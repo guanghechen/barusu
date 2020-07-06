@@ -11,12 +11,14 @@ import { isFunction } from './is'
 export function cover<T>(
   defaultValue: T | (() => T),
   value: T | null | undefined,
+  isValueValid?: (t: T | null | undefined) => boolean,
 ): T {
-  if (value == null) {
+  const valid = isValueValid != null ? isValueValid(value) : value != null
+  if (!valid) {
     if (isFunction(defaultValue)) return defaultValue()
     return defaultValue
   }
-  return value
+  return value!
 }
 
 
@@ -28,9 +30,10 @@ export function cover<T>(
 export function coverBoolean(
   defaultValue: boolean | (() => boolean),
   value?: boolean | null | unknown,
+  isValueValid?: (t: number | null | unknown) => boolean,
 ): boolean {
   const v = convertToBoolean(value)
-  return cover<boolean>(defaultValue, v)
+  return cover<boolean>(defaultValue, v, isValueValid)
 }
 
 
@@ -42,9 +45,10 @@ export function coverBoolean(
 export function coverNumber(
   defaultValue: number | (() => number),
   value?: number | null | unknown,
+  isValueValid?: (t: number | null | unknown) => boolean,
 ): number {
   const v = convertToNumber(value)
-  return cover<number>(defaultValue, v)
+  return cover<number>(defaultValue, v, isValueValid)
 }
 
 
@@ -56,7 +60,8 @@ export function coverNumber(
 export function coverString(
   defaultValue: string | (() => string),
   value?: string | null | unknown,
+  isValueValid?: (t: string | null | unknown) => boolean,
 ): string {
   const v = convertToString(value)
-  return cover<string>(defaultValue, v)
+  return cover<string>(defaultValue, v, isValueValid)
 }
