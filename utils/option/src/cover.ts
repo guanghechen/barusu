@@ -1,4 +1,5 @@
 import { convertToBoolean, convertToNumber, convertToString } from './convert'
+import { isFunction } from './is'
 
 
 /**
@@ -7,8 +8,14 @@ import { convertToBoolean, convertToNumber, convertToString } from './convert'
  * @param defaultValue
  * @param value
  */
-export function cover<T>(defaultValue: T, value: T | null | undefined): T {
-  if (value == null) return defaultValue
+export function cover<T>(
+  defaultValue: T | (() => T),
+  value: T | null | undefined,
+): T {
+  if (value == null) {
+    if (isFunction(defaultValue)) return defaultValue()
+    return defaultValue
+  }
   return value
 }
 
@@ -18,8 +25,10 @@ export function cover<T>(defaultValue: T, value: T | null | undefined): T {
  * @param defaultValue
  * @param value
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function coverBoolean(defaultValue: boolean, value?: any): boolean {
+export function coverBoolean(
+  defaultValue: boolean | (() => boolean),
+  value?: boolean | null | unknown,
+): boolean {
   const v = convertToBoolean(value)
   return cover<boolean>(defaultValue, v)
 }
@@ -30,8 +39,10 @@ export function coverBoolean(defaultValue: boolean, value?: any): boolean {
  * @param defaultValue
  * @param value
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function coverNumber(defaultValue: number, value?: any): number {
+export function coverNumber(
+  defaultValue: number | (() => number),
+  value?: number | null | unknown,
+): number {
   const v = convertToNumber(value)
   return cover<number>(defaultValue, v)
 }
@@ -42,7 +53,10 @@ export function coverNumber(defaultValue: number, value?: any): number {
  * @param defaultValue
  * @param value
  */
-export function coverString(defaultValue: string, value?: string): string {
+export function coverString(
+  defaultValue: string | (() => string),
+  value?: string | null | unknown,
+): string {
   const v = convertToString(value)
   return cover<string>(defaultValue, v)
 }
