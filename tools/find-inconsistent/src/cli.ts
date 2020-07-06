@@ -1,8 +1,8 @@
 import program from 'commander'
 import path from 'path'
-import { version } from '@barusu/tool-find-inconsistent-packages/package.json'
+import { version } from '@barusu/tool-find-inconsistent/package.json'
 import { PackageManager } from './index'
-import { logger } from './util'
+import { logger, COMMAND_NAME } from './util'
 
 
 program
@@ -12,7 +12,7 @@ logger.registerToCommander(program)
 
 
 program
-  .name('find-inconsistent')
+  .name(COMMAND_NAME)
   .usage('[path of package.json] [options]')
   .arguments('[path of package.json]')
   .action(function (cmd, options: any) {

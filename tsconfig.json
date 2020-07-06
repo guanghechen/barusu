@@ -27,8 +27,8 @@
       "@barusu/tool-cipher": [
         "./tools/cipher/src"
       ],
-      "@barusu/tool-find-inconsistent-packages": [
-        "./tools/find-inconsistent-packages/src"
+      "@barusu/tool-find-inconsistent": [
+        "./tools/find-inconsistent/src"
       ],
       "@barusu/tool-sort-imports": [
         "./tools/sort-imports/src"
