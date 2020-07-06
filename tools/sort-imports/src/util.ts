@@ -192,12 +192,12 @@ export interface CommandOptions extends CommandOptionConfig {
    * log level
    * @default undefined
    */
-  logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string,
+  logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string
   /**
    * glob pattern of source file
    * @default []
    */
-  pattern: string[],
+  pattern: string[]
   /**
    * encoding of source file
    * @default 'utf-8'
@@ -227,7 +227,7 @@ export interface CommandOptions extends CommandOptionConfig {
    *
    * @default undefined
    */
-  moduleRanks?: ModuleRankItem[]
+  moduleRanks: ModuleRankItem[]
 }
 
 
@@ -239,5 +239,5 @@ export const defaultCommandOptions: CommandOptions = {
   indent: '  ',
   quote: '\'',
   semicolon: false,
-  moduleRanks: undefined,
+  moduleRanks: [],
 }

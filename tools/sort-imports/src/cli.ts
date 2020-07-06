@@ -9,11 +9,19 @@ import {
   findPackageJsonPath,
   flagDefaultOptions,
 } from '@barusu/util-cli'
-import { cover, coverString } from '@barusu/util-option'
+import {
+  cover,
+  coverBoolean,
+  coverNumber,
+  coverString,
+  isNotEmptyArray,
+  isNotEmptyString,
+} from '@barusu/util-option'
 import { StaticImportStatement } from './index'
 import {
   COMMAND_NAME,
   CommandOptions,
+  ModuleRankItem,
   defaultCommandOptions,
   logger,
 } from './util'
@@ -63,30 +71,47 @@ program
       {},
     )
 
-    /**
-     * remove undefined options to eliminate the overwrite effect on the default options
-     */
-    if (options.pattern!.length <= 0) {
-      // eslint-disable-next-line no-param-reassign
-      delete options.pattern
-    }
-
-    const {
-      logLevel = defaultOptions.logLevel,
-      pattern = defaultOptions.pattern,
-      quote = defaultOptions.quote,
-      semicolon = defaultOptions.semicolon,
-      indent = defaultOptions.indent,
-      encoding = defaultOptions.encoding,
-      maxColumn = defaultOptions.maxColumn,
-      moduleRanks = defaultOptions.moduleRanks,
-    } = options
-
     // reset log-level
+    const logLevel = cover<string | undefined>(defaultOptions.logLevel, options.logLevel)
     if (logLevel != null) {
       const level = Level.valueOf(logLevel)
       if (level != null) logger.setLevel(level)
     }
+
+    logger.debug('cwd:', flatOpts.cwd)
+    logger.debug('workspace:', flatOpts.workspace)
+    logger.debug('configPath', flatOpts.configPath)
+    logger.debug('parasticConfigPath', flatOpts.parasticConfigPath)
+    logger.debug('parasticConfigEntry', flatOpts.parasticConfigEntry)
+
+    // resolve pattern
+    const pattern: string[] = cover<string[]>(
+      defaultOptions.pattern, options.pattern, isNotEmptyArray)
+    logger.debug('pattern:', pattern)
+
+    // resolve quote
+    const quote: string = cover<string>(defaultOptions.quote, options.quote, isNotEmptyString)
+    logger.debug('quote:', quote)
+
+    // resolve semicolon
+    const semicolon: boolean = coverBoolean(defaultOptions.semicolon, options.semicolon)
+    logger.debug('semicolon:', semicolon)
+
+    // resolve indent
+    const indent: string = cover<string>(defaultOptions.indent, options.indent, isNotEmptyString)
+    logger.debug('indent:', indent)
+
+    // resolve encoding
+    const encoding: string = cover<string>(defaultOptions.encoding, options.encoding, isNotEmptyString)
+    logger.debug('encoding:', encoding)
+
+    // resolve maxColumn
+    const maxColumn: number = coverNumber(defaultOptions.maxColumn, options.maxColumn)
+    logger.debug('maxColumn:', maxColumn)
+
+    const moduleRanks: ModuleRankItem[] = cover<ModuleRankItem[]>(
+      defaultOptions.moduleRanks, options.moduleRanks, isNotEmptyArray)
+    logger.debug('moduleRanks:', moduleRanks)
 
     // parse regex in moduleRanks
     if (moduleRanks != null) {
@@ -114,18 +139,6 @@ program
       }
     }
 
-    logger.debug('cwd:', flatOpts.cwd)
-    logger.debug('workspace:', flatOpts.workspace)
-    logger.debug('configPath', flatOpts.configPath)
-    logger.debug('parasticConfigPath', flatOpts.parasticConfigPath)
-    logger.debug('parasticConfigEntry', flatOpts.parasticConfigEntry)
-    logger.debug('pattern:', pattern)
-    logger.debug('quote:', quote)
-    logger.debug('semicolon:', semicolon)
-    logger.debug('indent:', indent)
-    logger.debug('encoding:', encoding)
-    logger.debug('maxColumn:', maxColumn)
-    logger.debug('moduleRanks:', moduleRanks)
 
     const stat = new StaticImportStatement(
       quote, indent, semicolon, Number.parseInt(maxColumn as unknown as string), moduleRanks)
