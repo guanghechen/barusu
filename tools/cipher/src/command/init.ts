@@ -2,19 +2,40 @@ import { CommanderStatic } from 'commander'
 import fs from 'fs-extra'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
-import { mkdirsIfNotExists, parseOption } from '@barusu/util-cli'
+import {
+  ConfigFlatOpts,
+  findPackageJsonPath,
+  flagDefaultOptions,
+  mkdirsIfNotExists,
+} from '@barusu/util-cli'
 import {
   convertToBoolean,
   convertToNumber,
+  cover,
+  coverString,
   isNotEmptyString,
 } from '@barusu/util-option'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
-import { createDefaultOptions, handleError } from './_util'
+import {
+  GlobalCommandOptions,
+  defaultGlobalCommandOptions,
+  handleError,
+} from './_util'
 
 
 const SUB_COMMAND_NAME = 'init'
+
+
+interface SubCommandOptions extends GlobalCommandOptions {
+
+}
+
+
+const defaultCommandOptions: SubCommandOptions = {
+  ...defaultGlobalCommandOptions,
+}
 
 
 /**
@@ -32,39 +53,59 @@ export function loadSubCommandInit(
     .action(async function (workspace: string, options: any) {
       logger.setName(`${ name } ${ SUB_COMMAND_NAME }`)
 
-      const workspaceDir: string = workspace || path.resolve()
-      const packageJsonPath = path.resolve(workspaceDir, 'package.json')
-      const defaultOptions = createDefaultOptions(packageJsonPath, SUB_COMMAND_NAME)
+      const cwd: string = path.resolve()
+      const workspaceDir: string = path.resolve(cwd, workspace)
+      const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))
+      const parasticConfigPath: string | null | undefined = cover<string | null>(
+        (): string | null => findPackageJsonPath(workspaceDir),
+        options.parasticConfigPath)
+      const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
+      const flatOpts: ConfigFlatOpts = {
+        cwd,
+        workspace: workspaceDir,
+        configPath,
+        parasticConfigPath,
+        parasticConfigEntry,
+      }
+
+      const defaultOptions = flagDefaultOptions(
+        defaultCommandOptions,
+        flatOpts,
+        SUB_COMMAND_NAME,
+        {},
+      )
 
       // reset log-level
-      const logLevel = parseOption<string>(defaultOptions.logLevel, program.logLevel)
+      const logLevel = cover<string | undefined>(defaultOptions.logLevel, program.logLevel)
       if (logLevel != null) {
         const level = Level.valueOf(logLevel)
         if (level != null) logger.setLevel(level)
       }
 
+      logger.debug('cwd:', flatOpts.cwd)
+      logger.debug('workspace:', flatOpts.workspace)
+      logger.debug('configPath:', flatOpts.configPath)
+      logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
+      logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
+
       // get secretFilepath
-      const secretFilepath: string = path.resolve(workspaceDir, parseOption<string>(
+      const secretFilepath: string = path.resolve(workspaceDir, cover<string>(
         defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
+      logger.debug('secretFilepath:', secretFilepath)
 
       // get showAsterisk
-      const showAsterisk: boolean = parseOption<boolean>(
+      const showAsterisk: boolean = cover<boolean>(
         defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
+      logger.debug('showAsterisk:', showAsterisk)
 
       // get miniumPasswordLength
-      const miniumPasswordLength: number = parseOption<number>(
-        defaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength)
-      )
+      const miniumPasswordLength: number = cover<number>(
+        defaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength))
+      logger.debug('miniumPasswordLength:', miniumPasswordLength)
 
       // ensure paths exist
       mkdirsIfNotExists(workspaceDir, true, logger)
       mkdirsIfNotExists(secretFilepath, false, logger)
-
-      logger.debug('workspaceDir:', workspaceDir)
-      logger.debug('packageJsonPath:', packageJsonPath)
-      logger.debug('secretFilepath:', secretFilepath)
-      logger.debug('showAsterisk:', showAsterisk)
-      logger.debug('miniumPasswordLength:', miniumPasswordLength)
 
       // Secret file is existed
       if (fs.existsSync(secretFilepath)) {
