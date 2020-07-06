@@ -80,9 +80,9 @@ program
 
     logger.debug('cwd:', flatOpts.cwd)
     logger.debug('workspace:', flatOpts.workspace)
-    logger.debug('configPath', flatOpts.configPath)
-    logger.debug('parasticConfigPath', flatOpts.parasticConfigPath)
-    logger.debug('parasticConfigEntry', flatOpts.parasticConfigEntry)
+    logger.debug('configPath:', flatOpts.configPath)
+    logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
+    logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
 
     // resolve pattern
     const pattern: string[] = cover<string[]>(
