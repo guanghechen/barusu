@@ -4,14 +4,14 @@ import {
   AsyncRequestedAction,
   AsyncSucceedAction,
 } from './action'
-import { AsyncActionTypes } from './constant'
+import { AsyncActionStatus } from './constant'
 
 
 /**
  * Creators of async actions
  */
-export interface AsyncActionCreators<
-  AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol> ,
+export interface AsyncActionCreator<
+  T extends string | symbol,
   RP extends unknown,
   SP extends unknown,
   FP extends AsyncFailureResponse,
@@ -19,15 +19,15 @@ export interface AsyncActionCreators<
   /**
    * Requested action creator
    */
-  request: (payload?: RP) => AsyncRequestedAction<AT['REQUEST'], RP>
+  request: (payload?: RP) => AsyncRequestedAction<T, RP>
   /**
    * Succeed action creator
    */
-  success: (payload: SP) => AsyncSucceedAction<AT['SUCCESS'], SP>
+  success: (payload: SP) => AsyncSucceedAction<T, SP>
   /**
    * Failed action creator
    */
-  failure: (payload: FP) => AsyncFailedAction<AT['FAILURE'], FP>
+  failure: (payload: FP) => AsyncFailedAction<T, FP>
 }
 
 
@@ -36,67 +36,45 @@ export interface AsyncActionCreators<
  *
  * # Examples
  *
- *    const types = createAsyncActionTypes('@user/info')
- *    // => types = {
- *    //      REQUEST = '@user/info/REQUEST',
- *    //      SUCCESS: '@user/info/SUCCESS',
- *    //      FAILURE: '@user/info/FAILURE', }*
- *
- *    const creators = createAsyncActionCreators<{ id: number }, { data: string }>(actionTypes)
- *    //    creators = { request(...), success(...), failure(...) }
+ *    const creators = createAsyncActionCreators<
+ *      '@user/fetch_user', { id: number }, { name: string }>('@user/fetch_user')
+ *    // => { request(...), success(...), failure(...) }
  *
  *    // request
  *    creators.request({ id: 2 })
  *
  *    // request succeed
- *    creators.succeed({ data: 'lemon-clown' })
+ *    creators.succeed({ name: 'lemon-clown' })
  *
  * @param actionTypes
  */
-export function createAsyncActionCreators<
-  AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol> ,
+export function createAsyncActionCreator<
+  T extends string | symbol,
   RP extends unknown = unknown,
   SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse,
-  >(actionTypes: AT)
-  : AsyncActionCreators<AT, RP, SP, FP> {
-  /**
-   * Requested action
-   */
-  type RequestActionPayload = RP
-  type RequestAction = AsyncRequestedAction<AT['REQUEST'], RequestActionPayload>
-
-  /**
-   * Succeed action
-   */
-  type SuccessActionPayload = SP
-  type SuccessAction = AsyncSucceedAction<AT['SUCCESS'], SuccessActionPayload>
-
-  /**
-   * Failed action
-   */
-  type FailureActionPayload = FP
-  type FailureAction = AsyncFailedAction<AT['FAILURE'], FailureActionPayload>
-
+  FP extends AsyncFailureResponse = AsyncFailureResponse
+>(
+  actionType: T
+): AsyncActionCreator<T, RP, SP, FP> {
   /**
    * Requested action creator
    */
-  const createRequestAction = (payload?: RequestActionPayload): RequestAction => {
-    return { type: actionTypes.REQUEST, payload }
+  const createRequestAction = (payload?: RP): AsyncRequestedAction<T, RP> => {
+    return { type: actionType, status: AsyncActionStatus.REQUESTED, payload }
   }
 
   /**
    * Succeed action creator
    */
-  const createSuccessAction = (payload: SuccessActionPayload): SuccessAction => {
-    return { type: actionTypes.SUCCESS, payload }
+  const createSuccessAction = (payload: SP): AsyncSucceedAction<T, SP> => {
+    return { type: actionType, status: AsyncActionStatus.SUCCEED, payload }
   }
 
   /**
    * Failure action creator
    */
-  const createFailureAction = (payload: FailureActionPayload): FailureAction => {
-    return { type: actionTypes.FAILURE, payload }
+  const createFailureAction = (payload: FP): AsyncFailedAction<T, FP> => {
+    return { type: actionType, status: AsyncActionStatus.FAILED, payload }
   }
 
   // Action creators
