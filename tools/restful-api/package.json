@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-restful-api",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "quickly create restful style mock server.",
   "author": {
     "name": "lemon-clown",
@@ -45,10 +45,10 @@
     "answer": "cross-env node -r ts-node/register test/answer.ts"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.17",
-    "@barusu/typescript-json-schema": "^0.0.17",
-    "@barusu/util-cli": "^0.0.17",
-    "@barusu/util-option": "^0.0.17",
+    "@barusu/chalk-logger": "^0.0.18",
+    "@barusu/typescript-json-schema": "^0.0.18",
+    "@barusu/util-cli": "^0.0.18",
+    "@barusu/util-option": "^0.0.18",
     "@koa/cors": "^3.0.0",
     "@types/fs-extra": "^8.1.0",
     "@types/inquirer": "^6.5.0",
@@ -71,13 +71,13 @@
     "typescript": "^3.8.2"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.17",
-    "@barusu/rollup-config": "^0.0.17",
+    "@barusu/eslint-config": "^0.0.18",
+    "@barusu/rollup-config": "^0.0.18",
     "@lemon-clown/mocha-test-master": "^0.0.1",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
-    "cross-env": "^7.0.2",
     "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
     "mocha": "^7.1.1",
     "rollup": "2.16.1"
   }

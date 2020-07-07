@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-cli",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "utils for creating node.js command line program",
   "author": {
     "name": "lemon-clown",
@@ -37,15 +37,15 @@
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
   },
   "dependencies": {
-    "@barusu/util-option": "^0.0.17",
+    "@barusu/util-option": "^0.0.18",
     "@types/fs-extra": "^8.1.0",
     "@types/js-yaml": "^3.12.5",
     "fs-extra": "^8.1.0",
     "js-yaml": "^3.14.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.17",
-    "@barusu/rollup-config": "^0.0.17",
+    "@barusu/eslint-config": "^0.0.18",
+    "@barusu/rollup-config": "^0.0.18",
     "cross-env": "^7.0.2",
     "rollup": "2.16.1"
   }

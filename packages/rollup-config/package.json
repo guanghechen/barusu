@@ -1,6 +1,6 @@
 {
   "name": "@barusu/rollup-config",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "rollup configs for ts project",
   "author": {
     "name": "lemon-clown",
@@ -51,7 +51,7 @@
     "rollup-plugin-typescript2": "^0.27.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.17",
+    "@barusu/eslint-config": "^0.0.18",
     "cross-env": "^7.0.2"
   }
 }
