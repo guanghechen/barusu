@@ -16,226 +16,250 @@
 ## utils
 
   * `createActionCreator`
-    <details>
+    - <details><summary>Function signature</summary>
 
-    ```typescript
-    /**
-     * Create action creator
-     * @param type              Action type
-     * @param payloadRequired   Whether payload is required
-     */
-    export function createActionCreator<
-      T extends symbol | string,
-      P extends unknown
-    >(type: T, payloadRequired: false)
-      : (payload?: P) => Action<T, P>
-    export function createActionCreator<
-      T extends symbol | string,
-      P extends unknown
-    >(type: T, payloadRequired: true)
-      : (payload: P) => Required<Action<T, P>>
-    ```
+      ```typescript
+      /**
+       * Create action creator
+       * @param type              Action type
+       * @param payloadRequired   Whether payload is required
+       */
+      export function createActionCreator<
+        T extends symbol | string,
+        P extends unknown
+      >(type: T, payloadRequired: false)
+        : (payload?: P) => Action<T, P>
+      export function createActionCreator<
+        T extends symbol | string,
+        P extends unknown
+      >(type: T, payloadRequired: true)
+        : (payload: P) => Required<Action<T, P>>
+      ```
 
-  * `createAsyncActionTypes`
-    <details>
+    - <details><summary>Example</summary>
 
-    ```typescript
-    /**
-     * Create async action types
-     * # Examples
-     *
-     *    const types = createAsyncActions('@user/info')
-     *    // => types = {
-     *    //      REQUEST: '@user/info/REQUEST',
-     *    //      SUCCESS: '@user/info/SUCCESS',
-     *    //      FAILURE: '@user/info/FAILURE', }
-     *
-     * @param requestType
-     * @param successType
-     * @param failureType
-     */
-    export function createAsyncActionTypes<
-      RT extends string = string,
-      ST extends string = string,
-      FT extends string = string,
+      ```typescript
+      const UserCreator = createActionCreator<'@user/me', { name: string }>('@user/me', true)
+      // => (payload: { name: string }) => ({ type: '@user/me', name })
+      ```
+
+  * `createAsyncActionCreator`
+    - <details><summary>Function signature</summary>
+
+      ```typescript
+      /**
+       * Create async action types and async action creators
+       *
+       * # Examples
+       *
+       *    const creators = createAsyncActionCreators<
+       *      '@user/fetch_user', { id: number }, { name: string }>('@user/fetch_user')
+       *    // => { request(...), success(...), failure(...) }
+       *
+       *    // request
+       *    creators.request({ id: 2 })
+       *
+       *    // request succeed
+       *    creators.succeed({ name: 'lemon-clown' })
+       *
+       * @param actionTypes
+       */
+      export function createAsyncActionCreators<
+        T extends string | symbol,
+        RP extends unknown = unknown,
+        SP extends unknown = unknown,
+        FP extends AsyncFailureResponse = AsyncFailureResponse
       >(
-        requestType: RT,
-        successType: ST,
-        failureType: FT,
-    ): AsyncActionTypes<typeof requestType, typeof successType, typeof failureType>
-    export function createAsyncActionTypes<
-      RT extends symbol = symbol,   // unique symbol recommended
-      ST extends symbol = symbol,   // unique symbol recommended
-      FT extends symbol = symbol,   // unique symbol recommended
-      >(
-        requestType: RT,
-        successType: ST,
-        failureType: FT,
-    ): AsyncActionTypes<typeof requestType, typeof successType, typeof failureType>
-    export function createAsyncActionTypes(
-      name: string,
-    ): AsyncActionTypes<string, string, string>
-    ```
+        actionType: T
+      ): AsyncActionCreators<T, RP, SP, FP>
+      ```
 
-  * `createAsyncActionCreators`
-    <details>
+    - <details><summary>Example</summary>
 
-    ```typescript
-    /**
-     * Create async action types and async action creators
-     *
-     * # Examples
-     *
-     *    const types = createAsyncActionTypes('@user/info')
-     *    // => types = {
-     *    //      REQUEST = '@user/info/REQUEST',
-     *    //      SUCCESS: '@user/info/SUCCESS',
-     *    //      FAILURE: '@user/info/FAILURE', }*
-     *
-     *    const creators = createAsyncActionCreators<{ id: number }, { data: string }>(actionTypes)
-     *    //    creators = { request(...), success(...), failure(...) }
-     *
-     *    // request
-     *    creators.request({ id: 2 })
-     *
-     *    // request succeed
-     *    creators.succeed({ data: 'lemon-clown' })
-     *
-     * @param actionTypes
-     */
-    export function createAsyncActionCreators<
-      AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol> ,
-      RP extends unknown = unknown,
-      SP extends unknown = unknown,
-      FP extends AsyncFailureResponse = AsyncFailureResponse,
-      >(actionTypes: AT)
-      : AsyncActionCreators<AT, RP, SP, FP>
-    ```
+      ```typescript
+      // action for fetching user
+      const UserFetchActionType = '@user/fetch'
+      type UserFetchActionType = typeof UserFetchActionType
+      type UserFetchRequestVo = { name: string }
+      type UserFetchSucceedVo = { name: string, gender: 'male' | 'female' }
+      type UserFetchFailedVo = AsyncFailureResponse
+
+      // action for updating user
+      const UserUpdateActionType = '@user/update'
+      type UserUpdateActionType = typeof UserUpdateActionType
+      type UserUpdateRequestVo = { name: string, gender?: 'male' | 'female' }
+      type UserUpdateSucceedVo = { name: string, gender: 'male' | 'female' }
+      type UserUpdateFailedVo = AsyncFailureResponse
+
+      type UserActionTypes = UserFetchActionType | UserUpdateActionType
+      const UserActionCreators = {
+        fetch: createAsyncActionCreator<UserFetchActionType, UserFetchRequestVo,
+                UserFetchSucceedVo, UserFetchFailedVo>(UserFetchActionType),
+      }
+      // => {
+      //  fetch: {
+      //    request: (payload?: UserFetchRequestVo) => ({ type: '@user/fetch_user', status: 'REQUESTED', payload }),
+      //    success: (payloadF: UserFetchSucceedVo) => ({ type: '@user/fetch_user', status: 'SUCCEED', payload }),
+      //    failure: (payload?: UserFetchFailedVo) => ({ type: '@user/fetch_user', status: 'FAILED', payload }),
+      //  }
+      // }
+      ```
 
   * `createAsyncActionReducer`
-    <details>
+    - <details><summary>Function signature</summary>
 
-    ```typescript
-    /**
-     * Reducer of async actions
-     * @param actionTypes
-     */
-    export function createAsyncActionReducer<
-      AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol>,
-      RP extends unknown = unknown,
-      SP extends unknown = unknown,
-      FP extends AsyncFailureResponse = AsyncFailureResponse,
+      ```typescript
+      /**
+       * Create reducer of async actions
+       * @param actionType
+       */
+      export function createAsyncActionReducer<
+        S extends AsyncStateItem<unknown>,
+        T extends string | symbol,
+        RP extends unknown = unknown,
+        SP extends unknown = unknown,
+        FP extends AsyncFailureResponse = AsyncFailureResponse
       >(
-        actionTypes: AT,
-        onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], RP>>,
-        onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], SP>>,
-        onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], FP>>)
-      : AsyncActionReducer<AT, RP, SP, FP>
-    ```
+        actionType: T,
+        handlers: {
+          onRequestedAction?: AsyncActionHandler<S, AsyncRequestedAction<T, RP>>,
+          onSucceedAction?: AsyncActionHandler<S, AsyncSucceedAction<T, SP>>,
+          onFailedAction?: AsyncActionHandler<S, AsyncFailedAction<T, FP>>,
+        } = {},
+      ): AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>>
+      ```
+
+    - <details><summary>Example</summary>
+
+      ```typescript
+      export type UserStateData { name: string gender: string }
+      export type UserState = AsyncStateItem<UserStateData>
+
+      // action for fetching user
+      const UserFetchActionType = '@user/fetch'
+      type UserFetchActionType = typeof UserFetchActionType
+      type UserFetchRequestVo = { name: string }
+      type UserFetchSucceedVo = { name: string, gender: 'male' | 'female' }
+      type UserFetchFailedVo = AsyncFailureResponse
+
+      // action for updating user
+      const UserUpdateActionType = '@user/update'
+      type UserUpdateActionType = typeof UserUpdateActionType
+      type UserUpdateRequestVo = { name: string, gender?: 'male' | 'female' }
+      type UserUpdateSucceedVo = { name: string, gender: 'male' | 'female' }
+      type UserUpdateFailedVo = AsyncFailureResponse
+
+      type UserActionTypes = UserFetchActionType | UserUpdateActionType
+      const UserActionCreators = {
+        fetch: createAsyncActionReducer<UserState, UserFetchActionType,
+                UserFetchRequestVo, UserFetchSucceedVo, UserFetchFailedVo>(UserFetchActionType),
+      }
+      export const userReducer = assembleActionReducers<UserState, UserActionTypes>([
+        fetchUserActionReducer,
+      ])
+      ```
 
   * `createInitAsyncStateItem`
-    <details>
+    - <details><summary>Function signature</summary>
 
-    ```typescript
-    /**
-     * Create initial state item
-     * @param data
-     */
-    export function createInitAsyncStateItem<D>(data?: D | null): AsyncStateItem<D> {
-      return {
-        loading: false,
-        data: data === undefined ? null : data,
-        error: null
+      ```typescript
+      /**
+       * Create initial state item
+       * @param data
+       */
+      export function createInitAsyncStateItem<D>(data?: D | null): AsyncStateItem<D> {
+        return {
+          loading: false,
+          data: data === undefined ? null : data,
+          error: null
+        }
       }
-    }
-    ```
+      ```
 
-  * `createAsyncStateItem`
-    <details>
+    - <details><summary>Example</summary>
 
-    ```typescript
-    export function createAsyncStateItem<
-      RP extends unknown = unknown,
-      SP extends unknown = unknown,
-      FP extends AsyncFailureResponse = AsyncFailureResponse,
+      ```typescript
+      export type UserStateData { name: string gender: string }
+      export type UserState = AsyncStateItem<UserStateData>
+      export const initialUserState = createInitAsyncStateItem<UserStateData>({
+        name: 'alice',
+        gender: 'female',
+      })
+      ```
+
+  * `assembleActionReducers`
+    - <details><summary>Function signature</summary>
+
+      ```typescript
+      export function assembleActionReducers<
+        S extends AsyncStateItem<unknown>,
+        T extends string | symbol,
+        R extends AsyncActionReducer<S, T, AsyncActions<T, unknown>>
       >(
-        name: string,
-        data?: SP | null,
-        onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<string, RP>>,
-        onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<string, SP>>,
-        onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<string, FP>>)
-      : {
-        types: AsyncActionTypes<string, string, string>,
-        creators: AsyncActionCreators<AsyncActionTypes<string, string, string>, RP, SP, FP>
-        reducer: AsyncActionReducer<AsyncActionTypes<string, string, string>, RP, SP, FP>
-        initialState: AsyncStateItem<SP>
-      }
-    export function createAsyncStateItem<
-      AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol>,
-      RP extends unknown = unknown,
-      SP extends unknown = unknown,
-      FP extends AsyncFailureResponse = AsyncFailureResponse,
+        actionReducers: R[],
+      ): Reducer<S, AsyncActions<T, unknown>>
+      ```
+
+  * `createAsyncAction`
+    - <details><summary>Function signature</summary>
+
+      ```typescript
+      /**
+       * Shorthand for create both AsyncActionCreator and AsyncActionReducer
+       * @param actionType
+       * @param handlers
+       */
+      export function createAsyncAction<
+        S extends AsyncStateItem<unknown>,
+        T extends string | symbol,
+        RP extends unknown = unknown,
+        SP extends unknown = unknown,
+        FP extends AsyncFailureResponse = AsyncFailureResponse
       >(
-        types: AT,
-        data?: SP | null,
-        onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], RP>>,
-        onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], SP>>,
-        onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], FP>>)
-      : {
-        types: AT,
-        creators: AsyncActionCreators<AT, RP, SP, FP>
-        reducer: AsyncActionReducer<AT, RP, SP, FP>
-        initialState: AsyncStateItem<SP>
+        actionType: T,
+        handlers?: {
+          onRequestedAction?: AsyncActionHandler<S, AsyncRequestedAction<T, RP>>,
+          onSucceedAction?: AsyncActionHandler<S, AsyncSucceedAction<T, SP>>,
+          onFailedAction?: AsyncActionHandler<S, AsyncFailedAction<T, FP>>,
+        },
+      ): {
+        creator: AsyncActionCreator<T, RP, SP, FP>,
+        reducer: AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>>
       }
-    ```
+      ```
 
-# Examples
+    - <details><summary>Example</summary>
 
-## Create action
-  ```typescript
-  const userMeCreator = createActionCreator('@user/me')
-  ```
+      ```typescript
+      export type UserStateData { name: string gender: string }
+      export type UserState = AsyncStateItem<UserStateData>
 
-## Create Async actions
-  ```typescript
-  type UserMeRequestVo = { name: string }
-  type UserMeState = { name: string, age: number }
-  ```
+      // action for fetching user
+      const UserFetchActionType = '@user/fetch'
+      type UserFetchActionType = typeof UserFetchActionType
+      type UserFetchRequestVo = { name: string }
+      type UserFetchSucceedVo = { name: string, gender: 'male' | 'female' }
+      type UserFetchFailedVo = AsyncFailureResponse
 
-  * Use literal strings as action types, the returned `REQUEST`, `SUCCESS`, `FAILURE` of ActionTypes will be recognized as different types by TypeScript. (Recommended)
-    ```typescript
-    const userTypes = createAsyncActionTypes(
-      '@me/request', '@me/success', '@me/failure')
-    const {
-      creators: userActions,
-      reducer: userReducer,
-      initialState: initialUserState,
-    } = createAsyncStateItem<typeof userTypes, UserMeRequestVo, UserState>(userTypes)
-    ```
+      // action for updating user
+      const UserUpdateActionType = '@user/update'
+      type UserUpdateActionType = typeof UserUpdateActionType
+      type UserUpdateRequestVo = { name: string, gender?: 'male' | 'female' }
+      type UserUpdateSucceedVo = { name: string, gender: 'male' | 'female' }
+      type UserUpdateFailedVo = AsyncFailureResponse
 
-  * Use unique symbols as action types, the returned `REQUEST`, `SUCCESS`, `FAILURE` of ActionTypes will be recognized as different types by TypeScript.
-    ```typescript
-    const requestedType: unique symbol = Symbol('@me/request')
-    const succeedType: unique symbol = Symbol('@me/success')
-    const failedType: unique symbol = Symbol('@me/failure')
-    const userTypes = createAsyncActionTypes(requestedType, succeedType, failedType)
-    const {
-      creators: userActions,
-      reducer: userReducer,
-      initialState: initialUserState,
-    } = createAsyncStateItem<typeof userTypes, UserMeRequestVo, UserState>(userTypes)
-    ```
+      type UserActionTypes = UserFetchActionType | UserUpdateActionType
+      export const {
+        creator: fetchUserActionCreator,
+        reducer: fetchUserActionReducer,
+      } = createAsyncAction<
+        UserState, UserFetchActionType, UserFetchRequestVo, UserFetchSucceedVo, UserFetchFailedVo> (UserActionTypes.FETCH_USER)
 
-  * Use strings as action types, the returned `REQUEST`, `SUCCESS`, `FAILURE` of ActionTypes will be recognized as same types by TypeScript. (Not recommended)
-    ```typescript
-    const {
-      types: userTypes,
-      creators: userActions,
-      reducer: userReducer,
-      initialState: initialUserState,
-    } = createAsyncStateItem<UserMeRequestVo, UserState>('@me')
-    // => types = {
-    //  REQUEST: '@me/REQUEST',
-    //  SUCCESS: '@me/SUCCESS',
-    //  FAILURE: '@me/FAILURE', }
-    ```
+      const UserCreator = {
+        fetch: createAsyncActionReducer<UserState, UserFetchActionType,
+                UserFetchRequestVo, UserFetchSucceedVo, UserFetchFailedVo>(UserFetchActionType),
+      }
+      export const userReducer = assembleActionReducers<UserState, UserActionTypes>([
+        fetchUserActionReducer,
+      ])
+      ```

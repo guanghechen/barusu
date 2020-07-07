@@ -1,7 +1,11 @@
 import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
+import { CommandOptionConfig } from '@barusu/util-cli'
 
 
-export const logger = new ColorfulChalkLogger('sort-imports', {
+export const COMMAND_NAME = 'barusu-sort-imports'
+
+
+export const logger = new ColorfulChalkLogger(COMMAND_NAME, {
   level: INFO,
   date: true,
 }, process.argv)
@@ -177,4 +181,63 @@ export function formatImportOrExportStatItem(
     result = assembleStatement(true)
   }
   return result
+}
+
+
+/**
+ *
+ */
+export interface CommandOptions extends CommandOptionConfig {
+  /**
+   * log level
+   * @default undefined
+   */
+  logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string
+  /**
+   * glob pattern of source file
+   * @default []
+   */
+  pattern: string[]
+  /**
+   * encoding of source file
+   * @default 'utf-8'
+   */
+  encoding: string
+  /**
+   * maximum column width
+   * @default 80
+   */
+  maxColumn: number
+  /**
+   * indent of import/export statements in source codes
+   * @default '  '
+   */
+  indent: string
+  /**
+   * quotation marker surround the module path
+   * @default '\''
+   */
+  quote: string
+  /**
+   * whether to add a semicolon at the end of import/export statement
+   * @default false
+   */
+  semicolon: boolean
+  /**
+   *
+   * @default undefined
+   */
+  moduleRanks: ModuleRankItem[]
+}
+
+
+export const defaultCommandOptions: CommandOptions = {
+  logLevel: undefined,
+  pattern: [],
+  encoding: 'utf-8',
+  maxColumn: 80,
+  indent: '  ',
+  quote: '\'',
+  semicolon: false,
+  moduleRanks: [],
 }

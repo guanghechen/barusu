@@ -1,12 +1,17 @@
-import { AsyncFailureResponse, AsyncRequestedAction } from './action'
-import { AsyncActionTypes, createAsyncActionTypes } from './constant'
-import { AsyncActionCreators, createAsyncActionCreators } from './creator'
+import {
+  AsyncActions,
+  AsyncFailedAction,
+  AsyncFailureResponse,
+  AsyncRequestedAction,
+  AsyncSucceedAction,
+} from './action'
+import { AsyncActionCreator, createAsyncActionCreator } from './creator'
 import {
   AsyncActionHandler,
   AsyncActionReducer,
   createAsyncActionReducer,
 } from './reducer'
-import { AsyncStateItem, createInitAsyncStateItem } from './state'
+import { AsyncStateItem } from './state'
 export * from './action'
 export * from './constant'
 export * from './creator'
@@ -14,63 +19,29 @@ export * from './reducer'
 export * from './state'
 
 
-export function createAsyncStateItem<
+/**
+ * Shorthand for create both AsyncActionCreator and AsyncActionReducer
+ * @param actionType
+ * @param handlers
+ */
+export function createAsyncAction<
+  S extends AsyncStateItem<unknown>,
+  T extends string | symbol,
   RP extends unknown = unknown,
   SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse,
-  >(
-    name: string,
-    data?: SP | null,
-    onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<string, RP>>,
-    onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<string, SP>>,
-    onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<string, FP>>)
-  : {
-    types: AsyncActionTypes<string, string, string>,
-    creators: AsyncActionCreators<AsyncActionTypes<string, string, string>, RP, SP, FP>
-    reducer: AsyncActionReducer<AsyncActionTypes<string, string, string>, RP, SP, FP>
-    initialState: AsyncStateItem<SP>
-  }
-export function createAsyncStateItem<
-  AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol>,
-  RP extends unknown = unknown,
-  SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse,
-  >(
-    types: AT,
-    data?: SP | null,
-    onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], RP>>,
-    onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], SP>>,
-    onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], FP>>)
-  : {
-    types: AT,
-    creators: AsyncActionCreators<AT, RP, SP, FP>
-    reducer: AsyncActionReducer<AT, RP, SP, FP>
-    initialState: AsyncStateItem<SP>
-  }
-export function createAsyncStateItem<
-  AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol>,
-  RP extends unknown = unknown,
-  SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse,
-  >(
-    nameOrTypes: string | AT,
-    data?: SP | null,
-    onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], RP>>,
-    onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], SP>>,
-    onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], FP>>)
-  : {
-    types: AT,
-    creators: AsyncActionCreators<AT, RP, SP, FP>
-    reducer: AsyncActionReducer<AT, RP, SP, FP>
-    initialState: AsyncStateItem<SP>
-  } {
-
-  const types: AT = (typeof nameOrTypes === 'string')
-    ? createAsyncActionTypes(nameOrTypes) as AT
-    : nameOrTypes
-  const creators = createAsyncActionCreators<AT, RP, SP, FP>(types)
-  const reducer = createAsyncActionReducer<AT, RP, SP, FP>(
-    types, onRequestedAction, onSucceedAction, onFailedAction)
-  const initialState = createInitAsyncStateItem<SP>(data)
-  return { types, creators, reducer, initialState }
+  FP extends AsyncFailureResponse = AsyncFailureResponse
+>(
+  actionType: T,
+  handlers?: {
+    onRequestedAction?: AsyncActionHandler<S, AsyncRequestedAction<T, RP>>,
+    onSucceedAction?: AsyncActionHandler<S, AsyncSucceedAction<T, SP>>,
+    onFailedAction?: AsyncActionHandler<S, AsyncFailedAction<T, FP>>,
+  },
+): {
+  creator: AsyncActionCreator<T, RP, SP, FP>,
+  reducer: AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>>
+} {
+  const creator = createAsyncActionCreator<T, RP, SP, FP>(actionType)
+  const reducer = createAsyncActionReducer<S, T, RP, SP, FP>(actionType, handlers)
+  return { creator, reducer }
 }

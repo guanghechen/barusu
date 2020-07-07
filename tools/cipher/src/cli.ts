@@ -3,12 +3,14 @@ import { name, version } from '@barusu/tool-cipher/package.json'
 import { loadSubCommandDecrypt } from './command/decrypt'
 import { loadSubCommandEncrypt } from './command/encrypt'
 import { loadSubCommandInit } from './command/init'
-import { logger } from './index'
+import { COMMAND_NAME, logger } from './index'
 
 
 program
+  .storeOptionsAsProperties(false)
+  .passCommandToAction(false)
   .version(version)
-  .name('barusu-cipher')
+  .name(COMMAND_NAME)
 
 logger.registerToCommander(program)
 

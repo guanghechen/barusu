@@ -1,15 +1,20 @@
 import program from 'commander'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
-import { name, version } from '@barusu/tool-tsconfig-paths/package.json'
+import { name, version } from '@barusu/tool-find-inconsistent/package.json'
 import {
   ConfigFlatOpts,
   findPackageJsonPath,
   flagDefaultOptions,
 } from '@barusu/util-cli'
 import { cover, coverString } from '@barusu/util-option'
-import { TsconfigPathAliasResolver } from './index'
-import { COMMAND_NAME, defaultCommandOptions, logger } from './util'
+import { PackageManager } from './index'
+import {
+  COMMAND_NAME,
+  CommandOptions,
+  defaultCommandOptions,
+  logger,
+} from './util'
 
 
 program
@@ -17,21 +22,19 @@ program
   .passCommandToAction(false)
   .version(version)
 
-
 logger.registerToCommander(program)
 
 
 program
   .name(COMMAND_NAME)
-  .usage('[options]')
+  .usage('<workspace> [options]')
+  .arguments('<workspace>')
   .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
   .option('--parastic-config-path <parastic config filepath>', '')
   .option('--parastic-config-entry <parastic config filepath>', '')
-  .option('-dts, <dtsRootPath>', 'root path of declarations')
-  .requiredOption('-p, --project <tsconfigPath>', 'path of tsconfig.json', 'tsconfig.json')
-  .action(function (options: any) {
+  .action(function (workspace: string, options: CommandOptions) {
     const cwd: string = path.resolve()
-    const workspaceDir: string = path.resolve(cwd)
+    const workspaceDir: string = path.resolve(cwd, workspace)
     const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))
     const parasticConfigPath: string | null | undefined = cover<string | null>(
       (): string | null => findPackageJsonPath(workspaceDir),
@@ -65,12 +68,15 @@ program
     logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
     logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
 
-    const tsconfigPath = options.p || 'tsconfig.json'
-    const dtsRootPath = options.dts
-    logger.debug('tsconfigPath:', tsconfigPath)
-    logger.debug('dtsRootPath:', dtsRootPath)
+    const rootPackageJsonPath: string | null = findPackageJsonPath(workspaceDir)
+    logger.debug('rootPackageJsonPath:', rootPackageJsonPath)
 
-    const pathResolver = new TsconfigPathAliasResolver(cwd, tsconfigPath)
-    pathResolver.processDts(dtsRootPath)
+    if (rootPackageJsonPath == null) {
+      logger.error(`Cannot find valid package.json on the workspace ${ rootPackageJsonPath }`)
+      process.exit(-1)
+    }
+
+    const manager = new PackageManager
+    manager.resolve(rootPackageJsonPath)
   })
   .parse(process.argv)

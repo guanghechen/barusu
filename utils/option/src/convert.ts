@@ -1,4 +1,4 @@
-import { isNumber, isString } from './is'
+import { isBoolean, isNumber, isString } from './is'
 
 
 /**
@@ -10,7 +10,7 @@ import { isNumber, isString } from './is'
  *
  * @param v
  */
-export function convertToBoolean(v: string | boolean | any): boolean | undefined {
+export function convertToBoolean(v: string | boolean | unknown): boolean | undefined {
   if (v == null) return undefined
   if (isString(v)) {
     switch (v.toLowerCase()) {
@@ -36,6 +36,7 @@ export function convertToBoolean(v: string | boolean | any): boolean | undefined
 export function convertToNumber(v: number | string | unknown): number | undefined {
   if (v == null) return undefined
   if (isString(v)) {
+    if (v.length <= 0) return undefined
     const x = Number(v)
     return Number.isNaN(x) ? undefined : x
   }
@@ -46,14 +47,20 @@ export function convertToNumber(v: number | string | unknown): number | undefine
 
 /**
  * Convert to string
- *  - If v is null / undefined, return undefined
- *  - If v is a string, return v
+ *  - If v is null / undefined or v.toString is null / undefined, return undefined
+ *  - If v is a string / number / boolean, return v.toString()
  *  - Otherwise, return undefined
  *
  * @param v
  */
 export function convertToString(v: string | unknown): string | undefined {
   if (v == null) return undefined
-  if (isString(v)) return v
+  if (
+    isString(v) ||
+    isNumber(v) ||
+    isBoolean(v)
+  ) {
+    return v.toString()
+  }
   return undefined
 }

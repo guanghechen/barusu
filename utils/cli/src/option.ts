@@ -1,67 +1,127 @@
-import fs from 'fs-extra'
+import {
+  MergeStrategy,
+  defaultMergeStrategies,
+  isNotEmptyArray,
+  isNotEmptyObject,
+  isNotEmptyString,
+  merge,
+} from '@barusu/util-option'
+import { loadJsonOrYamlSync } from './fs'
 
 
-export interface CommandOptionConfig {
-  [key: string]: any
+export interface ConfigFlatOpts {
+  /**
+   * Path of currently executing command
+   */
+  readonly cwd: string
+  /**
+   * Working directory
+   */
+  readonly workspace: string
+  /**
+   * Filepath of configs, only *.yml, *.yaml and *.json are supported.
+   * Each configuration file can specify the same options, the configuration
+   * file specified later can override the configuration specified previous.
+   * @default []
+   */
+  readonly configPath?: string[]
+  /**
+   * Filepath of parastic config,
+   */
+  readonly parasticConfigPath?: string | null
+  /**
+   * The entry key of options in the parasitic configuration file
+   */
+  readonly parasticConfigEntry?: string | null
 }
 
 
-export interface CommandConfig {
+export interface CommandOptionConfig extends Record<string, unknown> {
+  /**
+   * Filepath of configs, only *.yml, *.yaml and *.json are supported.
+   * Each configuration file can specify the same options, the configuration
+   * file specified later can override the configuration specified previous.
+   * @default []
+   */
+  readonly configPath?: string[]
+  /**
+   * Filepath of parastic config,
+   */
+  readonly parasticConfigPath?: string | null
+  /**
+   * The entry key of options in the parasitic configuration file
+   */
+  readonly parasticConfigEntry?: string | null
+}
+
+
+export interface CommandConfig<C extends CommandOptionConfig> {
   /**
    * Global options shared by all sub-commands
    */
-  __globalOptions__: CommandOptionConfig
+  __globalOptions__: C
   /**
    * Sub-command specific options
    */
-  [subCommand: string]: CommandOptionConfig
+  [subCommand: string]: C
 }
 
 
 /**
  * Flat defaultOptions with configs from package.json
  */
-export function flatDefaultOptionsFromPackageJson(
-  defaultOptions: CommandOptionConfig,
-  packageJsonPath: string,
-  packageName: string,
-  subCommandName?: string,
-): typeof defaultOptions & CommandOptionConfig {
-  if (!fs.existsSync(packageJsonPath)) return defaultOptions
+export function flagDefaultOptions<C extends CommandOptionConfig>(
+  defaultOptions: C,
+  flatOpts: ConfigFlatOpts,
+  subCommandName: string | false,
+  strategies: Partial<Record<keyof C, MergeStrategy>> = {},
+): C {
+  let resolvedConfig = {} as CommandConfig<C>
 
-  // load command config from package.json
-  const packageJson = fs.readJSONSync(packageJsonPath)
-  const commandConfig: CommandConfig = packageJson[packageName]
-  if (commandConfig == null || typeof commandConfig !== 'object') {
-    return defaultOptions
+  // load configs
+  if (isNotEmptyArray(flatOpts.configPath)) {
+    const configs: CommandConfig<C>[] = []
+    for (const filepath of flatOpts.configPath) {
+      const config = loadJsonOrYamlSync(filepath) as CommandConfig<C>
+      configs.push(config)
+    }
+    resolvedConfig = merge<CommandConfig<C>>(configs, {}, defaultMergeStrategies.replace)
+  } else { // otherwise, load from parastic config
+    if (
+      isNotEmptyString(flatOpts.parasticConfigPath) &&
+      isNotEmptyString(flatOpts.parasticConfigEntry)
+    ) {
+      const config = loadJsonOrYamlSync(flatOpts.parasticConfigPath) as any
+      resolvedConfig = config[flatOpts.parasticConfigEntry] as CommandConfig<C> || {}
+    }
   }
 
-  let result = defaultOptions
+  let result: C = defaultOptions
 
-  // merge globalOptions
-  if (typeof commandConfig.__globalOptions__ === 'object') {
-    result = { ...result, ...commandConfig.__globalOptions__ }
-  }
+  if (subCommandName === false) {
+    result = merge<C>([result, resolvedConfig as unknown as C],
+      strategies,
+      defaultMergeStrategies.replace)
+  } else {
+    // merge globalOptions
+    if (isNotEmptyObject(resolvedConfig.__globalOptions__)) {
+      result = merge<C>(
+        [result, resolvedConfig.__globalOptions__],
+        strategies,
+        defaultMergeStrategies.replace)
+    }
 
-  // merge specified sub-command option
-  if (
-    subCommandName != null &&
-    typeof commandConfig[subCommandName] == 'object'
-  ) {
-    result = { ...result, ...commandConfig[subCommandName] }
+    // merge specified sub-command option
+    if (
+      isNotEmptyString(subCommandName) &&
+      typeof resolvedConfig[subCommandName] == 'object'
+    ) {
+      result = merge<C>(
+        [result, resolvedConfig[subCommandName]],
+        strategies,
+        defaultMergeStrategies.replace)
+    }
   }
 
   return result
-}
-
-
-export function parseOption<T>(
-  defaultValue: T,
-  optionValue: T | null | undefined,
-  isOptionValueValid?: (t: T | null | undefined) => boolean,
-): T {
-  const valid = isOptionValueValid != null
-    ? isOptionValueValid(optionValue)
-    : optionValue != null
-  return valid ? optionValue! : defaultValue
 }

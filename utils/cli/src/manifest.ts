@@ -8,9 +8,9 @@ import { Logger } from './types'
  * null will be returned if the package.json is not found.
  */
 export function findPackageJsonPath(p: string): string | null {
-  const dirname = path.dirname(p)
-  const target = path.join(dirname, 'package.json')
+  const target = path.join(p, 'package.json')
   if (fs.existsSync(target)) return target
+  const dirname = path.dirname(p)
   if (dirname === p) return null
   return findPackageJsonPath(dirname)
 }

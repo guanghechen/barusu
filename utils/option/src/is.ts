@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
-
 /**
  * Test whether v is a boolean / Boolean
  * @param v
@@ -59,7 +56,7 @@ export function isSymbol(v: symbol | unknown): v is symbol {
  * @param v
  */
 export function isInteger(v: number | unknown): v is number {
-  return isNumber(v) && Number.isInteger(v)
+  return isNumber(v) && Number.isInteger(Number(v))
 }
 
 
@@ -78,6 +75,16 @@ export function isArray(v: unknown[] | unknown): v is unknown[] {
  */
 export function isObject(v: unknown): v is Record<string, unknown> {
   return Object.prototype.toString.call(v) === '[object Object]'
+}
+
+
+/**
+ * Test whether v is a function
+ * @param v
+ */
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(v: unknown): v is Function {
+  return Object.prototype.toString.call(v) === '[object Function]'
 }
 
 
@@ -139,7 +146,7 @@ export function isNotEmptyArray(v: unknown[] | unknown): v is unknown[] {
  * Test whether v is an empty object
  * @param v
  */
-export function isEmptyObject(v: Record<string, unknown>): v is Record<string, unknown> {
+export function isEmptyObject(v: Record<string, unknown> | unknown): v is Record<string, unknown> {
   return isObject(v) && Object.getOwnPropertyNames(v).length <= 0
 }
 
@@ -158,6 +165,6 @@ export function isNotEmptyObject (v: Record<string, unknown> | unknown): v is Re
  * @param v
  */
 export function isNumberLike(v: number | string | unknown): v is (number | string) {
-  if (typeof v === 'number') return true
-  return isString(v) && !Number.isNaN(Number(v))
+  if (isNumber(v)) return true
+  return isNotEmptyString(v) && !Number.isNaN(Number(v))
 }

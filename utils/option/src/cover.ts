@@ -1,4 +1,5 @@
 import { convertToBoolean, convertToNumber, convertToString } from './convert'
+import { isFunction } from './is'
 
 
 /**
@@ -7,9 +8,17 @@ import { convertToBoolean, convertToNumber, convertToString } from './convert'
  * @param defaultValue
  * @param value
  */
-export function cover<T>(defaultValue: T, value: T | null | undefined): T {
-  if (value == null) return defaultValue
-  return value
+export function cover<T>(
+  defaultValue: T | (() => T),
+  value: T | null | undefined,
+  isValueValid?: (t: T | null | undefined) => boolean,
+): T {
+  const valid = isValueValid != null ? isValueValid(value) : value != null
+  if (!valid) {
+    if (isFunction(defaultValue)) return defaultValue()
+    return defaultValue
+  }
+  return value!
 }
 
 
@@ -18,10 +27,13 @@ export function cover<T>(defaultValue: T, value: T | null | undefined): T {
  * @param defaultValue
  * @param value
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function coverBoolean(defaultValue: boolean, value?: any): boolean {
+export function coverBoolean(
+  defaultValue: boolean | (() => boolean),
+  value?: boolean | null | unknown,
+  isValueValid?: (t: number | null | unknown) => boolean,
+): boolean {
   const v = convertToBoolean(value)
-  return cover<boolean>(defaultValue, v)
+  return cover<boolean>(defaultValue, v, isValueValid)
 }
 
 
@@ -30,10 +42,13 @@ export function coverBoolean(defaultValue: boolean, value?: any): boolean {
  * @param defaultValue
  * @param value
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function coverNumber(defaultValue: number, value?: any): number {
+export function coverNumber(
+  defaultValue: number | (() => number),
+  value?: number | null | unknown,
+  isValueValid?: (t: number | null | unknown) => boolean,
+): number {
   const v = convertToNumber(value)
-  return cover<number>(defaultValue, v)
+  return cover<number>(defaultValue, v, isValueValid)
 }
 
 
@@ -42,7 +57,11 @@ export function coverNumber(defaultValue: number, value?: any): number {
  * @param defaultValue
  * @param value
  */
-export function coverString(defaultValue: string, value?: string): string {
+export function coverString(
+  defaultValue: string | (() => string),
+  value?: string | null | unknown,
+  isValueValid?: (t: string | null | unknown) => boolean,
+): string {
   const v = convertToString(value)
-  return cover<string>(defaultValue, v)
+  return cover<string>(defaultValue, v, isValueValid)
 }

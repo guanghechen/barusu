@@ -5,88 +5,137 @@ import {
   AsyncRequestedAction,
   AsyncSucceedAction,
 } from './action'
-import { AsyncActionTypes } from './constant'
+import { AsyncActionStatus } from './constant'
 import { AsyncStateItem } from './state'
 
 
-export type AsyncActionHandler<SP, A> = (state: AsyncStateItem<SP>, action: A) => AsyncStateItem<SP>
+export type AsyncActionHandler<
+  S extends AsyncStateItem<unknown>,
+  A extends AsyncActions<symbol | string>,
+  > = (state: S, action: A) => S
+
+
+type Reducer<
+  S extends AsyncStateItem<unknown>,
+  A extends AsyncActions<symbol | string>,
+  > = AsyncActionHandler<S, A>
 
 
 export interface AsyncActionReducer<
-  AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol>,
-  RP extends unknown = unknown,
-  SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse,
+  S extends AsyncStateItem<unknown>,
+  T extends string | symbol,
+  A extends AsyncActions<T>,
   > {
+  /**
+   * Accepted action type
+   */
+  readonly actionType: T
   /**
    * @param state   StateItem
    * @param action  async actions for this state item
    */
-  (state: AsyncStateItem<SP>, action: AsyncActions<AT, RP, SP, FP>): AsyncStateItem<SP>
+  process: AsyncActionHandler<S, A>
 }
 
 
 /**
- * Reducer of async actions
- * @param actionTypes
+ * Create reducer of async actions
+ * @param actionType
  */
 export function createAsyncActionReducer<
-  AT extends AsyncActionTypes<string, string, string> | AsyncActionTypes<symbol, symbol, symbol>,
+  S extends AsyncStateItem<unknown>,
+  T extends string | symbol,
   RP extends unknown = unknown,
   SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse,
-  >(
-    actionTypes: AT,
-    onRequestedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], RP>>,
-    onSucceedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], SP>>,
-    onFailedAction?: AsyncActionHandler<SP, AsyncRequestedAction<AT['REQUEST'], FP>>)
-  : AsyncActionReducer<AT, RP, SP, FP> {
+  FP extends AsyncFailureResponse = AsyncFailureResponse
+>(
+  actionType: T,
+  handlers: {
+    onRequestedAction?: AsyncActionHandler<S, AsyncRequestedAction<T, RP>>,
+    onSucceedAction?: AsyncActionHandler<S, AsyncSucceedAction<T, SP>>,
+    onFailedAction?: AsyncActionHandler<S, AsyncFailedAction<T, FP>>,
+  } = {},
+): AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>> {
 
-  if (onRequestedAction == null) {
-    // eslint-disable-next-line no-param-reassign
-    onRequestedAction = (state) => {
-      return { ...state, loading: true }
-    }
-  }
+  /**
+   * Requested action handler
+   */
+  const onRequestedAction: AsyncActionHandler<S, AsyncRequestedAction<T, RP>> =
+    handlers.onRequestedAction != null
+      ? handlers.onRequestedAction
+      : (state) => {
+        return {
+          ...state,
+          loading: true
+        }
+      }
 
-  if (onSucceedAction == null) {
-    // eslint-disable-next-line no-param-reassign
-    onSucceedAction = (state, action) => {
-      const { payload } = action
-      return {
-        ...state,
-        loading: false,
-        data: payload !== undefined ? payload : null,
-        error: null,
+  /**
+   * Succeed action handler
+   */
+  const onSucceedAction: AsyncActionHandler<S, AsyncSucceedAction<T, SP>> =
+    handlers.onSucceedAction != null
+      ? handlers.onSucceedAction
+      : (state, action) => {
+        const { payload } = action
+        return {
+          ...state,
+          loading: false,
+          data: payload !== undefined ? payload : null,
+          error: null,
+        }
+      }
+
+  /**
+   * Failed action handler
+   */
+  const onFailedAction: AsyncActionHandler<S, AsyncFailedAction<T, FP>> =
+    handlers.onFailedAction != null
+      ? handlers.onFailedAction
+      : (state, action) => {
+        const { payload } = action
+        return {
+          ...state,
+          loading: false,
+          data: null,
+          error: payload !== undefined ? payload : null,
+        }
+      }
+
+  const actionReducer: AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>> = {
+    actionType,
+    process: function (state: S, action: AsyncActions<T, RP, SP, FP>) {
+      if (action.type !== actionType) return state
+      switch (action.status) {
+        case AsyncActionStatus.REQUESTED:
+          return onRequestedAction!(state, action)
+        case AsyncActionStatus.SUCCEED:
+          return onSucceedAction!(state, action)
+        case AsyncActionStatus.FAILED:
+          return onFailedAction!(state, action)
+        default:
+          return state
       }
     }
   }
 
-  if (onFailedAction == null) {
-    // eslint-disable-next-line no-param-reassign
-    onFailedAction = (state, action) => {
-      const { payload } = action
-      return {
-        ...state,
-        loading: false,
-        data: null,
-        error: payload !== undefined ? payload : null,
+  return actionReducer
+}
+
+
+export function assembleActionReducers<
+  S extends AsyncStateItem<unknown>,
+  T extends string | symbol,
+  R extends AsyncActionReducer<S, T, AsyncActions<T>> = AsyncActionReducer<S, T, AsyncActions<any, any, any>>
+>(
+  actionReducers: R[],
+): Reducer<S, AsyncActions<T, unknown>> {
+  return (state: S, action: AsyncActions<T, unknown>): S => {
+    for (const reducer of actionReducers) {
+      if (reducer.actionType === action.type) {
+        return reducer.process(state, action)
       }
     }
+    return state
   }
-
-  const reducer: AsyncActionReducer<AT, RP, SP, FP> = (state, action) => {
-    switch (action.type) {
-      case actionTypes.REQUEST:
-        return onRequestedAction!(state, action as AsyncRequestedAction<AT['REQUEST'], RP>)
-      case actionTypes.SUCCESS:
-        return onSucceedAction!(state, action as AsyncSucceedAction<AT['SUCCESS'], SP>)
-      case actionTypes.FAILURE:
-        return onFailedAction!(state, action as AsyncFailedAction<AT['FAILURE'], FP>)
-      default:
-        return state
-    }
-  }
-
-  return reducer
 }
