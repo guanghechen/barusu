@@ -29,7 +29,7 @@
     "!lib/**/*.d.ts.map"
   ],
   "bin": {
-    "resolve-tsconfig-paths": "./lib/cjs/cli.js"
+    "barusu-tsconfig-paths": "./lib/cjs/cli.js"
   },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
@@ -41,6 +41,8 @@
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.17",
     "@barusu/tool-sort-imports": "^0.0.17",
+    "@barusu/util-cli": "^0.0.17",
+    "@barusu/util-option": "^0.0.17",
     "@types/fs-extra": "^8.1.0",
     "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
