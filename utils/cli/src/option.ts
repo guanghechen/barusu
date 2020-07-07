@@ -92,7 +92,7 @@ export function flagDefaultOptions<C extends CommandOptionConfig>(
       isNotEmptyString(flatOpts.parasticConfigEntry)
     ) {
       const config = loadJsonOrYamlSync(flatOpts.parasticConfigPath) as any
-      resolvedConfig = config[flatOpts.parasticConfigEntry] as CommandConfig<C>
+      resolvedConfig = config[flatOpts.parasticConfigEntry] as CommandConfig<C> || {}
     }
   }
 
