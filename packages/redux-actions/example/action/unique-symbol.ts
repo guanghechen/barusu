@@ -1,13 +1,54 @@
-import { createAsyncActionCreators, createAsyncActionTypes } from '../../src'
+import {
+  AsyncStateItem,
+  assembleActionReducers,
+  createAsyncAction,
+  createInitAsyncStateItem,
+} from '../../src'
 
 
-const requestedType: unique symbol = Symbol('@user/me/request')
-const succeedType: unique symbol = Symbol('@user/me/success')
-const failedType: unique symbol = Symbol('@user/me/failure')
-const types = createAsyncActionTypes(requestedType, succeedType, failedType)
+export interface UserStateData {
+  name: string
+  gender: string
+}
 
-const creators = createAsyncActionCreators<typeof types, { x: number }>(types)
-const action1 = creators.request({ x: 2 })
+
+export type UserState = AsyncStateItem<UserStateData>
+
+
+export const initialUserState: UserState
+  = createInitAsyncStateItem<UserStateData>({
+    name: 'alice',
+    gender: 'female',
+  })
+
+
+const FETCH_USER_ACTION_TYPE: unique symbol = Symbol('@user/fetch_user')
+const UPDATE_USER_ACTION_TYPE: unique symbol = Symbol('@user/update_user')
+export type UserActionTypes =
+  | typeof FETCH_USER_ACTION_TYPE
+  | typeof UPDATE_USER_ACTION_TYPE
+
+
+export const {
+  creator: fetchUserActionCreator,
+  reducer: fetchUserActionReducer,
+} = createAsyncAction<
+  UserState,
+  typeof FETCH_USER_ACTION_TYPE,
+  { x: number }>(FETCH_USER_ACTION_TYPE)
+
+
+export const userActionCreators = {
+  fetchUser: fetchUserActionCreator,
+}
+
+
+export const userReducer = assembleActionReducers<UserState, UserActionTypes>([
+  fetchUserActionReducer,
+])
+
+
+const action1 = userActionCreators.fetchUser.request({ x: 2 })
 
 
 /**
@@ -18,12 +59,29 @@ const action1 = creators.request({ x: 2 })
  *
  * Because unique symbol are different type each other in TypeScript
  */
-console.log(action1.type === types.FAILURE)
+// console.log(action1.type === UPDATE_USER_ACTION_TYPE)
+
+
+/**
+ * But it's okay in the next lines because they're identical.
+ */
+console.log(action1.type === FETCH_USER_ACTION_TYPE)
 
 
 /**
  * And also will be warned when you try to call the .request func with a
  * different type of payload than the typeof AsyncRequestedAction.payload
  */
-creators.request({ x: '2' })
-creators.request({ x: 2, y: 1})
+// userActionCreators.fetchUser.request({ x: '2' })
+// userActionCreators.fetchUser.request({ x: 2, y: 1})
+
+
+/**
+ * on request succeed
+ */
+userActionCreators.fetchUser.success({ name: 'alice' })
+
+/**
+ * on request failed
+ */
+userActionCreators.fetchUser.failure({ code: 500, message: 'Server Error' })
