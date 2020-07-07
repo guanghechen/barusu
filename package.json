@@ -17,7 +17,7 @@
   },
   "scripts": {
     "pre:publish": "yarn find-inconsistent && yarn sort-imports",
-    ":publish": "lerna publish",
+    ":publish": "lerna publish --no-private",
     "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "bootstrap": "lerna bootstrap",
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
@@ -35,7 +35,7 @@
   ],
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "lerna": "^3.20.2",
+    "lerna": "^3.22.1",
     "rimraf": "^3.0.2",
     "ts-node": "^8.8.2",
     "tsconfig-paths": "^3.9.0",
@@ -48,11 +48,11 @@
     ],
     "moduleRanks": [
       {
-        "regex": "^(react|vue|angular)(?:[\/\\-][\\w\\-.\/]*)?$",
+        "regex": "^(react|vue|angular)(?:[/\\-][\\w\\-./]*)?$",
         "rank": 1.1
       },
       {
-        "regex": "^mocha|chai(?:[\/][\\w\\-.\/]*)?$",
+        "regex": "^mocha|chai(?:[/][\\w\\-./]*)?$",
         "rank": 1.2
       },
       {
