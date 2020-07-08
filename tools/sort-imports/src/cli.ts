@@ -99,7 +99,7 @@ program
 
     // resolve indent
     const indent: string = cover<string>(defaultOptions.indent, options.indent, isNotEmptyString)
-    logger.debug('indent:', indent)
+    logger.debug('indent:', indent.replace(' ', '_'))
 
     // resolve encoding
     const encoding: string = cover<string>(defaultOptions.encoding, options.encoding, isNotEmptyString)
