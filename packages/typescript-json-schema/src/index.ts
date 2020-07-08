@@ -134,15 +134,22 @@ export function generateSchema(
 
 /**
  * build ts.Program from tsconfig
- * @param configFileName    location of tsconfig.json
- * @param onlyIncludeFiles  only include these specified files
+ * @param configFileName            location of tsconfig.json
+ * @param onlyIncludeFiles          only include these specified files
+ * @param additionalCompilerOptions additional compiler options (identified with configFileName#compilerOptions)
  */
-export function programFromConfig(configFileName: string, onlyIncludeFiles?: string[]): ts.Program {
+export function programFromConfig(
+  configFileName: string,
+  onlyIncludeFiles?: string[],
+  additionalCompilerOptions: ts.CompilerOptions = {},
+): ts.Program {
   // basically a copy of https://github.com/Microsoft/TypeScript/blob/3663d400270ccae8b69cbeeded8ffdc8fa12d7ad/src/compiler/tsc.ts -> parseConfigFile
   const result = ts.parseConfigFileTextToJson(configFileName, ts.sys.readFile(configFileName)!)
   const configObject = result.config
 
-  const configParseResult = ts.parseJsonConfigFileContent(configObject, ts.sys, path.dirname(configFileName), {}, path.basename(configFileName))
+  const configParseResult = ts.parseJsonConfigFileContent(
+    configObject, ts.sys, path.dirname(configFileName),
+    additionalCompilerOptions, path.basename(configFileName))
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { out, outDir, outFile, declaration, declarationDir, declarationMap, ...restOptions } = configParseResult.options
