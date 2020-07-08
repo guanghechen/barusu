@@ -4,6 +4,7 @@ import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import {
   ConfigFlatOpts,
+  absoluteOfWorkspace,
   findPackageJsonPath,
   flagDefaultOptions,
   mkdirsIfNotExists,
@@ -88,17 +89,17 @@ export function loadSubCommandInit(
       logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
       logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
 
-      // get secretFilepath
-      const secretFilepath: string = path.resolve(workspaceDir, cover<string>(
+      // resolve secretFilepath
+      const secretFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
         defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
       logger.debug('secretFilepath:', secretFilepath)
 
-      // get showAsterisk
+      // resolve showAsterisk
       const showAsterisk: boolean = cover<boolean>(
         defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
       logger.debug('showAsterisk:', showAsterisk)
 
-      // get miniumPasswordLength
+      // resolve miniumPasswordLength
       const miniumPasswordLength: number = cover<number>(
         defaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength))
       logger.debug('miniumPasswordLength:', miniumPasswordLength)
