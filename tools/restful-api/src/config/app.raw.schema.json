@@ -42,7 +42,7 @@
           "type": "string",
           "required": true
         },
-        "ignoreMissingModels": {
+        "muteMissingModel": {
           "description": "忽略未找到的模型，若为 false，则抛出异常，并终止程序\n#default false",
           "type": "boolean",
           "required": true

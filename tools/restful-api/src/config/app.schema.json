@@ -68,7 +68,7 @@
       "required": false,
       "requiredProperties": [
         "tsconfigPath",
-        "ignoreMissingModels",
+        "muteMissingModel",
         "clean"
       ],
       "allowAdditionalProperties": false,
@@ -78,7 +78,7 @@
           "type": "string",
           "required": true
         },
-        "ignoreMissingModels": {
+        "muteMissingModel": {
           "type": "boolean",
           "required": true
         },
