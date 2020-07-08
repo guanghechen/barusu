@@ -37,8 +37,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.17",
-    "@barusu/rollup-config": "^0.0.17",
+    "@barusu/eslint-config": "^0.0.18",
+    "@barusu/rollup-config": "^0.0.18",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
