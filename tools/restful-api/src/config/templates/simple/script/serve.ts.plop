@@ -9,8 +9,6 @@ async function serve () {
   console.log(chalk.gray('--> ' + args.join(' ')))
 
   const serve = new ServeCommand()
-  serve.onHook(SubCommandHook.BEFORE_START, (server, context) => {
-    const router = new Router({ prefix: context.prefixUrl })
     router.get('/hello/world', ctx => {
       ctx.body = {
         code: 200,

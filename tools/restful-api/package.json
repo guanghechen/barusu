@@ -68,6 +68,7 @@
     "koa-router": "^7.4.0",
     "mockjs": "^1.1.0",
     "option-master": "^0.0.16",
+    "plop": "^2.7.0",
     "typescript": "^3.8.2"
   },
   "devDependencies": {

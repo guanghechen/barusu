@@ -3,6 +3,7 @@
     "Builtins",
     "Lerna",
     "autoprefixer",
+    "autorestart",
     "axios",
     "barsize",
     "barusu",
@@ -25,6 +26,7 @@
     "mkdirs",
     "mockjs",
     "njsproj",
+    "nodemon",
     "ntvs",
     "parastic",
     "plopfile",
@@ -39,6 +41,7 @@
     "rollup",
     "sourcemap",
     "styl",
+    "tada",
     "tsbuildinfo",
     "typeof",
     "ymal"
