@@ -96,12 +96,12 @@ export function loadSubCommandInit(
       logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
       logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
 
-      // get tsconfig.json filepath
+      // resolve tsconfig.json filepath
       const tsconfigPath: string = path.resolve(workspace, cover<string>(
         defaultOptions.tsconfigPath, options.tsconfigPath, isNotEmptyString))
       logger.debug('tsconfigPath:', tsconfigPath)
 
-      // get encoding
+      // resolve encoding
       const encoding: string = cover<string>(
         defaultCommandOptions.encoding, options.encoding, isNotEmptyString)
       logger.debug('encoding:', encoding)

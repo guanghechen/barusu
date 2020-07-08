@@ -1,8 +1,6 @@
 import { CommanderStatic } from 'commander'
 import path from 'path'
-import ts from 'typescript'
 import { Level } from '@barusu/chalk-logger'
-import * as TJS from '@barusu/typescript-json-schema'
 import {
   ConfigFlatOpts,
   absoluteOfWorkspace,
@@ -13,14 +11,15 @@ import {
 import {
   cover,
   coverBoolean,
+  coverNumber,
   coverString,
   isNotEmptyString,
 } from '@barusu/util-option'
-import { generate } from '../core/generate'
+import { serve } from '../core/serve'
 import {
-  GenerateCommandContext,
-  createGenerateCommandContext,
-} from '../core/generate/context'
+  ServeCommandContext,
+  createServeCommandContext,
+} from '../core/serve/context'
 import { logger } from '../index'
 import { EventTypes, eventBus } from '../util/event-bus'
 import {
@@ -30,8 +29,8 @@ import {
 } from './_util'
 
 
-const SUB_COMMAND_NAME = 'generate'
-const SUB_COMMAND_NAME_ALIAS = 'g'
+const SUB_COMMAND_NAME = 'serve'
+const SUB_COMMAND_NAME_ALIAS = 's'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -60,28 +59,43 @@ interface SubCommandOptions extends GlobalCommandOptions {
    */
   encoding: string
   /**
-   * Clean schema folders before generate
+   * Server ip / domain
+   * @default 'localhost'
+   */
+  host: string
+  /**
+   * The port on which the server is listening
+   * @default 3000
+   */
+  port: number
+  /**
+   * Routing prefix
+   */
+  prefixUrl: string
+  /**
+   * Whether to return only the required attributes in JSON-Schema
    * @default false
    */
-  clean: boolean
+  mockRequiredOnly: boolean
   /**
-   * Ignore missing models
+   * Whether all optional attributes are always returned
    * @default false
    */
-  muteMissingModel: boolean
+  mockOptionalsAlways: boolean
   /**
-   *
-   * @default []
+   * The probability that an optional attribute will be returned
+   * @default 0.8
    */
-  ignoredDataTypes: string[]
+  mockOptionalsProbability: number
   /**
-   * Additional schema options
+   * Whether to prioritize using data files as mock data
+   * @default false
    */
-  additionalSchemaArgs?: TJS.PartialArgs
+  mockDataFileFirst: boolean
   /**
-   * Additional compiler options (identified with tsconfig.json#compilerOptions)
+   * The root directory where the mock data file is located
    */
-  additionalCompilerOptions?: ts.CompilerOptions
+  mockDataFileRootPath?: string
 }
 
 
@@ -91,41 +105,40 @@ const defaultCommandOptions: SubCommandOptions = {
   tsconfigPath: 'tsconfig.json',
   schemaRootPath: '__data-schemas',
   encoding: 'utf-8',
-  clean: false,
-  muteMissingModel: false,
-  ignoredDataTypes: [],
+  host: 'localhost',
+  port: 3000,
+  prefixUrl: '',
+  mockRequiredOnly: false,
+  mockOptionalsAlways: false,
+  mockDataFileRootPath: undefined,
+  mockOptionalsProbability: 0.8,
+  mockDataFileFirst: false,
 }
 
 
 /**
- * load Sub-command: generate
+ * load Sub-command: serve
  */
-export function loadSubCommandGenerate(
+export function loadSubCommandServe(
   name: string,
   program: CommanderStatic,
 ): void {
   program
     .command(`${ SUB_COMMAND_NAME } <directory>`)
     .alias(SUB_COMMAND_NAME_ALIAS)
-    .option('-C, --api-config-path <api-config-path>', 'filepath of api-item config (glob patterns / strings)', (val, acc: string[]) => acc.concat(val), [])
-    .option('-p, --tsconfig-path <tsconfigPath>', 'path of tsconfig.json')
-    .option('-s, --schema-root-path <schemaRootPath>', 'root path of schema files')
-    .option('-e, --encoding <encoding>', 'specify encoding of all files.')
-    .option('--mute-missing-model', 'quiet when model not found')
-    .option('--clean', 'clean schema folders before generate.')
-    .action(async function (_workspaceDir: string, options: SubCommandOptions) {
+    .action(async function (workspace: string, options: SubCommandOptions) {
       logger.setName(`${ name } ${ SUB_COMMAND_NAME }`)
 
       const cwd: string = path.resolve()
-      const workspace: string = path.resolve(cwd, _workspaceDir)
-      const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspace, p))
+      const workspaceDir: string = path.resolve(cwd, workspace)
+      const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))
       const parasticConfigPath: string | null | undefined = cover<string | null>(
-        (): string | null => findPackageJsonPath(workspace),
+        (): string | null => findPackageJsonPath(workspaceDir),
         options.parasticConfigPath)
       const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
       const flatOpts: ConfigFlatOpts = {
         cwd,
-        workspace,
+        workspace: workspaceDir,
         configPath,
         parasticConfigPath,
         parasticConfigEntry,
@@ -168,49 +181,70 @@ export function loadSubCommandGenerate(
       logger.debug('schemaRootPath:', schemaRootPath)
 
       // resolve encoding
-      const encoding: string = coverString(
+      const encoding = coverString(
         defaultOptions.encoding, options.encoding, isNotEmptyString)
       logger.debug('encoding:', encoding)
 
-      // resolve muteMissingModel
-      const muteMissingModel: boolean = coverBoolean(
-        defaultOptions.muteMissingModel, options.muteMissingModel)
-      logger.debug('muteMissingModel:', muteMissingModel)
+      // resolve host
+      const host: string = coverString(
+        defaultOptions.host, options.host, isNotEmptyString)
+      logger.debug('host:', host)
 
-      // resolve clean
-      const clean: boolean = coverBoolean(defaultOptions.clean, options.clean)
-      logger.debug('clean:', clean)
+      // resolve port
+      const port: number = coverNumber(defaultOptions.port, options.port)
+      logger.debug('port:', port)
 
-      // resolve ignoredDataTypes
-      const ignoredDataTypes: string[] = defaultOptions.ignoredDataTypes
-      logger.debug('ignoredDataTypes:', ignoredDataTypes)
+      // resolve prefixUrl
+      const prefixUrl: string = coverString(
+        defaultOptions.prefixUrl, options.prefixUrl, isNotEmptyString)
+      logger.debug('prefixUrl:', prefixUrl)
 
-      // resolve additionalSchemaArgs
-      const additionalSchemaArgs: TJS.PartialArgs | undefined =
-        defaultOptions.additionalSchemaArgs
-      logger.debug('additionalSchemaArgs:', additionalSchemaArgs)
+      // resolve mockRequiredOnly
+      const mockRequiredOnly: boolean = coverBoolean(
+        defaultOptions.mockRequiredOnly, options.mockRequiredOnly)
+      logger.debug('mockRequiredOnly:', mockRequiredOnly)
 
-      // resolve additionalCompilerOptions
-      const additionalCompilerOptions: ts.CompilerOptions | undefined =
-        defaultOptions.additionalCompilerOptions
-      logger.debug('additionalCompilerOptions:', additionalCompilerOptions)
+      // resolve mockOptionalsAlways
+      const mockOptionalsAlways: boolean = coverBoolean(
+        defaultOptions.mockOptionalsAlways, options.mockOptionalsAlways)
+      logger.debug('mockOptionalsAlways:', mockOptionalsAlways)
+
+      // resolve mockOptionalsProbability
+      const mockOptionalsProbability: number = coverNumber(
+        defaultOptions.mockOptionalsProbability, options.mockOptionalsProbability)
+      logger.debug('mockOptionalsProbability:', mockOptionalsProbability)
+
+      // resolve mockOptionalsAlways
+      const mockDataFileFirst: boolean = coverBoolean(
+        defaultOptions.mockDataFileFirst, options.mockDataFileFirst)
+      logger.debug('mockDataFileFirst:', mockDataFileFirst)
+
+      // resolve mockDataFileRootPath
+      const mockDataFileRootPath: string | undefined = absoluteOfWorkspace(workspace,
+        cover<string | undefined>(defaultOptions.mockDataFileRootPath,
+          options.mockDataFileRootPath, isNotEmptyString))
+      logger.debug('mockDataFileRootPath:', mockDataFileRootPath)
+
 
       try {
-        const context: GenerateCommandContext = await createGenerateCommandContext({
+        const context: ServeCommandContext = await createServeCommandContext({
           cwd,
           workspace,
           tsconfigPath,
           schemaRootPath,
           apiConfigPath,
           encoding,
-          clean,
-          muteMissingModel,
-          ignoredDataTypes,
-          additionalSchemaArgs,
-          additionalCompilerOptions,
+          host,
+          port,
+          prefixUrl,
+          mockRequiredOnly,
+          mockOptionalsAlways,
+          mockOptionalsProbability,
+          mockDataFileFirst,
+          mockDataFileRootPath,
         })
 
-        await generate(context)
+        await serve(context)
       } catch (error) {
         handleError(error)
       } finally {

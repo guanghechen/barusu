@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import Koa from 'koa'
 import path from 'path'
-import { logger } from '../../core/util/logger'
+import { logger } from '../../../util/logger'
 
 
 interface Params {

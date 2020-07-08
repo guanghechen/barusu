@@ -4,7 +4,7 @@ import { generateDataSchema } from './generate-schema'
 
 
 /**
- * Initialize a mock server project with templates
+ *
  * @param context
  */
 export async function generate(context: GenerateCommandContext): Promise<void> {
