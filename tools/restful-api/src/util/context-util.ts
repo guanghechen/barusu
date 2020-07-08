@@ -3,42 +3,7 @@ import yaml from 'js-yaml'
 import { DSchema, OptionMaster, optionMaster } from 'option-master'
 import path from 'path'
 import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
-import { CmdOptions } from '../types/option'
 import { logger } from './logger'
-
-
-/**
- * 若 apiItemConfigPath 为目录，则目录下的所有 .api.yml/.api.yaml/.api.json 为后缀的文件
- * 均视为 ApiItems 的配置文件；
- * 否则，apiItemConfigPath 为 ApiItems 的配置文件
- *
- * @param apiItemConfigPath
- */
-export function extractApiItemPath(apiItemConfigPath: string): string[] {
-  const stat = fs.statSync(apiItemConfigPath)
-  if (stat.isFile()) return [apiItemConfigPath]
-  const files: string[] = fs.readdirSync(apiItemConfigPath)
-  return files
-    .map(f => path.join(apiItemConfigPath, f))
-    .filter(f => /\.api(?:\.yml|\.yaml$|\.json)$/.test(f))
-}
-
-
-/**
- * 将命令行参数覆盖配置文件中配置的参数
- * @param config
- * @param options
- */
-export function coverConfigWithCmdOptions<T> (config: T, options: CmdOptions): T {
-  const result: T = { ...config }
-  for (const key of Object.getOwnPropertyNames(options)) {
-    const item = options[key]
-    if (item.userSpecified || config[key] === undefined) {
-      result[key] = item.value
-    }
-  }
-  return result
-}
 
 
 /**

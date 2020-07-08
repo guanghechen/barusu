@@ -216,7 +216,7 @@
 
     generate:
       clean: true
-      ignoreMissingModels: true
+      muteMissingModel: true
       ignoredDataTypes:
         - 'undefined'
       schemaArgs:
