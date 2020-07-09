@@ -2,9 +2,9 @@ import { coverString, isNotEmptyString } from '@barusu/util-option'
 
 
 /**
- * Context variables for `init` command
+ * Context variables for RestfulApiInitializerContext
  */
-export interface InitCommandContext {
+export interface RestfulApiInitializerContext {
   /**
    * Path of currently executing command
    */
@@ -46,11 +46,13 @@ interface Params {
 
 
 /**
- * Create InitCommandContext
+ * Create RestfulApiInitializerContext
  * @param params
  */
-export function createInitCommandContext(params: Params): InitCommandContext {
-  const context: InitCommandContext = {
+export function createRestfulApiInitializerContext(
+  params: Params
+): RestfulApiInitializerContext {
+  const context: RestfulApiInitializerContext = {
     cwd: params.cwd,
     workspace: params.workspace,
     tsconfigPath: params.tsconfigPath,

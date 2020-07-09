@@ -16,13 +16,14 @@ import {
   coverString,
   isNotEmptyString,
 } from '@barusu/util-option'
-import { generate } from '../core/generate'
 import {
-  GenerateCommandContext,
-  createGenerateCommandContext,
-} from '../core/generate/context'
-import { logger } from '../index'
-import { EventTypes, eventBus } from '../util/event-bus'
+  EventTypes,
+  RestfulApiGenerator,
+  RestfulApiGeneratorContext,
+  createRestfulApiGeneratorContext,
+  eventBus,
+  logger,
+} from '../index'
 import {
   GlobalCommandOptions,
   defaultGlobalCommandOptions,
@@ -196,7 +197,7 @@ export function loadSubCommandGenerate(
       logger.debug('additionalCompilerOptions:', additionalCompilerOptions)
 
       try {
-        const context: GenerateCommandContext = await createGenerateCommandContext({
+        const context: RestfulApiGeneratorContext = await createRestfulApiGeneratorContext({
           cwd,
           workspace,
           tsconfigPath,
@@ -210,7 +211,8 @@ export function loadSubCommandGenerate(
           additionalCompilerOptions,
         })
 
-        await generate(context)
+        const generator = new RestfulApiGenerator(context)
+        await generator.generate()
       } catch (error) {
         handleError(error)
       } finally {

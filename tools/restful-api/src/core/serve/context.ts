@@ -6,9 +6,9 @@ import { logger } from '../../util/logger'
 
 
 /**
- * Context variables for `serve` command
+ * Context variables for RestfulApiServerContext
  */
-export interface ServeCommandContext {
+export interface RestfulApiServerContext {
   /**
    * Path of currently executing command
    */
@@ -69,9 +69,9 @@ export interface ServeCommandContext {
 
 
 interface Params {
-    /**
-   * Path of currently executing command
-   */
+  /**
+ * Path of currently executing command
+ */
   readonly cwd: string
   /**
    * Working directory
@@ -141,9 +141,11 @@ interface Params {
 
 
 /**
- * Create ServeCommandContext
+ * Create RestfulApiServerContext
  */
-export async function createServeCommandContext(params: Params): Promise<ServeCommandContext> {
+export async function createRestfulApiServerContext(
+  params: Params
+): Promise<RestfulApiServerContext> {
   const apiItemParser = new ApiItemParser(params.schemaRootPath)
   const apiConfigPaths: string[] = await globby(params.apiConfigPath, { cwd: params.workspace })
   for (const apiConfigPath of apiConfigPaths) {
@@ -156,7 +158,7 @@ export async function createServeCommandContext(params: Params): Promise<ServeCo
     throw new Error('no valid api item found.')
   }
 
-  const context: ServeCommandContext = {
+  const context: RestfulApiServerContext = {
     cwd: params.cwd,
     workspace: params.workspace,
     tsconfigPath: params.workspace,

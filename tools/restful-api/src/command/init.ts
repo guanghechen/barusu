@@ -7,11 +7,11 @@ import {
   flagDefaultOptions,
 } from '@barusu/util-cli'
 import { cover, coverString, isNotEmptyString } from '@barusu/util-option'
-import { init } from '../core/init'
 import {
-  InitCommandContext,
-  createInitCommandContext,
+  RestfulApiInitializerContext,
+  createRestfulApiInitializerContext,
 } from '../core/init/context'
+import { RestfulApiInitializer } from '../core/init/initializer'
 import { logger } from '../index'
 import { EventTypes, eventBus } from '../util/event-bus'
 import {
@@ -63,7 +63,7 @@ export function loadSubCommandInit(
 
       const cwd: string = path.resolve()
       const workspace: string = path.resolve(cwd, _workspaceDir)
-      const configPath: string[] = options.apiConfigPath!.map((p: string) => path.resolve(workspace, p))
+      const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspace, p))
       const parasticConfigPath: string | null | undefined = cover<string | null>(
         (): string | null => findPackageJsonPath(workspace),
         options.parasticConfigPath)
@@ -107,9 +107,10 @@ export function loadSubCommandInit(
       logger.debug('encoding:', encoding)
 
       try {
-        const context: InitCommandContext = createInitCommandContext(
+        const context: RestfulApiInitializerContext = createRestfulApiInitializerContext(
           { cwd, workspace, tsconfigPath, encoding })
-        await init(context)
+        const initializer = new RestfulApiInitializer(context)
+        await initializer.init()
       } catch (error) {
         handleError(error)
       } finally {

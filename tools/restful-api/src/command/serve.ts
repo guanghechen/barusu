@@ -15,11 +15,11 @@ import {
   coverString,
   isNotEmptyString,
 } from '@barusu/util-option'
-import { serve } from '../core/serve'
 import {
-  ServeCommandContext,
-  createServeCommandContext,
+  RestfulApiServerContext,
+  createRestfulApiServerContext,
 } from '../core/serve/context'
+import { RestfulApiServer } from '../core/serve/server'
 import { logger } from '../index'
 import { EventTypes, eventBus } from '../util/event-bus'
 import {
@@ -227,7 +227,7 @@ export function loadSubCommandServe(
 
 
       try {
-        const context: ServeCommandContext = await createServeCommandContext({
+        const context: RestfulApiServerContext = await createRestfulApiServerContext({
           cwd,
           workspace,
           tsconfigPath,
@@ -244,7 +244,8 @@ export function loadSubCommandServe(
           mockDataFileRootPath,
         })
 
-        await serve(context)
+        const server = new RestfulApiServer(context)
+        server.start()
       } catch (error) {
         handleError(error)
       } finally {

@@ -6,14 +6,11 @@ import {
   toKebabCase,
   toPascalCase,
 } from '@barusu/util-option'
-import {
-  loadConfigSchema,
-  loadContextConfig,
-} from '../_core/util/context-util'
 import { ApiConfig, ApiConfigContext, RawApiConfig } from '../types/api-config'
 import { ApiItem, HttpVerb, RawApiItem } from '../types/api-item'
 import { ApiItemGroup, RawApiItemGroup } from '../types/api-item-group'
 import { logger } from '../util/logger'
+import { loadConfigSchema, loadContextConfig } from './env'
 
 
 export class ApiItemParser {
