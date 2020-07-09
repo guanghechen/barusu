@@ -37,6 +37,7 @@
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
   },
   "dependencies": {
+    "@barusu/chalk-logger": "^0.0.18",
     "@barusu/util-option": "^0.0.18",
     "@types/fs-extra": "^8.1.0",
     "@types/js-yaml": "^3.12.5",
