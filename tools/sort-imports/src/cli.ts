@@ -2,18 +2,12 @@ import program from 'commander'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
-import { Level } from '@barusu/chalk-logger'
 import { name, version } from '@barusu/tool-sort-imports/package.json'
-import {
-  ConfigFlatOpts,
-  findPackageJsonPath,
-  flagDefaultOptions,
-} from '@barusu/util-cli'
+import { resolveCommandOptions } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
   coverNumber,
-  coverString,
   isNotEmptyArray,
   isNotEmptyString,
 } from '@barusu/util-option'
@@ -49,40 +43,9 @@ program
   .option('--quote <quote>', 'quotation marker surround the module path')
   .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
   .action(function (workspace: string, options: CommandOptions) {
-    const cwd: string = path.resolve()
-    const workspaceDir: string = path.resolve(cwd, workspace)
-    const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))
-    const parasticConfigPath: string | null | undefined = cover<string | null>(
-      (): string | null => findPackageJsonPath(workspaceDir),
-      options.parasticConfigPath)
-    const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
-    const flatOpts: ConfigFlatOpts = {
-      cwd,
-      workspace: workspaceDir,
-      configPath,
-      parasticConfigPath,
-      parasticConfigEntry,
-    }
-
-    const defaultOptions = flagDefaultOptions(
-      defaultCommandOptions,
-      flatOpts,
-      false,
-      {},
-    )
-
-    // reset log-level
-    const logLevel = cover<string | undefined>(defaultOptions.logLevel, options.logLevel)
-    if (logLevel != null) {
-      const level = Level.valueOf(logLevel)
-      if (level != null) logger.setLevel(level)
-    }
-
-    logger.debug('cwd:', flatOpts.cwd)
-    logger.debug('workspace:', flatOpts.workspace)
-    logger.debug('configPath:', flatOpts.configPath)
-    logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
-    logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
+    const defaultOptions = resolveCommandOptions(
+      logger, name, false,
+      defaultCommandOptions, workspace, options)
 
     // resolve pattern
     const pattern: string[] = cover<string[]>(
