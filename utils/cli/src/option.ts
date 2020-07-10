@@ -140,15 +140,15 @@ export function flagDefaultOptions<C extends CommandOptionConfig>(
 export function resolveCommandOptions<
   C extends Partial<CommandOptionConfig>,
   D extends CommandOptionConfig,
->(
-  logger: ColorfulChalkLogger,
-  commandName: string,
-  subCommandName: string | false,
-  defaultOptions: D,
-  workspaceDir: string,
-  options: C,
-  strategies: Partial<Record<keyof D, MergeStrategy>> = {},
-): D {
+  >(
+    logger: ColorfulChalkLogger,
+    commandName: string,
+    subCommandName: string | false,
+    defaultOptions: D,
+    workspaceDir: string,
+    options: C,
+    strategies: Partial<Record<keyof D, MergeStrategy>> = {},
+): D & ConfigFlatOpts {
   const cwd: string = path.resolve()
   const workspace: string = path.resolve(cwd, workspaceDir)
   const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspace, p))
@@ -187,5 +187,10 @@ export function resolveCommandOptions<
   return {
     ...resolvedOptions,
     logLevel,
+    cwd,
+    workspace,
+    configPath,
+    parasticConfigPath,
+    parasticConfigEntry,
   }
 }
