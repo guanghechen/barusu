@@ -42,6 +42,7 @@
     "@barusu/util-option": "^0.0.18",
     "@types/fs-extra": "^8.1.0",
     "@types/js-yaml": "^3.12.5",
+    "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
     "js-yaml": "^3.14.0"
   },
