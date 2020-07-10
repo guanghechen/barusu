@@ -44,7 +44,6 @@
     "@barusu/util-cli": "^0.0.18",
     "@barusu/util-option": "^0.0.18",
     "@types/fs-extra": "^8.1.0",
-    "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0"
   },

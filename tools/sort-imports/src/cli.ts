@@ -1,9 +1,8 @@
-import program from 'commander'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
 import { name, version } from '@barusu/tool-sort-imports/package.json'
-import { resolveCommandOptions } from '@barusu/util-cli'
+import { createTopCommand, resolveCommandOptions } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
@@ -21,31 +20,25 @@ import {
 } from './util'
 
 
-program
-  .storeOptionsAsProperties(false)
-  .passCommandToAction(false)
-  .version(version)
-
-logger.registerToCommander(program)
-
+const program = createTopCommand(
+  COMMAND_NAME,
+  version,
+  logger
+)
 
 program
-  .name(COMMAND_NAME)
   .usage('<workspace> [options]')
   .arguments('<workspace>')
-  .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
-  .option('--parastic-config-path <parastic config filepath>', '')
-  .option('--parastic-config-entry <parastic config filepath>', '')
   .option('-P, --pattern <pattern>', 'glob pattern of source file', (val, acc: string[]) => acc.concat(val), [])
   .option('-e, --encoding <encoding>', 'encoding of source file')
   .option('--max-column <maxColumn>', 'maximum column width')
   .option('--indent <indent>', 'indent of source codes')
   .option('--quote <quote>', 'quotation marker surround the module path')
   .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
-  .action(function (workspace: string, options: CommandOptions) {
+  .action(function (_workspaceDir: string, options: CommandOptions) {
     const defaultOptions = resolveCommandOptions(
       logger, name, false,
-      defaultCommandOptions, workspace, options)
+      defaultCommandOptions, _workspaceDir, options)
 
     // resolve pattern
     const pattern: string[] = cover<string[]>(
