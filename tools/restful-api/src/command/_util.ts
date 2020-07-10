@@ -1,20 +1,34 @@
-import { CommandOptionConfig } from '@barusu/util-cli'
-import { EventTypes, eventBus } from '../util/event-bus'
+import { SimpleEventBus } from '@barusu/event-bus'
 import { logger } from '../util/logger'
 
 
-export interface GlobalCommandOptions extends CommandOptionConfig {
+export enum EventTypes {
   /**
-   * log level
-   * @default undefined
+   * Cancelled, exit program
    */
-  logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string
+  CANCELED = 'CANCELED',
+  /**
+   * Exiting, exiting program
+   */
+  EXITING = 'EXITING',
 }
 
 
-export const defaultGlobalCommandOptions: GlobalCommandOptions = {
-  logLevel: undefined as unknown as string,
-}
+export const eventBus = new SimpleEventBus<EventTypes>()
+
+
+eventBus.on(EventTypes.CANCELED, function () {
+  logger.info('canceled')
+  logger.debug('canceled.')
+  eventBus.dispatch({ type: EventTypes.EXITING })
+})
+
+
+eventBus.on(EventTypes.EXITING, function () {
+  setTimeout(() => {
+    process.exit(0)
+  }, 0)
+})
 
 
 /**
