@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/eslint-config#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/scaffolds/eslint-config#readme",
   "keywords": [
     "eslintconfig"
   ],
