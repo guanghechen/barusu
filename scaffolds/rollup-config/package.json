@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/rollup-config#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/scaffolds/rollup-config#readme",
   "keywords": [
     "rollup",
     "typescript"
