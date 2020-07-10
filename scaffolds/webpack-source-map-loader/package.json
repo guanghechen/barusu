@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/webpack-source-map-loader#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/scaffolds/webpack-source-map-loader#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

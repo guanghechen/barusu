@@ -22,7 +22,7 @@
         "./scaffolds/rollup-config/src"
       ],
       "@barusu/webpack-source-map-loader": [
-        "./packages/webpack-source-map-loader/src"
+        "./scaffolds/webpack-source-map-loader/src"
       ],
       "@barusu/rollup-plugin-copy": [
         "./scaffolds/rollup-plugin-copy/src"
