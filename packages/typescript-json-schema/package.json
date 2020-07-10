@@ -31,11 +31,11 @@
   ],
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
-    "prebuild": "rimraf lib/",
+    "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "test": "TS_NODE_PROJECT='./tsconfig.test.json' TS_NODE_FILES=true mocha -t 60000 -r ts-node/register test/**.test.ts",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "test": "TS_NODE_PROJECT='./tsconfig.test.json'  mocha -t 5000 -r ts-node/register test/**.test.ts"
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@types/json-schema": "^7.0.5",

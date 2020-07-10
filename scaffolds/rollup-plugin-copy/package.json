@@ -33,8 +33,9 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "prebuild": "rimraf lib/",
+    "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
+    "test": "echo 'no test yet.'",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
   },

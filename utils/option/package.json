@@ -32,9 +32,9 @@
     "start": "rollup -w -c rollup.config.js",
     "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "test": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts"
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@types/chai": "^4.2.11",

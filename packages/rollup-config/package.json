@@ -32,11 +32,12 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "prebuild": "yarn lint:fix && rimraf *.tsbuildinfo lib/",
+    "prebuild": "yarn lint:fix && yarn test && rimraf *.tsbuildinfo lib/",
     "build": "tsc -p tsconfig.src.json --sourceMap --declarationMap",
     "postbuild": "rimraf lib/**/*.tsbuildinfo",
-    "lint:fix": "eslint 'src/**/*.ts' --fix",
-    "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json"
+    "test": "echo 'no test yet.'",
+    "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json",
+    "lint:fix": "eslint 'src/**/*.ts' --fix"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^13.0.0",
