@@ -1,24 +1,16 @@
-import program from 'commander'
 import { name, version } from '@barusu/tool-restful-api/package.json'
+import { createTopCommand } from '@barusu/util-cli'
 import { loadSubCommandGenerate } from './command/generate'
 import { loadSubCommandInit } from './command/init'
 import { loadSubCommandServe } from './command/serve'
 import { COMMAND_NAME, logger } from './index'
 
 
-program
-  .storeOptionsAsProperties(false)
-  .passCommandToAction(false)
-  .version(version)
-  .name(COMMAND_NAME)
-
-logger.registerToCommander(program)
-
-
-program
-  .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
-  .option('--parastic-config-path <parastic config filepath>', '')
-  .option('--parastic-config-entry <parastic config filepath>', '')
+const program = createTopCommand(
+  COMMAND_NAME,
+  version,
+  logger
+)
 
 
 // load sub-command: init

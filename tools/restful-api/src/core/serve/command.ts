@@ -1,10 +1,10 @@
-import commander from 'commander'
 import {
   ConfigFlatOpts,
   absoluteOfWorkspace,
   relativeOfWorkspace,
   resolveCommandOptions,
 } from '@barusu/util-cli'
+import { commander } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,

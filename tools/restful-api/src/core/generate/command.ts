@@ -1,4 +1,3 @@
-import commander from 'commander'
 import ts from 'typescript'
 import * as TJS from '@barusu/typescript-json-schema'
 import {
@@ -7,6 +6,7 @@ import {
   relativeOfWorkspace,
   resolveCommandOptions,
 } from '@barusu/util-cli'
+import { commander } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,

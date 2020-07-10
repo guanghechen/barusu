@@ -61,7 +61,6 @@
     "@types/koa-router": "^7.4.1",
     "@types/mockjs": "^1.0.2",
     "command-exists": "^1.2.9",
-    "commander": "^5.0.0",
     "execa": "^4.0.3",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",

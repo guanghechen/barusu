@@ -1,6 +1,6 @@
-import commander from 'commander'
 import path from 'path'
 import { ConfigFlatOpts, resolveCommandOptions } from '@barusu/util-cli'
+import { commander } from '@barusu/util-cli'
 import { cover, isNotEmptyString } from '@barusu/util-option'
 import { logger } from '../../util/logger'
 import {
