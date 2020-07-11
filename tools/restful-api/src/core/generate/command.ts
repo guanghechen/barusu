@@ -98,8 +98,9 @@ export function createSubCommandGenerate(
   const command = new commander.Command()
 
   command
-    .command(`${ commandName } <directory>`)
+    .name(commandName)
     .aliases(aliases)
+    .arguments('<workspace>')
     .option('-C, --api-config-path <api-config-path>', 'filepath of api-item config (glob patterns / strings)', (val, acc: string[]) => acc.concat(val), [])
     .option('-p, --tsconfig-path <tsconfigPath>', 'path of tsconfig.json')
     .option('-s, --schema-root-path <schemaRootPath>', 'root path of schema files')

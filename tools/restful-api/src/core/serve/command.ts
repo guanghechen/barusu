@@ -117,8 +117,9 @@ export function createSubCommandServe(
   const command = new commander.Command()
 
   command
-    .command(`${ commandName } <directory>`)
+    .name(commandName)
     .aliases(aliases)
+    .arguments('<workspace>')
     .action(async function (_workspaceDir: string, options: SubCommandOptions) {
       logger.setName(commandName)
       const defaultOptions: SubCommandServeOptions = resolveCommandOptions<

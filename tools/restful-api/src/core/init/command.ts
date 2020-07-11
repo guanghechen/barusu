@@ -45,8 +45,9 @@ export function createSubCommandInit(
   const command = new commander.Command()
 
   command
-    .command(`${ commandName } <directory>`)
+    .name(commandName)
     .aliases(aliases)
+    .arguments('<workspace>')
     .option('-p, --tsconfig-path <tsconfigPath>', 'path of tsconfig.json (absolute or relative to the workspace)')
     .option('-e, --encoding <encoding>', 'specify encoding of all files.')
     .action(async function (_workspaceDir: string, options: SubCommandOptions) {
