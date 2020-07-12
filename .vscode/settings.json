@@ -2,6 +2,7 @@
   "cSpell.words": [
     "Builtins",
     "Lerna",
+    "Subcommand",
     "autoprefixer",
     "autorestart",
     "axios",
@@ -34,6 +35,7 @@
     "postbuild",
     "postcss",
     "prebuild",
+    "probaby",
     "rapit",
     "readdir",
     "recognised",
@@ -41,6 +43,7 @@
     "rollup",
     "sourcemap",
     "styl",
+    "subcommands",
     "tada",
     "tsbuildinfo",
     "typeof",
