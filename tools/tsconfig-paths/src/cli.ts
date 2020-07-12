@@ -1,9 +1,9 @@
-import program from 'commander'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import { name, version } from '@barusu/tool-tsconfig-paths/package.json'
 import {
   ConfigFlatOpts,
+  createTopCommand,
   findPackageJsonPath,
   flagDefaultOptions,
 } from '@barusu/util-cli'
@@ -12,17 +12,13 @@ import { TsconfigPathAliasResolver } from './index'
 import { COMMAND_NAME, defaultCommandOptions, logger } from './util'
 
 
-program
-  .storeOptionsAsProperties(false)
-  .passCommandToAction(false)
-  .version(version)
-
-
-logger.registerToCommander(program)
-
+const program = createTopCommand(
+  COMMAND_NAME,
+  version,
+  logger
+)
 
 program
-  .name(COMMAND_NAME)
   .usage('[options]')
   .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
   .option('--parastic-config-path <parastic config filepath>', '')

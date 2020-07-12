@@ -1,12 +1,13 @@
 import ts from 'typescript'
 import * as TJS from '@barusu/typescript-json-schema'
 import {
+  Command,
   ConfigFlatOpts,
   absoluteOfWorkspace,
+  commander,
   relativeOfWorkspace,
   resolveCommandOptions,
 } from '@barusu/util-cli'
-import { commander } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
@@ -95,9 +96,11 @@ export function createSubCommandGenerate(
   commandName = 'generate',
   aliases: string[] = ['g'],
 ): commander.Command {
-  const command = new commander.Command()
+  const command = new Command()
 
   command
+    .storeOptionsAsProperties(false)
+    .passCommandToAction(false)
     .name(commandName)
     .aliases(aliases)
     .arguments('<workspace>')
@@ -107,7 +110,7 @@ export function createSubCommandGenerate(
     .option('-e, --encoding <encoding>', 'specify encoding of all files.')
     .option('--mute-missing-model', 'quiet when model not found')
     .option('--clean', 'clean schema folders before generate.')
-    .action(async function (_workspaceDir: string, options: SubCommandOptions) {
+    .action(async function ([_workspaceDir], options: SubCommandOptions) {
       logger.setName(commandName)
 
       const defaultOptions: SubCommandGenerateOptions = resolveCommandOptions<

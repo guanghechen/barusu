@@ -35,7 +35,7 @@ program
   .option('--indent <indent>', 'indent of source codes')
   .option('--quote <quote>', 'quotation marker surround the module path')
   .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
-  .action(function (_workspaceDir: string, options: CommandOptions) {
+  .action(function ([_workspaceDir], options: CommandOptions) {
     const defaultOptions = resolveCommandOptions(
       logger, name, false,
       defaultCommandOptions, _workspaceDir, options)
