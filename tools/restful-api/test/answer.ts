@@ -1,10 +1,16 @@
 import chalk from 'chalk'
 import path from 'path'
+import { name, version } from '@barusu/tool-restful-api/package.json'
+import { createTopCommand } from '@barusu/util-cli'
 import {
   ApiItemParser,
-  GenerateCommand,
-  SubCommandHook,
-  execCommand,
+  COMMAND_NAME,
+  RestfulApiGenerator,
+  RestfulApiGeneratorContext,
+  SubCommandGenerateOptions,
+  createRestfulApiGeneratorContext,
+  createSubCommandGenerate,
+  logger,
 } from '../src'
 import { ApiItemParserTestCaseMaster } from './util/api-parser-case-util'
 import { CommandTestCaseMaster } from './util/command-case-util'
@@ -26,19 +32,33 @@ async function answer() {
   const commandCaseMaster = new CommandTestCaseMaster({ caseRootDirectory })
   await commandCaseMaster.scan('sub-command/generate/simple')
   await commandCaseMaster.answer(async kase => {
+    const program = createTopCommand(COMMAND_NAME, version, logger)
+    program.addCommand(createSubCommandGenerate(
+      name,
+      async (options: SubCommandGenerateOptions): Promise<void> => {
+        const context: RestfulApiGeneratorContext = await createRestfulApiGeneratorContext({
+          cwd: options.cwd,
+          workspace: options.workspace,
+          tsconfigPath: options.tsconfigPath,
+          schemaRootPath: options.schemaRootPath,
+          apiConfigPath: options.apiConfigPath,
+          encoding: options.encoding,
+          clean: options.clean,
+          muteMissingModel: options.muteMissingModel,
+          ignoredDataTypes: options.ignoredDataTypes,
+          additionalSchemaArgs: options.additionalSchemaArgs,
+          additionalCompilerOptions: options.additionalCompilerOptions,
+        })
+
+        const generator = new RestfulApiGenerator(context)
+        await generator.generate()
+      },
+    ))
+
     const projectDir = kase.dir
-    const args = ['', '', 'generate', projectDir, '--log-level=debug', '-s', 'schemas/answer']
+    const args = ['', COMMAND_NAME, 'generate', projectDir, '--log-level=debug', '-s', 'schemas/answer']
     console.log(chalk.gray('--> ' + args.join(' ')))
-
-    const generate = new GenerateCommand()
-    const promise = new Promise(resolve => {
-      generate.onHook(SubCommandHook.AFTER_COMPLETED, resolve)
-    })
-
-    execCommand(args, { generate })
-
-    // await generate completed
-    await promise
+    program.parse(args)
   })
 }
 

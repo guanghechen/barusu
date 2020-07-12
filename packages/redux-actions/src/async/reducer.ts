@@ -123,14 +123,21 @@ export function createAsyncActionReducer<
 }
 
 
+/**
+ * Create redux reducer
+ *
+ * @param initialState
+ * @param actionReducers
+ */
 export function assembleActionReducers<
-  S extends AsyncStateItem<unknown>,
-  T extends string | symbol,
+  S extends AsyncStateItem<unknown> = AsyncStateItem<any>,
+  T extends string | symbol = any,
   R extends AsyncActionReducer<S, T, AsyncActions<T>> = AsyncActionReducer<S, T, AsyncActions<any, any, any>>
 >(
+  initialState: S,
   actionReducers: R[],
 ): Reducer<S, AsyncActions<T, unknown>> {
-  return (state: S, action: AsyncActions<T, unknown>): S => {
+  return (state: S = initialState, action: AsyncActions<T, unknown>): S => {
     for (const reducer of actionReducers) {
       if (reducer.actionType === action.type) {
         return reducer.process(state, action)

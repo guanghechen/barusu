@@ -4,9 +4,11 @@ import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import {
   ConfigFlatOpts,
+  absoluteOfWorkspace,
   findPackageJsonPath,
   flagDefaultOptions,
   mkdirsIfNotExists,
+  relativeOfWorkspace,
 } from '@barusu/util-cli'
 import {
   convertToBoolean,
@@ -118,24 +120,24 @@ export function loadSubCommandDecrypt(
       logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
 
       // resolve outDir
-      const outDir: string = path.resolve(workspaceDir,
+      const outDir: string = absoluteOfWorkspace(workspaceDir,
         cover<string>(defaultOptions.outDir, options.outDir, isNotEmptyString))
       logger.debug('outDir:', outDir)
 
       // resolve cipherDir
-      const cipherDir: string = path.resolve(workspaceDir,
+      const cipherDir: string = absoluteOfWorkspace(workspaceDir,
         cover<string>(
           defaultOptions.cipherDir, options.cipherDir, isNotEmptyString))
       logger.debug('cipherDir:', cipherDir)
 
       // resolve secretFilepath
-      const secretFilepath: string = path.resolve(workspaceDir,
+      const secretFilepath: string = absoluteOfWorkspace(workspaceDir,
         cover<string>(
           defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
       logger.debug('secretFilepath:', secretFilepath)
 
       // resolve indexFilepath
-      const indexFilepath: string = path.resolve(cipherDir,
+      const indexFilepath: string = absoluteOfWorkspace(cipherDir,
         cover<string>(
           defaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
       logger.debug('indexFilepath:', indexFilepath)
@@ -162,11 +164,11 @@ export function loadSubCommandDecrypt(
       logger.debug('cipherFilepathPatterns:', cipherFilepathPatterns)
 
       // calc cipherRelativeDir
-      const cipherRelativeDir = path.relative(workspaceDir, cipherDir)
+      const cipherRelativeDir = relativeOfWorkspace(workspaceDir, cipherDir)
       logger.debug('cipherRelativeDir:', cipherRelativeDir)
 
       // calc outRelativeDir
-      const outRelativeDir = path.relative(workspaceDir, outDir)
+      const outRelativeDir = relativeOfWorkspace(workspaceDir, outDir)
       logger.debug('outRelativeDir:', outRelativeDir)
 
       // ensure paths exist

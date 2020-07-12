@@ -30,7 +30,7 @@
     "lint:fix": "echo 'no lint action needed'"
   },
   "dependencies": {
-    "plop": "^2.6.0",
+    "plop": "^2.7.0",
     "semver-regex": "^3.1.1"
   }
 }

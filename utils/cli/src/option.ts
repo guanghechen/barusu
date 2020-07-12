@@ -1,5 +1,9 @@
+import path from 'path'
+import { ColorfulChalkLogger, Level } from '@barusu/chalk-logger'
 import {
   MergeStrategy,
+  cover,
+  coverString,
   defaultMergeStrategies,
   isNotEmptyArray,
   isNotEmptyObject,
@@ -7,6 +11,7 @@ import {
   merge,
 } from '@barusu/util-option'
 import { loadJsonOrYamlSync } from './fs'
+import { findPackageJsonPath } from './manifest'
 
 
 export interface ConfigFlatOpts {
@@ -37,6 +42,11 @@ export interface ConfigFlatOpts {
 
 
 export interface CommandOptionConfig extends Record<string, unknown> {
+  /**
+   * log level
+   * @default undefined
+   */
+  readonly logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string
   /**
    * Filepath of configs, only *.yml, *.yaml and *.json are supported.
    * Each configuration file can specify the same options, the configuration
@@ -124,4 +134,63 @@ export function flagDefaultOptions<C extends CommandOptionConfig>(
   }
 
   return result
+}
+
+
+export function resolveCommandOptions<
+  C extends Partial<CommandOptionConfig>,
+  D extends CommandOptionConfig,
+  >(
+    logger: ColorfulChalkLogger,
+    commandName: string,
+    subCommandName: string | false,
+    defaultOptions: D,
+    workspaceDir: string,
+    options: C,
+    strategies: Partial<Record<keyof D, MergeStrategy>> = {},
+): D & ConfigFlatOpts {
+  const cwd: string = path.resolve()
+  const workspace: string = path.resolve(cwd, workspaceDir)
+  const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspace, p))
+  const parasticConfigPath: string | null | undefined = cover<string | null>(
+    (): string | null => findPackageJsonPath(workspace),
+    options.parasticConfigPath)
+  const parasticConfigEntry: string = coverString(commandName, options.parasticConfigEntry)
+  const flatOpts: ConfigFlatOpts = {
+    cwd,
+    workspace,
+    configPath,
+    parasticConfigPath,
+    parasticConfigEntry,
+  }
+
+  const resolvedOptions = flagDefaultOptions<D>(
+    defaultOptions,
+    flatOpts,
+    subCommandName,
+    strategies,
+  )
+
+  // reset log-level
+  const logLevel = cover<string | undefined>(resolvedOptions.logLevel, options.logLevel)
+  if (logLevel != null) {
+    const level = Level.valueOf(logLevel)
+    if (level != null) logger.setLevel(level)
+  }
+
+  logger.debug('cwd:', flatOpts.cwd)
+  logger.debug('workspace:', flatOpts.workspace)
+  logger.debug('configPath:', flatOpts.configPath)
+  logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
+  logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
+
+  return {
+    ...resolvedOptions,
+    logLevel,
+    cwd,
+    workspace,
+    configPath,
+    parasticConfigPath,
+    parasticConfigEntry,
+  }
 }

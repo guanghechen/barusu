@@ -4,9 +4,11 @@ import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import {
   ConfigFlatOpts,
+  absoluteOfWorkspace,
   findPackageJsonPath,
   flagDefaultOptions,
   mkdirsIfNotExists,
+  relativeOfWorkspace,
 } from '@barusu/util-cli'
 import {
   convertToBoolean,
@@ -111,47 +113,47 @@ export function loadSubCommandEncrypt(
       logger.debug('parasticConfigPath', flatOpts.parasticConfigPath)
       logger.debug('parasticConfigEntry', flatOpts.parasticConfigEntry)
 
-      // get outDir
-      const outDir: string = path.resolve(workspaceDir,
+      // resolve outDir
+      const outDir: string = absoluteOfWorkspace(workspaceDir,
         cover<string>(
           defaultOptions.outDir, options.outDir, isNotEmptyString))
       logger.debug('outDir:', outDir)
 
-      // get secretFilepath
-      const secretFilepath: string = path.resolve(workspaceDir,
+      // resolve secretFilepath
+      const secretFilepath: string = absoluteOfWorkspace(workspaceDir,
         cover<string>(
           defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
       logger.debug('secretFilepath:', secretFilepath)
 
-      // get indexFilepath
-      const indexFilepath: string = path.resolve(outDir,
+      // resolve indexFilepath
+      const indexFilepath: string = absoluteOfWorkspace(outDir,
         cover<string>(
           defaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
       logger.debug('indexFilepath:', indexFilepath)
 
-      // get force
+      // resolve force
       const force: boolean = cover<boolean>(
         defaultOptions.force, convertToBoolean(options.force))
       logger.debug('force:', force)
 
-      // get showAsterisk
+      // resolve showAsterisk
       const showAsterisk: boolean = cover<boolean>(
         defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
       logger.debug('showAsterisk:', showAsterisk)
 
-      // get miniumPasswordLength
+      // resolve miniumPasswordLength
       const miniumPasswordLength: number = cover<number>(
         defaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength)
       )
       logger.debug('miniumPasswordLength:', miniumPasswordLength)
 
-      // get plainFilepathPatterns
+      // resolve plainFilepathPatterns
       const plainFilepathPatterns: string[] = cover<string[]>(
         defaultOptions.plainFilepathPattern, options.plainFilepathPattern, isNotEmptyArray)
       logger.debug('plainFilepathPatterns:', plainFilepathPatterns)
 
       // calc outRelativeDir
-      const outRelativeDir = path.relative(workspaceDir, outDir)
+      const outRelativeDir = relativeOfWorkspace(workspaceDir, outDir)
       logger.debug('outRelativeDir:', outRelativeDir)
 
       // ensure paths exist

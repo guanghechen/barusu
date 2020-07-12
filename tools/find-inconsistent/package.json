@@ -33,10 +33,11 @@
   },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
-    "prebuild": "rimraf lib/",
+    "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
+    "test": "echo 'no test yet.'",
+    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.18",

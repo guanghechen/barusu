@@ -30,6 +30,7 @@
   },
   "workspaces": [
     "packages/*",
+    "scaffolds/*",
     "tools/*",
     "utils/*"
   ],
@@ -43,8 +44,8 @@
   },
   "@barusu/tool-sort-imports": {
     "pattern": [
-      "{packages,tools,utils}/**/src/**/*.{ts,tsx}",
-      "{packages,tools,utils}/**/test/**/*.{ts,tsx}"
+      "{packages,scaffolds,tools,utils}/*/src/**/*.{ts,tsx}",
+      "{packages,scaffolds,tools,utils}/*/test/**/*.{ts,tsx}"
     ],
     "moduleRanks": [
       {

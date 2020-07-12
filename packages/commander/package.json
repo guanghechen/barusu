@@ -30,15 +30,16 @@
   ],
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
-    "prebuild": "rimraf lib/",
+    "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
+    "test": "echo 'no test yet.'",
+    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {},
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.17",
-    "@barusu/rollup-config": "^0.0.17",
+    "@barusu/eslint-config": "^0.0.18",
+    "@barusu/rollup-config": "^0.0.18",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",

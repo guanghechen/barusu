@@ -1,0 +1,58 @@
+{
+  "name": "@barusu/rollup-config",
+  "version": "0.0.18",
+  "description": "rollup configs for ts project",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/barusu.git"
+  },
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/scaffolds/rollup-config#readme",
+  "keywords": [
+    "rollup",
+    "typescript"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12.16.0"
+  },
+  "files": [
+    "lib/",
+    ".eslintrc.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "!lib/**/*.js.map",
+    "!lib/**/*.d.ts.map"
+  ],
+  "scripts": {
+    "prebuild": "yarn lint:fix && yarn test && rimraf *.tsbuildinfo lib/",
+    "build": "tsc -p tsconfig.src.json --sourceMap --declarationMap",
+    "postbuild": "rimraf lib/**/*.tsbuildinfo",
+    "test": "echo 'no test yet.'",
+    "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json",
+    "lint:fix": "eslint 'src/**/*.ts' --fix"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "@types/eslint": "^6.1.8",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.0",
+    "builtin-modules": "^3.1.0",
+    "rollup": "2.16.1",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-typescript2": "^0.27.0"
+  },
+  "devDependencies": {
+    "@barusu/eslint-config": "^0.0.18",
+    "cross-env": "^7.0.2"
+  }
+}

@@ -1,9 +1,9 @@
-import program from 'commander'
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import { name, version } from '@barusu/tool-find-inconsistent/package.json'
 import {
   ConfigFlatOpts,
+  createTopCommand,
   findPackageJsonPath,
   flagDefaultOptions,
 } from '@barusu/util-cli'
@@ -17,22 +17,16 @@ import {
 } from './util'
 
 
-program
-  .storeOptionsAsProperties(false)
-  .passCommandToAction(false)
-  .version(version)
-
-logger.registerToCommander(program)
-
+const program = createTopCommand(
+  COMMAND_NAME,
+  version,
+  logger
+)
 
 program
-  .name(COMMAND_NAME)
   .usage('<workspace> [options]')
   .arguments('<workspace>')
-  .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
-  .option('--parastic-config-path <parastic config filepath>', '')
-  .option('--parastic-config-entry <parastic config filepath>', '')
-  .action(function (workspace: string, options: CommandOptions) {
+  .action(function ([workspace], options: CommandOptions) {
     const cwd: string = path.resolve()
     const workspaceDir: string = path.resolve(cwd, workspace)
     const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))

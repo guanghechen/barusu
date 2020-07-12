@@ -1,0 +1,23 @@
+__globalOptions__:
+  encoding: {{ encoding }}
+  logLevel: {{ lowerCase logLevel }}
+
+# options for sub-command `generate`
+generate:
+  clean: true
+  muteMissingModel: true
+  ignoredDataTypes:
+    - 'undefined'
+  schemaArgs:
+    ref: false
+    required: true
+
+# options for sub-command `serve`
+serve:
+  host: '0.0.0.0'
+  port: 8091
+  prefixUrl: /mock
+  mockDataFileFirst: true
+  mockDataFileRootPath: data/
+  mockOptionalsAlways: true
+  mockOptionalsProbability: 0.7

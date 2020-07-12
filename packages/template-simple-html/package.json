@@ -30,11 +30,8 @@
     "lint:fix": "echo 'no lint action needed'"
   },
   "dependencies": {
-    "colorette": "^1.1.0",
     "fs-extra": "^8.1.0",
-    "globby": "^11.0.0",
-    "is-plain-object": "^3.0.0",
-    "plop": "^2.6.0",
+    "plop": "^2.7.0",
     "semver-regex": "^3.1.1",
     "title-case": "^3.0.2"
   }

@@ -1,0 +1,253 @@
+{
+  "definitions": {
+    "GlobalContextConfig": {
+      "type": "object",
+      "description": "命令的全局选项配置",
+      "properties": {
+        "cwd": {
+          "description": "执行命令所在的目录",
+          "type": "string"
+        },
+        "apiConfigPath": {
+          "description": "api 条目配置文件（夹）所在路径",
+          "type": "string"
+        },
+        "schemaRootPath": {
+          "description": "Json-Schema 存放的文件夹根目录",
+          "type": "string"
+        },
+        "encoding": {
+          "description": "目标工程的文件编码（简单起见，只考虑所有的源码使用同一种编码格式）",
+          "type": "string"
+        },
+        "logLevel": {
+          "description": "日志的级别",
+          "type": "string",
+          "enum": [
+            "debug",
+            "error",
+            "info",
+            "verbose",
+            "warn"
+          ]
+        }
+      }
+    },
+    "GenerateContextConfig": {
+      "type": "object",
+      "description": "generate 子命令的上下文配置",
+      "properties": {
+        "tsconfigPath": {
+          "description": "tsconfig.json 所在的路径\n#default tsconfig.json",
+          "type": "string",
+          "required": true
+        },
+        "muteMissingModel": {
+          "description": "忽略未找到的模型，若为 false，则抛出异常，并终止程序\n#default false",
+          "type": "boolean",
+          "required": true
+        },
+        "clean": {
+          "description": "在生成 JSON-SCHEMA 之前，是否先清空新生成 JSON-SCHEMA 待存放的文件夹\n#default false",
+          "type": "boolean",
+          "required": true
+        },
+        "ignoredDataTypes": {
+          "description": "忽略指定类型的数据模型",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "required": true
+          }
+        },
+        "apiConfigPath": {
+          "description": "定义 ApiItems 的文件路径（yaml/json 格式）\n若指定的是目录，则目录下的所有 .api.yml/.api.yaml/.api.json 为后缀的文件\n均视为 ApiItems 的配置文件",
+          "type": "string"
+        },
+        "schemaRootPath": {
+          "description": "生成的 Json-Schema 存放的文件夹根目录（绝对路径或相对于 tsconfig.json 所在的路径）\n可覆盖 globalOption.encoding 的值",
+          "type": "string"
+        },
+        "encoding": {
+          "description": "目标工程的文件编码（简单起见，只考虑所有的源码使用同一种编码格式）\n可覆盖 globalOption.encoding 的值",
+          "type": "string"
+        },
+        "schemaArgs": {
+          "description": "额外的构建 Schema 的选项",
+          "type": "object",
+          "properties": {
+            "ref": {
+              "type": "boolean"
+            },
+            "aliasRef": {
+              "type": "boolean"
+            },
+            "topRef": {
+              "type": "boolean"
+            },
+            "titles": {
+              "type": "boolean"
+            },
+            "defaultProps": {
+              "type": "boolean"
+            },
+            "noExtraProps": {
+              "type": "boolean"
+            },
+            "propOrder": {
+              "type": "boolean"
+            },
+            "typeOfKeyword": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "strictNullChecks": {
+              "type": "boolean"
+            },
+            "ignoreErrors": {
+              "type": "boolean"
+            },
+            "out": {
+              "type": "string"
+            },
+            "validationKeywords": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "excludePrivate": {
+              "type": "boolean"
+            },
+            "uniqueNames": {
+              "type": "boolean"
+            },
+            "rejectDateType": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "defaultNumberType": {
+              "enum": [
+                "integer",
+                "number"
+              ],
+              "type": "string"
+            }
+          }
+        },
+        "additionalCompilerOptions": {
+          "type": "object",
+          "allowAdditionalProperties": true
+        }
+      }
+    },
+    "ServeContextConfig": {
+      "type": "object",
+      "description": "serve 子命令的上下文配置",
+      "properties": {
+        "host": {
+          "description": "mock-server 监听的地址：ip/域名",
+          "default": "127.0.0.1",
+          "type": "string",
+          "required": true
+        },
+        "port": {
+          "description": "mock-server 监听的端口",
+          "minimum": 0,
+          "maximum": 65535,
+          "default": 8080,
+          "type": "number",
+          "required": true
+        },
+        "prefixUrl": {
+          "description": "mock serve 的路由前缀",
+          "default": "",
+          "type": "string",
+          "required": true
+        },
+        "apiConfigPath": {
+          "description": "定义 ApiItems 的文件路径（yaml/json 格式）\n若指定的是目录，则目录下的所有 .api.yml/.api.yaml/.api.json 为后缀的文件\n均视为 ApiItems 的配置文件",
+          "type": "string"
+        },
+        "schemaRootPath": {
+          "description": "生成的 Json-Schema 存放的文件夹根目录（绝对路径或相对于 tsconfig.json 所在的路径）\n可覆盖 globalOption.encoding 的值",
+          "type": "string"
+        },
+        "encoding": {
+          "description": "目标工程的文件编码（简单起见，只考虑所有的源码使用同一种编码格式）\n可覆盖 globalOption.encoding 的值",
+          "type": "string"
+        },
+        "mockRequiredOnly": {
+          "description": "是否只返回 JSON-SCHEMA 中 required 的属性",
+          "default": false,
+          "type": "boolean",
+          "required": true
+        },
+        "mockOptionalsAlways": {
+          "description": "是否始终都返回所有的非 required 的属性",
+          "default": false,
+          "type": "boolean",
+          "required": true
+        },
+        "mockOptionalsProbability": {
+          "description": "返回数据中，包含非 required 的属性的几率",
+          "default": 0.8,
+          "type": "number",
+          "required": true
+        },
+        "mockDataFileFirst": {
+          "description": "是否优先使用数据文件作为 mock 数据",
+          "default": false,
+          "type": "boolean",
+          "required": true
+        },
+        "mockDataFileRootPath": {
+          "description": "mock 数据文件所在的根目录",
+          "type": "string"
+        }
+      }
+    },
+    "InitContextConfig": {
+      "type": "object",
+      "description": "init 子命令的上下文配置",
+      "properties": {
+      }
+    }
+  },
+  "description": "上下文配置",
+  "title": "AppContextConfig",
+  "type": "object",
+  "required": true,
+  "properties": {
+    "globalOptions": {
+      "type": "ref",
+      "title": "命令的全局选项配置",
+      "$ref": "#/definitions/GlobalContextConfig"
+    },
+    "generate": {
+      "type": "ref",
+      "title": "子命令 generate 选项配置",
+      "$ref": "#/definitions/GenerateContextConfig"
+    },
+    "serve": {
+      "type": "ref",
+      "title": "子命令 serve 选项配置",
+      "$ref": "#/definitions/ServeContextConfig"
+    },
+    "init": {
+      "type": "ref",
+      "title": "子命令 init 选项配置",
+      "$ref": "#/definitions/InitContextConfig"
+    }
+  }
+}
