@@ -2,7 +2,10 @@ import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
 import { name, version } from '@barusu/tool-sort-imports/package.json'
-import { createTopCommand, resolveCommandOptions } from '@barusu/util-cli'
+import {
+  createTopCommand,
+  resolveCommandConfigurationOptions,
+} from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
@@ -36,7 +39,7 @@ program
   .option('--quote <quote>', 'quotation marker surround the module path')
   .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
   .action(function ([_workspaceDir], options: CommandOptions) {
-    const defaultOptions = resolveCommandOptions(
+    const defaultOptions = resolveCommandConfigurationOptions(
       logger, name, false,
       defaultCommandOptions, _workspaceDir, options)
 
