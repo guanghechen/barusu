@@ -164,7 +164,7 @@ export async function createRestfulApiServerContext(
     tsconfigPath: params.workspace,
     schemaRootPath: params.schemaRootPath,
     encoding: coverString('utf-8', params.encoding),
-    host: coverString('localhost', params.encoding),
+    host: coverString('localhost', params.host),
     port: Number.parseInt(coverNumber(3000, params.port).toFixed(0)),
     prefixUrl: coverString('', params.prefixUrl),
     mockRequiredOnly: coverBoolean(false, params.mockRequiredOnly),

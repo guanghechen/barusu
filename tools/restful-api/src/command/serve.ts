@@ -1,4 +1,4 @@
-import { commander } from '@barusu/util-cli'
+import { Command } from '@barusu/util-cli'
 import {
   RestfulApiServer,
   RestfulApiServerContext,
@@ -6,7 +6,7 @@ import {
   createRestfulApiServerContext,
   createSubCommandServe,
 } from '../index'
-import { EventTypes, eventBus, handleError } from './_util'
+import { handleError } from './_util'
 
 
 /**
@@ -14,7 +14,7 @@ import { EventTypes, eventBus, handleError } from './_util'
  */
 export function loadSubCommandServe(
   packageName: string,
-  program: commander.Command,
+  program: Command,
 ): void {
   const process = async (options: SubCommandServeOptions): Promise<void> => {
     try {
@@ -39,8 +39,6 @@ export function loadSubCommandServe(
       server.start()
     } catch (error) {
       handleError(error)
-    } finally {
-      eventBus.dispatch({ type: EventTypes.EXITING })
     }
   }
 

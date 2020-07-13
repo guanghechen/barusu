@@ -1,22 +1,22 @@
 import {
-  ConfigFlatOpts,
+  Command,
+  CommandConfigurationFlatOpts,
   absoluteOfWorkspace,
-  relativeOfWorkspace,
-  resolveCommandOptions,
 } from '@barusu/util-cli'
-import { commander } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
   coverNumber,
   coverString,
+  isNotEmptyArray,
   isNotEmptyString,
 } from '@barusu/util-option'
 import { logger } from '../../util/logger'
 import {
   GlobalCommandOptions,
   __defaultGlobalCommandOptions,
-} from '../../util/option'
+  resolveGlobalCommandOptions,
+} from '../option'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -30,20 +30,10 @@ interface SubCommandOptions extends GlobalCommandOptions {
    */
   readonly apiConfigPath: string[]
   /**
-   * Path of tsconfig.json
-   * @default tsconfig.json
-   */
-  tsconfigPath: string
-  /**
    * Root path of schema files
    * @default __data-schemas
    */
   schemaRootPath: string
-  /**
-   * The encoding format of files in the working directory
-   * @default 'utf-8'
-   */
-  encoding: string
   /**
    * Server ip / domain
    * @default 'localhost'
@@ -88,9 +78,7 @@ interface SubCommandOptions extends GlobalCommandOptions {
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
   apiConfigPath: [],
-  tsconfigPath: 'tsconfig.json',
   schemaRootPath: '__data-schemas',
-  encoding: 'utf-8',
   host: 'localhost',
   port: 3000,
   prefixUrl: '',
@@ -102,7 +90,7 @@ const __defaultCommandOptions: SubCommandOptions = {
 }
 
 
-export type SubCommandServeOptions = SubCommandOptions & ConfigFlatOpts
+export type SubCommandServeOptions = SubCommandOptions & CommandConfigurationFlatOpts
 
 
 /**
@@ -110,44 +98,43 @@ export type SubCommandServeOptions = SubCommandOptions & ConfigFlatOpts
  */
 export function createSubCommandServe(
   packageName: string,
-  process?: (options: SubCommandServeOptions) => void | Promise<void>,
+  handle?: (options: SubCommandServeOptions) => void | Promise<void>,
   commandName = 'serve',
   aliases: string[] = ['s'],
-): commander.Command {
-  const command = new commander.Command()
+): Command {
+  const command = new Command()
 
   command
     .name(commandName)
     .aliases(aliases)
     .arguments('<workspace>')
+    .option('-C, --api-config-path <api-config-path>', 'filepath of api-item config (glob patterns / strings)', (val, acc: string[]) => acc.concat(val), [])
+    .option('-s, --schema-root-path <schemaRootPath>', 'root path of schema files')
+    .option('-h, --host <host>', 'specify the ip/domain address to which the mock-server listens.')
+    .option('-p, --port <port>', 'specify the port on which the mock-server listens.')
+    .option('--prefix-url <prefixUrl>', 'specify the prefix url of routes.')
+    .option('--mock-required-only', 'json-schema-faker\'s option `requiredOnly`')
+    .option('--mock-optionals-always', 'json-schema-faker\'s option `alwaysFakeOptionals`')
+    .option('--mock-optionals-probability <optionalsProbability>', 'json-schema-faker\'s option `optionalsProbability`')
+    .option('--mock-use-data-file-first <mockDataFileRootPath>', 'specify the mock data file root path.')
+    .option('--mock-data-file-first', 'preferred use data file as mock data source.')
     .action(async function ([_workspaceDir], options: SubCommandOptions) {
       logger.setName(commandName)
-      const defaultOptions: SubCommandServeOptions = resolveCommandOptions<
-        SubCommandOptions, SubCommandOptions>(
-          logger, packageName, commandName,
-          __defaultCommandOptions, _workspaceDir, options)
+
+      const defaultOptions: SubCommandServeOptions = resolveGlobalCommandOptions(
+        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
       const { workspace } = defaultOptions
 
       // resolve apConfigPath
       const apiConfigPath: string[] = cover<string[]>(
-        defaultOptions.apiConfigPath, options.apiConfigPath, isNotEmptyString)
-        .map((p: string): string => relativeOfWorkspace(workspace, p))
+        defaultOptions.apiConfigPath, options.apiConfigPath, isNotEmptyArray)
+        .map((p: string): string => absoluteOfWorkspace(workspace, p))
       logger.debug('apiConfigPath:', apiConfigPath)
-
-      // resolve tsconfigPath
-      const tsconfigPath: string = absoluteOfWorkspace(workspace, coverString(
-        defaultOptions.tsconfigPath, options.tsconfigPath, isNotEmptyString))
-      logger.debug('tsconfigPath:', tsconfigPath)
 
       // resolve schemaRootPath
       const schemaRootPath: string = absoluteOfWorkspace(workspace, coverString(
         defaultOptions.schemaRootPath, options.schemaRootPath, isNotEmptyString))
       logger.debug('schemaRootPath:', schemaRootPath)
-
-      // resolve encoding
-      const encoding = coverString(
-        defaultOptions.encoding, options.encoding, isNotEmptyString)
-      logger.debug('encoding:', encoding)
 
       // resolve host
       const host: string = coverString(
@@ -191,10 +178,8 @@ export function createSubCommandServe(
 
       const resolvedOptions: SubCommandServeOptions = {
         ...defaultOptions,
-        tsconfigPath,
         schemaRootPath,
         apiConfigPath,
-        encoding,
         host,
         port,
         prefixUrl,
@@ -205,8 +190,8 @@ export function createSubCommandServe(
         mockDataFileRootPath,
       }
 
-      if (process != null) {
-        await process(resolvedOptions)
+      if (handle != null) {
+        await handle(resolvedOptions)
       }
     })
 
