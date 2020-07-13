@@ -1,19 +1,11 @@
-import program from 'commander'
-import { name, version } from '@barusu/tool-cipher/package.json'
+import { name } from '@barusu/tool-cipher/package.json'
 import { loadSubCommandDecrypt } from './command/decrypt'
 import { loadSubCommandEncrypt } from './command/encrypt'
 import { loadSubCommandInit } from './command/init'
-import { COMMAND_NAME, logger } from './index'
+import { createProgram } from './core/command'
 
 
-program
-  .storeOptionsAsProperties(false)
-  .passCommandToAction(false)
-  .version(version)
-  .name(COMMAND_NAME)
-
-logger.registerToCommander(program)
-
+const program = createProgram()
 
 // load sub-command: init
 loadSubCommandInit(name, program)

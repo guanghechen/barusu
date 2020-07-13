@@ -1,6 +1,7 @@
 import progress from 'cli-progress'
 import fs from 'fs-extra'
 import path from 'path'
+import { absoluteOfWorkspace } from '@barusu/util-cli'
 import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
 import { destroyBuffer } from './buffer'
 import { WorkspaceCatalog, WorkspaceCatalogData } from './catalog'
@@ -148,8 +149,8 @@ export class CipherMaster {
       const tasks: Promise<void>[] = []
       for (const plainFilepath of plainFilepaths) {
         const cipherFilepath = path.join(outputRelativePath, resolveDestPath(plainFilepath))
-        const absolutePlainFilepath = path.resolve(self.workspaceDir, plainFilepath)
-        const absoluteCipherFilepath = path.resolve(self.workspaceDir, cipherFilepath)
+        const absolutePlainFilepath = absoluteOfWorkspace(self.workspaceDir, plainFilepath)
+        const absoluteCipherFilepath = absoluteOfWorkspace(self.workspaceDir, cipherFilepath)
 
         const skipped = !force && fs.existsSync(absoluteCipherFilepath)
         const task = skipped
@@ -209,8 +210,8 @@ export class CipherMaster {
       const tasks: Promise<void>[] = []
       for (const cipherFilepath of cipherFilepaths) {
         const plainFilepath = path.join(outputRelativePath, resolveDestPath(cipherFilepath))
-        const absoluteCipherFilepath = path.resolve(self.workspaceDir, cipherFilepath)
-        const absolutePlainFilepath = path.resolve(self.workspaceDir, plainFilepath)
+        const absoluteCipherFilepath = absoluteOfWorkspace(self.workspaceDir, cipherFilepath)
+        const absolutePlainFilepath = absoluteOfWorkspace(self.workspaceDir, plainFilepath)
 
         const skipped = !force && fs.existsSync(absolutePlainFilepath)
         const task = skipped
