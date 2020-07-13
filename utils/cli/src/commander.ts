@@ -1,6 +1,5 @@
 import commander from 'commander'
-import { ColorfulChalkLogger } from '@barusu/chalk-logger'
-import { CommandOptionConfig } from './option'
+import { CommandConfigurationOptions } from './option'
 
 
 /**
@@ -10,7 +9,7 @@ import { CommandOptionConfig } from './option'
  * @param options command options
  * @param extra   extra args (neither declared command arguments nor command options)
  */
-export type CommandActionCallback<T extends CommandOptionConfig> = (
+export type CommandActionCallback<T extends CommandConfigurationOptions> = (
   args: string[],
   options: T,
   extra: string[],
@@ -34,7 +33,7 @@ export class Command extends commander.Command {
    * @return {Command} `this` command for chaining
    * @api public
    */
-  public action<T extends CommandOptionConfig>(fn: CommandActionCallback<T>): this {
+  public action<T extends CommandConfigurationOptions>(fn: CommandActionCallback<T>): this {
     const self = this
 
     const listener = (args: string[]): void => {
@@ -67,6 +66,7 @@ export class Command extends commander.Command {
     return self
   }
 
+  // override
   public opts(): Record<string, unknown> {
     const self = this
     const nodes: Command[] = [self]
@@ -91,37 +91,13 @@ export class Command extends commander.Command {
 
     return options
   }
+
+  // override
+  public addCommand(command: Command): this {
+    super.addCommand(command)
+    return this
+  }
 }
 
 
 export { commander }
-
-
-/**
- * Create top command
- * @param commandName
- * @param version
- * @param logger
- */
-export function createTopCommand(
-  commandName: string,
-  version: string,
-  logger: ColorfulChalkLogger,
-): Command {
-  const program = new Command()
-
-  program
-    .storeOptionsAsProperties(false)
-    .passCommandToAction(false)
-    .version(version)
-    .name(commandName)
-
-  logger.registerToCommander(program)
-
-  program
-    .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
-    .option('--parastic-config-path <parastic config filepath>', '')
-    .option('--parastic-config-entry <parastic config filepath>', '')
-
-  return program
-}
