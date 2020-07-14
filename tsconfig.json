@@ -45,6 +45,9 @@
       "@barusu/util-cli": [
         "./utils/cli/src"
       ],
+      "@barusu/util-mocha": [
+        "./utils/mocha/src"
+      ],
       "@barusu/util-option": [
         "./utils/option/src"
       ],
