@@ -3,7 +3,11 @@ import path from 'path'
 import { isNonExistentOrEmpty } from '@barusu/util-cli'
 import { logger } from '../../util/logger'
 import { RestfulApiInitializerContext } from './context'
-import { createInitialCommit, installDependencies } from './util'
+import {
+  createInitialCommit,
+  installDependencies,
+  renderTemplates,
+} from './util'
 
 
 export class RestfulApiInitializer {
@@ -25,6 +29,8 @@ export class RestfulApiInitializer {
       logger.error(`${ relativeProjectPath } is not a non-empty directory path`)
       return
     }
+
+    await renderTemplates(context)
 
     const execaOptions: execa.Options = { stdio: 'inherit', cwd: context.workspace }
 
