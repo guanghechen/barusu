@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-mocha",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -44,8 +44,8 @@
     "mocha": "^7.1.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.19",
-    "@barusu/rollup-config": "^0.0.19",
+    "@barusu/eslint-config": "^0.0.20",
+    "@barusu/rollup-config": "^0.0.20",
     "cross-env": "^7.0.2",
     "rollup": "2.16.1"
   }

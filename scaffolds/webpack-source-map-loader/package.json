@@ -1,6 +1,6 @@
 {
   "name": "@barusu/webpack-source-map-loader",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -36,8 +36,8 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.19",
-    "@barusu/rollup-config": "^0.0.19",
+    "@barusu/eslint-config": "^0.0.20",
+    "@barusu/rollup-config": "^0.0.20",
     "@types/loader-utils": "^1.1.3",
     "@types/webpack": "^4.41.6",
     "rollup": "2.16.1"

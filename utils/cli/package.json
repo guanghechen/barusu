@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-cli",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "utils for creating node.js command line program",
   "author": {
     "name": "lemon-clown",
@@ -38,8 +38,8 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.19",
-    "@barusu/util-option": "^0.0.19",
+    "@barusu/chalk-logger": "^0.0.20",
+    "@barusu/util-option": "^0.0.20",
     "@types/fs-extra": "^8.1.0",
     "@types/js-yaml": "^3.12.5",
     "chalk": "^3.0.0",
@@ -50,8 +50,8 @@
     "ora": "^4.0.4"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.19",
-    "@barusu/rollup-config": "^0.0.19",
+    "@barusu/eslint-config": "^0.0.20",
+    "@barusu/rollup-config": "^0.0.20",
     "cross-env": "^7.0.2",
     "rollup": "2.16.1"
   }
