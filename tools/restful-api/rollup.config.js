@@ -11,7 +11,7 @@ const paths = {
 }
 
 
-const config = createRollupConfig({
+const baseConfig = createRollupConfig({
   manifest,
   pluginOptions: {
     eslintOptions: {
@@ -28,18 +28,43 @@ const config = createRollupConfig({
 })
 
 
-config[0].plugins.push(
-  copy({
-    copyOnce: true,
-    verbose: true,
-    targets: [
-      {
-        src: resolvePath('src/config/*'),
-        dest: resolvePath('lib/config'),
-      }
+const { external, plugins } = baseConfig[0]
+const config = [
+  {
+    ...baseConfig[0],
+    plugins: [
+      ...plugins,
+      copy({
+        copyOnce: true,
+        verbose: true,
+        targets: [
+          {
+            src: resolvePath('src/config/*'),
+            dest: resolvePath('lib/config'),
+          }
+        ]
+      })
     ]
-  })
-)
+  },
+  {
+    input: resolvePath('src/cli.ts'),
+    output: [
+      {
+        file: resolvePath('lib/cjs/cli.js'),
+        format: 'cjs',
+        exports: 'named',
+        sourcemap: true,
+        banner: '#! /usr/bin/env node',
+      },
+    ],
+    external: [
+      ...external,
+      './index',
+      '../index',
+    ],
+    plugins,
+  }
+]
 
 
 export default config
