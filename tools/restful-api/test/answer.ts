@@ -1,16 +1,15 @@
 import chalk from 'chalk'
 import path from 'path'
-import { name, version } from '@barusu/tool-restful-api/package.json'
-import { createTopCommand } from '@barusu/util-cli'
+import { name } from '@barusu/tool-restful-api/package.json'
 import {
   ApiItemParser,
   COMMAND_NAME,
   RestfulApiGenerator,
   RestfulApiGeneratorContext,
   SubCommandGenerateOptions,
+  createProgram,
   createRestfulApiGeneratorContext,
   createSubCommandGenerate,
-  logger,
 } from '../src'
 import { ApiItemParserTestCaseMaster } from './util/api-parser-case-util'
 import { CommandTestCaseMaster } from './util/command-case-util'
@@ -32,7 +31,7 @@ async function answer() {
   const commandCaseMaster = new CommandTestCaseMaster({ caseRootDirectory })
   await commandCaseMaster.scan('sub-command/generate/simple')
   await commandCaseMaster.answer(async kase => {
-    const program = createTopCommand(COMMAND_NAME, version, logger)
+    const program = createProgram()
     program.addCommand(createSubCommandGenerate(
       name,
       async (options: SubCommandGenerateOptions): Promise<void> => {
@@ -56,7 +55,16 @@ async function answer() {
     ))
 
     const projectDir = kase.dir
-    const args = ['', COMMAND_NAME, 'generate', projectDir, '--log-level=debug', '-s', 'schemas/answer']
+    const args = [
+      '',
+      COMMAND_NAME,
+      'generate',
+      projectDir,
+      '--log-level=debug',
+      '--config-path=app.yml',
+      '--api-config-path=api.yml',
+      '--schema-root-path=schemas/answer',
+    ]
     console.log(chalk.gray('--> ' + args.join(' ')))
     program.parse(args)
   })

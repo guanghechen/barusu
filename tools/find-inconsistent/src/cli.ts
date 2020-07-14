@@ -2,10 +2,11 @@ import path from 'path'
 import { Level } from '@barusu/chalk-logger'
 import { name, version } from '@barusu/tool-find-inconsistent/package.json'
 import {
-  ConfigFlatOpts,
+  CommandConfigurationFlatOpts,
+  absoluteOfWorkspace,
   createTopCommand,
   findPackageJsonPath,
-  flagDefaultOptions,
+  flatOptionsFromConfiguration,
 } from '@barusu/util-cli'
 import { cover, coverString } from '@barusu/util-option'
 import { PackageManager } from './index'
@@ -29,12 +30,12 @@ program
   .action(function ([workspace], options: CommandOptions) {
     const cwd: string = path.resolve()
     const workspaceDir: string = path.resolve(cwd, workspace)
-    const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))
+    const configPath: string[] = options.configPath!.map((p: string) => absoluteOfWorkspace(workspaceDir, p))
     const parasticConfigPath: string | null | undefined = cover<string | null>(
       (): string | null => findPackageJsonPath(workspaceDir),
       options.parasticConfigPath)
     const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
-    const flatOpts: ConfigFlatOpts = {
+    const flatOpts: CommandConfigurationFlatOpts = {
       cwd,
       workspace: workspaceDir,
       configPath,
@@ -42,7 +43,7 @@ program
       parasticConfigEntry,
     }
 
-    const defaultOptions = flagDefaultOptions(
+    const defaultOptions = flatOptionsFromConfiguration(
       defaultCommandOptions,
       flatOpts,
       false,

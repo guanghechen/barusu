@@ -1,5 +1,5 @@
 import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
-import { CommandOptionConfig } from '@barusu/util-cli'
+import { CommandConfigurationOptions } from '@barusu/util-cli'
 
 
 export const COMMAND_NAME = 'barusu-sort-imports'
@@ -187,7 +187,7 @@ export function formatImportOrExportStatItem(
 /**
  *
  */
-export interface CommandOptions extends CommandOptionConfig {
+export interface CommandOptions extends CommandConfigurationOptions {
   /**
    * log level
    * @default undefined

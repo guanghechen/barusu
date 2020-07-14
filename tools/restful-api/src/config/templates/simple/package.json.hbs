@@ -1,15 +1,15 @@
 {
-  "name": "{{ kebabCase packageName }}",
+  "name": "{{{kebabCase packageName}}}",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build:schemas": "rapit generate .",
-    "serve:cli": "nodemon --exec \"yarn build:schemas && rapit serve .\"",
+    "build:schemas": "barusu-rapit generate .",
+    "serve:cli": "nodemon --exec \"yarn build:schemas && barusu-rapit serve .\"",
     "serve:program": "nodemon --exec \"yarn build:schemas && node -r ts-node/register script/serve.ts\"",
     "serve": "yarn serve:program"
   },
   "dependencies": {
-    "@barusu/tool-restful-api": "^{{{lowerCase templateVersion}}}",
+    "@barusu/tool-restful-api": "^{{{lowerCase templateVersion}}}"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^{{{lowerCase templateVersion}}}",

@@ -10,11 +10,13 @@ import {
   isNotEmptyString,
   merge,
 } from '@barusu/util-option'
+import { Command } from './commander'
 import { loadJsonOrYamlSync } from './fs'
 import { findPackageJsonPath } from './manifest'
+import { absoluteOfWorkspace } from './path'
 
 
-export interface ConfigFlatOpts {
+export interface CommandConfigurationFlatOpts {
   /**
    * Path of currently executing command
    */
@@ -41,7 +43,7 @@ export interface ConfigFlatOpts {
 }
 
 
-export interface CommandOptionConfig extends Record<string, unknown> {
+export interface CommandConfigurationOptions extends Record<string, unknown> {
   /**
    * log level
    * @default undefined
@@ -65,7 +67,7 @@ export interface CommandOptionConfig extends Record<string, unknown> {
 }
 
 
-export interface CommandConfig<C extends CommandOptionConfig> {
+export interface CommandConfiguration<C extends CommandConfigurationOptions> {
   /**
    * Global options shared by all sub-commands
    */
@@ -80,29 +82,29 @@ export interface CommandConfig<C extends CommandOptionConfig> {
 /**
  * Flat defaultOptions with configs from package.json
  */
-export function flagDefaultOptions<C extends CommandOptionConfig>(
+export function flatOptionsFromConfiguration<C extends CommandConfigurationOptions>(
   defaultOptions: C,
-  flatOpts: ConfigFlatOpts,
+  flatOpts: CommandConfigurationFlatOpts,
   subCommandName: string | false,
   strategies: Partial<Record<keyof C, MergeStrategy>> = {},
 ): C {
-  let resolvedConfig = {} as CommandConfig<C>
+  let resolvedConfig = {} as CommandConfiguration<C>
 
   // load configs
   if (isNotEmptyArray(flatOpts.configPath)) {
-    const configs: CommandConfig<C>[] = []
+    const configs: CommandConfiguration<C>[] = []
     for (const filepath of flatOpts.configPath) {
-      const config = loadJsonOrYamlSync(filepath) as CommandConfig<C>
+      const config = loadJsonOrYamlSync(filepath) as CommandConfiguration<C>
       configs.push(config)
     }
-    resolvedConfig = merge<CommandConfig<C>>(configs, {}, defaultMergeStrategies.replace)
+    resolvedConfig = merge<CommandConfiguration<C>>(configs, {}, defaultMergeStrategies.replace)
   } else { // otherwise, load from parastic config
     if (
       isNotEmptyString(flatOpts.parasticConfigPath) &&
       isNotEmptyString(flatOpts.parasticConfigEntry)
     ) {
       const config = loadJsonOrYamlSync(flatOpts.parasticConfigPath) as any
-      resolvedConfig = config[flatOpts.parasticConfigEntry] as CommandConfig<C> || {}
+      resolvedConfig = config[flatOpts.parasticConfigEntry] as CommandConfiguration<C> || {}
     }
   }
 
@@ -137,9 +139,50 @@ export function flagDefaultOptions<C extends CommandOptionConfig>(
 }
 
 
-export function resolveCommandOptions<
-  C extends Partial<CommandOptionConfig>,
-  D extends CommandOptionConfig,
+/**
+ * Create top command
+ * @param commandName
+ * @param version
+ * @param logger
+ */
+export function createTopCommand(
+  commandName: string,
+  version: string,
+  logger: ColorfulChalkLogger,
+): Command {
+  const program = new Command()
+
+  program
+    .storeOptionsAsProperties(false)
+    .passCommandToAction(false)
+    .version(version)
+    .name(commandName)
+
+  logger.registerToCommander(program)
+
+  program
+    .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
+    .option('--parastic-config-path <parastic config filepath>', '')
+    .option('--parastic-config-entry <parastic config filepath>', '')
+
+  return program
+}
+
+
+/**
+ * Resolve CommandConfigurationOptions
+ *
+ * @param logger
+ * @param commandName
+ * @param subCommandName
+ * @param defaultOptions
+ * @param workspaceDir
+ * @param options
+ * @param strategies
+ */
+export function resolveCommandConfigurationOptions<
+  C extends Partial<CommandConfigurationOptions>,
+  D extends CommandConfigurationOptions,
   >(
     logger: ColorfulChalkLogger,
     commandName: string,
@@ -148,15 +191,15 @@ export function resolveCommandOptions<
     workspaceDir: string,
     options: C,
     strategies: Partial<Record<keyof D, MergeStrategy>> = {},
-): D & ConfigFlatOpts {
+): D & CommandConfigurationFlatOpts {
   const cwd: string = path.resolve()
   const workspace: string = path.resolve(cwd, workspaceDir)
-  const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspace, p))
+  const configPath: string[] = options.configPath!.map((p: string) => absoluteOfWorkspace(workspace, p))
   const parasticConfigPath: string | null | undefined = cover<string | null>(
     (): string | null => findPackageJsonPath(workspace),
     options.parasticConfigPath)
   const parasticConfigEntry: string = coverString(commandName, options.parasticConfigEntry)
-  const flatOpts: ConfigFlatOpts = {
+  const flatOpts: CommandConfigurationFlatOpts = {
     cwd,
     workspace,
     configPath,
@@ -164,7 +207,7 @@ export function resolveCommandOptions<
     parasticConfigEntry,
   }
 
-  const resolvedOptions = flagDefaultOptions<D>(
+  const resolvedOptions = flatOptionsFromConfiguration<D>(
     defaultOptions,
     flatOpts,
     subCommandName,

@@ -1,9 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
-import {
-  DirTestCaseMaster,
-  DirTestCaseMasterProps,
-} from '@lemon-clown/mocha-test-master'
+import { DirTestCaseMaster, DirTestCaseMasterProps } from '@barusu/util-mocha'
 
 
 /**

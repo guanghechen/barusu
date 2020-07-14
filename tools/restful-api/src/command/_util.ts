@@ -1,5 +1,5 @@
 import { SimpleEventBus } from '@barusu/event-bus'
-import { logger } from '../util/logger'
+import { logger } from '../index'
 
 
 export enum EventTypes {

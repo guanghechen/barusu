@@ -1,4 +1,4 @@
-import { commander } from '@barusu/util-cli'
+import { Command } from '@barusu/util-cli'
 import {
   RestfulApiInitializer,
   RestfulApiInitializerContext,
@@ -14,7 +14,7 @@ import { EventTypes, eventBus, handleError } from './_util'
  */
 export function loadSubCommandInit(
   packageName: string,
-  program: commander.Command,
+  program: Command,
 ): void {
   const process = async (options: SubCommandInitOptions): Promise<void> => {
     try {

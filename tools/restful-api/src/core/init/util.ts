@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
+import nodePlop from 'node-plop'
 import path from 'path'
-import { Plop, run } from 'plop'
+import { runPlop } from '@barusu/util-cli'
 import { toLowerCase } from '@barusu/util-option'
 import { templateRootDir } from '../../util/env'
 import { logger } from '../../util/logger'
@@ -30,10 +32,8 @@ export async function renderTemplates(
   logger.debug('templateDir:', templateDir)
   logger.debug('templateConfig:', templateConfig)
 
-  Plop.launch({
-    cwd: context.workspace,
-    configPath: templateConfig,
-  }, env => run(env, undefined, true))
+  const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
+  await runPlop(plop, logger, undefined, { workspace: context.workspace })
 }
 
 

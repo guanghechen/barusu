@@ -1,7 +1,7 @@
-[![npm version](https://img.shields.io/npm/v/restful-api-tool.svg)](https://www.npmjs.com/package/restful-api-tool)
-[![npm download](https://img.shields.io/npm/dm/restful-api-tool.svg)](https://www.npmjs.com/package/restful-api-tool)
-[![npm license](https://img.shields.io/npm/l/restful-api-tool.svg)](https://www.npmjs.com/package/restful-api-tool)
-[![git action](https://action-badges.now.sh/lemon-clown/restful-api-tool?action=test)](https://github.com/lemon-clown/restful-api-tool/actions)
+[![npm version](https://img.shields.io/npm/v/@barusu/tool-restful-api.svg)](https://www.npmjs.com/package/@barusu/tool-restful-api)
+[![npm download](https://img.shields.io/npm/dm/@barusu/tool-restful-api.svg)](https://www.npmjs.com/package/@barusu/tool-restful-api)
+[![npm license](https://img.shields.io/npm/l/@barusu/tool-restful-api.svg)](https://www.npmjs.com/package/@barusu/tool-restful-api)
+
 
 # Introduction
   * In brief, the purpose of this project is to achieve: `ts type` -> `JSON-Schema` -> `mock data` -> `restful mock-server`
@@ -18,7 +18,7 @@
 
     - The `serve` sub-command parses the configuration file to generate a mock server
       - You can specify the directory of the mock data file, so that the files under this file directory are preferentially proxyed as the response data;
-      - In addition, `serve` also supports custom routing, which is based on `koa` and `koa-router`. If you want to support custom routing while generating mock server, see below
+      - In addition, `serve` also supports custom routing, which is based on `koa` and `@koa/router`. If you want to support custom routing while generating mock server, see below
 
   ---
 
@@ -36,20 +36,20 @@
 
     - `serve` 子命令解析配置文件，生成一个 mock server
       - 你可以指定 mock data 文件的目录，使得优先代理此文件目录下的文件作为响应数据；
-      - 此外，`serve` 还支持自定义路由，它基于 `koa` 和 `koa-router`，如果你想要在生成 mock server 的同时还支持自定义路由的话，可参见下文
+      - 此外，`serve` 还支持自定义路由，它基于 `koa` 和 `@koa/router`，如果你想要在生成 mock server 的同时还支持自定义路由的话，可参见下文
 
 
 # Install
 
   ```shell
   # Global installation
-  yarn global add restful-api-tool
-  # or use npm: npm install -g restful-api-tool
+  yarn global add @barusu/tool-restful-api
+  # or use npm: npm install -g @barusu/tool-restful-api
 
   # Init mock server project
   rapit init demo-mock-server --log-level verbose
 
-  # or use npx: npx restful-api-tool init demo-mock-server -- --log-level verbose
+  # or use npx: npx @barusu/tool-restful-api init demo-mock-server -- --log-level verbose
   ```
 
 # Cli Usage
@@ -121,8 +121,8 @@
 
 # Programming Usage
   ```shell
-  yarn add --dev restful-api-tool
-  # or use npm: npm install --save-dev restful-api-tool
+  yarn add --dev @barusu/tool-restful-api
+  # or use npm: npm install --save-dev @barusu/tool-restful-api
   ```
 
 ## Usage
@@ -132,7 +132,7 @@
     ```typescript
     import path from 'path'
     import chalk from 'chalk'
-    import { execCommand, Router, ServeCommand, SubCommandHook } from 'restful-api-tool'
+    import { execCommand, Router, ServeCommand, SubCommandHook } from '@barusu/tool-restful-api'
 
     async function serve () {
       const projectDir = path.resolve()
@@ -191,7 +191,7 @@
   * Add a `package.json` file, like this:
     ```json
     {
-      "name": "restful-api-tool---demo",
+      "name": "@barusu/tool-restful-api---demo",
       "version": "0.0.0",
       "private": true,
       "scripts": {
@@ -201,7 +201,7 @@
       },
       "devDependencies": {
         "nodemon": "^1.19.1",
-        "restful-api-tool": "^0.0.5",
+        "@barusu/tool-restful-api": "^0.0.5",
         "ts-node": "^8.4.1",
         "typescript": "^3.6.3"
       }
@@ -275,13 +275,10 @@
 <!-- 参考链接 -->
 [json-schema]: https://json-schema.org/
 [json-schema-faker]: https://github.com/json-schema-faker/json-schema-faker
-[typescript-json-schema]: https://github.com/lemon-clown/typescript-json-schema
-[app-config]: https://github.com/lemon-clown/restful-api-tool/blob/master/src/core/types/context.ts
-[app-config-generate]: https://github.com/lemon-clown/restful-api-tool/blob/develop/src/core/types/context.ts#L39
-[app-config-serve]: https://github.com/lemon-clown/restful-api-tool/blob/develop/src/core/types/context.ts#L91
-[api-config]: https://github.com/lemon-clown/restful-api-tool/blob/master/src/core/types/api-config.ts
-[api-config-rawapiconfig]: https://github.com/lemon-clown/restful-api-tool/blob/master/src/core/types/api-config.ts#L7
-[example]: https://github.com/lemon-clown/restful-api-tool/tree/master/example
+[@barusu/typescript-json-schema]: https://github.com/lemon-clown/typescript-json-schema
+[api-config]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/types/api-config.ts
+[api-config-rawapiconfig]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/types/api-config.ts#L7
+[example]: https://github.com/lemon-clown/barusu/tree/master/tools/restful-api/example
 
 [usage-cli]: #Cli-Usage
 [usage-programming]: #Programming-Usage

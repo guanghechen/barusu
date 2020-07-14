@@ -1,6 +1,6 @@
 import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 import { createStaticImportOrExportRegex } from '@barusu/tool-sort-imports'
-import { CommandOptionConfig } from '@barusu/util-cli'
+import { CommandConfigurationOptions } from '@barusu/util-cli'
 
 
 export const COMMAND_NAME = 'barusu-find-inconsistent'
@@ -40,7 +40,7 @@ export function correctModulePath(
 /**
  *
  */
-export interface CommandOptions extends CommandOptionConfig {
+export interface CommandOptions extends CommandConfigurationOptions {
   /**
    * log level
    * @default undefined

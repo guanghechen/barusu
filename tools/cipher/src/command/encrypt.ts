@@ -1,192 +1,68 @@
-import { CommanderStatic } from 'commander'
 import globby from 'globby'
-import path from 'path'
-import { Level } from '@barusu/chalk-logger'
 import {
-  ConfigFlatOpts,
-  absoluteOfWorkspace,
-  findPackageJsonPath,
-  flagDefaultOptions,
+  Command,
   mkdirsIfNotExists,
   relativeOfWorkspace,
 } from '@barusu/util-cli'
 import {
-  convertToBoolean,
-  convertToNumber,
-  cover,
-  coverString,
-  isNotEmptyArray,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  SubCommandEncryptOptions,
+  createSubCommandEncrypt,
+} from '../core/encrypt/command'
 import { WorkspaceCatalog } from '../util/catalog'
 import { EventTypes, eventBus } from '../util/event-bus'
 import { logger } from '../util/logger'
 import { CipherMaster } from '../util/master'
-import {
-  GlobalCommandOptions,
-  defaultGlobalCommandOptions,
-  handleError,
-} from './_util'
-
-
-const SUB_COMMAND_NAME = 'encrypt'
-
-
-interface SubCommandOptions extends GlobalCommandOptions {
-  /**
-   * root dir of outputs
-   * @default plain-bak
-   */
-  outDir: string
-  /**
-   * do encrypt event the target filepath has already exists.
-   * @default false
-   */
-  force: boolean
-  /**
-   * glob pattern of files have been encrypted
-   * @default []
-   */
-  plainFilepathPattern: string[]
-}
-
-
-const defaultCommandOptions: SubCommandOptions = {
-  ...defaultGlobalCommandOptions,
-  outDir: 'plain-bak',
-  force: false,
-  plainFilepathPattern: [],
-}
+import { handleError } from './_util'
 
 
 /**
  * load Sub-command: encrypt
  */
 export function loadSubCommandEncrypt(
-  name: string,
-  program: CommanderStatic,
+  packageName: string,
+  program: Command,
 ): void {
-  program
-    .command(`${ SUB_COMMAND_NAME } <workspace>`)
-    .option('-S, --secret-filepath <secret filepath>', 'path of secret file')
-    .option('-I, --index-filepath <cipher files index>', 'path of index of cipher files')
-    .option('-P, --plain-filepath-pattern <glob pattern>', 'glob pattern of files to be encrypted', (val, acc: string[]) => acc.concat(val), [])
-    .option('-o, --out-dir <outDir>', 'root dir of outputs')
-    .option('-f, --force', 'do encrypt event the target filepath has already exists.')
-    .option('--show-asterisk', 'whether to print password asterisks')
-    .option('--minimum-password-length', 'the minimum size required of password')
-    .action(async function (workspace: string, options: any) {
-      logger.setName(`${ name } ${ SUB_COMMAND_NAME }`)
-
-      const cwd: string = path.resolve()
-      const workspaceDir: string = path.resolve(cwd, workspace)
-      const configPath: string[] = options.configPath!.map((p: string) => path.resolve(workspaceDir, p))
-      const parasticConfigPath: string | null | undefined = cover<string | null>(
-        (): string | null => findPackageJsonPath(workspaceDir),
-        options.parasticConfigPath)
-      const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
-      const flatOpts: ConfigFlatOpts = {
-        cwd,
-        workspace: workspaceDir,
-        configPath,
-        parasticConfigPath,
-        parasticConfigEntry,
-      }
-
-      const defaultOptions = flagDefaultOptions(
-        defaultCommandOptions,
-        flatOpts,
-        SUB_COMMAND_NAME,
-        {},
-      )
-
-      // reset log-level
-      const logLevel = cover<string | undefined>(defaultOptions.logLevel, program.logLevel)
-      if (logLevel != null) {
-        const level = Level.valueOf(logLevel)
-        if (level != null) logger.setLevel(level)
-      }
-
-      logger.debug('cwd:', flatOpts.cwd)
-      logger.debug('workspace:', flatOpts.workspace)
-      logger.debug('configPath', flatOpts.configPath)
-      logger.debug('parasticConfigPath', flatOpts.parasticConfigPath)
-      logger.debug('parasticConfigEntry', flatOpts.parasticConfigEntry)
-
-      // resolve outDir
-      const outDir: string = absoluteOfWorkspace(workspaceDir,
-        cover<string>(
-          defaultOptions.outDir, options.outDir, isNotEmptyString))
-      logger.debug('outDir:', outDir)
-
-      // resolve secretFilepath
-      const secretFilepath: string = absoluteOfWorkspace(workspaceDir,
-        cover<string>(
-          defaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
-      logger.debug('secretFilepath:', secretFilepath)
-
-      // resolve indexFilepath
-      const indexFilepath: string = absoluteOfWorkspace(outDir,
-        cover<string>(
-          defaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
-      logger.debug('indexFilepath:', indexFilepath)
-
-      // resolve force
-      const force: boolean = cover<boolean>(
-        defaultOptions.force, convertToBoolean(options.force))
-      logger.debug('force:', force)
-
-      // resolve showAsterisk
-      const showAsterisk: boolean = cover<boolean>(
-        defaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
-      logger.debug('showAsterisk:', showAsterisk)
-
-      // resolve miniumPasswordLength
-      const miniumPasswordLength: number = cover<number>(
-        defaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength)
-      )
-      logger.debug('miniumPasswordLength:', miniumPasswordLength)
-
-      // resolve plainFilepathPatterns
-      const plainFilepathPatterns: string[] = cover<string[]>(
-        defaultOptions.plainFilepathPattern, options.plainFilepathPattern, isNotEmptyArray)
-      logger.debug('plainFilepathPatterns:', plainFilepathPatterns)
-
-      // calc outRelativeDir
-      const outRelativeDir = relativeOfWorkspace(workspaceDir, outDir)
-      logger.debug('outRelativeDir:', outRelativeDir)
+  const handle = async (options: SubCommandEncryptOptions): Promise<void> => {
+    try {
 
       // ensure paths exist
-      mkdirsIfNotExists(workspaceDir, true, logger)
-      mkdirsIfNotExists(outDir, true, logger)
-      mkdirsIfNotExists(secretFilepath, false, logger)
-      mkdirsIfNotExists(indexFilepath, false, logger)
+      mkdirsIfNotExists(options.workspace, true, logger)
+      mkdirsIfNotExists(options.outDir, true, logger)
+      mkdirsIfNotExists(options.secretFilepath, false, logger)
+      mkdirsIfNotExists(options.indexFilepath, false, logger)
 
-      try {
-        const master = new CipherMaster({
-          workspaceDir,
-          showAsterisk,
-          secretFilepath,
-          minimumSize: miniumPasswordLength,
-        })
+      // calc outRelativeDir
+      const outRelativeDir = relativeOfWorkspace(options.workspace, options.outDir)
+      logger.debug('outRelativeDir:', outRelativeDir)
 
-        const workspaceCatalog = (
-          (await master.loadIndex(indexFilepath, outRelativeDir)) ||
-          new WorkspaceCatalog({ items: [], cipherRelativeDir: outRelativeDir })
-        )
+      const master = new CipherMaster({
+        workspaceDir: options.workspace,
+        showAsterisk: options.showAsterisk,
+        secretFilepath: options.secretFilepath,
+        minimumSize: options.miniumPasswordLength,
+      })
 
-        const resolveDestPath = (plainFilepath: string) => {
-          const cipherFilepath: string = workspaceCatalog
-            .resolveCipherFilepath(plainFilepath)
-          return cipherFilepath
-        }
+      const workspaceCatalog = (
+        (await master.loadIndex(options.indexFilepath, outRelativeDir)) ||
+        new WorkspaceCatalog({ items: [], cipherRelativeDir: outRelativeDir })
+      )
 
-        const plainFilepaths = await globby(plainFilepathPatterns, { cwd: workspaceDir })
-        await master.encryptFiles(plainFilepaths, outRelativeDir, resolveDestPath, force)
-        await master.saveIndex(indexFilepath, workspaceCatalog)
-      } catch (error) {
-        handleError(error)
+      const resolveDestPath = (plainFilepath: string) => {
+        const cipherFilepath: string = workspaceCatalog
+          .resolveCipherFilepath(plainFilepath)
+        return cipherFilepath
       }
-      eventBus.dispatch({ type: EventTypes.EXITING })
-    })
+
+      const plainFilepaths = await globby(options.plainFilepathPattern, { cwd: options.workspace })
+      await master.encryptFiles(plainFilepaths, outRelativeDir, resolveDestPath, options.force)
+      await master.saveIndex(options.indexFilepath, workspaceCatalog)
+    } catch (error) {
+      handleError(error)
+    } finally {
+    eventBus.dispatch({ type: EventTypes.EXITING })
+    }
+  }
+
+  const command = createSubCommandEncrypt(packageName, handle)
+  program.addCommand(command)
 }

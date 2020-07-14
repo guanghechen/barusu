@@ -1,4 +1,4 @@
-import { commander } from '@barusu/util-cli'
+import { Command } from '@barusu/util-cli'
 import {
   RestfulApiGenerator,
   RestfulApiGeneratorContext,
@@ -14,7 +14,7 @@ import { EventTypes, eventBus, handleError } from './_util'
  */
 export function loadSubCommandGenerate(
   packageName: string,
-  program: commander.Command,
+  program: Command,
 ): void {
   const process = async (options: SubCommandGenerateOptions): Promise<void> => {
     try {
