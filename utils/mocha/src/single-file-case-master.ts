@@ -218,15 +218,15 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
     const self = this
     if (doAnswer == null) {
       // eslint-disable-next-line no-param-reassign
-      doAnswer = async fileCase => {
-        const data = await fs.readJSON(fileCase.filePath)
+      doAnswer = async kase => {
+        const data = await fs.readJSON(kase.filePath)
         for (const caseItem of data.cases) {
           const output: Output = await self.consume(caseItem)
           const outputData: OutputData = self.toJSON(output)
           caseItem[self.answerField] = outputData
         }
         const content: string = await self.stringify(data)
-        await fs.writeFile(fileCase.filePath, content, 'utf-8')
+        await fs.writeFile(kase.filePath, content, 'utf-8')
       }
     }
     await super.answer(doAnswer)
@@ -240,9 +240,9 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
     const self = this
     if (doTest == null) {
       // eslint-disable-next-line no-param-reassign
-      doTest = function* (fileCase) {
-        const data = fs.readJSONSync(fileCase.filePath)
-        yield data.title || fileCase.title
+      doTest = function* (kase) {
+        const data = fs.readJSONSync(kase.filePath)
+        yield data.title || kase.title
         yield async function () {
           for (const caseItem of data.cases) {
             const answer: OutputData = caseItem[self.answerField]
