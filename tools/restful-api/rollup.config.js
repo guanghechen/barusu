@@ -1,5 +1,6 @@
 import path from 'path'
 import { createRollupConfig } from '@barusu/rollup-config'
+import { copy } from '@barusu/rollup-plugin-copy'
 import manifest from './package.json'
 
 
@@ -25,6 +26,20 @@ const config = createRollupConfig({
     },
   }
 })
+
+
+config[0].plugins.push(
+  copy({
+    copyOnce: true,
+    verbose: true,
+    targets: [
+      {
+        src: resolvePath('src/config/*'),
+        dest: resolvePath('lib/config'),
+      }
+    ]
+  })
+)
 
 
 export default config
