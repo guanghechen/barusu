@@ -23,19 +23,21 @@ module.exports = function (plop) {
       },
       {
         type: 'list',
-        name: 'loglevel',
+        name: 'logLevel',
         default: 'verbose',
         message: 'log level',
         choices: ['debug', 'verbose', 'info', 'warn', 'error'],
-        filter: (text) => toLowerCase(text).trim(),
-        transformer: (text) => toLowerCase(text).trim(),
+        filter: (text) => text.toLowerCase().trim(),
+        transformer: (text) => text.toLowerCase().trim(),
       },
     ],
     actions: function (answers) {
       // eslint-disable-next-line no-param-reassign
       answers.templateVersion = manifest.version
+
+      const workspace = answers.workspace || path.resolve()
       const resolveSourcePath = (p) => path.normalize(path.resolve(__dirname, p))
-      const resolveTargetPath = (p) => path.normalize(path.resolve(p))
+      const resolveTargetPath = (p) => path.normalize(path.resolve(workspace, p))
 
       return [
         {
