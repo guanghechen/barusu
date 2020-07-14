@@ -3,7 +3,7 @@ import {
   FileTestCase,
   FileTestCaseMaster,
   FileTestCaseMasterProps,
-} from '@lemon-clown/mocha-test-master'
+} from '@barusu/util-mocha'
 import { ApiItemGroup, ApiItemParser } from '../../src'
 
 

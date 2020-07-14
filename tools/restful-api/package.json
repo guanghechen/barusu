@@ -79,7 +79,7 @@
     "@barusu/eslint-config": "^0.0.19",
     "@barusu/rollup-config": "^0.0.19",
     "@barusu/rollup-plugin-copy": "^0.0.19",
-    "@lemon-clown/mocha-test-master": "^0.0.1",
+    "@barusu/util-mocha": "^0.0.19",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",

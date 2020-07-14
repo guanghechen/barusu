@@ -3,7 +3,7 @@ import path from 'path'
 import {
   DirTestCaseMaster,
   DirTestCaseMasterProps,
-} from '@lemon-clown/mocha-test-master'
+} from '@barusu/util-mocha'
 
 
 /**

@@ -123,11 +123,6 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
-"@lemon-clown/mocha-test-master@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@lemon-clown/mocha-test-master/-/mocha-test-master-0.0.1.tgz#82d431b5031e47898be9794efa82a3adf6a8df12"
-  integrity sha512-NTCtrHfixbUOz2Igceforx0Jwar+yTozAHzMzGd44Q+J0BpF8An25ahs/6FHBD/LI4gx7Xd7b2+fHmmt7mRukQ==
-
 "@lerna/add@3.21.0":
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.21.0.tgz#27007bde71cc7b0a2969ab3c2f0ae41578b4577b"
