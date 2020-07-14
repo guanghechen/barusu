@@ -18,7 +18,7 @@
 
     - The `serve` sub-command parses the configuration file to generate a mock server
       - You can specify the directory of the mock data file, so that the files under this file directory are preferentially proxyed as the response data;
-      - In addition, `serve` also supports custom routing, which is based on `koa` and `koa-router`. If you want to support custom routing while generating mock server, see below
+      - In addition, `serve` also supports custom routing, which is based on `koa` and `@koa/router`. If you want to support custom routing while generating mock server, see below
 
   ---
 
@@ -36,7 +36,7 @@
 
     - `serve` 子命令解析配置文件，生成一个 mock server
       - 你可以指定 mock data 文件的目录，使得优先代理此文件目录下的文件作为响应数据；
-      - 此外，`serve` 还支持自定义路由，它基于 `koa` 和 `koa-router`，如果你想要在生成 mock server 的同时还支持自定义路由的话，可参见下文
+      - 此外，`serve` 还支持自定义路由，它基于 `koa` 和 `@koa/router`，如果你想要在生成 mock server 的同时还支持自定义路由的话，可参见下文
 
 
 # Install

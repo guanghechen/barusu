@@ -1,7 +1,7 @@
 import chalk from 'chalk'
-import Router from 'koa-router'
 import path from 'path'
 import { name } from '@barusu/tool-restful-api/package.json'
+import Router from '@koa/router'
 import {
   COMMAND_NAME,
   RestfulApiServer,

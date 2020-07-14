@@ -138,9 +138,9 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-router@^7.0.42":
+"@types/@koa/router@^7.0.42":
   version "7.0.42"
-  resolved "https://registry.yarnpkg.com/@types/koa-router/-/koa-router-7.0.42.tgz#0e5c01d4d0a2873d402d432114f08372d7c50eb1"
+  resolved "https://registry.yarnpkg.com/@types/@koa/router/-/@koa/router-7.0.42.tgz#0e5c01d4d0a2873d402d432114f08372d7c50eb1"
   integrity sha512-mggrNY7Ywwjt7QjaMAlbb1ixE+v7AFskOeyKdmZT/NvPVEAo48gYUxIcF8ILlMc3eg1bo6SxNoUcbxhTv7edrA==
   dependencies:
     "@types/koa" "*"
@@ -1366,9 +1366,9 @@ koa-json@^2.0.2:
     koa-is-json "1"
     streaming-json-stringify "3"
 
-koa-router@^7.4.0:
+@koa/router@^7.4.0:
   version "7.4.0"
-  resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-7.4.0.tgz#aee1f7adc02d5cb31d7d67465c9eacc825e8c5e0"
+  resolved "https://registry.yarnpkg.com/@koa/router/-/@koa/router-7.4.0.tgz#aee1f7adc02d5cb31d7d67465c9eacc825e8c5e0"
   integrity sha512-IWhaDXeAnfDBEpWS6hkGdZ1ablgr6Q6pGdXCyK38RbzuH4LkUOpPqPw+3f8l8aTDrQmBQ7xJc0bs2yV4dzcO+g==
   dependencies:
     debug "^3.1.0"
@@ -1954,7 +1954,7 @@ restful-api-tool@^0.0.1:
     "@types/js-yaml" "^3.12.1"
     "@types/koa" "^2.11.0"
     "@types/koa-json" "^2.0.18"
-    "@types/koa-router" "^7.0.42"
+    "@types/@koa/router" "^7.0.42"
     "@types/mockjs" "^1.0.2"
     "@types/node" "^12.7.3"
     colorful-chalk-logger "^0.4.2"
@@ -1964,7 +1964,7 @@ restful-api-tool@^0.0.1:
     json-schema-faker "^0.5.0-rc23"
     koa "^2.11.0"
     koa-json "^2.0.2"
-    koa-router "^7.4.0"
+    @koa/router "^7.4.0"
     mockjs "^1.1.0"
     option-master "^0.0.13"
     typescript "3.5.3"
