@@ -5688,10 +5688,14 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-option-master@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/option-master/-/option-master-0.0.16.tgz#4192ef8b8ca2393970240bc48cfb6119d241be99"
-  integrity sha512-qpUL37Yfijx4409J1UDxsUCl+FRgGJLMDhHOtrkdWCYqbVXFcYPvGz5XjgZ6rZTgJfkTbKSBT7NqQE6wt4y4DA==
+option-master@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/option-master/-/option-master-0.0.19.tgz#35d9f245227dcc6de6990afe7315e44c431d3c4c"
+  integrity sha512-6m+PPIeb0QtNZmyNlqNWaiBGEqakj1M8eu7EYHCwT/e9aHs+NeZO+Y4qYSI6A5ajgrLKCI3+mT+mOlOefM7ciw==
+  dependencies:
+    change-case "^4.1.1"
+    lower-case "^2.0.1"
+    upper-case "^2.0.1"
 
 optionator@^0.8.3:
   version "0.8.3"
