@@ -1,0 +1,13 @@
+{
+  "value": {
+    "type": "integer",
+    "required": true,
+    "enum": [
+      1,
+      2,
+      3
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,70 @@
+{
+  "value": {
+    "type": "combine",
+    "required": false,
+    "strategy": "one",
+    "allOf": [
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "nickname"
+        ],
+        "allowAdditionalProperties": true,
+        "silentIgnore": true,
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "age"
+        ],
+        "allowAdditionalProperties": true,
+        "silentIgnore": true,
+        "properties": {
+          "age": {
+            "type": "integer",
+            "required": true,
+            "minimum": 1
+          }
+        }
+      }
+    ],
+    "oneOf": [
+      {
+        "type": "string",
+        "required": true,
+        "minLength": 3,
+        "maxLength": 25
+      },
+      {
+        "type": "string",
+        "required": true,
+        "pattern": "^x--\\d+$"
+      },
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "name"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}

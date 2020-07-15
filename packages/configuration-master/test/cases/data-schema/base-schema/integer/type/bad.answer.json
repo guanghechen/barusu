@@ -1,0 +1,74 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (true)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (false)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (\"d0x23\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (\"0.2302\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (\"233sfe\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (2.3232)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got (-32.22)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected an integer, but got ([])."
+      }
+    ],
+    "warnings": []
+  }
+]

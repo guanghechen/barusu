@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "properties": {
+    "globalOptions": {
+      "type": "object",
+      "properties": {
+        "encoding": {
+          "type": "string",
+          "default": "utf-8"
+        },
+        "logLevel": {
+          "type": "string",
+          "enum": [
+            "debug",
+            "verbose",
+            "info",
+            "warn",
+            "error",
+            "fatal"
+          ],
+          "required": true
+        },
+        "configPath": {
+          "type": "string"
+        }
+      }
+    },
+    "generate": {
+      "type": "object",
+      "properties": {
+        "clean": {
+          "type": "boolean",
+          "default": false
+        },
+        "ignoreMissingModels": {
+          "type": "boolean",
+          "default": false
+        },
+        "tsconfigPath": {
+          "type": "string",
+          "default": "tsconfig.json"
+        },
+        "apiItemConfigPath": {
+          "type": "string",
+          "default": "api.yml"
+        },
+        "schemaArgs": {
+          "type": "object",
+          "allowAdditionalProperties": "true",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^attr-"
+          },
+          "properties": {
+            "ref": {
+              "type": "boolean",
+              "default": false
+            },
+            "required": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
+          "default": "127.0.0.1"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535,
+          "required": true
+        },
+        "prefixUrl": {
+          "type": "string",
+          "default": "/"
+        },
+        "useDataFileFirst": {
+          "type": "boolean",
+          "default": false
+        },
+        "dataFileRootPath": {
+          "type": "string"
+        },
+        "apiItemConfigPath": {
+          "type": "string"
+        },
+        "alwaysFakeOptionals": {
+          "type": "boolean",
+          "default": false
+        },
+        "optionalsProbability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1.0
+        }
+      },
+      "dependencies": {
+        "dataFileRootPath": [
+          "apiItemConfigPath"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "generate": [
+      "globalOptions"
+    ],
+    "serve": [
+      "globalOptions"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    "true",
+    "TRUE",
+    "TrUe",
+    "false",
+    "False",
+    "FALSE"
+  ]
+}

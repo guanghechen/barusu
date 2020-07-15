@@ -1,0 +1,79 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "patternProperties",
+        "reason": "[user.items.0.name#required: required, but got (undefined).,\nuser.items.1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").,\nuser.items#type: expected an object, but got ([]).]",
+        "property": "user",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "[items.0.name#required: required, but got (undefined).,\nitems.1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").,\nitems#type: expected an object, but got ([]).]",
+            "property": "items",
+            "traces": [
+              {
+                "constraint": "oneOf",
+                "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+                "traces": [
+                  {
+                    "constraint": "[0]",
+                    "reason": "[0.name#required: required, but got (undefined).,\n1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").]",
+                    "traces": [
+                      {
+                        "constraint": "items",
+                        "reason": "0.name#required: required, but got (undefined).",
+                        "property": "0",
+                        "traces": [
+                          {
+                            "constraint": "properties",
+                            "reason": "name#required: required, but got (undefined).",
+                            "property": "name",
+                            "traces": [
+                              {
+                                "constraint": "required",
+                                "reason": "required, but got (undefined)."
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "constraint": "items",
+                        "reason": "1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").",
+                        "property": "1",
+                        "traces": [
+                          {
+                            "constraint": "properties",
+                            "reason": "method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").",
+                            "property": "method",
+                            "traces": [
+                              {
+                                "constraint": "enum",
+                                "reason": "expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\")."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "constraint": "[1]",
+                    "reason": "#type: expected an object, but got ([]).",
+                    "traces": [
+                      {
+                        "constraint": "type",
+                        "reason": "expected an object, but got ([])."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

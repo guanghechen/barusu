@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "format": "ipv4",
+  "required": true
+}

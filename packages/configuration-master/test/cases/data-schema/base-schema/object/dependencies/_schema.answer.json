@@ -1,0 +1,68 @@
+{
+  "value": {
+    "type": "object",
+    "required": false,
+    "requiredProperties": [
+      "name"
+    ],
+    "allowAdditionalProperties": false,
+    "dependencies": {
+      "more": [
+        "name",
+        "email"
+      ],
+      "password": [
+        "name",
+        "email"
+      ]
+    },
+    "silentIgnore": false,
+    "properties": {
+      "name": {
+        "type": "string",
+        "required": true,
+        "pattern": "[\\w]{3,20}"
+      },
+      "email": {
+        "type": "string",
+        "required": false,
+        "pattern": "[^@]+@[^\\.]+\\..+"
+      },
+      "password": {
+        "type": "string",
+        "required": false,
+        "pattern": "[\\w]{3,20}"
+      },
+      "more": {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [],
+        "allowAdditionalProperties": false,
+        "dependencies": {
+          "gender": [
+            "nick"
+          ]
+        },
+        "silentIgnore": false,
+        "properties": {
+          "nick": {
+            "type": "string",
+            "required": false,
+            "minLength": 3,
+            "maxLength": 20
+          },
+          "gender": {
+            "type": "string",
+            "required": false,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

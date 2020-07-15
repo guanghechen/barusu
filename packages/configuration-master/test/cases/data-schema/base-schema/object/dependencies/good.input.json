@@ -1,0 +1,31 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {
+      "name": "alice",
+      "email": "alice@somewhat.com",
+      "password": "alice_password",
+      "more": {
+        "nick": "little alice"
+      }
+    },
+    {
+      "name": "alice",
+      "email": "alice@somewhat.com",
+      "password": "alice_password",
+      "more": {
+        "nick": "waw",
+        "gender": "female"
+      }
+    },
+    {
+      "name": "alice",
+      "email": "alice@somewhat.com",
+      "password": "alice_password"
+    },
+    {
+      "name": "alice",
+      "email": "alice@somewhat.com"
+    }
+  ]
+}

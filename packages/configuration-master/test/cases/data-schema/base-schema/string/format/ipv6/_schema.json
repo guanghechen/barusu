@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "format": "ipv6",
+  "required": true
+}

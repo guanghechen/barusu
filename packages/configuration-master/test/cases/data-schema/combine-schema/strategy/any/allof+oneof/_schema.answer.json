@@ -1,0 +1,97 @@
+{
+  "value": {
+    "type": "combine",
+    "required": false,
+    "strategy": "any",
+    "allOf": [
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "name"
+        ],
+        "allowAdditionalProperties": true,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "age"
+        ],
+        "allowAdditionalProperties": true,
+        "silentIgnore": false,
+        "properties": {
+          "age": {
+            "type": "integer",
+            "required": true,
+            "minimum": 1
+          }
+        }
+      }
+    ],
+    "oneOf": [
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "name",
+          "gender"
+        ],
+        "allowAdditionalProperties": true,
+        "silentIgnore": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          },
+          "gender": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "nickname",
+          "sex"
+        ],
+        "allowAdditionalProperties": true,
+        "silentIgnore": true,
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "required": true
+          },
+          "sex": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        },
+        "propertyNames": {
+          "type": "string",
+          "required": false,
+          "pattern": "^(name|age)$"
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}

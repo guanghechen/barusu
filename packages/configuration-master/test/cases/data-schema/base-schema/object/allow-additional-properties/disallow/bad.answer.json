@@ -1,0 +1,61 @@
+[
+  {
+    "value": {
+      "name": "alice"
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "constraint": "properties",
+        "reason": "property(xx-gender) is not defined (allowAdditionalProperties is false), skipped.",
+        "property": "xx-gender"
+      }
+    ]
+  },
+  {
+    "value": {
+      "name": "bob",
+      "age": 18
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "constraint": "properties",
+        "reason": "property(xx-sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "property": "xx-sex"
+      }
+    ]
+  },
+  {
+    "value": {
+      "name": "alice"
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "constraint": "properties",
+        "reason": "property(gender) is not defined (allowAdditionalProperties is false), skipped.",
+        "property": "gender"
+      }
+    ]
+  },
+  {
+    "value": {
+      "name": "bob",
+      "age": 18
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "constraint": "properties",
+        "reason": "property(xx-gender) is not defined (allowAdditionalProperties is false), skipped.",
+        "property": "xx-gender"
+      },
+      {
+        "constraint": "properties",
+        "reason": "property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "property": "sex"
+      }
+    ]
+  }
+]

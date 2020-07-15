@@ -1,0 +1,9 @@
+{
+  "value": {
+    "type": "integer",
+    "required": true,
+    "exclusiveMinimum": 20
+  },
+  "errors": [],
+  "warnings": []
+}

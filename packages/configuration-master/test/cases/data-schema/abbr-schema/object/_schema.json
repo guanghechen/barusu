@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "host": "string",
+    "port": "integer",
+    "public": "boolean"
+  },
+  "required": true
+}
+

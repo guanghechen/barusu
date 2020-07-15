@@ -1,0 +1,17 @@
+[
+  {
+    "value": {
+      "name": "alice"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "bob",
+      "age": 18
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

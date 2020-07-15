@@ -1,0 +1,35 @@
+[
+  {
+    "value": {
+      "name": "alice",
+      "gender": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "bob",
+      "email": "bob@bob.com",
+      "sex": "male"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "email": "john@bob.com",
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "john",
+      "sex": "female"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

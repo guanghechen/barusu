@@ -1,0 +1,8 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    "1234cc ss dd ee ff gg dfs dfe",
+    "中文中文中文中文中文中文dd",
+    "fefFFsFF3223SSSSSSSSsssssssss"
+  ]
+}

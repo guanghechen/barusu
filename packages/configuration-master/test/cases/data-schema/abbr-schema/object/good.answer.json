@@ -1,0 +1,31 @@
+[
+  {
+    "value": {
+      "host": "127.0.0.1",
+      "port": 8080,
+      "public": false
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "host": "127.0.0.1",
+      "public": true
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {},
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "port": 80
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

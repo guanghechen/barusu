@@ -1,0 +1,37 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {
+      "title": "alice",
+      "name": "alice",
+      "children": [
+        {
+          "name": "alice-1"
+        },
+        {
+          "name": "alice-2",
+          "children": [
+            {
+              "name": "alice-2-1",
+              "children": [
+                {}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "alice",
+      "name": "alice",
+      "children": [
+        {
+          "name": "alice-1"
+        },
+        {
+          "name": "alice 2"
+        }
+      ]
+    }
+  ]
+}

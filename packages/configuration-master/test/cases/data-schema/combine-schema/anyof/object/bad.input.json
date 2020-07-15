@@ -1,0 +1,13 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {},
+    true,
+    {
+      "gender": "man"
+    },
+    {
+      "sex": "woman"
+    }
+  ]
+}

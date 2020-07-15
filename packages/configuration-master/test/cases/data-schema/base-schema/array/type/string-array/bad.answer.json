@@ -1,0 +1,126 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "items",
+        "reason": "0#type: expected a string, but got (1).",
+        "property": "0",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (1)."
+          }
+        ]
+      },
+      {
+        "constraint": "items",
+        "reason": "2#type: expected a string, but got (2).",
+        "property": "2",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (2)."
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "items",
+        "reason": "0#type: expected a string, but got (true).",
+        "property": "0",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (true)."
+          }
+        ]
+      },
+      {
+        "constraint": "items",
+        "reason": "1#type: expected a string, but got (2).",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (2)."
+          }
+        ]
+      },
+      {
+        "constraint": "items",
+        "reason": "2#type: expected a string, but got (false).",
+        "property": "2",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (false)."
+          }
+        ]
+      },
+      {
+        "constraint": "items",
+        "reason": "3#type: expected a string, but got (1).",
+        "property": "3",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (1)."
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "items",
+        "reason": "1#type: expected a string, but got (false).",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (false)."
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "items",
+        "reason": "1#type: expected a string, but got (false).",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (false)."
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "items",
+        "reason": "1#pattern: expected value pattern is (\"^\\\\d+-\\\\w+$\"), but got (\"xx\").",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "pattern",
+            "reason": "expected value pattern is (\"^\\\\d+-\\\\w+$\"), but got (\"xx\")."
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

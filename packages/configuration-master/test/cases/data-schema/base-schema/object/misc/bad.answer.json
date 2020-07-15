@@ -1,0 +1,130 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "globalOptions.logLevel#required: required, but got (undefined).",
+        "property": "globalOptions",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "logLevel#required: required, but got (undefined).",
+            "property": "logLevel",
+            "traces": [
+              {
+                "constraint": "required",
+                "reason": "required, but got (undefined)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "properties",
+        "reason": "[serve.port#type: expected an integer, but got (\"sss\").,\nserve.dataFileRootPath#dependencies: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
+        "property": "serve",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "port#type: expected an integer, but got (\"sss\").",
+            "property": "port",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (\"sss\")."
+              }
+            ]
+          },
+          {
+            "constraint": "dependencies",
+            "reason": "dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.",
+            "property": "dataFileRootPath"
+          }
+        ]
+      },
+      {
+        "constraint": "dependencies",
+        "reason": "generate depend on [\"globalOptions\"], but \"globalOptions\" is absent.",
+        "property": "generate"
+      }
+    ],
+    "warnings": [
+      {
+        "constraint": "properties",
+        "reason": "generate.schemaArgs.ignored-X#pattern: expected value pattern is (\"^attr-\"), but got (\"ignored-X\").",
+        "property": "generate",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "schemaArgs.ignored-X#pattern: expected value pattern is (\"^attr-\"), but got (\"ignored-X\").",
+            "property": "schemaArgs",
+            "traces": [
+              {
+                "constraint": "propertyNames",
+                "reason": "property(ignored-X) is not matched propertyNamesSchema, skipped.",
+                "property": "ignored-X",
+                "traces": [
+                  {
+                    "constraint": "pattern",
+                    "reason": "expected value pattern is (\"^attr-\"), but got (\"ignored-X\")."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "errors": [
+      {
+        "constraint": "dependencies",
+        "reason": "generate depend on [\"globalOptions\"], but \"globalOptions\" is absent.",
+        "property": "generate"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "generate.clean#type: expected a boolean, but got (\"oh\").",
+        "property": "generate",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "clean#type: expected a boolean, but got (\"oh\").",
+            "property": "clean",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a boolean, but got (\"oh\")."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "properties",
+        "reason": "serve.port#required: required, but got (undefined).",
+        "property": "serve",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "port#required: required, but got (undefined).",
+            "property": "port",
+            "traces": [
+              {
+                "constraint": "required",
+                "reason": "required, but got (undefined)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

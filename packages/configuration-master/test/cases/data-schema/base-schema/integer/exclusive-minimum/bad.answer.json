@@ -1,0 +1,29 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "exclusiveMinimum",
+        "reason": "exclusiveMinimum value expected is 20, but got (20)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "exclusiveMinimum",
+        "reason": "exclusiveMinimum value expected is 20, but got (19)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "exclusiveMinimum",
+        "reason": "exclusiveMinimum value expected is 20, but got (-23219)."
+      }
+    ],
+    "warnings": []
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    "goods",
+    "more characters",
+    "中文中文s"
+  ]
+}

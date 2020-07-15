@@ -1,0 +1,33 @@
+[
+  {
+    "value": {
+      "serve": {
+        "host": "192.168.48.24",
+        "prefixUrl": "/dd",
+        "ssl": {
+          "pub_key": "waw",
+          "sec_key": "wow"
+        },
+        "port": 80
+      }
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "serve": {
+        "host": "127.0.0.1",
+        "port": 8021,
+        "port2": 30021,
+        "ssl": {
+          "pub_key": "waw",
+          "sec_key": "xxx"
+        },
+        "prefixUrl": "/"
+      }
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

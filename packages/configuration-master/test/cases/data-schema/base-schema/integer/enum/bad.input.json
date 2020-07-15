@@ -1,0 +1,9 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    -1,
+    -2,
+    0,
+    4
+  ]
+}

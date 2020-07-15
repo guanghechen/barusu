@@ -1,0 +1,163 @@
+{
+  "value": {
+    "type": "object",
+    "required": false,
+    "requiredProperties": [],
+    "allowAdditionalProperties": false,
+    "dependencies": {
+      "generate": [
+        "globalOptions"
+      ],
+      "serve": [
+        "globalOptions"
+      ]
+    },
+    "silentIgnore": false,
+    "properties": {
+      "globalOptions": {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "logLevel"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "encoding": {
+            "type": "string",
+            "default": "utf-8",
+            "required": false
+          },
+          "logLevel": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "debug",
+              "verbose",
+              "info",
+              "warn",
+              "error",
+              "fatal"
+            ]
+          },
+          "configPath": {
+            "type": "string",
+            "required": false
+          }
+        }
+      },
+      "generate": {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "clean": {
+            "type": "boolean",
+            "default": false,
+            "required": false
+          },
+          "ignoreMissingModels": {
+            "type": "boolean",
+            "default": false,
+            "required": false
+          },
+          "tsconfigPath": {
+            "type": "string",
+            "default": "tsconfig.json",
+            "required": false
+          },
+          "apiItemConfigPath": {
+            "type": "string",
+            "default": "api.yml",
+            "required": false
+          },
+          "schemaArgs": {
+            "type": "object",
+            "required": false,
+            "requiredProperties": [],
+            "allowAdditionalProperties": true,
+            "silentIgnore": false,
+            "properties": {
+              "ref": {
+                "type": "boolean",
+                "default": false,
+                "required": false
+              },
+              "required": {
+                "type": "boolean",
+                "default": false,
+                "required": false
+              }
+            },
+            "propertyNames": {
+              "type": "string",
+              "required": false,
+              "pattern": "^attr-"
+            }
+          }
+        }
+      },
+      "serve": {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "port"
+        ],
+        "allowAdditionalProperties": false,
+        "dependencies": {
+          "dataFileRootPath": [
+            "apiItemConfigPath"
+          ]
+        },
+        "silentIgnore": false,
+        "properties": {
+          "host": {
+            "type": "string",
+            "default": "127.0.0.1",
+            "required": false,
+            "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+          },
+          "port": {
+            "type": "integer",
+            "required": true,
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "prefixUrl": {
+            "type": "string",
+            "default": "/",
+            "required": false
+          },
+          "useDataFileFirst": {
+            "type": "boolean",
+            "default": false,
+            "required": false
+          },
+          "dataFileRootPath": {
+            "type": "string",
+            "required": false
+          },
+          "apiItemConfigPath": {
+            "type": "string",
+            "required": false
+          },
+          "alwaysFakeOptionals": {
+            "type": "boolean",
+            "default": false,
+            "required": false
+          },
+          "optionalsProbability": {
+            "type": "number",
+            "required": false,
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

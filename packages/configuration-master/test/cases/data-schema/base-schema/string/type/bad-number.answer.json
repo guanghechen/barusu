@@ -1,0 +1,29 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got (1.232)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got (-23)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got (2)."
+      }
+    ],
+    "warnings": []
+  }
+]

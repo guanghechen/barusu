@@ -1,0 +1,61 @@
+{
+  "type": "combine",
+  "strategy": "all",
+  "anyOf": [
+    {
+      "type": "object",
+      "allowAdditionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    {
+      "type": "object",
+      "allowAdditionalProperties": true,
+      "properties": {
+        "email": {
+          "type": "string",
+          "pattern": "[^@]+@[^\\.]+\\..+",
+          "required": true
+        }
+      }
+    }
+  ],
+  "oneOf": [
+    {
+      "type": "object",
+      "allowAdditionalProperties": true,
+      "silentIgnore": true,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^(name|email)$"
+      },
+      "properties": {
+        "gender": {
+          "type": "string",
+          "enum": [ "male", "female" ],
+          "required": true
+        }
+      }
+    },
+    {
+      "type": "object",
+      "allowAdditionalProperties": true,
+      "silentIgnore": true,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^(name|email)$"
+      },
+      "properties": {
+        "sex": {
+          "type": "string",
+          "enum": [ "male", "female" ],
+          "required": true
+        }
+      }
+    }
+  ]
+}

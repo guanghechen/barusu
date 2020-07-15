@@ -1,0 +1,17 @@
+[
+  {
+    "value": "alice@gmail.com",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": "alice-1@some.ww.com",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": "alice-2@xx.yy.zz",
+    "errors": [],
+    "warnings": []
+  }
+]

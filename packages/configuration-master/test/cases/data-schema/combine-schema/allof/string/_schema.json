@@ -1,0 +1,14 @@
+{
+  "type": "combine",
+  "allOf": [
+    {
+      "type": "string",
+      "minLength": 5
+    },
+    {
+      "type": "string",
+      "pattern": "^[\\d]+$"
+    }
+  ],
+  "required": true
+}

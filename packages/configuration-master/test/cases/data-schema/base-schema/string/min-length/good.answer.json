@@ -1,0 +1,17 @@
+[
+  {
+    "value": "goods",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": "more characters",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": "中文中文s",
+    "errors": [],
+    "warnings": []
+  }
+]
