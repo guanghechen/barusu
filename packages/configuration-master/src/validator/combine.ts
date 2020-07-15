@@ -5,7 +5,7 @@ import {
   DataValidationResult,
   DataValidator,
 } from '../_core/validator'
-import { stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   COMBINE_T_TYPE as T,
   COMBINE_V_TYPE as V,

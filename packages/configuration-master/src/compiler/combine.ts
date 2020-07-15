@@ -5,7 +5,7 @@ import {
 } from '../_core/compiler'
 import { DSchema, RDSchema } from '../_core/schema'
 import { coverString } from '../_util/cover-util'
-import { stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   COMBINE_T_TYPE as T,
   COMBINE_V_TYPE as V,

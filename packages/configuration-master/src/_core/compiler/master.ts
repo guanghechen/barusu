@@ -1,5 +1,6 @@
+import { isArray, isString } from '@barusu/util-option'
 import { coverString } from '../../_util/cover-util'
-import { isArray, isString, stringify } from '../../_util/type-util'
+import { stringify } from '../../_util/string-util'
 import {
   DDSchema,
   DSchema,

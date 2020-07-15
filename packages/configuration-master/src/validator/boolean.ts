@@ -1,3 +1,4 @@
+import { isBoolean } from '@barusu/util-option'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,
@@ -5,7 +6,6 @@ import {
   DataValidator,
 } from '../_core/validator'
 import { coverBoolean } from '../_util/cover-util'
-import { isBoolean } from '../_util/type-util'
 import {
   BOOLEAN_T_TYPE as T,
   BOOLEAN_V_TYPE as V,

@@ -44,9 +44,7 @@
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
   },
   "dependencies": {
-    "change-case": "^4.1.1",
-    "lower-case": "^2.0.1",
-    "upper-case": "^2.0.1"
+    "@barusu/util-option": "^0.0.20"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.20",

@@ -1,10 +1,11 @@
+import { isArray } from '@barusu/util-option'
 import {
   BaseDataSchemaCompiler,
   DataSchemaCompileResult,
   DataSchemaCompiler,
 } from '../_core/compiler'
 import { coverBoolean } from '../_util/cover-util'
-import { isArray, stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   ARRAY_T_TYPE as T,
   ARRAY_V_TYPE as V,

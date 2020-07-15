@@ -1,3 +1,4 @@
+import { isArray } from '@barusu/util-option'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,
@@ -5,7 +6,7 @@ import {
   DataValidationResult,
   DataValidator,
 } from '../_core/validator'
-import { isArray, stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   ARRAY_T_TYPE as T,
   ARRAY_V_TYPE as V,

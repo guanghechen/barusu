@@ -1,5 +1,6 @@
+import { convertToNumber, isArray, isString } from '@barusu/util-option'
 import { StringExceptionHandleResult } from './handle-result'
-import { convertToNumber, isArray, isString, stringify } from './type-util'
+import { stringify } from './string-util'
 
 
 /**
@@ -33,7 +34,7 @@ export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => 
 
   // 转为 number
   const v = convertToNumber(value)
-  if (Number.isNaN(v)) {
+  if (v == null || Number.isNaN(v)) {
     return result.addError(`(${ stringify(value) }) is not a valid number (or number string).`)
   }
 
@@ -56,7 +57,7 @@ export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) =>
 
   // 转为 number
   const v = convertToNumber(value)
-  if (Number.isNaN(v)) {
+  if (v == null || Number.isNaN(v)) {
     return result.addError(`(${ stringify(value) }) is not a valid integer (or integer string)`)
   }
 

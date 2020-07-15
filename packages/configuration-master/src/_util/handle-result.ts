@@ -1,4 +1,4 @@
-import { stringify } from './type-util'
+import { stringify } from './string-util'
 
 
 /**

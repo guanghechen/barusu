@@ -1,3 +1,4 @@
+import { isArray, isObject } from '@barusu/util-option'
 import {
   BaseDataSchemaCompiler,
   DataSchemaCompileResult,
@@ -5,7 +6,7 @@ import {
 } from '../_core/compiler'
 import { DSchema, RDSchema } from '../_core/schema'
 import { coverArray, coverBoolean, coverString } from '../_util/cover-util'
-import { isArray, isObject, stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   OBJECT_T_TYPE as T,
   OBJECT_V_TYPE as V,

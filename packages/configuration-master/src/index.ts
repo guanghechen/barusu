@@ -9,7 +9,6 @@ export * from './_core/validator'
 // export utils
 export * from './_util/cover-util'
 export * from './_util/handle-result'
-export * from './_util/type-util'
 export * from './_util/string-util'
 
 // export DataSchemas

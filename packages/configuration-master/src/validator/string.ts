@@ -1,10 +1,5 @@
 import {
-  BaseDataValidator,
-  BaseDataValidatorFactory,
-  DataValidationResult,
-  DataValidator,
-} from '../_core/validator'
-import {
+  isString,
   toCamelCase,
   toCapitalCase,
   toConstantCase,
@@ -13,8 +8,14 @@ import {
   toPascalCase,
   toSnakeCase,
   toUpperCase,
-} from '../_util/string-util'
-import { isString, stringify } from '../_util/type-util'
+} from '@barusu/util-option'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
+import { stringify } from '../_util/string-util'
 import {
   STRING_T_TYPE as T,
   STRING_V_TYPE as V,

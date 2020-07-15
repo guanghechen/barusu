@@ -2,7 +2,7 @@ import {
   DataHandleResult,
   DataHandleResultException,
 } from '../../_util/handle-result'
-import { stringify } from '../../_util/type-util'
+import { stringify } from '../../_util/string-util'
 import { DataSchema } from '../schema'
 
 

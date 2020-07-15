@@ -1,3 +1,4 @@
+import { isString } from '@barusu/util-option'
 import {
   BaseDataSchemaCompiler,
   DataSchemaCompileResult,
@@ -9,7 +10,6 @@ import {
   coverRegex,
   coverString,
 } from '../_util/cover-util'
-import { isString } from '../_util/type-util'
 import {
   RawStringDataSchema as RDS,
   STRING_T_TYPE as T,

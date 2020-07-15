@@ -7,9 +7,9 @@ import {
   FileTestCaseMasterProps,
 } from '@barusu/util-mocha'
 import {
+  ConfigurationMaster,
   DSCResult,
   DataHandleResultException,
-  ConfigurationMaster,
   RDSchema,
 } from '../../src'
 

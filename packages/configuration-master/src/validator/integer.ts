@@ -1,10 +1,11 @@
+import { isInteger } from '@barusu/util-option'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,
   DataValidationResult,
   DataValidator,
 } from '../_core/validator'
-import { isInteger, stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   INTEGER_T_TYPE as T,
   INTEGER_V_TYPE as V,

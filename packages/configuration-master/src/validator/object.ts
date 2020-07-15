@@ -1,10 +1,11 @@
+import { isObject } from '@barusu/util-option'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,
   DataValidationResult,
   DataValidator,
 } from '../_core/validator'
-import { isObject, stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   OBJECT_T_TYPE as T,
   OBJECT_V_TYPE as V,

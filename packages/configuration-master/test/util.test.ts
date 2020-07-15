@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import fs from 'fs-extra'
 import path from 'path'
-import { toKebabCase } from '../src/_util/string-util'
+import { toKebabCase } from '@barusu/util-option'
 
 
 /**
@@ -33,7 +33,7 @@ before(async function () {
       const abf = path.join(p, f)
       const stat = fs.statSync(abf)
       if (stat.isDirectory()) {
-        let _items = await scanDir(rootDir, abf)
+        const _items = await scanDir(rootDir, abf)
         items.push(..._items)
         continue
       }

@@ -4,7 +4,7 @@ import {
   DataSchemaCompiler,
 } from '../_core/compiler'
 import { coverString } from '../_util/cover-util'
-import { stringify } from '../_util/type-util'
+import { stringify } from '../_util/string-util'
 import {
   REF_T_TYPE as T,
   REF_V_TYPE as V,
