@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { optionMaster } from 'option-master'
+import { configurationMaster } from '@barusu/configuration-master'
 
 
 function generate(schemaName: string) {
@@ -8,8 +8,8 @@ function generate(schemaName: string) {
   const schemaPath = path.resolve(__dirname, `../src/core/config/${ schemaName }.schema.json`)
   const rawDataSchemaContent: string = fs.readFileSync(rawSchemaPath, 'utf-8')
   const rawDataSchema = JSON.parse(rawDataSchemaContent)
-  const result = optionMaster.compile(rawDataSchema)
-  const json = optionMaster.toJSON(result.value!)
+  const result = configurationMaster.compile(rawDataSchema)
+  const json = configurationMaster.toJSON(result.value!)
   const data = JSON.stringify(json, null, 2)
   fs.writeFileSync(schemaPath, data, 'utf-8')
 }

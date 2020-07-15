@@ -9,6 +9,9 @@
       "@barusu/commander": [
         "./packages/commander/src"
       ],
+      "@barusu/configuration-master": [
+        "./packages/configuration-master/src"
+      ],
       "@barusu/event-bus": [
         "./packages/event-bus/src"
       ],

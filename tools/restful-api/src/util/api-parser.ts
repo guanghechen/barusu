@@ -1,5 +1,5 @@
-import { OptionMaster, TDSchema } from 'option-master'
 import path from 'path'
+import { ConfigurationMaster, TDSchema } from '@barusu/configuration-master'
 import {
   coverString,
   isObject,
@@ -15,22 +15,22 @@ import { loadConfigSchema, loadContextConfig } from './env'
 
 export class ApiItemParser {
   private readonly schemaRootDir: string
-  private readonly optionMaster: OptionMaster
+  private readonly configurationMaster: ConfigurationMaster
   private readonly schema: TDSchema
   private groups: ApiItemGroup[]
 
-  public constructor(schemaRootDir?: string, optionMaster?: OptionMaster) {
-    if (optionMaster == null) {
+  public constructor(schemaRootDir?: string, configurationMaster?: ConfigurationMaster) {
+    if (configurationMaster == null) {
       // eslint-disable-next-line no-param-reassign
-      optionMaster = new OptionMaster()
-      optionMaster.registerDefaultSchemas()
+      configurationMaster = new ConfigurationMaster()
+      configurationMaster.registerDefaultSchemas()
     }
     this.schemaRootDir = schemaRootDir || ''
-    this.optionMaster = optionMaster
+    this.configurationMaster = configurationMaster
     this.groups = []
 
     // load apiConfigSchema
-    this.schema = loadConfigSchema(optionMaster, 'api')
+    this.schema = loadConfigSchema(configurationMaster, 'api')
   }
 
   /**
@@ -41,7 +41,7 @@ export class ApiItemParser {
   public scan(apiConfigFilePath: string, encoding = 'utf-8'): this {
     const self = this
     const apiConfig: ApiConfig = loadContextConfig<RawApiConfig, ApiConfig>({
-      optionMaster: self.optionMaster,
+      configurationMaster: self.configurationMaster,
       schema: self.schema,
       configPath: apiConfigFilePath,
       encoding: encoding,
