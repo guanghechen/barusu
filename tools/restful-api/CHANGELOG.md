@@ -1,4 +1,4 @@
-# v0.0.6 (2019-01-08)
+# v0.0.7 (2019-01-08)
 * Upgrade @lemon-clown/typescript-json-schema to `^0.42.4`
   - fix: comments of properties of non-native type should override comments on that reffed type
 

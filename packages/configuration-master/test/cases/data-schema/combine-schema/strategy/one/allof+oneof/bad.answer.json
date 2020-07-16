@@ -1,0 +1,354 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[1]",
+            "reason": "age#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "age#required: required, but got (undefined).",
+                "property": "age",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got ({\"nickname\":\"alice\"}).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({\"nickname\":\"alice\"})."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got ({\"nickname\":\"alice\"}).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({\"nickname\":\"alice\"})."
+              }
+            ]
+          },
+          {
+            "constraint": "[2]",
+            "reason": "name#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "name#required: required, but got (undefined).",
+                "property": "name",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "expected matched oneOf [\"allOf\",\"oneOf\"], but matched [] of them"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "nickname#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "nickname#required: required, but got (undefined).",
+                "property": "nickname",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got ({\"age\":22}).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({\"age\":22})."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got ({\"age\":22}).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({\"age\":22})."
+              }
+            ]
+          },
+          {
+            "constraint": "[2]",
+            "reason": "name#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "name#required: required, but got (undefined).",
+                "property": "name",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "expected matched oneOf [\"allOf\",\"oneOf\"], but matched [] of them"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected an object, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (true)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected an object, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (true)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true)."
+              }
+            ]
+          },
+          {
+            "constraint": "[2]",
+            "reason": "#type: expected an object, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (true)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "expected matched oneOf [\"allOf\",\"oneOf\"], but matched [] of them"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected an object, but got (false).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (false)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected an object, but got (false).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (false)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got (false).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (false)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got (false).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (false)."
+              }
+            ]
+          },
+          {
+            "constraint": "[2]",
+            "reason": "#type: expected an object, but got (false).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (false)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "expected matched oneOf [\"allOf\",\"oneOf\"], but matched [] of them"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "strategy",
+        "reason": "expected matched oneOf [\"allOf\",\"oneOf\"], but matched [\"allOf\",\"oneOf\"] of them"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected an object, but got (\"x--1233\").",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (\"x--1233\")."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected an object, but got (\"x--1233\").",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (\"x--1233\")."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 2 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[2]",
+            "reason": "#type: expected an object, but got (\"x--1233\").",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (\"x--1233\")."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "expected matched oneOf [\"allOf\",\"oneOf\"], but matched [] of them"
+      }
+    ],
+    "warnings": []
+  }
+]

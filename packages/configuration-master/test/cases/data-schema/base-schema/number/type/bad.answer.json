@@ -1,0 +1,38 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a number, but got (\"d0x23\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a number, but got (\"0x23.ff\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a number, but got (true)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a number, but got (false)."
+      }
+    ],
+    "warnings": []
+  }
+]

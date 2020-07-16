@@ -1,0 +1,114 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "date#format: not matched `date`",
+        "property": "date",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `date`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "date#format: not matched `date`",
+        "property": "date",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `date`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "date#format: not matched `date`",
+        "property": "date",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `date`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "time#format: not matched `time`",
+        "property": "time",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `time`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "time#format: not matched `time`",
+        "property": "time",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `time`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "date-time#format: not matched `date-time`",
+        "property": "date-time",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `date-time`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "date-time#format: not matched `date-time`",
+        "property": "date-time",
+        "traces": [
+          {
+            "constraint": "format",
+            "reason": "not matched `date-time`"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

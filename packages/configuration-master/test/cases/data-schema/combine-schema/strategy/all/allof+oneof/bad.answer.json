@@ -1,0 +1,128 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[1]",
+            "reason": "age#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "age#required: required, but got (undefined).",
+                "property": "age",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"oneOf\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "name#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "name#required: required, but got (undefined).",
+                "property": "name",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"oneOf\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 2 DataSchemas"
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"oneOf\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "gender#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "gender#required: required, but got (undefined).",
+                "property": "gender",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "sex#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "sex#required: required, but got (undefined).",
+                "property": "sex",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"oneOf\"]"
+      }
+    ],
+    "warnings": []
+  }
+]

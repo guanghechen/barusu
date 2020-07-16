@@ -1,0 +1,115 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[1]",
+            "reason": "age#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "age#required: required, but got (undefined).",
+                "property": "age",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"anyOf\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "name#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "name#required: required, but got (undefined).",
+                "property": "name",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"anyOf\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "gender#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "gender#required: required, but got (undefined).",
+                "property": "gender",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "sex#required: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "sex#required: required, but got (undefined).",
+                "property": "sex",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "strategy",
+        "reason": "not matched all of [\"allOf\",\"anyOf\"]"
+      }
+    ],
+    "warnings": []
+  }
+]

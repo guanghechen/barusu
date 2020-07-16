@@ -1,0 +1,50 @@
+{
+  "value": {
+    "type": "ref",
+    "required": true,
+    "$ref": "#/definitions/tree",
+    "definitions": {
+      "name": {
+        "type": "string",
+        "required": true,
+        "pattern": "^[\\w\\-]{2,20}\\w$",
+        "transform": [
+          "trim"
+        ],
+        "$id": "##/tree-node-name"
+      },
+      "tree": {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "name"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "ref",
+            "required": true,
+            "$ref": "##/tree-node-name"
+          },
+          "title": {
+            "type": "string",
+            "required": false
+          },
+          "children": {
+            "type": "array",
+            "required": false,
+            "unique": false,
+            "items": {
+              "type": "ref",
+              "required": false,
+              "$ref": "#/definitions/tree"
+            }
+          }
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

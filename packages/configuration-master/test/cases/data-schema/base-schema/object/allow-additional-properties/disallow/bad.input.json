@@ -1,0 +1,24 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {
+      "name": "alice",
+      "xx-gender": "female"
+    },
+    {
+      "name": "bob",
+      "age": 18,
+      "xx-sex": "male"
+    },
+    {
+      "name": "alice",
+      "gender": "female"
+    },
+    {
+      "name": "bob",
+      "age": 18,
+      "xx-gender": "female",
+      "sex": "male"
+    }
+  ]
+}

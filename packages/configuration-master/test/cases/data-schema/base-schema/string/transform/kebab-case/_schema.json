@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "transform": "kebab-case",
+  "required": true
+}

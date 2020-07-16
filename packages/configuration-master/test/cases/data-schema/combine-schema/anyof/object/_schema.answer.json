@@ -1,0 +1,49 @@
+{
+  "value": {
+    "type": "combine",
+    "required": true,
+    "strategy": "all",
+    "anyOf": [
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "gender"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "gender": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "sex"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "sex": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}

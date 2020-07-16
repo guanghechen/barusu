@@ -1,0 +1,20 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got ({})."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got ({\"ss\":\"dfe\"})."
+      }
+    ],
+    "warnings": []
+  }
+]

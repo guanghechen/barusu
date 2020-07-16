@@ -1,0 +1,49 @@
+{
+  "value": {
+    "type": "object",
+    "required": true,
+    "requiredProperties": [],
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "properties": {
+      "tree": {
+        "type": "ref",
+        "required": false,
+        "$ref": "#/definitions/tree"
+      }
+    },
+    "definitions": {
+      "tree": {
+        "type": "object",
+        "required": false,
+        "requiredProperties": [
+          "name"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          },
+          "title": {
+            "type": "string",
+            "required": false
+          },
+          "children": {
+            "type": "array",
+            "required": false,
+            "unique": false,
+            "items": {
+              "type": "ref",
+              "required": false,
+              "$ref": "#/definitions/tree"
+            }
+          }
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

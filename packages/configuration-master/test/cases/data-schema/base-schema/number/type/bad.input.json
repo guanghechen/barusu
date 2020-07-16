@@ -1,0 +1,9 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    "d0x23",
+    "0x23.ff",
+    true,
+    false
+  ]
+}

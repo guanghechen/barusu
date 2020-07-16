@@ -1,0 +1,37 @@
+[
+  {
+    "value": {
+      "name": "alice",
+      "age": 31,
+      "gender": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "bob",
+      "age": 32
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "john",
+      "age": 33,
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "john",
+      "age": 33,
+      "gender": "female"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

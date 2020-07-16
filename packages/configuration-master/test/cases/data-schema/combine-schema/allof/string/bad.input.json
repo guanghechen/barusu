@@ -1,0 +1,10 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    true,
+    {},
+    [],
+    "23",
+    "ae2e312"
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got (true)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a string, but got (false)."
+      }
+    ],
+    "warnings": []
+  }
+]

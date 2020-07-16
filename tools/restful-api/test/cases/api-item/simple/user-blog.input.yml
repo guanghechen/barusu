@@ -8,15 +8,15 @@ api:
         method: GET
         title: get current user information
         response:
-          fullModelName: QueryCurrentUserResponseVo
+          voFullName: QueryCurrentUserResponseVo
       update:
         path: /me
         method: POST
         title: update current user information
         request:
-          fullModelName: UpdateCurrentUserRequestVo
+          voFullName: UpdateCurrentUserRequestVo
         response:
-          fullModelName: UpdateCurrentUserResponseVo
+          voFullName: UpdateCurrentUserResponseVo
       login:
         path: /login
         method: POST
@@ -26,7 +26,7 @@ api:
     path: /api/blog
     description: the user's blog
     response:
-      modelNameSuffix: PaginationResponseVo
+      voNameSuffix: PaginationResponseVo
     items:
       query-articles:
         path: /articles
@@ -37,13 +37,13 @@ api:
         method: POST
         title: create an article
         response:
-          fullModelName: BlogCreateArticleResponseVo
+          voFullName: BlogCreateArticleResponseVo
     subGroups:
       article:
         path: /article/:articleId
         description: blog articles
         response:
-          modelNameSuffix: ResponseVo
+          voNameSuffix: ResponseVo
         items:
           query:
             method: GET

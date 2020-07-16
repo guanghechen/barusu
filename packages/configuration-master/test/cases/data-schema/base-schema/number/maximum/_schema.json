@@ -1,0 +1,5 @@
+{
+  "type": "number",
+  "maximum": 20.1,
+  "required": true
+}

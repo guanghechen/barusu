@@ -1,0 +1,20 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "maximum",
+        "reason": "maximum value expected is 20, but got (21)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "maximum",
+        "reason": "maximum value expected is 20, but got (192323)."
+      }
+    ],
+    "warnings": []
+  }
+]

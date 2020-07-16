@@ -1,0 +1,34 @@
+{
+  "value": {
+    "type": "object",
+    "required": false,
+    "requiredProperties": [
+      "name"
+    ],
+    "allowAdditionalProperties": true,
+    "silentIgnore": true,
+    "properties": {
+      "gender": {
+        "type": "string",
+        "required": false,
+        "enum": [
+          "male",
+          "female"
+        ]
+      },
+      "name": {
+        "type": "string",
+        "required": true,
+        "minLength": 3,
+        "maxLength": 25
+      }
+    },
+    "propertyNames": {
+      "type": "string",
+      "required": false,
+      "pattern": "^(name|age)$"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

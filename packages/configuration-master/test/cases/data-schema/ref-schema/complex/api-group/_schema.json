@@ -1,0 +1,261 @@
+{
+  "definitions": {
+    "HttpVerb": {
+      "description": "http 动词",
+      "title": "HttpVerb",
+      "enum": [
+        "DEL",
+        "DELETE",
+        "GET",
+        "PATCH",
+        "POST",
+        "PUT"
+      ],
+      "type": "string"
+    },
+    "RawApiItem": {
+      "description": "未经处理的 API 条目",
+      "title": "RawApiItem",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "the name of the API item",
+          "type": "string",
+          "title": "name",
+          "required": true
+        },
+        "title": {
+          "description": "the title of the API item;\nif no value is specified, the value of `name` will be used as the default",
+          "default": "",
+          "type": "string",
+          "title": "title"
+        },
+        "description": {
+          "description": "the description of the API item",
+          "default": "",
+          "type": "string",
+          "title": "description"
+        },
+        "path": {
+          "description": "the routing path of the API item;\nthe prefixPath of the group belongs to the prefix path",
+          "default": "",
+          "type": "string",
+          "title": "path"
+        },
+        "fullPath": {
+          "description": "the full routing path of the API item",
+          "type": "string",
+          "title": "fullPath"
+        },
+        "method": {
+          "description": "the HTTP verbs of the API item",
+          "default": "HttpVerb.GET",
+          "enum": [
+            "DEL",
+            "DELETE",
+            "GET",
+            "PATCH",
+            "POST",
+            "PUT"
+          ],
+          "type": "string",
+          "title": "method"
+        },
+        "request": {
+          "description": "the configuration of the request object in an HTTP request",
+          "type": "object",
+          "properties": {
+            "model": {
+              "description": "the data model name of the request object (ts type name);\nif not specified, that is, the group to which the current\nbelongs is `p`, the model value will be set to\n`toCamelCase (p.request.modelNamePrefix + this.name + p.request.modelNameSuffix)`",
+              "type": "string",
+              "title": "model"
+            },
+            "fullModelName": {
+              "description": "the full data model name (ts type name) of the request object",
+              "type": "string",
+              "title": "fullModelName"
+            },
+            "schema": {
+              "description": "file path of the JSON-Schema corresponding to the data model of the request object",
+              "type": "string",
+              "title": "schema"
+            }
+          },
+          "title": "request"
+        },
+        "response": {
+          "description": "the configuration of the response object in an HTTP response",
+          "type": "object",
+          "properties": {
+            "model": {
+              "description": "the data model name of the response object (ts type name);\nif not specified, that is, the group to which the current\nbelongs is `p`, the model value will be set to\n`toCamelCase (p.response.modelNamePrefix + this.name + p.response.modelNameSuffix)`",
+              "type": "string",
+              "title": "model"
+            },
+            "fullModelName": {
+              "description": "the full data model name (ts type name) of the response object",
+              "type": "string",
+              "title": "fullModelName"
+            },
+            "schema": {
+              "description": "file path of the JSON-Schema corresponding to the data model of the response object",
+              "type": "string",
+              "title": "schema"
+            },
+            "headers": {
+              "description": "additional response headers in an HTTP response",
+              "type": "object",
+              "allowAdditionalProperties": true,
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "headers"
+            }
+          },
+          "title": "response"
+        }
+      }
+    },
+    "RawApiItemGroup": {
+      "description": "未经处理的 API 接口组\n  - 子组中对应的未设置的项将继承父接口组中对应的项\n  - 子组中设置为 null 的项，表示未设置任何值，且不会继承父接口中对应的项*",
+      "title": "RawApiItemGroup",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "the name of the API group",
+          "type": "string",
+          "title": "name",
+          "required": true
+        },
+        "title": {
+          "description": "the title of the API group",
+          "type": "string",
+          "title": "title"
+        },
+        "description": {
+          "description": "the description of the API group",
+          "type": "string",
+          "title": "description"
+        },
+        "prefixPath": {
+          "description": "the prefix path of the route in the API group",
+          "type": "string",
+          "title": "prefixPath"
+        },
+        "defaultMethod": {
+          "description": "the default HTTP verbs in the API group",
+          "enum": [
+            "DEL",
+            "DELETE",
+            "GET",
+            "PATCH",
+            "POST",
+            "PUT"
+          ],
+          "type": "string",
+          "title": "defaultMethod"
+        },
+        "request": {
+          "description": "the configuration of the request object in an HTTP request",
+          "type": "object",
+          "properties": {
+            "modelNamePrefix": {
+              "description": "the request data model name prefix for ApiItem.request.model within the API group",
+              "default": "",
+              "type": "string",
+              "title": "modelNamePrefix"
+            },
+            "modelNameSuffix": {
+              "description": "the request data model name suffix for ApiItem.request.model within the API group",
+              "default": "RequestVo",
+              "type": "string",
+              "title": "modelNameSuffix"
+            }
+          },
+          "title": "request"
+        },
+        "response": {
+          "description": "the configuration of the response object in an HTTP response",
+          "type": "object",
+          "properties": {
+            "modelNamePrefix": {
+              "description": "the response data model name prefix for ApiItem.response.model within the API group",
+              "default": "",
+              "type": "string",
+              "title": "modelNamePrefix"
+            },
+            "modelNameSuffix": {
+              "description": "the response data model name suffix for ApiItem.response.model within the API group",
+              "default": "ResponseVo",
+              "type": "string",
+              "title": "modelNameSuffix"
+            },
+            "headers": {
+              "description": "additional response headers for requests within the API group",
+              "type": "object",
+              "allowAdditionalProperties": true,
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "headers"
+            }
+          },
+          "title": "response"
+        },
+        "subGroups": {
+          "description": "sub API group;\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+          "type": "combine",
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "$ref": "#/definitions/RawApiItemGroup"
+              }
+            },
+            {
+              "type": "object",
+              "patternProperties": {
+                "^\\w(?:[\\w\\-])+$": {
+                  "type": "ref",
+                  "$ref": "#/definitions/RawApiItemGroup"
+                }
+              }
+            }
+          ],
+          "title": "subGroups"
+        },
+        "items": {
+          "description": "API items in the API group\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+          "type": "combine",
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "$ref": "#/definitions/RawApiItem"
+              }
+            },
+            {
+              "type": "object",
+              "patternProperties": {
+                "^\\w(?:[\\w\\-])+$": {
+                  "type": "ref",
+                  "$ref": "#/definitions/RawApiItem"
+                }
+              }
+            }
+          ],
+          "title": "items"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "patternProperties": {
+    "^\\w(?:[\\w\\-])+$": {
+      "type": "ref",
+      "$ref": "#/definitions/RawApiItemGroup"
+    }
+  }
+}

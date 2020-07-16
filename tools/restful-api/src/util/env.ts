@@ -1,7 +1,11 @@
 import fs from 'fs-extra'
 import yaml from 'js-yaml'
-import { DSchema, OptionMaster, optionMaster } from 'option-master'
 import path from 'path'
+import {
+  ConfigurationMaster,
+  DSchema,
+  configurationMaster,
+} from '@barusu/configuration-master'
 import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import { logger } from './logger'
 
@@ -21,13 +25,13 @@ export function calcConfigFilePath (...filePath: string[]): string {
 
 /**
  * Load JSON-Schema of Configuration
- * @param optionMaster
+ * @param configurationMaster
  * @param schemaName
  */
-export function loadConfigSchema(optionMaster: OptionMaster, schemaName: string): any {
-  const schemaPath: string = calcConfigFilePath(`${ schemaName }.schema.json`)
+export function loadConfigSchema(configurationMaster: ConfigurationMaster, schemaName: string): any {
+  const schemaPath: string = calcConfigFilePath(`${ schemaName }-schema.json`)
   const schemaContent = fs.readJSONSync(schemaPath)
-  const schema = optionMaster.parseJSON(schemaContent)
+  const schema = configurationMaster.parseJSON(schemaContent)
   return schema
 }
 
@@ -36,14 +40,14 @@ export function loadConfigSchema(optionMaster: OptionMaster, schemaName: string)
  * Load config
  *
  * @param params
- *  - optionMaster
+ *  - configurationMaster
  *  - schema        Schema of configuration
  *  - configPath    filepath of config
  *  - encoding      encoding of config file
  *  - preParse      preprocessor of config file
  */
 export function loadContextConfig<R, T> (params: {
-  optionMaster: OptionMaster,
+  configurationMaster: ConfigurationMaster,
   schema: DSchema,
   configPath: string,
   encoding: string,
@@ -82,7 +86,7 @@ export function loadContextConfig<R, T> (params: {
   }
 
   // parse config
-  const result = optionMaster.validate(params.schema, json)
+  const result = configurationMaster.validate(params.schema, json)
   if (result.hasError) {
     throw new Error(`Bad data of \`${ params.configPath }\` ${ result.errorSummary }`)
   }

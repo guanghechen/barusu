@@ -1,0 +1,315 @@
+{
+  "value": {
+    "type": "object",
+    "required": false,
+    "requiredProperties": [],
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "patternProperties": [
+      {
+        "pattern": "^\\w(?:[\\w\\-])+$",
+        "schema": {
+          "type": "ref",
+          "required": false,
+          "$ref": "#/definitions/RawApiItemGroup"
+        }
+      }
+    ],
+    "definitions": {
+      "HttpVerb": {
+        "type": "string",
+        "required": false,
+        "description": "http 动词",
+        "enum": [
+          "DEL",
+          "DELETE",
+          "GET",
+          "PATCH",
+          "POST",
+          "PUT"
+        ]
+      },
+      "RawApiItem": {
+        "type": "object",
+        "required": false,
+        "description": "未经处理的 API 条目",
+        "requiredProperties": [
+          "name"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "description": "the name of the API item"
+          },
+          "title": {
+            "type": "string",
+            "default": "",
+            "required": false,
+            "description": "the title of the API item;\nif no value is specified, the value of `name` will be used as the default"
+          },
+          "description": {
+            "type": "string",
+            "default": "",
+            "required": false,
+            "description": "the description of the API item"
+          },
+          "path": {
+            "type": "string",
+            "default": "",
+            "required": false,
+            "description": "the routing path of the API item;\nthe prefixPath of the group belongs to the prefix path"
+          },
+          "fullPath": {
+            "type": "string",
+            "required": false,
+            "description": "the full routing path of the API item"
+          },
+          "method": {
+            "type": "string",
+            "default": "HttpVerb.GET",
+            "required": false,
+            "description": "the HTTP verbs of the API item",
+            "enum": [
+              "DEL",
+              "DELETE",
+              "GET",
+              "PATCH",
+              "POST",
+              "PUT"
+            ]
+          },
+          "request": {
+            "type": "object",
+            "required": false,
+            "description": "the configuration of the request object in an HTTP request",
+            "requiredProperties": [],
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "model": {
+                "type": "string",
+                "required": false,
+                "description": "the data model name of the request object (ts type name);\nif not specified, that is, the group to which the current\nbelongs is `p`, the model value will be set to\n`toCamelCase (p.request.modelNamePrefix + this.name + p.request.modelNameSuffix)`"
+              },
+              "fullModelName": {
+                "type": "string",
+                "required": false,
+                "description": "the full data model name (ts type name) of the request object"
+              },
+              "schema": {
+                "type": "string",
+                "required": false,
+                "description": "file path of the JSON-Schema corresponding to the data model of the request object"
+              }
+            }
+          },
+          "response": {
+            "type": "object",
+            "required": false,
+            "description": "the configuration of the response object in an HTTP response",
+            "requiredProperties": [],
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "model": {
+                "type": "string",
+                "required": false,
+                "description": "the data model name of the response object (ts type name);\nif not specified, that is, the group to which the current\nbelongs is `p`, the model value will be set to\n`toCamelCase (p.response.modelNamePrefix + this.name + p.response.modelNameSuffix)`"
+              },
+              "fullModelName": {
+                "type": "string",
+                "required": false,
+                "description": "the full data model name (ts type name) of the response object"
+              },
+              "schema": {
+                "type": "string",
+                "required": false,
+                "description": "file path of the JSON-Schema corresponding to the data model of the response object"
+              },
+              "headers": {
+                "type": "object",
+                "required": false,
+                "description": "additional response headers in an HTTP response",
+                "requiredProperties": [],
+                "allowAdditionalProperties": true,
+                "silentIgnore": false
+              }
+            }
+          }
+        }
+      },
+      "RawApiItemGroup": {
+        "type": "object",
+        "required": false,
+        "description": "未经处理的 API 接口组\n  - 子组中对应的未设置的项将继承父接口组中对应的项\n  - 子组中设置为 null 的项，表示未设置任何值，且不会继承父接口中对应的项*",
+        "requiredProperties": [
+          "name"
+        ],
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "description": "the name of the API group"
+          },
+          "title": {
+            "type": "string",
+            "required": false,
+            "description": "the title of the API group"
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "description": "the description of the API group"
+          },
+          "prefixPath": {
+            "type": "string",
+            "required": false,
+            "description": "the prefix path of the route in the API group"
+          },
+          "defaultMethod": {
+            "type": "string",
+            "required": false,
+            "description": "the default HTTP verbs in the API group",
+            "enum": [
+              "DEL",
+              "DELETE",
+              "GET",
+              "PATCH",
+              "POST",
+              "PUT"
+            ]
+          },
+          "request": {
+            "type": "object",
+            "required": false,
+            "description": "the configuration of the request object in an HTTP request",
+            "requiredProperties": [],
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "modelNamePrefix": {
+                "type": "string",
+                "default": "",
+                "required": false,
+                "description": "the request data model name prefix for ApiItem.request.model within the API group"
+              },
+              "modelNameSuffix": {
+                "type": "string",
+                "default": "RequestVo",
+                "required": false,
+                "description": "the request data model name suffix for ApiItem.request.model within the API group"
+              }
+            }
+          },
+          "response": {
+            "type": "object",
+            "required": false,
+            "description": "the configuration of the response object in an HTTP response",
+            "requiredProperties": [],
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "modelNamePrefix": {
+                "type": "string",
+                "default": "",
+                "required": false,
+                "description": "the response data model name prefix for ApiItem.response.model within the API group"
+              },
+              "modelNameSuffix": {
+                "type": "string",
+                "default": "ResponseVo",
+                "required": false,
+                "description": "the response data model name suffix for ApiItem.response.model within the API group"
+              },
+              "headers": {
+                "type": "object",
+                "required": false,
+                "description": "additional response headers for requests within the API group",
+                "requiredProperties": [],
+                "allowAdditionalProperties": true,
+                "silentIgnore": false
+              }
+            }
+          },
+          "subGroups": {
+            "type": "combine",
+            "required": false,
+            "description": "sub API group;\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+            "strategy": "all",
+            "oneOf": [
+              {
+                "type": "array",
+                "required": false,
+                "unique": false,
+                "items": {
+                  "type": "ref",
+                  "required": false,
+                  "$ref": "#/definitions/RawApiItemGroup"
+                }
+              },
+              {
+                "type": "object",
+                "required": false,
+                "requiredProperties": [],
+                "allowAdditionalProperties": false,
+                "silentIgnore": false,
+                "patternProperties": [
+                  {
+                    "pattern": "^\\w(?:[\\w\\-])+$",
+                    "schema": {
+                      "type": "ref",
+                      "required": false,
+                      "$ref": "#/definitions/RawApiItemGroup"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "items": {
+            "type": "combine",
+            "required": false,
+            "description": "API items in the API group\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+            "strategy": "all",
+            "oneOf": [
+              {
+                "type": "array",
+                "required": false,
+                "unique": false,
+                "items": {
+                  "type": "ref",
+                  "required": false,
+                  "$ref": "#/definitions/RawApiItem"
+                }
+              },
+              {
+                "type": "object",
+                "required": false,
+                "requiredProperties": [],
+                "allowAdditionalProperties": false,
+                "silentIgnore": false,
+                "patternProperties": [
+                  {
+                    "pattern": "^\\w(?:[\\w\\-])+$",
+                    "schema": {
+                      "type": "ref",
+                      "required": false,
+                      "$ref": "#/definitions/RawApiItem"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

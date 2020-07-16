@@ -17,7 +17,7 @@ api:
     subGroups:
       info:
         response:
-          modelNamePrefix: Xx
+          voNamePrefix: Xx
           headers:
             Authorize: <token>
         items:
@@ -26,9 +26,9 @@ api:
             method: GET
             title: 获取当前用户信息
             request:
-              fullModelName: CurrentUserInfoRequestModel
+              voFullName: CurrentUserInfoRequestModel
             response:
-              fullModelName: CurrentUserInfoResponseModel
+              voFullName: CurrentUserInfoResponseModel
           u:
             path: /:id
             name: OO

@@ -1,0 +1,11 @@
+{
+  "value": {
+    "type": "string",
+    "required": true,
+    "format": [
+      "ipv6"
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}

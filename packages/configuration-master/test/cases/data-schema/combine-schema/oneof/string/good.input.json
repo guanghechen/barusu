@@ -1,0 +1,10 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    "abEoEuro",
+    "dfEsgGS",
+    383,
+    222,
+    "0xffe"
+  ]
+}

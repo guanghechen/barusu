@@ -1,0 +1,475 @@
+{
+  "type": "object",
+  "required": true,
+  "description": "未经处理的 API 配置内容",
+  "requiredProperties": [
+    "schemaDir",
+    "api"
+  ],
+  "allowAdditionalProperties": false,
+  "silentIgnore": false,
+  "properties": {
+    "schemaDir": {
+      "type": "string",
+      "default": "",
+      "required": true,
+      "description": "模型对应的 JSON-Schema 的输出目录"
+    },
+    "api": {
+      "type": "combine",
+      "required": true,
+      "description": "sub API group;\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+      "strategy": "all",
+      "oneOf": [
+        {
+          "type": "array",
+          "required": true,
+          "unique": false,
+          "items": {
+            "type": "ref",
+            "required": true,
+            "$ref": "#/definitions/RawApiItemGroup"
+          }
+        },
+        {
+          "type": "object",
+          "required": true,
+          "requiredProperties": [
+            "^\\w(?:[\\w\\-])+$"
+          ],
+          "allowAdditionalProperties": false,
+          "silentIgnore": false,
+          "patternProperties": [
+            {
+              "pattern": "^\\w(?:[\\w\\-])+$",
+              "schema": {
+                "type": "ref",
+                "required": true,
+                "$ref": "#/definitions/RawApiItemGroup"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "RawApiItem": {
+      "type": "object",
+      "required": false,
+      "description": "unprocessed API item",
+      "requiredProperties": [
+        "name"
+      ],
+      "allowAdditionalProperties": false,
+      "silentIgnore": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true,
+          "description": "Name of this api item"
+        },
+        "active": {
+          "type": "boolean",
+          "default": true,
+          "required": false,
+          "description": "Whether this api item is available"
+        },
+        "title": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "Title of this api item"
+        },
+        "desc": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "Description of this api item"
+        },
+        "description": {
+          "type": "string",
+          "required": false,
+          "description": "identified as @desc"
+        },
+        "path": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "the routing path of the API item;\nthe prefixPath of the group belongs to the prefix path"
+        },
+        "fullPath": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "the full routing path of the API item"
+        },
+        "method": {
+          "type": "ref",
+          "default": "",
+          "required": false,
+          "description": "HTTP method supported of this api item",
+          "$ref": "#/definitions/HttpVerb"
+        },
+        "request": {
+          "type": "combine",
+          "required": false,
+          "description": "the configuration of the request object in an HTTP request",
+          "strategy": "all",
+          "oneOf": [
+            {
+              "type": "object",
+              "required": false,
+              "requiredProperties": [
+                "voName"
+              ],
+              "allowAdditionalProperties": false,
+              "silentIgnore": false,
+              "properties": {
+                "voName": {
+                  "type": "string",
+                  "required": true,
+                  "description": "The corresponding RequestVo interface name of current ApiItem in TypeScript"
+                },
+                "schemaPath": {
+                  "type": "string",
+                  "required": false,
+                  "description": "The JSON-Schema path of the corresponding RequestVo"
+                },
+                "headers": {
+                  "type": "ref",
+                  "required": false,
+                  "description": "HTTP request headers (Received from client)",
+                  "$ref": "#/definitions/HttpRequestHeaders"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": false,
+              "requiredProperties": [
+                "voFullName"
+              ],
+              "allowAdditionalProperties": false,
+              "silentIgnore": false,
+              "properties": {
+                "voFullName": {
+                  "type": "string",
+                  "required": true,
+                  "description": "the full corresponding RequestVo interface name of current\nApiItem in TypeScript, ignoring the group's properties (\n`request.voNamePrefix` and `request.voNameSuffix`) effect"
+                },
+                "schemaPath": {
+                  "type": "string",
+                  "required": false,
+                  "description": "The JSON-Schema path of the corresponding RequestVo"
+                },
+                "headers": {
+                  "type": "ref",
+                  "required": false,
+                  "description": "HTTP request headers (Received from client)",
+                  "$ref": "#/definitions/HttpRequestHeaders"
+                }
+              }
+            },
+            {
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        "response": {
+          "type": "combine",
+          "required": false,
+          "description": "the configuration of the response object in an HTTP response",
+          "strategy": "all",
+          "oneOf": [
+            {
+              "type": "object",
+              "required": false,
+              "requiredProperties": [
+                "voName"
+              ],
+              "allowAdditionalProperties": false,
+              "silentIgnore": false,
+              "properties": {
+                "voName": {
+                  "type": "string",
+                  "required": true,
+                  "description": "The corresponding ResponseVo interface name of current ApiItem in TypeScript"
+                },
+                "schemaPath": {
+                  "type": "string",
+                  "required": false,
+                  "description": "The JSON-Schema path of the corresponding ResponseVo"
+                },
+                "headers": {
+                  "type": "ref",
+                  "required": false,
+                  "description": "HTTP response headers (externally specified to return to the client)",
+                  "$ref": "#/definitions/HttpRequestHeaders"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": false,
+              "requiredProperties": [
+                "voFullName"
+              ],
+              "allowAdditionalProperties": false,
+              "silentIgnore": false,
+              "properties": {
+                "voFullName": {
+                  "type": "string",
+                  "required": true,
+                  "description": "the full corresponding ResponseVo interface name of current\nApiItem in TypeScript, ignoring the group's properties (\n`response.voNamePrefix` and `response.voNameSuffix`) effect"
+                },
+                "schemaPath": {
+                  "type": "string",
+                  "required": false,
+                  "description": "The JSON-Schema path of the corresponding ResponseVo"
+                },
+                "headers": {
+                  "type": "ref",
+                  "required": false,
+                  "description": "HTTP response headers (externally specified to return to the client)",
+                  "$ref": "#/definitions/HttpResponseHeaders"
+                }
+              }
+            },
+            {
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      }
+    },
+    "HttpResponseHeaders_1": {
+      "type": "object",
+      "required": false,
+      "description": "HTTP Response Headers",
+      "requiredProperties": [],
+      "allowAdditionalProperties": true,
+      "silentIgnore": false
+    },
+    "HttpResponseHeaders": {
+      "type": "ref",
+      "required": false,
+      "description": "HTTP Response Headers",
+      "$ref": "#/definitions/HttpResponseHeaders_1"
+    },
+    "HttpRequestHeaders_1": {
+      "type": "object",
+      "required": false,
+      "description": "HTTP Request Headers",
+      "requiredProperties": [],
+      "allowAdditionalProperties": true,
+      "silentIgnore": false
+    },
+    "HttpRequestHeaders": {
+      "type": "ref",
+      "required": false,
+      "description": "HTTP Request Headers",
+      "$ref": "#/definitions/HttpRequestHeaders_1"
+    },
+    "HttpVerb": {
+      "type": "string",
+      "required": false,
+      "description": "HTTP methods",
+      "enum": [
+        "DELETE",
+        "GET",
+        "PATCH",
+        "POST",
+        "PUT"
+      ]
+    },
+    "RawApiItemGroup": {
+      "type": "object",
+      "required": false,
+      "description": "unprocessed API item group",
+      "requiredProperties": [
+        "name",
+        "items"
+      ],
+      "allowAdditionalProperties": false,
+      "silentIgnore": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true,
+          "description": "the name of the API group"
+        },
+        "active": {
+          "type": "boolean",
+          "default": true,
+          "required": false,
+          "description": "Whether this api item group is available"
+        },
+        "title": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "the title of the API group"
+        },
+        "desc": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "the description of the API group"
+        },
+        "description": {
+          "type": "string",
+          "required": false,
+          "description": "identified as"
+        },
+        "path": {
+          "type": "string",
+          "default": "",
+          "required": false,
+          "description": "the prefix path of the route in the API group"
+        },
+        "method": {
+          "type": "ref",
+          "required": false,
+          "description": "the default HTTP verbs in the API group",
+          "$ref": "#/definitions/HttpVerb"
+        },
+        "request": {
+          "type": "object",
+          "default": {},
+          "required": false,
+          "description": "the configuration of the request object in an HTTP request",
+          "requiredProperties": [],
+          "allowAdditionalProperties": false,
+          "silentIgnore": false,
+          "properties": {
+            "voNamePrefix": {
+              "type": "string",
+              "default": "",
+              "required": false,
+              "description": "the request data model name prefix for ApiItem.request.model within the API group"
+            },
+            "voNameSuffix": {
+              "type": "string",
+              "default": "RequestVo",
+              "required": false,
+              "description": "the request data model name suffix for ApiItem.request.model within the API group"
+            },
+            "headers": {
+              "type": "ref",
+              "required": false,
+              "description": "additional request headers for requests within the API group",
+              "$ref": "#/definitions/HttpRequestHeaders"
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "default": {},
+          "required": false,
+          "description": "the configuration of the response object in an HTTP response",
+          "requiredProperties": [],
+          "allowAdditionalProperties": false,
+          "silentIgnore": false,
+          "properties": {
+            "voNamePrefix": {
+              "type": "string",
+              "default": "",
+              "required": false,
+              "description": "the response data model name prefix for ApiItem.response.model within the API group"
+            },
+            "voNameSuffix": {
+              "type": "string",
+              "default": "ResponseVo",
+              "required": false,
+              "description": "the response data model name suffix for ApiItem.response.model within the API group"
+            },
+            "headers": {
+              "type": "ref",
+              "required": false,
+              "description": "additional response headers for requests within the API group",
+              "$ref": "#/definitions/HttpResponseHeaders"
+            }
+          }
+        },
+        "subGroups": {
+          "type": "combine",
+          "required": false,
+          "description": "sub API group;\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+          "strategy": "all",
+          "oneOf": [
+            {
+              "type": "array",
+              "required": true,
+              "unique": false,
+              "items": {
+                "type": "ref",
+                "required": true,
+                "$ref": "#/definitions/RawApiItemGroup"
+              }
+            },
+            {
+              "type": "object",
+              "required": true,
+              "requiredProperties": [
+                "^\\w(?:[\\w\\-])+$"
+              ],
+              "allowAdditionalProperties": false,
+              "silentIgnore": false,
+              "patternProperties": [
+                {
+                  "pattern": "^\\w(?:[\\w\\-])+$",
+                  "schema": {
+                    "type": "ref",
+                    "required": true,
+                    "$ref": "#/definitions/RawApiItemGroup"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "items": {
+          "type": "combine",
+          "default": [],
+          "required": true,
+          "description": "API items in the API group\neither an array format or an object format;\nif it is an object format, the key is the name of the entry",
+          "strategy": "all",
+          "oneOf": [
+            {
+              "type": "array",
+              "required": true,
+              "unique": false,
+              "items": {
+                "type": "ref",
+                "required": true,
+                "$ref": "#/definitions/RawApiItem"
+              }
+            },
+            {
+              "type": "object",
+              "required": true,
+              "requiredProperties": [
+                "^\\w(?:[\\w\\-])+$"
+              ],
+              "allowAdditionalProperties": false,
+              "silentIgnore": false,
+              "patternProperties": [
+                {
+                  "pattern": "^\\w(?:[\\w\\-])+$",
+                  "schema": {
+                    "type": "ref",
+                    "required": true,
+                    "$ref": "#/definitions/RawApiItem"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

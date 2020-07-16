@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "transform": "camel-case",
+  "required": true
+}

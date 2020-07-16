@@ -1,0 +1,44 @@
+[
+  {
+    "value": {
+      "name": "alice",
+      "email": "alice@somewhat.com",
+      "password": "alice_password",
+      "more": {
+        "nick": "little alice"
+      }
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "alice",
+      "email": "alice@somewhat.com",
+      "password": "alice_password",
+      "more": {
+        "nick": "waw",
+        "gender": "female"
+      }
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "alice",
+      "email": "alice@somewhat.com",
+      "password": "alice_password"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "name": "alice",
+      "email": "alice@somewhat.com"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

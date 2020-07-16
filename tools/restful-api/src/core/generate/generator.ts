@@ -28,14 +28,14 @@ export class RestfulApiGenerator {
     const tasks: Promise<void>[] = []
     for (const item of context.apiItems) {
       // RequestData
-      if (item.request.model != null) {
-        const task = self.generateDataSchema(item.request.model, item.request.schema)
+      if (item.request.voName != null) {
+        const task = self.generateDataSchema(item.request.voName, item.request.schemaPath)
         tasks.push(task)
       }
 
       // ResponseData
-      if (item.response.model != null) {
-        const task = self.generateDataSchema(item.response.model, item.response.schema)
+      if (item.response.voName != null) {
+        const task = self.generateDataSchema(item.response.voName, item.response.schemaPath)
         tasks.push(task)
       }
     }

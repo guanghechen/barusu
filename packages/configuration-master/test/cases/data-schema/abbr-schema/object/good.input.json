@@ -1,0 +1,18 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {
+      "host": "127.0.0.1",
+      "port": 8080,
+      "public": false
+    },
+    {
+      "host": "127.0.0.1",
+      "public": true
+    },
+    {},
+    {
+      "port": 80
+    }
+  ]
+}

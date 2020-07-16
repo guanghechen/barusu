@@ -1753,9 +1753,9 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-option-master@^0.0.13:
+@barusu/configuration-master@^0.0.13:
   version "0.0.13"
-  resolved "https://registry.yarnpkg.com/option-master/-/option-master-0.0.13.tgz#a35421b8d5c3154ebe7e090d410bf8dbe08cf05c"
+  resolved "https://registry.yarnpkg.com/@barusu/configuration-master/-/@barusu/configuration-master-0.0.13.tgz#a35421b8d5c3154ebe7e090d410bf8dbe08cf05c"
   integrity sha512-NMeOup9QYkrn1adIC9mUO/cV7HTIj0K0qVO+bh4CzovuWLBnYSxekuaNTB8nqxOWf2sEvz+BEIe+yGXti9ZMrg==
   dependencies:
     camelcase "^5.3.1"
@@ -1966,7 +1966,7 @@ restful-api-tool@^0.0.1:
     koa-json "^2.0.2"
     @koa/router "^7.4.0"
     mockjs "^1.1.0"
-    option-master "^0.0.13"
+    @barusu/configuration-master "^0.0.13"
     typescript "3.5.3"
 
 ret@^0.2.0:

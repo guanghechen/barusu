@@ -41,11 +41,13 @@
     "test": "TS_NODE_FILES=true mocha -r ts-node/register test/**/*.test.ts",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.ts",
+    "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.schema.ts",
+    "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts",
     "answer": "TS_NODE_FILES=true cross-env node -r ts-node/register test/answer.ts"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.20",
+    "@barusu/configuration-master": "^0.0.20",
     "@barusu/event-bus": "^0.0.20",
     "@barusu/typescript-json-schema": "^0.0.20",
     "@barusu/util-cli": "^0.0.20",
@@ -72,7 +74,6 @@
     "koa": "^2.13.0",
     "koa-json": "^2.0.2",
     "mockjs": "^1.1.0",
-    "option-master": "^0.0.19",
     "typescript": "^3.8.2"
   },
   "devDependencies": {

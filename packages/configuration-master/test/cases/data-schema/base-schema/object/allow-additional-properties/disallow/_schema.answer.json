@@ -1,0 +1,30 @@
+{
+  "value": {
+    "type": "object",
+    "required": false,
+    "requiredProperties": [
+      "name"
+    ],
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "properties": {
+      "name": {
+        "type": "string",
+        "required": true
+      },
+      "age": {
+        "type": "number",
+        "required": false,
+        "minimum": 1,
+        "maximum": 200
+      }
+    },
+    "propertyNames": {
+      "type": "string",
+      "required": false,
+      "pattern": "^xx-"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

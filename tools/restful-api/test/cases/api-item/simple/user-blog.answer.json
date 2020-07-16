@@ -2,61 +2,65 @@
   {
     "name": "user",
     "fullName": "user",
+    "active": true,
     "title": "user",
-    "description": "basic api",
+    "desc": "basic api",
     "path": "/api/user",
     "request": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "RequestVo"
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo"
     },
     "response": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "ResponseVo"
+      "voNamePrefix": "",
+      "voNameSuffix": "ResponseVo"
     },
     "items": [
       {
         "name": "query",
+        "active": true,
         "title": "get current user information",
-        "description": "",
+        "desc": "",
         "path": "/api/user/me",
         "method": "GET",
         "request": {
-          "model": "UserQueryRequestVo",
-          "schema": "<PROJECT_DIR>/user/user-query-request-vo.json"
+          "voName": "UserQueryRequestVo",
+          "schemaPath": "<PROJECT_DIR>/user/user-query-request-vo.json"
         },
         "response": {
-          "model": "QueryCurrentUserResponseVo",
-          "schema": "<PROJECT_DIR>/user/query-current-user-response-vo.json"
+          "voName": "UserQueryResponseVo",
+          "schemaPath": "<PROJECT_DIR>/user/user-query-response-vo.json"
         }
       },
       {
         "name": "update",
+        "active": true,
         "title": "update current user information",
-        "description": "",
+        "desc": "",
         "path": "/api/user/me",
         "method": "POST",
         "request": {
-          "model": "UpdateCurrentUserRequestVo",
-          "schema": "<PROJECT_DIR>/user/update-current-user-request-vo.json"
+          "voName": "UpdateCurrentUserRequestVo",
+          "schemaPath": "<PROJECT_DIR>/user/update-current-user-request-vo.json"
         },
         "response": {
-          "model": "UpdateCurrentUserResponseVo",
-          "schema": "<PROJECT_DIR>/user/update-current-user-response-vo.json"
+          "voName": "UpdateCurrentUserResponseVo",
+          "schemaPath": "<PROJECT_DIR>/user/update-current-user-response-vo.json"
         }
       },
       {
         "name": "login",
+        "active": true,
         "title": "login",
-        "description": "",
+        "desc": "",
         "path": "/api/user/login",
         "method": "POST",
         "request": {
-          "model": "UserLoginRequestVo",
-          "schema": "<PROJECT_DIR>/user/user-login-request-vo.json"
+          "voName": "UserLoginRequestVo",
+          "schemaPath": "<PROJECT_DIR>/user/user-login-request-vo.json"
         },
         "response": {
-          "model": "UserLoginResponseVo",
-          "schema": "<PROJECT_DIR>/user/user-login-response-vo.json"
+          "voName": "UserLoginResponseVo",
+          "schemaPath": "<PROJECT_DIR>/user/user-login-response-vo.json"
         }
       }
     ],
@@ -65,46 +69,49 @@
   {
     "name": "blog",
     "fullName": "blog",
+    "active": true,
     "title": "blog",
-    "description": "the user's blog",
+    "desc": "the user's blog",
     "path": "/api/blog",
     "request": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "RequestVo"
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo"
     },
     "response": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "PaginationResponseVo"
+      "voNamePrefix": "",
+      "voNameSuffix": "PaginationResponseVo"
     },
     "items": [
       {
         "name": "query-articles",
+        "active": true,
         "title": "query articles under the blog",
-        "description": "",
+        "desc": "",
         "path": "/api/blog/articles",
         "method": "GET",
         "request": {
-          "model": "BlogQueryArticlesRequestVo",
-          "schema": "<PROJECT_DIR>/blog/blog-query-articles-request-vo.json"
+          "voName": "BlogQueryArticlesRequestVo",
+          "schemaPath": "<PROJECT_DIR>/blog/blog-query-articles-request-vo.json"
         },
         "response": {
-          "model": "BlogQueryArticlesPaginationResponseVo",
-          "schema": "<PROJECT_DIR>/blog/blog-query-articles-pagination-response-vo.json"
+          "voName": "BlogQueryArticlesPaginationResponseVo",
+          "schemaPath": "<PROJECT_DIR>/blog/blog-query-articles-pagination-response-vo.json"
         }
       },
       {
         "name": "create-article",
+        "active": true,
         "title": "create an article",
-        "description": "",
+        "desc": "",
         "path": "/api/blog/articles",
         "method": "POST",
         "request": {
-          "model": "BlogCreateArticleRequestVo",
-          "schema": "<PROJECT_DIR>/blog/blog-create-article-request-vo.json"
+          "voName": "BlogCreateArticleRequestVo",
+          "schemaPath": "<PROJECT_DIR>/blog/blog-create-article-request-vo.json"
         },
         "response": {
-          "model": "BlogCreateArticleResponseVo",
-          "schema": "<PROJECT_DIR>/blog/blog-create-article-response-vo.json"
+          "voName": "BlogCreateArticlePaginationResponseVo",
+          "schemaPath": "<PROJECT_DIR>/blog/blog-create-article-pagination-response-vo.json"
         }
       }
     ],
@@ -112,61 +119,65 @@
       {
         "name": "article",
         "fullName": "blog-article",
+        "active": true,
         "title": "article",
-        "description": "blog articles",
+        "desc": "blog articles",
         "path": "/api/blog/article/:articleId",
         "request": {
-          "modelNamePrefix": "",
-          "modelNameSuffix": "RequestVo"
+          "voNamePrefix": "",
+          "voNameSuffix": "RequestVo"
         },
         "response": {
-          "modelNamePrefix": "",
-          "modelNameSuffix": "ResponseVo"
+          "voNamePrefix": "",
+          "voNameSuffix": "ResponseVo"
         },
         "items": [
           {
             "name": "query",
+            "active": true,
             "title": "get article with specified `articleId`",
-            "description": "",
+            "desc": "",
             "path": "/api/blog/article/:articleId",
             "method": "GET",
             "request": {
-              "model": "BlogArticleQueryRequestVo",
-              "schema": "<PROJECT_DIR>/blog-article/blog-article-query-request-vo.json"
+              "voName": "BlogArticleQueryRequestVo",
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-query-request-vo.json"
             },
             "response": {
-              "model": "BlogArticleQueryResponseVo",
-              "schema": "<PROJECT_DIR>/blog-article/blog-article-query-response-vo.json"
+              "voName": "BlogArticleQueryResponseVo",
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-query-response-vo.json"
             }
           },
           {
             "name": "update",
+            "active": true,
             "title": "update article with specified `articleId`",
-            "description": "",
+            "desc": "",
             "path": "/api/blog/article/:articleId",
             "method": "POST",
             "request": {
-              "model": "BlogArticleUpdateRequestVo",
-              "schema": "<PROJECT_DIR>/blog-article/blog-article-update-request-vo.json"
+              "voName": "BlogArticleUpdateRequestVo",
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-update-request-vo.json"
             },
             "response": {
-              "model": "BlogArticleUpdateResponseVo",
-              "schema": "<PROJECT_DIR>/blog-article/blog-article-update-response-vo.json"
+              "voName": "BlogArticleUpdateResponseVo",
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-update-response-vo.json"
             }
           },
           {
             "name": "delete",
+            "active": true,
             "title": "delete an article with specified `articleId`",
-            "description": "",
+            "desc": "",
             "path": "/api/blog/article/:articleId",
             "method": "DELETE",
             "request": {
-              "model": "BlogArticleDeleteRequestVo",
-              "schema": "<PROJECT_DIR>/blog-article/blog-article-delete-request-vo.json"
+              "voName": "BlogArticleDeleteRequestVo",
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-delete-request-vo.json"
             },
             "response": {
-              "model": "BlogArticleDeleteResponseVo",
-              "schema": "<PROJECT_DIR>/blog-article/blog-article-delete-response-vo.json"
+              "voName": "BlogArticleDeleteResponseVo",
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-delete-response-vo.json"
             }
           }
         ],

@@ -1,36 +1,45 @@
-import { OptionMaster, TDSchema } from 'option-master'
 import path from 'path'
+import { ConfigurationMaster, TDSchema } from '@barusu/configuration-master'
 import {
+  coverBoolean,
   coverString,
+  isNotEmptyString,
   isObject,
   toKebabCase,
   toPascalCase,
 } from '@barusu/util-option'
 import { ApiConfig, ApiConfigContext, RawApiConfig } from '../types/api-config'
-import { ApiItem, HttpVerb, RawApiItem } from '../types/api-item'
-import { ApiItemGroup, RawApiItemGroup } from '../types/api-item-group'
+import { RawApiItemGroup } from '../types/api-item-group/raw'
+import { ResolvedApiItemGroup } from '../types/api-item-group/resolved'
+import { RawApiItem } from '../types/api-item/raw'
+import { ResolvedApiItem } from '../types/api-item/resolved'
+import {
+  HttpRequestHeaders,
+  HttpResponseHeaders,
+  HttpVerb,
+} from '../types/http'
 import { logger } from '../util/logger'
 import { loadConfigSchema, loadContextConfig } from './env'
 
 
 export class ApiItemParser {
   private readonly schemaRootDir: string
-  private readonly optionMaster: OptionMaster
+  private readonly configurationMaster: ConfigurationMaster
   private readonly schema: TDSchema
-  private groups: ApiItemGroup[]
+  private groups: ResolvedApiItemGroup[]
 
-  public constructor(schemaRootDir?: string, optionMaster?: OptionMaster) {
-    if (optionMaster == null) {
+  public constructor(schemaRootDir?: string, configurationMaster?: ConfigurationMaster) {
+    if (configurationMaster == null) {
       // eslint-disable-next-line no-param-reassign
-      optionMaster = new OptionMaster()
-      optionMaster.registerDefaultSchemas()
+      configurationMaster = new ConfigurationMaster()
+      configurationMaster.registerDefaultSchemas()
     }
     this.schemaRootDir = schemaRootDir || ''
-    this.optionMaster = optionMaster
+    this.configurationMaster = configurationMaster
     this.groups = []
 
     // load apiConfigSchema
-    this.schema = loadConfigSchema(optionMaster, 'api')
+    this.schema = loadConfigSchema(configurationMaster, 'api')
   }
 
   /**
@@ -41,7 +50,7 @@ export class ApiItemParser {
   public scan(apiConfigFilePath: string, encoding = 'utf-8'): this {
     const self = this
     const apiConfig: ApiConfig = loadContextConfig<RawApiConfig, ApiConfig>({
-      optionMaster: self.optionMaster,
+      configurationMaster: self.configurationMaster,
       schema: self.schema,
       configPath: apiConfigFilePath,
       encoding: encoding,
@@ -49,27 +58,28 @@ export class ApiItemParser {
     })
     const apiContext: ApiConfigContext = apiConfig
     for (const rawApiGroup of apiConfig.api) {
-      const apiGroup: ApiItemGroup = this.extractRawApiItemGroup(rawApiGroup, apiContext)
+      const apiGroup: ResolvedApiItemGroup = this.extractRawApiItemGroup(rawApiGroup, apiContext)
       this.groups.push(apiGroup)
     }
     return this
   }
 
   /**
-   * returns the list of ApiItemGroup parsed by the previous scan operation, and clears this list
+   * returns the list of ResolvedApiItemGroup parsed by the previous scan operation, and clears this list
    *
-   * 返回之前 scan 操作解析得到的 ApiItemGroup 列表，并清除此列表
+   * 返回之前 scan 操作解析得到的 ResolvedApiItemGroup 列表，并清除此列表
    */
-  public collect(): ApiItemGroup[] {
+  public collect(): ResolvedApiItemGroup[] {
     return this.groups.splice(0, this.groups.length)
   }
 
   /**
-   * 将 ApiItemGroups 拍平，获得 ApiItem 数组
+   * 将 ApiItemGroups 拍平，获得 ResolvedApiItem 数组
+   * @param activatedOnly   仅返回状态为 active 的 ApiItem
    */
-  public collectAndFlat(): ApiItem[] {
-    const recursiveCollect = (apiGroup: ApiItemGroup): ApiItem[] => {
-      const items: ApiItem[] = []
+  public collectAndFlat(activatedOnly = true): ResolvedApiItem[] {
+    const recursiveCollect = (apiGroup: ResolvedApiItemGroup): ResolvedApiItem[] => {
+      const items: ResolvedApiItem[] = []
       if (apiGroup.items != null) {
         items.push(...apiGroup.items)
       }
@@ -78,10 +88,12 @@ export class ApiItemParser {
           items.push(...recursiveCollect(subGroup))
         }
       }
+
+      if (activatedOnly) return items.filter(item => item.active)
       return items
     }
 
-    const items: ApiItem[] = []
+    const items: ResolvedApiItem[] = []
     for (const apiGroup of this.groups) {
       items.push(...recursiveCollect(apiGroup))
     }
@@ -110,46 +122,61 @@ export class ApiItemParser {
    * @param context
    * @param parent
    */
-  public extractRawApiItemGroup(data: RawApiItemGroup, context: ApiConfigContext, parent?: ApiItemGroup): ApiItemGroup {
-    const items: ApiItem[] = []
-    const subGroups: ApiItemGroup[] = []
+  public extractRawApiItemGroup(data: RawApiItemGroup, context: ApiConfigContext, parent?: ResolvedApiItemGroup): ResolvedApiItemGroup {
+    const items: ResolvedApiItem[] = []
+    const subGroups: ResolvedApiItemGroup[] = []
     const defaultMethod: HttpVerb | undefined = (parent != null && parent.method != null) ? parent.method : undefined
+    const rawRequest = data.request || {}
+    const rawResponse = data.response || {}
 
     // calc request model name
     const requestModelNamePrefix: string = coverString(
-      parent != null ? parent.request.modelNamePrefix : '',
-      data.request.modelNamePrefix)
+      parent != null ? parent.request.voNamePrefix: '',
+      rawRequest.voNamePrefix)
     const requestModelNameSuffix: string = coverString(
-      parent != null ? parent.request.modelNameSuffix : 'RequestVo',
-      data.request.modelNameSuffix)
+      parent != null ? parent.request.voNameSuffix : 'RequestVo',
+      rawRequest.voNameSuffix)
 
     // calc response model name
     const responseModelNamePrefix: string = coverString(
-      parent != null ? parent.response.modelNamePrefix : '',
-      data.response.modelNamePrefix)
+      parent != null ? parent.response.voNamePrefix: '',
+      rawResponse.voNamePrefix)
     const responseModelNameSuffix: string = coverString(
-      parent != null ? parent.response.modelNameSuffix : 'ResponseVo',
-      data.response.modelNameSuffix)
+      parent != null ? parent.response.voNameSuffix: 'ResponseVo',
+      rawResponse.voNameSuffix)
 
-    // calc response headers
-    const responseHeaders = ((parent != null && parent.response.headers != null) || (data.response.headers != null))
-      ? { ...(parent != null ? parent.response.headers : undefined), ...data.response.headers }
+    // calc request headers
+    const requestHeaders = (
+      (parent != null && parent.request.headers != null)
+      || (rawRequest.headers != null)
+    )
+      ? { ...(parent != null ? parent.request.headers : undefined), ...rawRequest.headers }
       : undefined
 
-    const group: ApiItemGroup = {
+    // calc response headers
+    const responseHeaders = (
+      (parent != null && parent.response.headers != null)
+      || (rawResponse.headers != null)
+    )
+      ? { ...(parent != null ? parent.response.headers : undefined), ...rawResponse.headers }
+      : undefined
+
+    const group: ResolvedApiItemGroup = {
       name: data.name,
       fullName: toKebabCase(parent != null ? parent.fullName + '/' + data.name : data.name),
-      title: coverString(data.name, data.title),
-      description: data.description,
+      active: coverBoolean(true, data.active),
+      title: coverString(data.name, data.title, isNotEmptyString),
+      desc: coverString(data.desc || '', data.description, isNotEmptyString),
       path: (parent != null ? parent.path : '') + data.path,
-      method: coverString(defaultMethod as any, data.method) as HttpVerb,
+      method: coverString(defaultMethod as any, data.method, isNotEmptyString) as HttpVerb,
       request: {
-        modelNamePrefix: requestModelNamePrefix,
-        modelNameSuffix: requestModelNameSuffix,
+        voNamePrefix: requestModelNamePrefix,
+        voNameSuffix: requestModelNameSuffix,
+        headers: requestHeaders,
       },
       response: {
-        modelNamePrefix: responseModelNamePrefix,
-        modelNameSuffix: responseModelNameSuffix,
+        voNamePrefix: responseModelNamePrefix,
+        voNameSuffix: responseModelNameSuffix,
         headers: responseHeaders,
       },
       items,
@@ -160,8 +187,8 @@ export class ApiItemParser {
     if (data.items != null) {
       const rawApiItems: RawApiItem[] = this.normalizeItems<RawApiItem>(data.items)
       for (const rawApiItem of rawApiItems) {
-        const apiItem = this.extractRawApiItem(rawApiItem, context, group)
-        items.push(apiItem)
+        const ResolvedApiItem = this.extractRawApiItem(rawApiItem, context, group)
+        items.push(ResolvedApiItem)
       }
     }
 
@@ -183,26 +210,45 @@ export class ApiItemParser {
    * @param context
    * @param group
    */
-  public extractRawApiItem(data: RawApiItem, context: ApiConfigContext, group?: ApiItemGroup): ApiItem {
+  public extractRawApiItem(data: RawApiItem, context: ApiConfigContext, group?: ResolvedApiItemGroup): ResolvedApiItem {
     // preprocess
+    const rawRequest: {
+      voName?: string,
+      voFullName?: string,
+      schemaPath?: string
+      headers?: HttpRequestHeaders,
+    } = {}
+    const rawResponse: {
+      voName?: string,
+      voFullName?: string,
+      schemaPath?: string
+      headers?: HttpResponseHeaders,
+    } = {}
+
     if (typeof data.request === 'string') {
       // eslint-disable-next-line no-param-reassign
-      data.request = { fullModelName: data.request }
-    } else if (data.request == null) {
-      // eslint-disable-next-line no-param-reassign
-      data.request = {}
+      rawRequest.voFullName = data.request
+    } else if (data.request != null) {
+      const { voName, voFullName, schemaPath, headers } = data.request as typeof rawRequest
+      rawRequest.voName = voName
+      rawRequest.voFullName = voFullName
+      rawRequest.schemaPath = schemaPath
+      rawRequest.headers = headers
     }
     if (typeof data.response === 'string') {
       // eslint-disable-next-line no-param-reassign
-      data.response = { fullModelName: data.response }
-    } else if (data.response == null) {
-      // eslint-disable-next-line no-param-reassign
-      data.request = {}
+      rawResponse.voFullName = data.response
+    } else if (data.request != null) {
+      const { voName, voFullName, schemaPath, headers } = data.response as typeof rawResponse
+      rawResponse.voName = voName
+      rawResponse.voFullName = voFullName
+      rawResponse.schemaPath = schemaPath
+      rawResponse.headers = headers
     }
 
     const { schemaDir } = context
     const fullGroupName = group != null ? toPascalCase(group.fullName.replace(/\//g, '-')) : ''
-    const defaultPath: string = group != null ? group.path + data.path : data.path
+    const defaultPath: string = group != null ? group.path + (data.path || '') : (data.path || '')
     const defaultMethod: HttpVerb = (group != null && group.method != null) ? group.method : HttpVerb.GET
 
     // calc schema path
@@ -216,46 +262,59 @@ export class ApiItemParser {
     // calc request model name
     const requestModelNameMiddle: string = coverString(
       group != null ? fullGroupName + '-' + data.name : data.name,
-      data.request.model)
+      rawRequest.voName,
+      isNotEmptyString)
     const defaultRequestModelName: string = (group != null)
-      ? group.request.modelNamePrefix + '-' + requestModelNameMiddle + '-' + group.request.modelNameSuffix
+      ? group.request.voNamePrefix + '-' + requestModelNameMiddle + '-' + group.request.voNameSuffix
       : requestModelNameMiddle
-    const requestModelName = toPascalCase(coverString(defaultRequestModelName, data.request.fullModelName))
+    const requestModelName = toPascalCase(
+      coverString(defaultRequestModelName, rawRequest.voFullName, isNotEmptyString))
     const requestSchemaPath = resolveSchemaPath(requestModelName)
 
     // calc response model name
     const responseModelNameMiddle: string = coverString(
       group != null ? fullGroupName + '-' + data.name : data.name,
-      data.response.model)
+      rawResponse.voName,
+      isNotEmptyString)
     const defaultResponseModelName: string = (group != null)
-      ? group.response.modelNamePrefix + '-' + responseModelNameMiddle + '-' + group.response.modelNameSuffix
+      ? group.response.voNamePrefix + '-' + responseModelNameMiddle + '-' + group.response.voNameSuffix
       : responseModelNameMiddle
-    const responseModelName = toPascalCase(coverString(defaultResponseModelName, data.response.fullModelName))
+    const responseModelName = toPascalCase(
+      coverString(defaultResponseModelName, rawResponse.voFullName, isNotEmptyString))
     const responseSchemaPath = resolveSchemaPath(responseModelName)
 
-    // calc response headers
-    const responseHeaders = ((group != null && group.response.headers != null) || (data.response.headers != null))
-      ? { ...(group != null ? group.response.headers : undefined), ...(data.response as any).headers }
+    // calc request headers
+    const requestHeaders: HttpRequestHeaders | undefined = (
+      (group != null && group.request.headers != null) || (rawRequest.headers != null)
+    ) ? { ...(group != null ? group.request.headers : undefined), ...rawRequest.headers }
       : undefined
 
-    const apiItem: ApiItem = {
+    // calc response headers
+    const responseHeaders: HttpResponseHeaders | undefined = (
+      (group != null && group.response.headers != null) || (rawResponse.headers != null)
+    ) ? { ...(group != null ? group.response.headers : undefined), ...rawResponse.headers }
+      : undefined
+
+    const ResolvedApiItem: ResolvedApiItem = {
       name: data.name,
-      title: coverString(data.name, data.title),
-      description: data.description,
-      path: coverString(defaultPath, data.fullPath),
-      method: coverString(defaultMethod, data.method) as HttpVerb,
+      active: coverBoolean(true, data.active),
+      title: coverString(data.name, data.title, isNotEmptyString),
+      desc: coverString(data.desc || '', data.description, isNotEmptyString),
+      path: coverString(defaultPath, data.fullPath, isNotEmptyString),
+      method: coverString(defaultMethod || HttpVerb.GET, data.method, isNotEmptyString) as HttpVerb,
       request: {
-        model: requestModelName,
-        schema: requestSchemaPath,
+        voName:requestModelName,
+        schemaPath: requestSchemaPath,
+        headers: requestHeaders,
       },
       response: {
-        model: responseModelName,
-        schema: responseSchemaPath,
+        voName: responseModelName,
+        schemaPath: responseSchemaPath,
         headers: responseHeaders,
       }
     }
 
-    return apiItem
+    return ResolvedApiItem
   }
 
   /**

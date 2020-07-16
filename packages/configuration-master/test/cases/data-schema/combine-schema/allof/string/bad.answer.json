@@ -1,0 +1,137 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got ({}).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({})."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got ({}).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({})."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#type: expected a string, but got ([]).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ([])."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "#type: expected a string, but got ([]).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ([])."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "#minLength: minLength expected is 5, but got value (\"23\") with length (2).",
+            "traces": [
+              {
+                "constraint": "minLength",
+                "reason": "minLength expected is 5, but got value (\"23\") with length (2)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "allOf",
+        "reason": "not matched all of DataSchemas defined in `allOf`",
+        "traces": [
+          {
+            "constraint": "[1]",
+            "reason": "#pattern: expected value pattern is (\"^[\\\\d]+$\"), but got (\"ae2e312\").",
+            "traces": [
+              {
+                "constraint": "pattern",
+                "reason": "expected value pattern is (\"^[\\\\d]+$\"), but got (\"ae2e312\")."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

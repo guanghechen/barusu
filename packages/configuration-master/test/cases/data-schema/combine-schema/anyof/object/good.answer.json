@@ -1,0 +1,66 @@
+[
+  {
+    "value": {
+      "gender": "female"
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "constraint": "anyOf",
+        "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+                "property": "sex"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "value": {
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "constraint": "anyOf",
+        "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+                "property": "sex"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "value": {
+      "sex": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

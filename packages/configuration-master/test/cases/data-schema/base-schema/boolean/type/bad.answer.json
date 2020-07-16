@@ -1,0 +1,38 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a boolean, but got (\"nothing\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a boolean, but got (\"null\")."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a boolean, but got (null)."
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "type",
+        "reason": "expected a boolean, but got (123)."
+      }
+    ],
+    "warnings": []
+  }
+]

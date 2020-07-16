@@ -1,0 +1,19 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {
+      "nickname": "alice"
+    },
+    {
+      "age": 22
+    },
+    true,
+    false,
+    {
+      "nickname": "alice",
+      "age": 22,
+      "name": "alice"
+    },
+    "x--1233"
+  ]
+}

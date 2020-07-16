@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "[\\w]{3,20}",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "pattern": "[^@]+@[^\\.]+\\..+"
+    },
+    "password": {
+      "type": "string",
+      "pattern": "[\\w]{3,20}"
+    },
+    "more": {
+      "type": "object",
+      "properties": {
+        "nick": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 20
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "male",
+            "female"
+          ]
+        }
+      },
+      "dependencies": {
+        "gender": [
+          "nick"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "more": [
+      "name",
+      "email"
+    ],
+    "password": [
+      "name",
+      "email"
+    ]
+  }
+}

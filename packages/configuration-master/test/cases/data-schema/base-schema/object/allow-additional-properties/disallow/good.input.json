@@ -1,0 +1,12 @@
+{
+  "schema": "./_schema.json",
+  "cases": [
+    {
+      "name": "alice"
+    },
+    {
+      "name": "bob",
+      "age": 18
+    }
+  ]
+}

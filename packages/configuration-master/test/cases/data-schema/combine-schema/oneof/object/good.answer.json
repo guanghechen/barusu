@@ -1,0 +1,16 @@
+[
+  {
+    "value": {
+      "sex": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "value": {
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

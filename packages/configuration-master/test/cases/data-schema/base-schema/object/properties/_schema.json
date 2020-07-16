@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "serve": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
+          "default": "127.0.0.1"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535,
+          "default": 80
+        },
+        "prefixUrl": {
+          "type": "string",
+          "default": "/"
+        },
+        "ssl": {
+          "type": "object",
+          "required": true,
+          "properties": {
+            "pub_key": {
+              "type": "string",
+              "required": "true"
+            },
+            "sec_key": {
+              "type": "string",
+              "required": "true"
+            }
+          }
+        }
+      },
+      "patternProperties": {
+        "^data(?:\\-[\\w]+)+$": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "patternProperties": [
+    {
+      "pattern": "^data(?:\\-[\\w]+)+$",
+      "schema": {
+        "type": "string"
+      }
+    }
+  ]
+}

@@ -4,13 +4,14 @@ import {
   FileTestCaseMaster,
   FileTestCaseMasterProps,
 } from '@barusu/util-mocha'
-import { ApiItemGroup, ApiItemParser } from '../../src'
+import { ApiItemParser, ResolvedApiItemGroup } from '../../src'
 
 
 /**
  * DataSchema 编译器测试用例辅助类
  */
-export class ApiItemParserTestCaseMaster extends FileTestCaseMaster<ApiItemGroup[], ApiItemGroup[]> {
+export class ApiItemParserTestCaseMaster
+  extends FileTestCaseMaster<ResolvedApiItemGroup[], ResolvedApiItemGroup[]> {
   private readonly parser: ApiItemParser
 
   public constructor(parser: ApiItemParser, {
@@ -23,7 +24,7 @@ export class ApiItemParserTestCaseMaster extends FileTestCaseMaster<ApiItemGroup
   }
 
   // override
-  public async consume(kase: FileTestCase): Promise<ApiItemGroup[] | never> {
+  public async consume(kase: FileTestCase): Promise<ResolvedApiItemGroup[] | never> {
     const { inputFilePath } = kase
     this.parser.scan(inputFilePath)
     const apiItemGroups = this.parser.collect()
@@ -31,7 +32,7 @@ export class ApiItemParserTestCaseMaster extends FileTestCaseMaster<ApiItemGroup
   }
 
   // override
-  public stringify(data: ApiItemGroup[]): string {
+  public stringify(data: ResolvedApiItemGroup[]): string {
     const projectDir = path.resolve()
     const stringifyFilter = (key: string, value: any) => {
       // RegExp to string
@@ -53,7 +54,7 @@ export class ApiItemParserTestCaseMaster extends FileTestCaseMaster<ApiItemGroup
 
 
   // override
-  public toJSON(data: ApiItemGroup[]): ApiItemGroup[] {
+  public toJSON(data: ResolvedApiItemGroup[]): ResolvedApiItemGroup[] {
     return JSON.parse(this.stringify(data))
   }
 }
