@@ -117,11 +117,11 @@ export class RestfulApiServer {
         item.method.padEnd(6),
         prefixUrl,
         item.path,
-        chalk.gray('(' + (item.response.model || '') + ')') ,
+        chalk.gray('(' + (item.response.voName || '') + ')') ,
       )
       router.register(item.path, [item.method], [
         async (ctx: Router.RouterContext) => {
-          const schemaPath = item.response.schema
+          const schemaPath = item.response.schemaPath
           if (!(await isFile(schemaPath))) {
             throw new Error(`bad schema: ${ schemaPath } is not found.`)
           }

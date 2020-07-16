@@ -8,7 +8,7 @@ import {
   isNotEmptyArray,
   isNotEmptyString,
 } from '@barusu/util-option'
-import { ApiItem } from '../../types/api-item'
+import { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 import { logger } from '../../util/logger'
 
@@ -52,7 +52,7 @@ export interface RestfulApiGeneratorContext {
   /**
    * Api items
    */
-  readonly apiItems: ApiItem[]
+  readonly apiItems: ResolvedApiItem[]
   /**
    * ts.Program: A Program is an immutable collection of 'SourceFile's and a
    * 'CompilerOptions' that represent a compilation unit.
@@ -134,7 +134,7 @@ export async function createRestfulApiGeneratorContext(
     apiItemParser.scan(apiConfigPath)
   }
 
-  const apiItems: ApiItem[] = apiItemParser.collectAndFlat()
+  const apiItems: ResolvedApiItem[] = apiItemParser.collectAndFlat()
   if (apiItems.length <= 0) {
     logger.debug('createGenerateCommandContext params: {}', params)
     throw new Error('no valid api item found.')

@@ -1,6 +1,6 @@
 import globby from 'globby'
 import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
-import { ApiItem } from '../../types/api-item'
+import { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 import { logger } from '../../util/logger'
 
@@ -64,7 +64,7 @@ export interface RestfulApiServerContext {
   /**
    * Api items
    */
-  readonly apiItems: ApiItem[]
+  readonly apiItems: ResolvedApiItem[]
 }
 
 
@@ -152,7 +152,7 @@ export async function createRestfulApiServerContext(
     apiItemParser.scan(apiConfigPath)
   }
 
-  const apiItems: ApiItem[] = apiItemParser.collectAndFlat()
+  const apiItems: ResolvedApiItem[] = apiItemParser.collectAndFlat()
   if (apiItems.length <= 0) {
     logger.debug('createServeCommandContext params: {}', params)
     throw new Error('no valid api item found.')
