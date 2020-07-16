@@ -1,6 +1,6 @@
 {
   "name": "@barusu/rollup-plugin-copy",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "rollup plugins to copy files and folds (glob supported)",
   "author": {
     "name": "lemon-clown",
@@ -47,8 +47,8 @@
     "is-plain-object": "^3.0.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.20",
-    "@barusu/rollup-config": "^0.0.20",
+    "@barusu/eslint-config": "^0.0.21",
+    "@barusu/rollup-config": "^0.0.21",
     "cross-env": "^7.0.2",
     "rollup": "2.16.1"
   }
