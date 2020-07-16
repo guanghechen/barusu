@@ -2,16 +2,17 @@
   {
     "name": "user",
     "fullName": "user",
+    "active": true,
     "title": "user",
-    "description": "",
+    "desc": "",
     "path": "/api/user",
     "request": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "RequestVo"
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo"
     },
     "response": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "ResponseVo",
+      "voNamePrefix": "",
+      "voNameSuffix": "ResponseVo",
       "headers": {
         "Content-Type": "application/json; UTF-8"
       }
@@ -19,17 +20,18 @@
     "items": [
       {
         "name": "login",
+        "active": true,
         "title": "登录",
-        "description": "",
+        "desc": "",
         "path": "/api/user/login",
         "method": "POST",
         "request": {
-          "model": "UserLoginRequestVo",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-login-request-vo.json"
+          "voName": "UserLoginRequestVo",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-login-request-vo.json"
         },
         "response": {
-          "model": "UserLoginResponseVo",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-login-response-vo.json",
+          "voName": "UserLoginResponseVo",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-login-response-vo.json",
           "headers": {
             "Content-Type": "application/json; UTF-8"
           }
@@ -37,17 +39,18 @@
       },
       {
         "name": "logout",
+        "active": true,
         "title": "退出登录",
-        "description": "",
+        "desc": "",
         "path": "/api/user/logout",
         "method": "POST",
         "request": {
-          "model": "UserLogoutRequestVo",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-logout-request-vo.json"
+          "voName": "UserLogoutRequestVo",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-logout-request-vo.json"
         },
         "response": {
-          "model": "UserLogoutResponseVo",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-logout-response-vo.json",
+          "voName": "UserLogoutResponseVo",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-logout-response-vo.json",
           "headers": {
             "Content-Type": "application/json; UTF-8"
           }
@@ -58,16 +61,17 @@
       {
         "name": "info",
         "fullName": "user-info",
+        "active": true,
         "title": "info",
-        "description": "",
+        "desc": "",
         "path": "/api/user",
         "request": {
-          "modelNamePrefix": "",
-          "modelNameSuffix": "RequestVo"
+          "voNamePrefix": "",
+          "voNameSuffix": "RequestVo"
         },
         "response": {
-          "modelNamePrefix": "Xx",
-          "modelNameSuffix": "ResponseVo",
+          "voNamePrefix": "Xx",
+          "voNameSuffix": "ResponseVo",
           "headers": {
             "Content-Type": "application/json; UTF-8",
             "Authorize": "<token>"
@@ -76,17 +80,18 @@
         "items": [
           {
             "name": "me",
+            "active": true,
             "title": "获取当前用户信息",
-            "description": "",
+            "desc": "",
             "path": "/api/user/me",
             "method": "GET",
             "request": {
-              "model": "CurrentUserInfoRequestModel",
-              "schema": "<PROJECT_DIR>/test/cases/schemas/user-info/current-user-info-request-model.json"
+              "voName": "CurrentUserInfoRequestModel",
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/current-user-info-request-model.json"
             },
             "response": {
-              "model": "CurrentUserInfoResponseModel",
-              "schema": "<PROJECT_DIR>/test/cases/schemas/user-info/current-user-info-response-model.json",
+              "voName": "CurrentUserInfoResponseModel",
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/current-user-info-response-model.json",
               "headers": {
                 "Content-Type": "application/json; UTF-8",
                 "Authorize": "<token>"
@@ -95,17 +100,18 @@
           },
           {
             "name": "UserInfo",
+            "active": true,
             "title": "获取指定用户信息",
-            "description": "",
+            "desc": "",
             "path": "/api/user/:id",
             "method": "GET",
             "request": {
-              "model": "UserInfoUserInfoRequestVo",
-              "schema": "<PROJECT_DIR>/test/cases/schemas/user-info/user-info-user-info-request-vo.json"
+              "voName": "UserInfoUserInfoRequestVo",
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/user-info-user-info-request-vo.json"
             },
             "response": {
-              "model": "XxUserInfoUserInfoResponseVo",
-              "schema": "<PROJECT_DIR>/test/cases/schemas/user-info/xx-user-info-user-info-response-vo.json",
+              "voName": "XxUserInfoUserInfoResponseVo",
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/xx-user-info-user-info-response-vo.json",
               "headers": {
                 "Content-Type": "application/json; UTF-8",
                 "Authorize": "<token>"

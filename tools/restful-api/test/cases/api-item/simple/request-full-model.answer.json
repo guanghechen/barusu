@@ -2,16 +2,17 @@
   {
     "name": "user",
     "fullName": "user",
+    "active": true,
     "title": "user",
-    "description": "",
+    "desc": "",
     "path": "/api/user",
     "request": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "RequestVo"
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo"
     },
     "response": {
-      "modelNamePrefix": "",
-      "modelNameSuffix": "ResponseVo",
+      "voNamePrefix": "",
+      "voNameSuffix": "ResponseVo",
       "headers": {
         "Content-Type": "application/json; UTF-8",
         "Authorize": "<token>"
@@ -20,17 +21,18 @@
     "items": [
       {
         "name": "me",
+        "active": true,
         "title": "获取当前用户信息",
-        "description": "",
+        "desc": "",
         "path": "/api/user/me",
         "method": "GET",
         "request": {
-          "model": "CurrentUserInfoRequestModel",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-request-model.json"
+          "voName": "CurrentUserInfoRequestModel",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-request-model.json"
         },
         "response": {
-          "model": "CurrentUserInfoResponseModel",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-response-model.json",
+          "voName": "CurrentUserInfoResponseModel",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-response-model.json",
           "headers": {
             "Content-Type": "application/json; UTF-8",
             "Authorize": "<token>"
@@ -39,17 +41,18 @@
       },
       {
         "name": "UserInfo",
+        "active": true,
         "title": "获取指定用户信息",
-        "description": "",
+        "desc": "",
         "path": "/api/user/:id",
         "method": "GET",
         "request": {
-          "model": "UserUserInfoRequestVo",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-request-vo.json"
+          "voName": "UserUserInfoRequestVo",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-request-vo.json"
         },
         "response": {
-          "model": "UserUserInfoResponseVo",
-          "schema": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-response-vo.json",
+          "voName": "UserUserInfoResponseVo",
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-response-vo.json",
           "headers": {
             "Content-Type": "application/json; UTF-8",
             "Authorize": "<token>"
