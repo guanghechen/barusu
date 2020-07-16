@@ -41,7 +41,8 @@
     "test": "TS_NODE_FILES=true mocha -r ts-node/register test/**/*.test.ts",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.ts",
+    "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.schema.ts",
+    "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts",
     "answer": "TS_NODE_FILES=true cross-env node -r ts-node/register test/answer.ts"
   },
   "dependencies": {

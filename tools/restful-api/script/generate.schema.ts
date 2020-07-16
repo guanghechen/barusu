@@ -1,11 +1,9 @@
 import fs from 'fs-extra'
-import path from 'path'
 import { configurationMaster } from '@barusu/configuration-master'
+import { calcConfigFilePath } from '../src'
 
 
-function generate(schemaName: string) {
-  const rawSchemaPath = path.resolve(__dirname, `../src/core/config/${ schemaName }.raw.schema.json`)
-  const schemaPath = path.resolve(__dirname, `../src/core/config/${ schemaName }.schema.json`)
+function generate(rawSchemaPath: string, schemaPath: string): void {
   const rawDataSchemaContent: string = fs.readFileSync(rawSchemaPath, 'utf-8')
   const rawDataSchema = JSON.parse(rawDataSchemaContent)
   const result = configurationMaster.compile(rawDataSchema)
@@ -15,5 +13,11 @@ function generate(schemaName: string) {
 }
 
 
-generate('app')
-generate('api')
+generate(
+  calcConfigFilePath('app-raw-schema.json'),
+  calcConfigFilePath('app-schema.json')
+)
+generate(
+  calcConfigFilePath('api-raw-schema.json'),
+  calcConfigFilePath('api-schema.json')
+)

@@ -29,7 +29,7 @@ export function calcConfigFilePath (...filePath: string[]): string {
  * @param schemaName
  */
 export function loadConfigSchema(configurationMaster: ConfigurationMaster, schemaName: string): any {
-  const schemaPath: string = calcConfigFilePath(`${ schemaName }.schema.json`)
+  const schemaPath: string = calcConfigFilePath(`${ schemaName }-schema.json`)
   const schemaContent = fs.readJSONSync(schemaPath)
   const schema = configurationMaster.parseJSON(schemaContent)
   return schema
