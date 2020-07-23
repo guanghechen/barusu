@@ -27,14 +27,14 @@
     "prebuild": "rimraf dist/",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "build:prod": "cross-env SHOULD_USE_SOURCEMAP=false yarn build",
-    "add-page": "template-simple-html add-html-page ."
+    "add-page": "barusu-template-simple-html add-html-page ."
   },
   "devDependencies": {
     "@barusu/rollup-plugin-copy": "^{{{lowerCase templateVersion}}}",
     "@barusu/template-simple-html": "^{{{lowerCase templateVersion}}}",
     "@barusu/util-option": "^{{{lowerCase templateVersion}}}",
-    "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.3",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
     "autoprefixer": "^9.7.6",
     "cross-env": "^7.0.2",
     "fs-extra": "^8.1.0",

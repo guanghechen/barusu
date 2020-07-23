@@ -20,7 +20,6 @@
   },
   "files": [
     "lib/",
-    ".eslintrc.js",
     "CHANGELOG.md",
     "LICENSE",
     "README.md",
@@ -38,8 +37,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.20",
-    "@barusu/rollup-config": "^0.0.20",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",

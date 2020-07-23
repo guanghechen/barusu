@@ -24,7 +24,7 @@ module.exports = {
     'release/',
     'node_modules/',
     '*.tsbuildinfo',
-    ".eslintrc.js",
+    '**/*.styl.d.ts',
     "rollup.config.js"
   ],
   'rules': {

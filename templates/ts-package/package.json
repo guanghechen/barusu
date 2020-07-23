@@ -1,6 +1,7 @@
 {
-  "name": "@barusu/template-simple-html",
+  "name": "@barusu/template-ts-package",
   "version": "0.0.21",
+  "description": "templates to create a ts package",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -9,30 +10,27 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/template-simple-html#readme",
-  "main": "lib/index.js",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/templates/ts-package#readme",
+  "main": "index.js",
   "license": "MIT",
   "files": [
-    "boilerplate/",
-    "lib/",
+    "boilerplate",
     "cli.js",
-    "plop.js",
+    "index.js",
     "package.json",
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
   ],
   "bin": {
-    "template-simple-html": "./cli.js"
+    "barusu-template-ts-package": "./cli.js"
   },
   "scripts": {
     "build": "echo 'no build action needed'",
     "lint:fix": "echo 'no lint action needed'"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0",
     "plop": "^2.7.0",
-    "semver-regex": "^3.1.1",
-    "title-case": "^3.0.2"
+    "semver-regex": "^3.1.1"
   }
 }
