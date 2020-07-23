@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/template-ts-package#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/templates/ts-package#readme",
   "main": "index.js",
   "license": "MIT",
   "files": [
@@ -23,7 +23,7 @@
     "README.md"
   ],
   "bin": {
-    "create-ts-package": "./cli.js"
+    "barusu-template-ts-package": "./cli.js"
   },
   "scripts": {
     "build": "echo 'no build action needed'",

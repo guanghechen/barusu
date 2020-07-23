@@ -15,5 +15,5 @@
 
 * Create a typescript project
   ```shell
-  create-ts-package [package-name]
+  barusu-template-ts-package [package-name]
   ```
