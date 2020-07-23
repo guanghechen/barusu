@@ -36,7 +36,7 @@ export function renameTarget(
   rename?: string | ((name: string, ext: string) => string)
 ): string {
   const parsedPath = path.parse(targetFilePath)
-  if (rename == null) return parsedPath.name
+  if (rename == null) return targetFilePath
   if (typeof rename === 'string') return rename
   return rename(parsedPath.name, parsedPath.ext.replace(/^(\.)?/, ''))
 }
