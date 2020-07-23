@@ -12,7 +12,7 @@
 
   * Create new html project
     ```shell
-    template-simple-html new-html-project <project name>
+    barusu-template-simple-html new-html-project <project name>
     ```
 
   * Add new html page

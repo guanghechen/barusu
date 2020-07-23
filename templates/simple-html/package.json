@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/template-simple-html#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/templates/simple-html#readme",
   "main": "lib/index.js",
   "license": "MIT",
   "files": [
@@ -23,7 +23,7 @@
     "README.md"
   ],
   "bin": {
-    "template-simple-html": "./cli.js"
+    "barusu-template-simple-html": "./cli.js"
   },
   "scripts": {
     "build": "echo 'no build action needed'",
