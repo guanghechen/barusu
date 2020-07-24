@@ -298,6 +298,7 @@ const resourceConfig = {
 
                 return pug.render(content, {
                   pretty: true,
+                  filename: srcPath,
                   data: {
                     title: `${ page.name } | ${ manifest.name }`,
                     sharedStyles: paths._shared.styles.map(item => calcRelativePath(item.dest)),
