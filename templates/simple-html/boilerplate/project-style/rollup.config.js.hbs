@@ -1,0 +1,201 @@
+import copy from '@barusu/rollup-plugin-copy'
+import { empty } from '@barusu/template-simple-html'
+import { mkdirsIfNotExists } from '@barusu/util-cli'
+import { coverString, coverBoolean } from '@barusu/util-option'
+import json from '@rollup/plugin-json'
+import nodeResolve from '@rollup/plugin-node-resolve'
+import autoprefixer from 'autoprefixer'
+import fs from 'fs-extra'
+import path from 'path'
+import postcssFlexbugsFixes from 'postcss-flexbugs-fixes'
+import pug from 'pug'
+import postcss from 'rollup-plugin-postcss'
+
+
+/**
+ * 环境变量
+ */
+const env = (() => {
+  const nodeEnv = coverString('development', process.env.NODE_ENV).toLowerCase()
+  const isEnvDevelopment = nodeEnv === 'development'
+  const isEnvProduction = nodeEnv === 'production'
+
+  return {
+    isEnvDevelopment,
+    isEnvProduction,
+    shouldUseSourceMap: coverBoolean(true, process.env.SHOULD_USE_SOURCEMAP),
+  }
+})()
+
+
+/**
+ * 收集目录下所有的文件
+ *
+ * @param {string} dir
+ * @param {(p:string)=>boolean} predicate
+ */
+const collectAllFiles = (dir, predicate) => {
+  const stat = fs.statSync(dir)
+  const results = []
+  if (stat.isDirectory()) {
+    const files = fs.readdirSync(dir)
+    for (const file of files) {
+      const absFile = path.join(dir, file)
+      results.push(...collectAllFiles(absFile, predicate))
+    }
+  } else if (stat.isFile()) {
+    if (predicate == null || predicate(dir)) {
+      results.push(dir)
+    }
+  }
+  return results
+}
+
+
+const resolvePath = (...p) => path.resolve(...p)
+const resolveSrcPath = (...p) => resolvePath('src/', ...p)
+const resolveDstPath = (...p) => resolvePath('dist/', ...p)
+const resolveDstPathOfSrc = (p) => resolveDstPath(path.relative(resolveSrcPath(), p))
+
+
+const paths = {
+  emptyBundlePath: resolvePath('.empty.__tmp__.js'),
+  srcRoot: resolveSrcPath(),
+  dstRoot: resolveDstPath(),
+  pages: collectAllFiles(
+    resolveSrcPath('pages'),
+    p => /\.pug$/.test(p))
+    .map(pageSrc => ({
+      src: pageSrc,
+      dest: resolveDstPathOfSrc(path.dirname(pageSrc)) + '/',
+      rename: p => p + '.html',
+    })),
+  stylus: collectAllFiles(
+    resolveSrcPath('resources/style'),
+    p => /\.styl$/.test(p) && !/third\-party/.test(p) && !/mixin\.styl$/.test(p))
+    .map(stylusSrc => ({
+      src: stylusSrc,
+      dest: resolveDstPathOfSrc(path.dirname(stylusSrc)) + '/',
+      rename: p => p + '.css',
+    })),
+  scripts: [
+  ],
+  resources: [
+    {
+      src: [ resolveSrcPath('resources/font') ],
+      dest: resolveDstPath('resources/'),
+    },
+    {
+      src: [ resolveSrcPath('resources/image') ],
+      dest: resolveDstPath('resources/'),
+    },
+    {
+      src: [ resolveSrcPath('resources/script/third-party') ],
+      dest: resolveDstPath('resources/script/'),
+    },
+    {
+      src: [ resolveSrcPath('resources/style/third-party') ],
+      dest: resolveDstPath('resources/style/'),
+    },
+  ]
+}
+
+
+// ensure paths existed
+paths.pages.forEach(p => mkdirsIfNotExists(p.dest, true))
+paths.stylus.forEach(p => mkdirsIfNotExists(p.dest, true))
+paths.resources.forEach(p => mkdirsIfNotExists(p.dest, true))
+
+
+// transpile (*.styl) ==> *.css
+const styleConfigs = paths.stylus
+  .map(({ src, dest, rename }) => ({
+    input: src,
+    output: {
+      file: paths.emptyBundlePath,
+    },
+    plugins: [
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      postcss({
+        extract: dest + rename(path.parse(src).name),
+        minimize: false,
+        modules: false,
+        plugins: [
+          postcssFlexbugsFixes({}),
+          autoprefixer({})
+        ],
+      }),
+    ]
+  }))
+
+
+// transpile js
+const scriptConfigs = paths.scripts
+  .map(({ src, dest }) => ({
+    inlineDynamicImports: true,
+    input: src,
+    output: {
+      format: 'iife',
+      file: dest,
+      sourcemap: env.shouldUseSourceMap,
+    },
+    plugins: [
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      json({
+        indent: '  ',
+        namedExports: true,
+      })
+    ]
+  }))
+
+
+const resourceConfig = {
+  output: {
+    file: paths.emptyBundlePath,
+  },
+  plugins: [
+    empty(),
+    copy({
+      copyOnce: false,
+      verbose: true,
+      targets: [
+        //- copy resources
+        ...paths.resources,
+
+        //- transpile pug
+        ...paths.pages
+          .map(({ src, dest, rename }) => {
+            return {
+              src,
+              dest,
+              rename,
+              transform: async (content, srcPath, dstPath) => {
+                return pug.render(content, {
+                  pretty: true,
+                  filename: srcPath,
+                  data: {
+                  }
+                })
+              }
+            }
+          }),
+      ].filter(Boolean)
+    }),
+  ],
+}
+
+
+const config = [
+  ...styleConfigs,
+  ...scriptConfigs,
+  resourceConfig,
+].filter(Boolean)
+
+
+export default config

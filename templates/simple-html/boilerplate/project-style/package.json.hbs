@@ -1,0 +1,49 @@
+{
+  "name": "{{{packageName}}}",
+  "version": "{{{lowerCase packageVersion}}}",
+{{#if packageAuthor}}
+  "author": {
+    "name": "{{{packageAuthor}}}",
+    "url": "https://github.com/{{{packageAuthor}}}/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}.git"
+  },
+{{#if isLernaProject}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}/tree/master/{{{packageLocation}}}#readme",
+{{else}}
+  "homepage": "https://github.com/{{{packageAuthor}}}/{{{projectName}}}#readme",
+{{/if}}
+{{/if}}
+  "private": true,
+  "files": [
+    "dist/",
+    "package.json",
+    "yarn.lock"
+  ],
+  "scripts": {
+    "start": "rollup -w -c rollup.config.js",
+    "prebuild": "rimraf dist/",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "build:prod": "cross-env SHOULD_USE_SOURCEMAP=false yarn build",
+    "add-page": "barusu-template-simple-html add-html-page ."
+  },
+  "devDependencies": {
+    "@barusu/rollup-plugin-copy": "^{{{lowerCase templateVersion}}}",
+    "@barusu/template-simple-html": "^{{{lowerCase templateVersion}}}",
+    "@barusu/util-cli": "^{{{lowerCase templateVersion}}}",
+    "@barusu/util-option": "^{{{lowerCase templateVersion}}}",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "autoprefixer": "^9.7.6",
+    "cross-env": "^7.0.2",
+    "fs-extra": "^8.1.0",
+    "postcss-flexbugs-fixes": "^4.2.0",
+    "pug": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "rollup": "2.16.1",
+    "rollup-plugin-postcss": "^3.1.1",
+    "stylus": "^0.54.7"
+  }
+}
