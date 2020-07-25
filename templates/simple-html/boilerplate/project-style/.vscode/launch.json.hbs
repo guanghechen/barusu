@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "name": "chrome (attach)",
+      "url": "http://localhost:{{{serverPort}}}*",
+      "webRoot": "${workspaceFolder}/dist",
+      "sourceMaps": true,
+      "trace": true
+    }
+  ]
+}

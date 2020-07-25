@@ -17,6 +17,7 @@
     "lib/",
     "cli.js",
     "plop.js",
+    "isolate-page.plop.js",
     "package.json",
     "CHANGELOG.md",
     "LICENSE",
