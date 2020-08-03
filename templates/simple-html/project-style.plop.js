@@ -75,6 +75,16 @@ module.exports = function (plop) {
       return [
         {
           type: 'add',
+          path: resolveTargetPath('.babelrc'),
+          templateFile: resolveSourcePath('.babelrc.hbs')
+        },
+        {
+          type: 'add',
+          path: resolveTargetPath('.browserslistrc'),
+          templateFile: resolveSourcePath('.browserslistrc.hbs')
+        },
+        {
+          type: 'add',
           path: resolveTargetPath('.editorconfig'),
           templateFile: resolveSourcePath('.editorconfig.hbs')
         },
