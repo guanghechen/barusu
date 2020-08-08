@@ -32,16 +32,14 @@ export function createSubCommandInit(
   const command = new Command()
 
   command
-    .storeOptionsAsProperties(false)
-    .passCommandToAction(false)
     .name(commandName)
     .aliases(aliases)
     .arguments('<workspace>')
-    .action(async function ([_workspace], options: any) {
+    .action(async function ([_workspaceDir], options: SubCommandInitOptions) {
       logger.setName(commandName)
 
       const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
-        packageName, commandName, __defaultCommandOptions, _workspace, options)
+        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
 
       const resolvedOptions: SubCommandInitOptions = {
         ...defaultOptions,

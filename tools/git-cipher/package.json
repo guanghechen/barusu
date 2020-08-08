@@ -45,10 +45,13 @@
     "@barusu/util-option": "^0.0.23",
     "@types/cli-progress": "^3.7.0",
     "@types/fs-extra": "^8.1.0",
+    "@types/inquirer": "^6.5.0",
     "cli-progress": "^3.8.2",
     "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
-    "globby": "^11.0.0"
+    "globby": "^11.0.0",
+    "inquirer": "^7.3.0",
+    "node-plop": "~0.26.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.23",
