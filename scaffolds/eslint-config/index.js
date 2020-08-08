@@ -25,7 +25,8 @@ module.exports = {
     'node_modules/',
     '*.tsbuildinfo',
     '**/*.styl.d.ts',
-    "rollup.config.js"
+    'rollup.config.js',
+    '.eslintrc.js'
   ],
   'rules': {
     'class-methods-use-this': 0,
