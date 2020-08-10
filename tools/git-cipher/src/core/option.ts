@@ -107,13 +107,16 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   logger.debug('cipherIndexFilename:', cipherIndexFilename)
 
   // resolve plainRepositoryUrl
-  const _rawPlainRepositoryUrl: string | null = cover<string>(
-    resolvedDefaultOptions.plainRepositoryUrl, options.plainRepositoryUrl, isNotEmptyString)
-  logger.debug('_rawPlainRepositoryUrl:', _rawPlainRepositoryUrl)
-  if (_rawPlainRepositoryUrl == null || _rawPlainRepositoryUrl.length <= 0) {
-    throw new Error('bad plainRepositoryUrl')
-  }
   const plainRepositoryUrl = (() => {
+    const _rawPlainRepositoryUrl: string | null = cover<string>(
+      resolvedDefaultOptions.plainRepositoryUrl, options.plainRepositoryUrl, isNotEmptyString)
+    logger.debug('_rawPlainRepositoryUrl:', _rawPlainRepositoryUrl)
+
+    // bad plainRepositoryUrl
+    if (_rawPlainRepositoryUrl == null || _rawPlainRepositoryUrl.length <= 0) {
+      return ''
+    }
+
     // relative file path
     if (/[.\/]/.test(_rawPlainRepositoryUrl)) {
       return relativeOfWorkspace(
