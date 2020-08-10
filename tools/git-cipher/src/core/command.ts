@@ -17,9 +17,10 @@ export function createProgram(): Command {
   // global options
   program
     .option('--secret-filepath <secretFilepath>', 'path of secret file')
-    .option('--cipher-root-dir <cipherRootDir>', 'the directory where the encrypted files are saved')
-    .option('--cipher-index-filename <cipherIndexFilename>', 'filename of index file of cipher directory')
-    .option('--plain-repository-url', 'url of source repository of plaintext files are located')
+    .option('--index-filepath <indexFilepath>', 'path of index file of ciphertext files')
+    .option('--ciphertext-root-dir <ciphertextRootDir>', 'the directory where the encrypted files are stored')
+    .option('--plaintext-root-dir <plaintextRootDir>', 'the directory where the source plaintext files are stored')
+    .option('--plaintext-repository-url <plaintextRepositoryUrl>', 'url of source repository of plaintext files are located')
     .option('--show-asterisk', 'whether to print password asterisks')
     .option('--minimum-password-length', 'the minimum size required of password')
 

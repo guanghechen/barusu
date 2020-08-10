@@ -25,20 +25,25 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
    */
   secretFilepath: string
   /**
-   * the directory where the encrypted files are saved
-   * @default barusu-cipher
-   */
-  cipherRootDir: string
-  /**
-   * filename of index file of cipher directory
+   * path of index file of ciphertext files
    * @default .barusu-index
    */
-  cipherIndexFilename: string
+  indexFilepath: string
+  /**
+   * the directory where the encrypted files are stored
+   * @default barusu-ciphertext
+   */
+  ciphertextRootDir: string
+  /**
+   * the directory where the source plaintext files are stored
+   * @default barusu-plaintext
+   */
+  plaintextRootDir: string
   /**
    * url of source repository of plaintext files are located
    * @default null
    */
-  plainRepositoryUrl: string
+  plaintextRepositoryUrl: string
   /**
    * whether to print password asterisks
    * @default true
@@ -57,9 +62,10 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
  */
 export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
   secretFilepath: '.barusu-secret',
-  cipherRootDir: 'barusu-cipher',
-  cipherIndexFilename: '.barusu-index',
-  plainRepositoryUrl: '',
+  indexFilepath: '.barusu-index',
+  ciphertextRootDir: 'barusu-ciphertext',
+  plaintextRootDir: 'barusu-plaintext',
+  plaintextRepositoryUrl: '',
   showAsterisk: true,
   miniumPasswordLength: 6,
 }
@@ -96,37 +102,42 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     resolvedDefaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
   logger.debug('secretFilepath:', secretFilepath)
 
-  // resolve cipherRootDir
-  const cipherRootDir: string = absoluteOfWorkspace(workspaceDir, cover<string>(
-    resolvedDefaultOptions.cipherRootDir, options.cipherRootDir, isNotEmptyString))
-  logger.debug('cipherRootDir:', cipherRootDir)
-
   // resolve indexFilepath
-  const cipherIndexFilename: string = absoluteOfWorkspace(cipherRootDir, cover<string>(
-    resolvedDefaultOptions.cipherIndexFilename, options.cipherIndexFilename, isNotEmptyString))
-  logger.debug('cipherIndexFilename:', cipherIndexFilename)
+  const indexFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
+    resolvedDefaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
+  logger.debug('indexFilepath:', indexFilepath)
 
-  // resolve plainRepositoryUrl
-  const plainRepositoryUrl = (() => {
-    const _rawPlainRepositoryUrl: string | null = cover<string>(
-      resolvedDefaultOptions.plainRepositoryUrl, options.plainRepositoryUrl, isNotEmptyString)
-    logger.debug('_rawPlainRepositoryUrl:', _rawPlainRepositoryUrl)
+  // resolve ciphertextRootDir
+  const ciphertextRootDir: string = absoluteOfWorkspace(workspaceDir, cover<string>(
+    resolvedDefaultOptions.ciphertextRootDir, options.ciphertextRootDir, isNotEmptyString))
+  logger.debug('ciphertextRootDir:', ciphertextRootDir)
 
-    // bad plainRepositoryUrl
-    if (_rawPlainRepositoryUrl == null || _rawPlainRepositoryUrl.length <= 0) {
+  // resolve plaintextRootDir
+  const plaintextRootDir: string = absoluteOfWorkspace(workspaceDir, cover<string>(
+    resolvedDefaultOptions.plaintextRootDir, options.plaintextRootDir, isNotEmptyString))
+  logger.debug('plaintextRootDir:', plaintextRootDir)
+
+  // resolve plaintextRepositoryUrl
+  const plaintextRepositoryUrl = (() => {
+    const rawPlaintextRepositoryUrl: string | null = cover<string>(
+      resolvedDefaultOptions.plaintextRepositoryUrl, options.plaintextRepositoryUrl, isNotEmptyString)
+    logger.debug('rawPlaintextRepositoryUrl:', rawPlaintextRepositoryUrl)
+
+    // bad plaintextRepositoryUrl
+    if (rawPlaintextRepositoryUrl == null || rawPlaintextRepositoryUrl.length <= 0) {
       return ''
     }
 
     // relative file path
-    if (/[.\/]/.test(_rawPlainRepositoryUrl)) {
+    if (/[.\/]/.test(rawPlaintextRepositoryUrl)) {
       return relativeOfWorkspace(
-        cipherRootDir,
-        absoluteOfWorkspace(workspaceDir, _rawPlainRepositoryUrl)
+        ciphertextRootDir,
+        absoluteOfWorkspace(workspaceDir, rawPlaintextRepositoryUrl)
       )
     }
-    return _rawPlainRepositoryUrl
+    return rawPlaintextRepositoryUrl
   })()
-  logger.debug('plainRepositoryUrl:', plainRepositoryUrl)
+  logger.debug('plaintextRepositoryUrl:', plaintextRepositoryUrl)
 
   // resolve showAsterisk
   const showAsterisk: boolean = cover<boolean>(
@@ -141,9 +152,10 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   return {
     ...resolvedDefaultOptions,
     secretFilepath,
-    cipherRootDir,
-    cipherIndexFilename,
-    plainRepositoryUrl,
+    indexFilepath,
+    ciphertextRootDir,
+    plaintextRootDir,
+    plaintextRepositoryUrl,
     showAsterisk,
     miniumPasswordLength,
   }

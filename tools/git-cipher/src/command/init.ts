@@ -22,9 +22,10 @@ export function loadSubCommandInit(
         cwd: options.cwd,
         workspace: options.workspace,
         secretFilepath: options.secretFilepath,
-        cipherRootDir: options.cipherRootDir,
-        cipherIndexFilename: options.cipherIndexFilename,
-        plainRepositoryUrl: options.plainRepositoryUrl,
+        indexFilepath: options.indexFilepath,
+        ciphertextRootDir: options.ciphertextRootDir,
+        plaintextRootDir: options.plaintextRootDir,
+        plaintextRepositoryUrl: options.plaintextRepositoryUrl,
         showAsterisk: options.showAsterisk,
         miniumPasswordLength: options.miniumPasswordLength,
       }

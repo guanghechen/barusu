@@ -15,17 +15,21 @@ export interface GitCipherInitializerContext {
    */
   readonly secretFilepath: string
   /**
-   * the directory where the encrypted files are saved
+   * path of index file of ciphertext files
    */
-  readonly cipherRootDir: string
+  readonly indexFilepath: string
   /**
-   * filename of index file of cipher directory
+   * the directory where the encrypted files are stored
    */
-  readonly cipherIndexFilename: string
+  readonly ciphertextRootDir: string
+  /**
+   * the directory where the source plaintext files are stored
+   */
+  readonly plaintextRootDir: string
   /**
    * url of source repository of plaintext files are located
    */
-  readonly plainRepositoryUrl: string
+  readonly plaintextRepositoryUrl: string
   /**
    * whether to print password asterisks
    */
@@ -51,17 +55,21 @@ interface Params {
    */
   readonly secretFilepath: string
   /**
-   * the directory where the encrypted files are saved
+   * path of index file of ciphertext files
    */
-  readonly cipherRootDir: string
+  readonly indexFilepath: string
   /**
-   * filename of index file of cipher directory
+   * the directory where the encrypted files are stored
    */
-  readonly cipherIndexFilename: string
+  readonly ciphertextRootDir: string
+  /**
+   * the directory where the source plaintext files are stored
+   */
+  readonly plaintextRootDir: string
   /**
    * url of source repository of plaintext files are located
    */
-  readonly plainRepositoryUrl: string
+  readonly plaintextRepositoryUrl: string
   /**
    * whether to print password asterisks
    */
@@ -85,9 +93,10 @@ export async function createGitCipherInitializerContext(
     cwd: params.cwd,
     workspace: params.workspace,
     secretFilepath: params.secretFilepath,
-    cipherRootDir: params.cipherRootDir,
-    cipherIndexFilename: params.cipherIndexFilename,
-    plainRepositoryUrl: params.plainRepositoryUrl,
+    indexFilepath: params.indexFilepath,
+    ciphertextRootDir: params.ciphertextRootDir,
+    plaintextRootDir: params.plaintextRootDir,
+    plaintextRepositoryUrl: params.plaintextRepositoryUrl,
     showAsterisk: params.showAsterisk,
     miniumPasswordLength: params.miniumPasswordLength,
   }

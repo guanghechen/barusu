@@ -1,7 +1,7 @@
 import commandExists from 'command-exists'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
-import { runPlop } from '@barusu/util-cli'
+import { runPlop, relativeOfWorkspace } from '@barusu/util-cli'
 import { toLowerCase } from '@barusu/util-option'
 import { resolveTemplateFilepath, version } from '../../util/env'
 import { logger } from '../../util/logger'
@@ -24,17 +24,17 @@ export class GitCipherInitializer {
     }
 
     // If not specified by the command option, an inquiry is launched
-    if (context.plainRepositoryUrl == null || /^\S*$/.test(context.plainRepositoryUrl)) {
-      const { plainRepositoryUrl } = await inquirer.prompt([
+    if (context.plaintextRepositoryUrl == null || /^\S*$/.test(context.plaintextRepositoryUrl)) {
+      const { plaintextRepositoryUrl } = await inquirer.prompt([
         {
           type: 'input',
-          name: 'plainRepositoryUrl',
+          name: 'plaintextRepositoryUrl',
           message: 'Resource git repository url?',
           filter: x => toLowerCase(x).trim(),
           transformer: (x: string) => toLowerCase(x).trim(),
         },
       ])
-      ; (context as any).plainRepositoryUrl = plainRepositoryUrl
+      ; (context as any).plaintextRepositoryUrl = plaintextRepositoryUrl
     }
 
     const templateConfig = resolveTemplateFilepath('plop.js')
@@ -42,10 +42,11 @@ export class GitCipherInitializer {
     await runPlop(plop, logger, undefined, {
       workspace: context.workspace,
       templateVersion: version,
-      secretFilepath: context.secretFilepath,
-      cipherRootDir: context.cipherRootDir,
-      cipherIndexFilename: context.cipherIndexFilename,
-      plainRepositoryUrl: context.plainRepositoryUrl,
+      secretFilepath: relativeOfWorkspace(context.workspace, context.secretFilepath),
+      indexFilepath: relativeOfWorkspace(context.workspace, context.indexFilepath),
+      ciphertextRootDir: relativeOfWorkspace(context.workspace, context.ciphertextRootDir),
+      plaintextRootDir: relativeOfWorkspace(context.workspace, context.plaintextRootDir),
+      plaintextRepositoryUrl: context.plaintextRepositoryUrl,
       showAsterisk: context.showAsterisk,
       miniumPasswordLength: context.miniumPasswordLength,
     })
