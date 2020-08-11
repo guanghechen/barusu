@@ -20,13 +20,18 @@ import { logger } from '../util/logger'
  */
 export interface GlobalCommandOptions extends CommandConfigurationOptions {
   /**
+   * default encoding of files in the workspace
+   * @default utf-8
+   */
+  encoding: string
+  /**
    * path of secret file
    * @default .barusu-secret
    */
   secretFilepath: string
   /**
    * encoding of secret file
-   * @default 'utf-8'
+   * @default utf-8
    */
   secretFileEncoding: string
   /**
@@ -34,6 +39,11 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
    * @default .barusu-index
    */
   indexFilepath: string
+  /**
+   * encoding of index file
+   * @default utf-8
+   */
+  indexFileEncoding: string
   /**
    * the directory where the encrypted files are stored
    * @default barusu-ciphertext
@@ -71,9 +81,11 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
  * Default value of global options
  */
 export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
+  encoding: 'utf-8',
   secretFilepath: '.barusu-secret',
   secretFileEncoding: 'utf-8',
   indexFilepath: '.barusu-index',
+  indexFileEncoding: 'utf-8',
   ciphertextRootDir: 'barusu-ciphertext',
   plaintextRootDir: 'barusu-plaintext',
   plaintextRepositoryUrl: '',
@@ -109,6 +121,11 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
       strategies
     )
 
+  // resolve encoding
+  const encoding: string = cover<string>(
+    resolvedDefaultOptions.encoding, options.encoding, isNotEmptyString)
+  logger.debug('encoding:', encoding)
+
   // resolve secretFilepath
   const secretFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
     resolvedDefaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
@@ -123,6 +140,11 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const indexFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
     resolvedDefaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
   logger.debug('indexFilepath:', indexFilepath)
+
+  // resolve indexFileEncoding
+  const indexFileEncoding: string = cover<string>(
+    resolvedDefaultOptions.indexFileEncoding, options.indexFileEncoding, isNotEmptyString)
+  logger.debug('indexFileEncoding:', indexFileEncoding)
 
   // resolve ciphertextRootDir
   const ciphertextRootDir: string = absoluteOfWorkspace(workspaceDir, cover<string>(
@@ -173,9 +195,11 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
 
   return {
     ...resolvedDefaultOptions,
+    encoding,
     secretFilepath,
     secretFileEncoding,
     indexFilepath,
+    indexFileEncoding,
     ciphertextRootDir,
     plaintextRootDir,
     plaintextRepositoryUrl,

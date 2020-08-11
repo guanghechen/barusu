@@ -2,7 +2,10 @@ import crypto from 'crypto'
 import fs from 'fs-extra'
 import path from 'path'
 import { collectAllFilesSync, relativeOfWorkspace } from '@barusu/util-cli'
+import { coverString, isNotEmptyString } from '@barusu/util-option'
+import { destroyBuffer } from './buffer'
 import { Cipher } from './cipher'
+import { ErrorCode } from './events'
 
 
 /**
@@ -31,7 +34,7 @@ export interface WorkspaceCatalogData {
   /**
    * Last modify time of the contents of the workspace
    */
-  mtime: string
+  mtime: string | null
   /**
    * Filepath map records
    */
@@ -42,15 +45,11 @@ export interface WorkspaceCatalogData {
 /**
  * Params of constructor of WorkspaceCatalog
  */
-export interface WorkspaceCatalogParams extends WorkspaceCatalogData {
+export interface WorkspaceCatalogParams {
   /**
    * A collect of util funcs for encryption / decryption
    */
   readonly cipher: Cipher
-  /**
-   * Encoding of the index file
-   */
-  readonly encoding: BufferEncoding
   /**
    * Root directory of plaintext files
    */
@@ -59,6 +58,16 @@ export interface WorkspaceCatalogParams extends WorkspaceCatalogData {
    * Root directory of ciphertext files
    */
   readonly ciphertextRootDir: string
+  /**
+   * Encoding of index file
+   * @default 'utf-8'
+   */
+  readonly indexFileEncoding?: string
+  /**
+   * Encoding of index file content
+   * @default 'base64'
+   */
+  readonly indexContentEncoding?: BufferEncoding
 }
 
 
@@ -67,23 +76,27 @@ export interface WorkspaceCatalogParams extends WorkspaceCatalogData {
  */
 export class WorkspaceCatalog {
   protected readonly cipher: Cipher
-  protected readonly encoding: BufferEncoding
   protected readonly plaintextRootDir: string
   protected readonly ciphertextRootDir: string
+  protected readonly indexFileEncoding: string
+  protected readonly indexContentEncoding: BufferEncoding
   protected readonly items: Readonly<WorkspaceCatalogItem>[]
   protected readonly plaintextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
   protected readonly ciphertextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
-  protected mtime: string
+  protected mtime: string | null
 
   public constructor(params: WorkspaceCatalogParams) {
     this.cipher = params.cipher
-    this.encoding = params.encoding
+    this.indexFileEncoding= coverString(
+      'utf-8', params.indexFileEncoding, isNotEmptyString)
+    this.indexContentEncoding= coverString(
+      'base64', params.indexContentEncoding, isNotEmptyString) as BufferEncoding
     this.plaintextRootDir = params.plaintextRootDir
     this.ciphertextRootDir = params.ciphertextRootDir
     this.items = []
     this.plaintextFilepathMap = new Map()
     this.ciphertextFilepathMap = new Map()
-    this.mtime = (new Date()).toISOString()
+    this.mtime = null
   }
 
   /**
@@ -91,14 +104,27 @@ export class WorkspaceCatalog {
    * @param indexFilepath absolute filepath of index file
    */
   public async load(indexFilepath: string): Promise<void> {
+    if (!fs.existsSync(indexFilepath)) {
+      throw {
+        code: ErrorCode.FILEPATH_NOT_FOUND,
+        message: `cannot find index file (${ indexFilepath })`
+      }
+    }
+
+    const {
+      indexFileEncoding,
+      indexContentEncoding,
+    } = this
+
     // load content from index file
-    const rawCiphertextContent = await fs.readFile(indexFilepath)
+    const rawCiphertextContent = await fs.readFile(indexFilepath, indexFileEncoding)
+    const ciphertextContent: Buffer = Buffer.from(rawCiphertextContent, indexContentEncoding)
 
     // do decryption
-    const rawContent = this.cipher.decrypt(rawCiphertextContent)
+    const rawContent = this.cipher.decrypt(ciphertextContent)
 
     // remove salt
-    const content = this.removeSalt(rawContent.toString(this.encoding))
+    const content = this.removeSalt(rawContent.toString())
 
     // parse the content
     const { mtime, items } = JSON.parse(content)
@@ -117,6 +143,9 @@ export class WorkspaceCatalog {
    * @param indexFilepath absolute filepath of index file
    */
   public async save(indexFilepath: string): Promise<void> {
+    const { cipher, indexContentEncoding, indexFileEncoding } = this
+
+
     // dump to data
     const data: WorkspaceCatalogData = {
       mtime: this.mtime,
@@ -128,9 +157,10 @@ export class WorkspaceCatalog {
     const content = this.insertSalt(plaintextContent)
 
     // save into the index file
-    const plainTextData: Buffer = Buffer.from(content, this.encoding)
-    const ciphertextData: Buffer = this.cipher.encrypt(plainTextData)
-    await fs.writeFile(indexFilepath, ciphertextData)
+    const plainTextData: Buffer = Buffer.from(content, 'utf-8')
+    const ciphertextData = cipher.encrypt(plainTextData).toString(indexContentEncoding)
+    destroyBuffer(plainTextData)
+    await fs.writeFile(indexFilepath, ciphertextData, indexFileEncoding)
   }
 
   /**
@@ -139,7 +169,7 @@ export class WorkspaceCatalog {
    */
   public touch(mtime: string): void {
     // shouldn't go back to an earlier time
-    if (this.mtime.localeCompare(mtime) >= 0) return
+    if (this.mtime != null && this.mtime.localeCompare(mtime) >= 0) return
     this.mtime = mtime
   }
 
@@ -211,7 +241,7 @@ export class WorkspaceCatalog {
    */
   public checkIntegrity(): void | never {
     const allCiphertextFiles = collectAllFilesSync(this.ciphertextRootDir, null)
-    if (allCiphertextFiles.length - 1 !== this.items.length) {
+    if (allCiphertextFiles.length !== this.items.length) {
       throw new Error(`[INTEGRITY DAMAGE] there are ${ this.items.length } files in index file, but actually there are ${ allCiphertextFiles.length } files in the cipher directory`)
     }
 

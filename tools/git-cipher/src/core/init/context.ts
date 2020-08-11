@@ -11,13 +11,25 @@ export interface GitCipherInitializerContext {
    */
   readonly workspace: string
   /**
+   * default encoding of files in the workspace
+   */
+  readonly encoding: string
+  /**
    * path of secret file
    */
   readonly secretFilepath: string
   /**
+   * encoding of secret file
+   */
+  readonly secretFileEncoding: string
+  /**
    * path of index file of ciphertext files
    */
   readonly indexFilepath: string
+  /**
+   * encoding of index file
+   */
+  readonly indexFileEncoding: string
   /**
    * the directory where the encrypted files are stored
    */
@@ -55,13 +67,25 @@ interface Params {
    */
   readonly workspace: string
   /**
+   * default encoding of files in the workspace
+   */
+  readonly encoding: string
+  /**
    * path of secret file
    */
   readonly secretFilepath: string
   /**
+   * encoding of secret file
+   */
+  readonly secretFileEncoding: string
+  /**
    * path of index file of ciphertext files
    */
   readonly indexFilepath: string
+  /**
+   * encoding of index file
+   */
+  readonly indexFileEncoding: string
   /**
    * the directory where the encrypted files are stored
    */
@@ -100,8 +124,11 @@ export async function createGitCipherInitializerContext(
   const context: GitCipherInitializerContext = {
     cwd: params.cwd,
     workspace: params.workspace,
+    encoding: params.encoding,
     secretFilepath: params.secretFilepath,
+    secretFileEncoding: params.secretFileEncoding,
     indexFilepath: params.indexFilepath,
+    indexFileEncoding: params.indexFileEncoding,
     ciphertextRootDir: params.ciphertextRootDir,
     plaintextRootDir: params.plaintextRootDir,
     plaintextRepositoryUrl: params.plaintextRepositoryUrl,

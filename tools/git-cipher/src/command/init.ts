@@ -7,8 +7,6 @@ import { GitCipherInitializerContext } from '../core/init/context'
 import { GitCipherInitializer } from '../core/init/initializer'
 import { EventTypes, eventBus } from '../util/events'
 import { handleError } from './_util'
-import { SecretMaster } from '../util/secret'
-import { AESCipher } from '../util/cipher'
 
 
 /**
@@ -23,8 +21,11 @@ export function loadSubCommandInit(
       const context: GitCipherInitializerContext = {
         cwd: options.cwd,
         workspace: options.workspace,
+        encoding: options.encoding,
         secretFilepath: options.secretFilepath,
+        secretFileEncoding: options.secretFileEncoding,
         indexFilepath: options.indexFilepath,
+        indexFileEncoding: options.indexFileEncoding,
         ciphertextRootDir: options.ciphertextRootDir,
         plaintextRootDir: options.plaintextRootDir,
         plaintextRepositoryUrl: options.plaintextRepositoryUrl,
@@ -33,18 +34,9 @@ export function loadSubCommandInit(
         maxPasswordLength: options.maxPasswordLength,
       }
 
+      // create
       const initializer = new GitCipherInitializer(context)
       await initializer.init()
-
-      const oldSecretMaster = new SecretMaster({
-        cipherFactory: { create: () => new AESCipher() },
-        showAsterisk: context.showAsterisk,
-        minPasswordLength: context.minPasswordLength,
-        maxPasswordLength: context.maxPasswordLength,
-      })
-      const secretMaster = await oldSecretMaster.recreate()
-      oldSecretMaster.cleanup()
-      await secretMaster.save(context.secretFilepath, 'utf-8')
     } catch (error) {
       handleError(error)
     } finally {

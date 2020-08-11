@@ -16,9 +16,11 @@ export function createProgram(): Command {
 
   // global options
   program
+    .option('--encoding <encoding>', 'default encoding of files in the workspace')
     .option('--secret-filepath <secretFilepath>', 'path of secret file')
     .option('--secret-file-encoding <secretFileEncoding>', 'encoding of secret file')
     .option('--index-filepath <indexFilepath>', 'path of index file of ciphertext files')
+    .option('--index-file-encoding <indexFileEncoding>', 'encoding of index file')
     .option('--ciphertext-root-dir <ciphertextRootDir>', 'the directory where the encrypted files are stored')
     .option('--plaintext-root-dir <plaintextRootDir>', 'the directory where the source plaintext files are stored')
     .option('--plaintext-repository-url <plaintextRepositoryUrl>', 'url of source repository of plaintext files are located')

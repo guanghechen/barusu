@@ -1,5 +1,10 @@
 import fs from 'fs-extra'
-import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
+import {
+  coverBoolean,
+  coverNumber,
+  coverString,
+  isNotEmptyString,
+} from '@barusu/util-option'
 import { calcMac, destroyBuffer } from './buffer'
 import { Cipher, CipherFactory } from './cipher'
 import { ErrorCode, EventTypes, eventBus } from './events'
@@ -77,8 +82,10 @@ export class SecretMaster {
   public constructor(params: SecretMasterParams) {
     this.secretCipher = params.cipherFactory.create()
     this.cipherFactory = params.cipherFactory
-    this.secretFileEncoding = coverString('utf-8', params.secretFileEncoding)
-    this.secretContentEncoding = coverString('hex', params.secretContentEncoding) as BufferEncoding
+    this.secretFileEncoding = coverString(
+      'utf-8', params.secretFileEncoding, isNotEmptyString)
+    this.secretContentEncoding = coverString(
+      'hex', params.secretContentEncoding, isNotEmptyString) as BufferEncoding
     this.showAsterisk = coverBoolean(true, params.showAsterisk)
     this.maxRetryTimes = coverNumber(2, params.maxRetryTimes)
     this.minPasswordLength = coverNumber(6, params.minPasswordLength)
@@ -90,10 +97,7 @@ export class SecretMaster {
    * Load secret key from secret file
    * @param secretFilepath absolute filepath of secret file
    */
-  public async load(
-    secretFilepath: string,
-    secretFileEncoding: string,
-  ): Promise<void> {
+  public async load(secretFilepath: string): Promise<void> {
     if (!fs.existsSync(secretFilepath)) {
       throw {
         code: ErrorCode.FILEPATH_NOT_FOUND,
@@ -101,7 +105,12 @@ export class SecretMaster {
       }
     }
 
-    const { secretCipher, cipherFactory, secretContentEncoding } = this
+    const {
+      secretCipher,
+      cipherFactory,
+      secretContentEncoding,
+      secretFileEncoding,
+    } = this
     const secretContent: string = await fs.readFile(secretFilepath, secretFileEncoding)
     const secretSepIndex = secretContent.indexOf('.')
     const encryptedSecret: Buffer = Buffer.from(
@@ -139,14 +148,12 @@ export class SecretMaster {
    * Dump the secret key into secret file
    * @param secretFilepath absolute filepath of secret file
    */
-  public async save(
-    secretFilepath: string,
-    secretFileEncoding: string,
-  ): Promise<void | never> {
+  public async save(secretFilepath: string): Promise<void | never> {
     const {
       encryptedSecret,
       encryptedSecretMac,
-      secretContentEncoding
+      secretContentEncoding,
+      secretFileEncoding,
     } = this
 
     if (encryptedSecret == null || encryptedSecretMac == null) {
