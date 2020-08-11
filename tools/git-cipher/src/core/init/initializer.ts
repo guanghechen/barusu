@@ -1,7 +1,11 @@
 import commandExists from 'command-exists'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
-import { relativeOfWorkspace, runPlop } from '@barusu/util-cli'
+import {
+  installDependencies,
+  relativeOfWorkspace,
+  runPlop,
+} from '@barusu/util-cli'
 import { toLowerCase } from '@barusu/util-option'
 import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
@@ -28,6 +32,7 @@ export class GitCipherInitializer {
   }
 
   public async init(): Promise<void> {
+    const { context } = this
     const hasGitInstalled: boolean = commandExists.sync('git')
     if (!hasGitInstalled) {
       throw new Error('Cannot find git, have you installed it?')
@@ -41,6 +46,12 @@ export class GitCipherInitializer {
 
     // create index file
     await this.createIndexFile()
+
+    // install dependencies
+    await installDependencies({
+      stdio: 'inherit',
+      cwd: context.workspace,
+    })
   }
 
   /**
