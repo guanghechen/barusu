@@ -87,8 +87,8 @@ export class WorkspaceCatalog {
   }
 
   /**
-   * load data from index file
-   * @param indexFilepath absolute filepath of index file of cipher directory
+   * Load data from index file
+   * @param indexFilepath absolute filepath of index file
    */
   public async load(indexFilepath: string): Promise<void> {
     // load content from index file
@@ -113,8 +113,8 @@ export class WorkspaceCatalog {
   }
 
   /**
-   * dump the data into index file
-   * @param indexFilepath absolute filepath of index file of cipher directory
+   * Dump the data into index file
+   * @param indexFilepath absolute filepath of index file
    */
   public async save(indexFilepath: string): Promise<void> {
     // dump to data

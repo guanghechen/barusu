@@ -37,7 +37,11 @@ export interface GitCipherInitializerContext {
   /**
    * the minimum size required of password
    */
-  readonly miniumPasswordLength: number
+  readonly minPasswordLength: number
+  /**
+   * the maximum size required of password
+   */
+  readonly maxPasswordLength: number
 }
 
 
@@ -77,7 +81,11 @@ interface Params {
   /**
    * the minimum size required of password
    */
-  readonly miniumPasswordLength: number
+  readonly minPasswordLength: number
+  /**
+   * the maximum size required of password
+   */
+  readonly maxPasswordLength: number
 }
 
 
@@ -98,7 +106,8 @@ export async function createGitCipherInitializerContext(
     plaintextRootDir: params.plaintextRootDir,
     plaintextRepositoryUrl: params.plaintextRepositoryUrl,
     showAsterisk: params.showAsterisk,
-    miniumPasswordLength: params.miniumPasswordLength,
+    minPasswordLength: params.minPasswordLength,
+    maxPasswordLength: params.maxPasswordLength,
   }
   return context
 }

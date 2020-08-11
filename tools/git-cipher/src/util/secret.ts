@@ -1,9 +1,10 @@
 import fs from 'fs-extra'
 import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
 import { calcMac, destroyBuffer } from './buffer'
-import { Cipher } from './cipher'
+import { Cipher, CipherFactory } from './cipher'
 import { ErrorCode, EventTypes, eventBus } from './events'
 import * as io from './io'
+import { logger } from './logger'
 
 
 /**
@@ -11,13 +12,9 @@ import * as io from './io'
  */
 export interface SecretMasterParams {
   /**
-   * Cipher built with main password to encrypt / decrypt secret
+   * Factory class that produces Cipher
    */
-  cipher: Cipher
-  /**
-   * Filepath to store secret
-   */
-  secretFilepath: string
+  cipherFactory: CipherFactory
   /**
    * Encoding of secret file
    * @default 'utf-8'
@@ -29,201 +26,266 @@ export interface SecretMasterParams {
    */
   secretContentEncoding?: BufferEncoding
   /**
-   * max wrong password retry times
-   * @default 3
-   */
-  maxRetryTimes?: number
-  /**
    * Whether to print asterisks when entering a password
    * @default true
    */
   showAsterisk?: boolean
   /**
+   * max wrong password retry times
+   * @default 2
+   */
+  maxRetryTimes?: number
+  /**
    * Minimum length of password
    * @default 6
    */
-  minimumSize?: number
+  minPasswordLength?: number
   /**
    * Maximum length of password
    * @default 100
    */
-  maximumSize?: number
+  maxPasswordLength?: number
 }
 
 
+/**
+ * @member secretCipher           cipher initialized by secret
+ * @member cipherFactory          factory to produce Cipher
+ * @member secretFileEncoding     encoding of secret file
+ * @member secretContentEncoding  encoding of secret content
+ * @member showAsterisk           whether to print password asterisks
+ * @member maxRetryTimes          maximum times of failed password attempts allowed
+ * @member minPasswordLength      minimum length of password
+ * @member maxPasswordLength      maximum length of password
+ * @member encryptedSecret        encrypted secret
+ * @member encryptedSecretMac     encrypted mac of secret plaintext
+ * @member cleanupTimer
+ * @member cleanupTimeout
+ */
 export class SecretMaster {
-  protected readonly cipher: Cipher
-  protected readonly secretFilepath: string
+  protected readonly secretCipher: Cipher
+  protected readonly cipherFactory: CipherFactory
   protected readonly secretFileEncoding: string
   protected readonly secretContentEncoding: BufferEncoding
-  protected readonly maxRetryTimes: number
   protected readonly showAsterisk: boolean
-  protected readonly minimumSize: number
-  protected readonly maximumSize: number
-  protected secret: Buffer | null = null
-  protected cleanupTimer: number | null = null
-  protected cleanupTimeout: number = 12 * 1000  // 12s
+  protected readonly maxRetryTimes: number
+  protected readonly minPasswordLength: number
+  protected readonly maxPasswordLength: number
+  protected encryptedSecret: Buffer | null = null
+  protected encryptedSecretMac: Buffer | null = null
 
   public constructor(params: SecretMasterParams) {
-    this.cipher = params.cipher
-    this.secretFilepath = params.secretFilepath
+    this.secretCipher = params.cipherFactory.create()
+    this.cipherFactory = params.cipherFactory
     this.secretFileEncoding = coverString('utf-8', params.secretFileEncoding)
     this.secretContentEncoding = coverString('hex', params.secretContentEncoding) as BufferEncoding
-    this.maxRetryTimes = coverNumber(3, params.maxRetryTimes)
     this.showAsterisk = coverBoolean(true, params.showAsterisk)
-    this.minimumSize = coverNumber(6, params.minimumSize)
-    this.maximumSize = coverNumber(100, params.maximumSize)
+    this.maxRetryTimes = coverNumber(2, params.maxRetryTimes)
+    this.minPasswordLength = coverNumber(6, params.minPasswordLength)
+    this.maxPasswordLength = coverNumber(100, params.maxPasswordLength)
     eventBus.on(EventTypes.EXITING, () => this.cleanup())
   }
 
-  public initCipherFromPassword(password: Buffer): void {
-    this.cipher.initKeyFromPassword(password)
-  }
-
   /**
-   * Load key from secret
+   * Load secret key from secret file
+   * @param secretFilepath absolute filepath of secret file
    */
-  public async loadSecret(): Promise<Buffer> {
-    const self = this
-    if (!fs.existsSync(self.secretFilepath)) {
-      throw new Error(`cannot find secret file (${ self.secretFilepath })`)
-    }
-
-    const bakSecret = (): Buffer => {
-      const secret: Buffer = Buffer.alloc(self.secret!.length)
-      self.secret!.copy(secret, 0, 0, self.secret!.length)
-      self.setCleanupTimer()
-      return secret
-    }
-
-    // existed secret
-    if (self.secret != null) {
-      return bakSecret()
-    }
-
-    const secretContent: string = await fs.readFile(
-      self.secretFilepath, self.secretFileEncoding)
-    const secretSepIndex = secretContent.indexOf('.')
-    const cipherSecret: Buffer = Buffer.from(
-      secretContent.slice(0, secretSepIndex), self.secretContentEncoding)
-    const cipherSecretMac: Buffer = Buffer.from(
-      secretContent.slice(secretSepIndex + 1), self.secretContentEncoding)
-
-    const testPassword = (password: Buffer): boolean => {
-      self.cipher.initKeyFromPassword(password)
-
-      let plainSecret: Buffer | null = null
-      let plainSecretMac: Buffer | null = null
-      let mac: Buffer | null = null
-      let flag = false
-      try {
-        plainSecret = self.cipher.decrypt(cipherSecret)
-        plainSecretMac = self.cipher.decrypt(cipherSecretMac)
-        mac = calcMac(plainSecret)
-        if (mac.compare(plainSecretMac) === 0) {
-          flag = true
-        }
-      } finally {
-        destroyBuffer(plainSecret)
-        destroyBuffer(plainSecretMac)
-        destroyBuffer(mac)
-        self.cleanup()
+  public async load(
+    secretFilepath: string,
+    secretFileEncoding: string,
+  ): Promise<void> {
+    if (!fs.existsSync(secretFilepath)) {
+      throw {
+        code: ErrorCode.FILEPATH_NOT_FOUND,
+        message: `cannot find secret file (${ secretFilepath })`
       }
-      return flag
     }
+
+    const { secretCipher, cipherFactory, secretContentEncoding } = this
+    const secretContent: string = await fs.readFile(secretFilepath, secretFileEncoding)
+    const secretSepIndex = secretContent.indexOf('.')
+    const encryptedSecret: Buffer = Buffer.from(
+      secretContent.slice(0, secretSepIndex), secretContentEncoding)
+    const encryptedSecretMac: Buffer = Buffer.from(
+      secretContent.slice(secretSepIndex + 1), secretContentEncoding)
+
+    this.encryptedSecret = encryptedSecret
+    this.encryptedSecretMac = encryptedSecretMac
 
     let secret: Buffer | null = null
-    for (let i = 0; i < self.maxRetryTimes; ++i) {
-      let password: Buffer | null = null
-      const question = i > 0 ? '(Retry) Password: ' : 'Password: '
-      password = await self.inputPassword(question, testPassword)
-      if (password != null) {
-        try {
-          self.cipher.initKeyFromPassword(password)
-          secret = self.cipher.decrypt(cipherSecret)
-        } finally {
-          destroyBuffer(password)
+    let password: Buffer | null = null
+    const passwordCipher: Cipher = cipherFactory.create()
+    try {
+      password = await this.askPassword()
+      if (password == null) {
+        throw {
+          code: ErrorCode.WRONG_PASSWORD,
+          message: 'Password incorrect'
         }
-        break
       }
+      passwordCipher.initKeyFromPassword(password)
+      secret = passwordCipher.decrypt(encryptedSecret)
+      secretCipher.initKeyFromSecret(secret)
+    } finally {
+      destroyBuffer(secret)
+      destroyBuffer(password)
+      secret = null
+      password = null
+      passwordCipher.cleanup()
     }
-
-    if (secret == null) {
-      throw {
-        code: ErrorCode.WRONG_PASSWORD,
-        message: 'Password incorrect'
-      }
-    }
-
-    self.secret = secret
-    return bakSecret()
   }
 
   /**
-   * Generate secret from key
+   * Dump the secret key into secret file
+   * @param secretFilepath absolute filepath of secret file
    */
-  public async saveSecret(secret: Buffer | null = this.secret): Promise<void> {
+  public async save(
+    secretFilepath: string,
+    secretFileEncoding: string,
+  ): Promise<void | never> {
     const {
-      secretFileEncoding,
-      secretContentEncoding,
-      secretFilepath,
+      encryptedSecret,
+      encryptedSecretMac,
+      secretContentEncoding
     } = this
 
-    if (secret == null) {
+    if (encryptedSecret == null || encryptedSecretMac == null) {
       throw {
         code: ErrorCode.NULL_POINTER_ERROR,
-        message: '[saveSecret] secret is null',
+        message: '[save] encryptedSecret / encryptedSecretMac are not specified',
       }
     }
 
-    const secretMac: Buffer = calcMac(secret)
-    const cipherSecret = this.cipher.encrypt(secret)
-    const cipherSecretMac = this.cipher.encrypt(secretMac)
-    const secretContent = cipherSecret.toString(secretContentEncoding) +
-      '.' + cipherSecretMac.toString(secretContentEncoding)
+    const secretContent = encryptedSecret.toString(secretContentEncoding) +
+      '.' + encryptedSecretMac.toString(secretContentEncoding)
     await fs.writeFile(secretFilepath, secretContent, secretFileEncoding)
+  }
 
-    this.cleanup()
-    this.secret = secret
-    this.loadSecret()
+  /**
+   * create a new secret key
+   */
+  public async recreate(params: Partial<SecretMasterParams> = {}): Promise<SecretMaster> {
+    const {
+      cipherFactory,
+      secretContentEncoding,
+      showAsterisk,
+      maxRetryTimes,
+      minPasswordLength,
+      maxPasswordLength,
+    } = this
+
+    const secretMaster = new SecretMaster({
+      cipherFactory,
+      secretContentEncoding,
+      showAsterisk,
+      maxRetryTimes,
+      minPasswordLength,
+      maxPasswordLength,
+      ...params,
+    })
+
+    let secret: Buffer | null = null
+    let password: Buffer | null = null
+    const passwordCipher: Cipher = cipherFactory.create()
+    try {
+      password = await io.inputPassword(
+        'Password: ', showAsterisk, 3, minPasswordLength, maxPasswordLength)
+      const isSame = await io.confirmPassword(
+        password, undefined, showAsterisk, minPasswordLength, maxPasswordLength)
+
+      if (!isSame) {
+        throw {
+          code: ErrorCode.ENTERED_PASSWORD_DIFFER,
+          message: 'Entered passwords differ!',
+        }
+      }
+
+      // use password to encrypt new secret
+      passwordCipher.initKeyFromPassword(password)
+
+      secret = secretMaster.secretCipher.createSecret()
+      const secretMac: Buffer = calcMac(secret)
+      const encryptedSecret = passwordCipher.encrypt(secret)
+      const encryptedSecretMac = passwordCipher.encrypt(secretMac)
+
+      // use new secret to init secretMaster
+      secretMaster.encryptedSecret = encryptedSecret
+      secretMaster.encryptedSecretMac = encryptedSecretMac
+      secretMaster.secretCipher.initKeyFromSecret(secret)
+    } finally {
+      destroyBuffer(secret)
+      destroyBuffer(password)
+      secret = null
+      password = null
+      passwordCipher.cleanup()
+    }
+    return secretMaster
+  }
+
+  public getCipher(): Cipher {
+    return this.secretCipher
   }
 
   /**
    * Destroy secret and sensitive data
    */
   public cleanup(): void {
-    destroyBuffer(this.secret)
-    this.secret = null
-    this.cipher.cleanup()
+    this.secretCipher.cleanup()
   }
 
   /**
-   * set a timer to do the cleanup
+   * Request password
    */
-  protected setCleanupTimer(): void {
-    if (this.cleanupTimer != null) {
-      clearTimeout(this.cleanupTimer)
-    }
-    this.cleanupTimer = setTimeout(
-      () => this.cleanup(),
-      this.cleanupTimeout
-    ) as any
-  }
-
-  protected async inputPassword(
-    question: string,
-    testPassword: (password: Buffer) => boolean,
-  ): Promise<Buffer | null> {
-    const self = this
-
+  protected async askPassword(): Promise<Buffer | null> {
+    const {
+      maxRetryTimes,
+      showAsterisk,
+      minPasswordLength,
+      maxPasswordLength,
+    } = this
     let password: Buffer | null = null
-    for (let i = 0; i < self.maxRetryTimes; ++i) {
+    for (let i = 0; i <= maxRetryTimes; ++i) {
+      const question = i > 0 ? '(Retry) Password: ' : 'Password: '
       password = await io.inputPassword(
-        question, self.showAsterisk, 1, self.minimumSize, self.maximumSize)
-      if (testPassword(password)) break
+        question, showAsterisk, 1, minPasswordLength, maxPasswordLength)
+      if (this.testPassword(password)) break
       destroyBuffer(password)
       password = null
     }
     return password
+  }
+
+  /**
+   * Test whether the password is correct
+   * @param password
+   */
+  protected testPassword(password: Buffer): boolean {
+    const { cipherFactory, encryptedSecret, encryptedSecretMac } = this
+    if (encryptedSecret == null || encryptedSecretMac == null) {
+      logger.error('[testPassword] encryptedSecret / encryptedSecretMac are not specified')
+      return false
+    }
+
+    let result = false
+    let plainSecret: Buffer | null = null
+    let plainSecretMac: Buffer | null = null
+    let mac: Buffer | null = null
+    const cipher = cipherFactory.create()
+
+    try {
+      cipher.initKeyFromPassword(password)
+      plainSecret = cipher.decrypt(encryptedSecret)
+      plainSecretMac = cipher.decrypt(encryptedSecretMac)
+      mac = calcMac(plainSecret)
+      if (mac.compare(plainSecretMac) === 0) {
+        result = true
+      }
+    } finally {
+      destroyBuffer(plainSecret)
+      destroyBuffer(plainSecretMac)
+      destroyBuffer(mac)
+      cipher.cleanup()
+    }
+    return result
   }
 }

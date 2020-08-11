@@ -49,6 +49,14 @@ export interface Cipher {
 
 
 /**
+ * Factory class that produces Cipher
+ */
+export interface CipherFactory {
+  create(): Cipher
+}
+
+
+/**
  *
  */
 export abstract class BaseCipher implements Cipher {

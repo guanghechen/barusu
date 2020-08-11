@@ -25,6 +25,11 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
    */
   secretFilepath: string
   /**
+   * encoding of secret file
+   * @default 'utf-8'
+   */
+  secretFileEncoding: string
+  /**
    * path of index file of ciphertext files
    * @default .barusu-index
    */
@@ -53,7 +58,12 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
    * the minimum size required of password
    * @default 6
    */
-  miniumPasswordLength: number
+  minPasswordLength: number
+  /**
+   * the maximum size required of password
+   * @default 100
+   */
+  maxPasswordLength: number
 }
 
 
@@ -62,12 +72,14 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
  */
 export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
   secretFilepath: '.barusu-secret',
+  secretFileEncoding: 'utf-8',
   indexFilepath: '.barusu-index',
   ciphertextRootDir: 'barusu-ciphertext',
   plaintextRootDir: 'barusu-plaintext',
   plaintextRepositoryUrl: '',
   showAsterisk: true,
-  miniumPasswordLength: 6,
+  minPasswordLength: 6,
+  maxPasswordLength: 100,
 }
 
 
@@ -101,6 +113,11 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const secretFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
     resolvedDefaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
   logger.debug('secretFilepath:', secretFilepath)
+
+  // resolve secretFileEncoding
+  const secretFileEncoding: string = cover<string>(
+    resolvedDefaultOptions.secretFileEncoding, options.secretFileEncoding, isNotEmptyString)
+  logger.debug('secretFileEncoding:', secretFileEncoding)
 
   // resolve indexFilepath
   const indexFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
@@ -144,19 +161,26 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     resolvedDefaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
   logger.debug('showAsterisk:', showAsterisk)
 
-  // resolve miniumPasswordLength
-  const miniumPasswordLength: number = cover<number>(
-    resolvedDefaultOptions.miniumPasswordLength, convertToNumber(options.miniumPasswordLength))
-  logger.debug('miniumPasswordLength:', miniumPasswordLength)
+  // resolve minPasswordLength
+  const minPasswordLength: number = cover<number>(
+    resolvedDefaultOptions.minPasswordLength, convertToNumber(options.minPasswordLength))
+  logger.debug('minPasswordLength:', minPasswordLength)
+
+  // resolve maxPasswordLength
+  const maxPasswordLength: number = cover<number>(
+    resolvedDefaultOptions.maxPasswordLength, convertToNumber(options.maxPasswordLength))
+  logger.debug('maxPasswordLength:', maxPasswordLength)
 
   return {
     ...resolvedDefaultOptions,
     secretFilepath,
+    secretFileEncoding,
     indexFilepath,
     ciphertextRootDir,
     plaintextRootDir,
     plaintextRepositoryUrl,
     showAsterisk,
-    miniumPasswordLength,
+    minPasswordLength,
+    maxPasswordLength,
   }
 }

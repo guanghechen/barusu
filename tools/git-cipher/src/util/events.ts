@@ -25,7 +25,11 @@ export enum ErrorCode {
   /**
    * Null pointer exception
    */
-  NULL_POINTER_ERROR = 'NULL_POINTER_ERROR'
+  NULL_POINTER_ERROR = 'NULL_POINTER_ERROR',
+  /**
+   * The specified filepath cannot be found
+   */
+  FILEPATH_NOT_FOUND = 'FILEPATH_NOT_FOUND',
 }
 
 

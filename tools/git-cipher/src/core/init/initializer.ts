@@ -48,7 +48,8 @@ export class GitCipherInitializer {
       plaintextRootDir: relativeOfWorkspace(context.workspace, context.plaintextRootDir),
       plaintextRepositoryUrl: context.plaintextRepositoryUrl,
       showAsterisk: context.showAsterisk,
-      miniumPasswordLength: context.miniumPasswordLength,
+      minPasswordLength: context.minPasswordLength,
+      maxPasswordLength: context.maxPasswordLength,
     })
   }
 }
