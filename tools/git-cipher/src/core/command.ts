@@ -23,7 +23,6 @@ export function createProgram(): Command {
     .option('--index-file-encoding <indexFileEncoding>', 'encoding of index file')
     .option('--ciphertext-root-dir <ciphertextRootDir>', 'the directory where the encrypted files are stored')
     .option('--plaintext-root-dir <plaintextRootDir>', 'the directory where the source plaintext files are stored')
-    .option('--plaintext-repository-url <plaintextRepositoryUrl>', 'url of source repository of plaintext files are located')
     .option('--show-asterisk', 'whether to print password asterisks')
     .option('--minimum-password-length', 'the minimum size required of password')
 

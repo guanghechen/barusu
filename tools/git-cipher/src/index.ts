@@ -1,5 +1,7 @@
 export * from './core/command'
 export * from './core/init/command'
+export * from './core/init/context'
+export * from './core/init/initializer'
 export * from './core/option'
 export * from './util/buffer'
 export * from './util/catalog'

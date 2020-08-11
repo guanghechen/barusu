@@ -28,7 +28,6 @@ export function loadSubCommandInit(
         indexFileEncoding: options.indexFileEncoding,
         ciphertextRootDir: options.ciphertextRootDir,
         plaintextRootDir: options.plaintextRootDir,
-        plaintextRepositoryUrl: options.plaintextRepositoryUrl,
         showAsterisk: options.showAsterisk,
         minPasswordLength: options.minPasswordLength,
         maxPasswordLength: options.maxPasswordLength,

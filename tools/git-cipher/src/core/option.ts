@@ -2,7 +2,6 @@ import {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
   absoluteOfWorkspace,
-  relativeOfWorkspace,
   resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
 import {
@@ -55,11 +54,6 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
    */
   plaintextRootDir: string
   /**
-   * url of source repository of plaintext files are located
-   * @default null
-   */
-  plaintextRepositoryUrl: string
-  /**
    * whether to print password asterisks
    * @default true
    */
@@ -88,7 +82,6 @@ export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
   indexFileEncoding: 'utf-8',
   ciphertextRootDir: 'barusu-ciphertext',
   plaintextRootDir: 'barusu-plaintext',
-  plaintextRepositoryUrl: '',
   showAsterisk: true,
   minPasswordLength: 6,
   maxPasswordLength: 100,
@@ -156,28 +149,6 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     resolvedDefaultOptions.plaintextRootDir, options.plaintextRootDir, isNotEmptyString))
   logger.debug('plaintextRootDir:', plaintextRootDir)
 
-  // resolve plaintextRepositoryUrl
-  const plaintextRepositoryUrl = (() => {
-    const rawPlaintextRepositoryUrl: string | null = cover<string>(
-      resolvedDefaultOptions.plaintextRepositoryUrl, options.plaintextRepositoryUrl, isNotEmptyString)
-    logger.debug('rawPlaintextRepositoryUrl:', rawPlaintextRepositoryUrl)
-
-    // bad plaintextRepositoryUrl
-    if (rawPlaintextRepositoryUrl == null || rawPlaintextRepositoryUrl.length <= 0) {
-      return ''
-    }
-
-    // relative file path
-    if (/[.\/]/.test(rawPlaintextRepositoryUrl)) {
-      return relativeOfWorkspace(
-        ciphertextRootDir,
-        absoluteOfWorkspace(workspaceDir, rawPlaintextRepositoryUrl)
-      )
-    }
-    return rawPlaintextRepositoryUrl
-  })()
-  logger.debug('plaintextRepositoryUrl:', plaintextRepositoryUrl)
-
   // resolve showAsterisk
   const showAsterisk: boolean = cover<boolean>(
     resolvedDefaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
@@ -202,7 +173,6 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     indexFileEncoding,
     ciphertextRootDir,
     plaintextRootDir,
-    plaintextRepositoryUrl,
     showAsterisk,
     minPasswordLength,
     maxPasswordLength,

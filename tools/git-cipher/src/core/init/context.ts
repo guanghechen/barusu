@@ -39,10 +39,6 @@ export interface GitCipherInitializerContext {
    */
   readonly plaintextRootDir: string
   /**
-   * url of source repository of plaintext files are located
-   */
-  readonly plaintextRepositoryUrl: string
-  /**
    * whether to print password asterisks
    */
   readonly showAsterisk: boolean
@@ -95,10 +91,6 @@ interface Params {
    */
   readonly plaintextRootDir: string
   /**
-   * url of source repository of plaintext files are located
-   */
-  readonly plaintextRepositoryUrl: string
-  /**
    * whether to print password asterisks
    */
   readonly showAsterisk: boolean
@@ -131,7 +123,6 @@ export async function createGitCipherInitializerContext(
     indexFileEncoding: params.indexFileEncoding,
     ciphertextRootDir: params.ciphertextRootDir,
     plaintextRootDir: params.plaintextRootDir,
-    plaintextRepositoryUrl: params.plaintextRepositoryUrl,
     showAsterisk: params.showAsterisk,
     minPasswordLength: params.minPasswordLength,
     maxPasswordLength: params.maxPasswordLength,

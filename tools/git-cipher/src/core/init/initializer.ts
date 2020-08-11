@@ -59,19 +59,17 @@ export class GitCipherInitializer {
    */
   protected async renderTemplates(): Promise<void> {
     const { context } = this
-    // If not specified by the command option, an inquiry is launched
-    if (context.plaintextRepositoryUrl == null || /^\S*$/.test(context.plaintextRepositoryUrl)) {
-      const { plaintextRepositoryUrl } = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'plaintextRepositoryUrl',
-          message: 'Resource git repository url?',
-          filter: x => toLowerCase(x).trim(),
-          transformer: (x: string) => toLowerCase(x).trim(),
-        },
-      ])
-      ; (context as any).plaintextRepositoryUrl = plaintextRepositoryUrl
-    }
+
+    // request repository url
+    const { plaintextRepositoryUrl } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'plaintextRepositoryUrl',
+        message: 'Resource git repository url?',
+        filter: x => toLowerCase(x).trim(),
+        transformer: (x: string) => toLowerCase(x).trim(),
+      },
+    ])
 
     const templateConfig = resolveTemplateFilepath('plop.js')
     const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
@@ -85,7 +83,7 @@ export class GitCipherInitializer {
       indexFileEncoding: context.indexFileEncoding,
       ciphertextRootDir: relativeOfWorkspace(context.workspace, context.ciphertextRootDir),
       plaintextRootDir: relativeOfWorkspace(context.workspace, context.plaintextRootDir),
-      plaintextRepositoryUrl: context.plaintextRepositoryUrl,
+      plaintextRepositoryUrl,
       showAsterisk: context.showAsterisk,
       minPasswordLength: context.minPasswordLength,
       maxPasswordLength: context.maxPasswordLength,
