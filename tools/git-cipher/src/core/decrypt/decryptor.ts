@@ -1,11 +1,11 @@
 import commandExists from 'command-exists'
 import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
+import { coverString } from '@barusu/util-option'
 import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
 import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherDecryptorContext } from './context'
-import { coverString } from '@barusu/util-option'
 
 
 export class GitCipherDecryptor {
