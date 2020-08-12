@@ -29,6 +29,7 @@ export async function createInitialCommit(execaOptions: execa.Options): Promise<
   if (!doInitialCommit) return
 
   // create init commit
+  await execa('git', ['init'], execaOptions)
   await createCommitAll(execaOptions, ':tada:  initialize.')
 }
 
@@ -43,8 +44,6 @@ export async function createCommitAll(
   execaOptions: execa.Options,
   message: string
 ): Promise<void> {
-  // create init commit
-  await execa('git', ['init'], execaOptions)
   await execa('git', ['add', '-A'], execaOptions)
   await execa('git', ['commit', '-m', message], execaOptions)
 }
