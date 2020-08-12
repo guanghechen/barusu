@@ -45,6 +45,7 @@ export function createSubCommandDecrypt(
     .name(commandName)
     .aliases(aliases)
     .arguments('<workspace>')
+    .option('--out-dir <outDir>', 'Root dir of outputs (decrypted files)')
     .action(async function ([_workspaceDir], options: SubCommandDecryptOptions) {
       logger.setName(commandName)
 
