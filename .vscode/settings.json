@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
     "Builtins",
+    "Decryptor",
+    "Encryptor",
     "Lerna",
     "Subcommand",
     "autoprefixer",
@@ -8,7 +10,9 @@
     "axios",
     "barsize",
     "barusu",
+    "browserslistrc",
     "cacheable",
+    "ciphertext",
     "colorette",
     "cond",
     "dirpath",

@@ -2,6 +2,7 @@ import copy from '@barusu/rollup-plugin-copy'
 import { empty } from '@barusu/template-simple-html'
 import { mkdirsIfNotExists } from '@barusu/util-cli'
 import { coverString, coverBoolean } from '@barusu/util-option'
+import babel from '@rollup/plugin-babel'
 import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import autoprefixer from 'autoprefixer'
@@ -146,6 +147,9 @@ const scriptConfigs = paths.scripts
       nodeResolve({
         browser: true,
         preferBuiltins: false,
+      }),
+      babel({
+        exclude: 'node_modules/**',
       }),
       json({
         indent: '  ',

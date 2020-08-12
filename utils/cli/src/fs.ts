@@ -225,7 +225,7 @@ export function loadJsonOrYamlSync(filepath: string, encoding = 'utf-8'): unknow
  */
 export function collectAllFilesSync(
   dir: string,
-  predicate: (p: string) => boolean
+  predicate: ((p: string) => boolean) | null
 ): string[] {
   const stat = fs.statSync(dir)
   const results: string[] = []

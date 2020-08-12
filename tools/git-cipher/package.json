@@ -1,7 +1,7 @@
 {
-  "name": "@barusu/util-cli",
+  "name": "@barusu/tool-git-cipher",
   "version": "0.0.23",
-  "description": "utils for creating node.js command line program",
+  "description": "cipher git repository",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -10,9 +10,8 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/utils/cli#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/git-cipher#readme",
   "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
   "license": "MIT",
@@ -28,6 +27,9 @@
     "!lib/**/*.js.map",
     "!lib/**/*.d.ts.map"
   ],
+  "bin": {
+    "barusu-git-cipher": "./lib/cjs/cli.js"
+  },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
     "prebuild": "yarn test && rimraf lib/",
@@ -38,23 +40,27 @@
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.23",
+    "@barusu/event-bus": "^0.0.23",
+    "@barusu/util-cli": "^0.0.23",
     "@barusu/util-option": "^0.0.23",
     "@types/fs-extra": "^8.1.0",
-    "@types/js-yaml": "^3.12.5",
-    "chalk": "^3.0.0",
+    "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",
-    "commander": "^5.0.0",
     "execa": "^4.0.3",
     "fs-extra": "^8.1.0",
+    "globby": "^11.0.0",
     "inquirer": "^7.3.0",
-    "js-yaml": "^3.14.0",
-    "node-plop": "~0.26.0",
-    "ora": "^4.0.4"
+    "node-plop": "~0.26.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.23",
     "@barusu/rollup-config": "^0.0.23",
+    "@barusu/rollup-plugin-copy": "^0.0.23",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
     "cross-env": "^7.0.2",
+    "mocha": "^7.1.1",
     "rollup": "2.16.1"
   }
 }
