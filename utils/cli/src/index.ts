@@ -1,5 +1,6 @@
 export * from './commander'
 export * from './fs'
+export * from './git'
 export * from './manifest'
 export * from './option'
 export * from './path'

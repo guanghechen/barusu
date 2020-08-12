@@ -1,9 +1,13 @@
 import execa from 'execa'
 import path from 'path'
-import { installDependencies, isNonExistentOrEmpty } from '@barusu/util-cli'
+import {
+  createInitialCommit,
+  installDependencies,
+  isNonExistentOrEmpty,
+} from '@barusu/util-cli'
 import { logger } from '../../util/logger'
 import { RestfulApiInitializerContext } from './context'
-import { createInitialCommit, renderTemplates } from './util'
+import { renderTemplates } from './util'
 
 
 export class RestfulApiInitializer {
