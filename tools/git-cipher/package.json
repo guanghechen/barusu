@@ -46,7 +46,6 @@
     "@types/fs-extra": "^8.1.0",
     "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",
-    "commander": "^5.0.0",
     "execa": "^4.0.3",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",

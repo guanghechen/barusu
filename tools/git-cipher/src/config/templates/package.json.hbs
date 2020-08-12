@@ -6,13 +6,21 @@
     "@barusu/tool-git-cipher": "^{{{lowerCase templateVersion}}}"
   },
   "@barusu/tool-git-cipher": {
-    "encoding": "{{{encoding}}}",
-    "secretFilepath": "{{{secretFilepath}}}",
-    "secretFileEncoding": "{{{secretFileEncoding}}}",
-    "indexFilepath": "{{{indexFilepath}}}",
-    "indexFileEncoding": "{{{indexFileEncoding}}}",
-    "ciphertextRootDir": "{{{ciphertextRootDir}}}",
-    "plaintextRootDir": "{{{plaintextRootDir}}}",
-    "showAsterisk": {{{showAsterisk}}}
+    "__globalOptions__": {
+      "encoding": "{{{encoding}}}",
+      "secretFilepath": "{{{secretFilepath}}}",
+      "secretFileEncoding": "{{{secretFileEncoding}}}",
+      "indexFilepath": "{{{indexFilepath}}}",
+      "indexFileEncoding": "{{{indexFileEncoding}}}",
+      "ciphertextRootDir": "{{{ciphertextRootDir}}}",
+      "plaintextRootDir": "{{{plaintextRootDir}}}",
+      "showAsterisk": {{{showAsterisk}}}
+    },
+    "encrypt": {
+      "updateBeforeEncrypt": true
+    },
+    "decrypt": {
+      "outDir": "{{{plaintextRootDir}}}-bak"
+    }
   }
 }

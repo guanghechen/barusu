@@ -1,3 +1,4 @@
+import { loadSubCommandDecrypt } from './command/decrypt'
 import { loadSubCommandEncrypt } from './command/encrypt'
 import { loadSubCommandInit } from './command/init'
 import { createProgram } from './core/command'
@@ -12,6 +13,9 @@ loadSubCommandInit(name, program)
 
 // load sub-command: encrypt
 loadSubCommandEncrypt(name, program)
+
+// load sub-command: decrypt
+loadSubCommandDecrypt(name, program)
 
 
 program

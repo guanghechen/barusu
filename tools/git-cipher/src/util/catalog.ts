@@ -80,11 +80,11 @@ export class WorkspaceCatalog {
   protected readonly plaintextRootDir: string
   protected readonly ciphertextRootDir: string
   protected readonly indexFileEncoding: string
-  protected readonly items: Readonly<WorkspaceCatalogItem>[]
   protected readonly indexContentEncoding: BufferEncoding
   protected readonly plaintextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
   protected readonly ciphertextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
   protected mtime: string | null
+  public readonly items: Readonly<WorkspaceCatalogItem>[]
 
   public constructor(params: WorkspaceCatalogParams) {
     this.cipher = params.cipher
@@ -307,6 +307,46 @@ export class WorkspaceCatalog {
   }
 
   /**
+   * resolve the relative filepath of the plaintext data
+   * @param absolutePlaintextFilepath
+   * @returns {string} plaintextFilepath
+   */
+  public resolvePlaintextFilepath(absolutePlaintextFilepath: string): string {
+    const plaintextFilepath = relativeOfWorkspace(
+      this.plaintextRootDir, absolutePlaintextFilepath)
+    return path.normalize(plaintextFilepath).replace(/[/\\]+/g, '/')
+  }
+
+  /**
+   * resolve the absolute filepath of plaintext
+   * @param plaintextFilepath
+   * @returns {string} absolutePlaintextFilepath
+   */
+  public resolveAbsolutePlaintextFilepath(plaintextFilepath: string): string {
+    return path.resolve(this.plaintextRootDir, plaintextFilepath)
+  }
+
+  /**
+   * resolve the relative filepath of the ciphertext data
+   * @param absoluteCiphertextFilepath
+   * @returns {string} ciphertextFilepath
+   */
+  public resolveCiphertextFilepath(absoluteCiphertextFilepath: string): string {
+    const ciphertextFilepath = relativeOfWorkspace(
+      this.ciphertextRootDir, absoluteCiphertextFilepath)
+    return path.normalize(ciphertextFilepath).replace(/[/\\]+/g, '/')
+  }
+
+  /**
+   * resolve the absolute filepath of ciphertext
+   * @param ciphertextFilepath
+   * @returns {string} absoluteCiphertextFilepath
+   */
+  public resolveAbsoluteCiphertextFilepath(ciphertextFilepath: string): string {
+    return path.resolve(this.ciphertextRootDir, ciphertextFilepath)
+  }
+
+  /**
    * adds some characters for obfuscation
    * @param content
    */
@@ -328,45 +368,5 @@ export class WorkspaceCatalog {
     return content
       .replace(/^[0-9a-z]+/, '')
       .replace(/[0-9a-z]+$/, '')
-  }
-
-  /**
-   * resolve the relative filepath of the plaintext data
-   * @param absolutePlaintextFilepath
-   * @returns {string} plaintextFilepath
-   */
-  protected resolvePlaintextFilepath(absolutePlaintextFilepath: string): string {
-    const plaintextFilepath = relativeOfWorkspace(
-      this.plaintextRootDir, absolutePlaintextFilepath)
-    return path.normalize(plaintextFilepath).replace(/[/\\]+/g, '/')
-  }
-
-  /**
-   * resolve the absolute filepath of plaintext
-   * @param plaintextFilepath
-   * @returns {string} absolutePlaintextFilepath
-   */
-  protected resolveAbsolutePlaintextFilepath(plaintextFilepath: string): string {
-    return path.resolve(this.plaintextRootDir, plaintextFilepath)
-  }
-
-  /**
-   * resolve the relative filepath of the ciphertext data
-   * @param absoluteCiphertextFilepath
-   * @returns {string} ciphertextFilepath
-   */
-  protected resolveCiphertextFilepath(absoluteCiphertextFilepath: string): string {
-    const ciphertextFilepath = relativeOfWorkspace(
-      this.ciphertextRootDir, absoluteCiphertextFilepath)
-    return path.normalize(ciphertextFilepath).replace(/[/\\]+/g, '/')
-  }
-
-  /**
-   * resolve the absolute filepath of ciphertext
-   * @param ciphertextFilepath
-   * @returns {string} absoluteCiphertextFilepath
-   */
-  protected resolveAbsoluteCiphertextFilepath(ciphertextFilepath: string): string {
-    return path.resolve(this.ciphertextRootDir, ciphertextFilepath)
   }
 }

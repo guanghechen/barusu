@@ -5,7 +5,6 @@ import nodePlop from 'node-plop'
 import {
   absoluteOfWorkspace,
   createInitialCommit,
-  ensureCriticalFilepathExists,
   installDependencies,
   mkdirsIfNotExists,
   relativeOfWorkspace,
