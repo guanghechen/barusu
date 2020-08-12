@@ -1,12 +1,16 @@
 import commandExists from 'command-exists'
+import execa from 'execa'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import {
+  absoluteOfWorkspace,
+  ensureCriticalFilepathExists,
   installDependencies,
+  mkdirsIfNotExists,
   relativeOfWorkspace,
   runPlop,
 } from '@barusu/util-cli'
-import { toLowerCase } from '@barusu/util-option'
+import { isNotEmptyString, toLowerCase } from '@barusu/util-option'
 import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
 import { resolveTemplateFilepath, version } from '../../util/env'
@@ -61,7 +65,7 @@ export class GitCipherInitializer {
     const { context } = this
 
     // request repository url
-    const { plaintextRepositoryUrl } = await inquirer.prompt([
+    let { plaintextRepositoryUrl } = await inquirer.prompt([
       {
         type: 'input',
         name: 'plaintextRepositoryUrl',
@@ -70,6 +74,19 @@ export class GitCipherInitializer {
         transformer: (x: string) => toLowerCase(x).trim(),
       },
     ])
+
+    // resolve plaintextRepositoryUrl
+    if (isNotEmptyString(plaintextRepositoryUrl)) {
+      if (/^[.]/.test(plaintextRepositoryUrl)) {
+        plaintextRepositoryUrl = absoluteOfWorkspace(context.workspace, plaintextRepositoryUrl)
+      }
+    }
+    logger.debug('plaintextRepositoryUrl:', plaintextRepositoryUrl)
+
+    // clone plaintext repository
+    if (isNotEmptyString(plaintextRepositoryUrl)) {
+      await this.cloneFromRemote(plaintextRepositoryUrl)
+    }
 
     const templateConfig = resolveTemplateFilepath('plop.js')
     const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
@@ -115,5 +132,19 @@ export class GitCipherInitializer {
       ciphertextRootDir: context.ciphertextRootDir,
     })
     await catalog.save(context.indexFilepath)
+  }
+
+  /**
+   * Clone from remote plaintext repository
+   * @param plaintextRepositoryUrl  url of remote source repository
+   */
+  protected async cloneFromRemote(plaintextRepositoryUrl: string): Promise<void> {
+    const { context } = this
+
+    mkdirsIfNotExists(context.plaintextRootDir, true, logger)
+    await execa('git', ['clone', plaintextRepositoryUrl, context.plaintextRootDir], {
+      stdio: 'inherit',
+      cwd: context.plaintextRootDir,
+    })
   }
 }
