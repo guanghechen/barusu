@@ -4,6 +4,7 @@ import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import {
   absoluteOfWorkspace,
+  createInitialCommit,
   ensureCriticalFilepathExists,
   installDependencies,
   mkdirsIfNotExists,
@@ -53,6 +54,12 @@ export class GitCipherInitializer {
 
     // install dependencies
     await installDependencies({
+      stdio: 'inherit',
+      cwd: context.workspace,
+    })
+
+    // create initial commit
+    await createInitialCommit({
       stdio: 'inherit',
       cwd: context.workspace,
     })
