@@ -6,6 +6,7 @@ import { coverString, isNotEmptyString } from '@barusu/util-option'
 import { destroyBuffer } from './buffer'
 import { Cipher } from './cipher'
 import { ErrorCode } from './events'
+import { logger } from './logger'
 
 
 /**
@@ -79,8 +80,8 @@ export class WorkspaceCatalog {
   protected readonly plaintextRootDir: string
   protected readonly ciphertextRootDir: string
   protected readonly indexFileEncoding: string
-  protected readonly indexContentEncoding: BufferEncoding
   protected readonly items: Readonly<WorkspaceCatalogItem>[]
+  protected readonly indexContentEncoding: BufferEncoding
   protected readonly plaintextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
   protected readonly ciphertextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
   protected mtime: string | null
@@ -145,7 +146,6 @@ export class WorkspaceCatalog {
   public async save(indexFilepath: string): Promise<void> {
     const { cipher, indexContentEncoding, indexFileEncoding } = this
 
-
     // dump to data
     const data: WorkspaceCatalogData = {
       mtime: this.mtime,
@@ -164,7 +164,7 @@ export class WorkspaceCatalog {
   }
 
   /**
-   * update mtime of the workspace
+   * Update mtime of the workspace
    * @param mtime
    */
   public touch(mtime: string): void {
@@ -174,7 +174,16 @@ export class WorkspaceCatalog {
   }
 
   /**
-   * add entry into the index table
+   * Check that the file has not modified since it was last saved
+   * @param stat
+   */
+  public isNotModified(stat: fs.Stats): boolean {
+    if (this.mtime == null) return false
+    return this.mtime >= stat.mtime.toISOString()
+  }
+
+  /**
+   * Add entry into the index table
    * @param absolutePlaintextFilepath
    * @returns {string | never} absoluteCiphertextFilepath
    */
@@ -207,6 +216,9 @@ export class WorkspaceCatalog {
       this.items.push(item)
     }
 
+    // update mtime
+    this.touch(mtime)
+
     this.plaintextFilepathMap.set(plaintextFilepath, item)
     this.ciphertextFilepathMap.set(ciphertextFilepath, item)
     return this.resolveAbsoluteCiphertextFilepath(ciphertextFilepath)
@@ -217,23 +229,58 @@ export class WorkspaceCatalog {
    * @param absoluteCiphertextFilepath
    *
    */
-  public removeItem(absoluteCiphertextFilepath: string): void {
-    const ciphertextFilepath = this.resolveCiphertextFilepath(absoluteCiphertextFilepath)
-    const item = this.ciphertextFilepathMap.get(ciphertextFilepath)
-    if (item == null) {
-      console.error(
-        `[NOT FOUND] absoluteCiphertextFilepath(${ absoluteCiphertextFilepath })` +
-        ' is not existed in the index table'
-      )
-      return
-    }
-
-    this.ciphertextFilepathMap.delete(ciphertextFilepath)
+  public removeItem(item: WorkspaceCatalogItem): void {
+    this.ciphertextFilepathMap.delete(item.ciphertextFilepath)
     this.plaintextFilepathMap.delete(item.plaintextFilepath)
     this.items.splice(
-      this.items.findIndex(x => x.plaintextFilepath === item.plaintextFilepath),
+      this.items.findIndex(x => x.plaintextFilepath === item!.plaintextFilepath),
       1
     )
+  }
+
+  /**
+   * Remove all files deleted from plaintextRootDir
+   *
+   * @param fullPlaintextFilepaths
+   */
+  public async removeDeletedFiles(fullPlaintextFilepaths: string[]): Promise<void> {
+    const validItems = new Set(
+      fullPlaintextFilepaths
+        .map(p => this.findItemByAbsolutePlaintextFilepath(p))
+        .filter(x => x != null)
+    )
+
+    for (const item of this.items) {
+      if (validItems.has(item)) continue
+      this.removeItem(item)
+      const targetFilepath = this.resolveAbsoluteCiphertextFilepath(item.ciphertextFilepath)
+      logger.verbose('unlink {}', targetFilepath)
+      await fs.unlink(targetFilepath)
+    }
+  }
+
+  /**
+   * find WorkspaceCatalogItem through absolutePlaintextFilepath
+   * @param absolutePlaintextFilepath
+   */
+  public findItemByAbsolutePlaintextFilepath(
+    absolutePlaintextFilepath: string
+  ): WorkspaceCatalogItem | null {
+    const plaintextFilepath = this.resolvePlaintextFilepath(absolutePlaintextFilepath)
+    const result = this.plaintextFilepathMap.get(plaintextFilepath)
+    return (result == null) ? null : result
+  }
+
+  /**
+   * find WorkspaceCatalogItem through absoluteCiphertextFilepath
+   * @param absoluteCiphertextFilepath
+   */
+  public findItemByAbsoluteCiphertextFilepath(
+    absoluteCiphertextFilepath: string
+  ): WorkspaceCatalogItem | null {
+    const ciphertextFilepath = this.resolvePlaintextFilepath(absoluteCiphertextFilepath)
+    const result = this.ciphertextFilepathMap.get(ciphertextFilepath)
+    return (result == null) ? null : result
   }
 
   /**
