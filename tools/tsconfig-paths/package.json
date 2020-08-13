@@ -44,7 +44,6 @@
     "@barusu/util-cli": "^0.0.24",
     "@barusu/util-option": "^0.0.24",
     "@types/fs-extra": "^8.1.0",
-    "commander": "^5.0.0",
     "fs-extra": "^8.1.0",
     "tsconfig": "^7.0.0",
     "tsconfig-paths": "^3.9.0"
