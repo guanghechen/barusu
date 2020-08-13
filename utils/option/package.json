@@ -37,11 +37,11 @@
   },
   "dependencies": {
     "@types/chai": "^4.2.11",
-    "@types/mocha": "^7.0.2",
+    "@types/mocha": "^8.0.2",
     "chai": "^4.2.0",
     "change-case": "^4.1.1",
     "lower-case": "^2.0.1",
-    "mocha": "^7.1.1",
+    "mocha": "^8.1.1",
     "title-case": "^3.0.2",
     "upper-case": "^2.0.1"
   },

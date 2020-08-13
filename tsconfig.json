@@ -30,11 +30,11 @@
       "@barusu/rollup-plugin-copy": [
         "./scaffolds/rollup-plugin-copy/src"
       ],
-      "@barusu/tool-cipher": [
-        "./tools/cipher/src"
-      ],
       "@barusu/tool-find-inconsistent": [
         "./tools/find-inconsistent/src"
+      ],
+      "@barusu/tool-git-cipher": [
+        "./tools/git-cipher/src"
       ],
       "@barusu/tool-sort-imports": [
         "./tools/sort-imports/src"

@@ -92,8 +92,8 @@
   Usage: barusu-git-cipher encrypt|e [options] <workspace>
 
   Options:
-    --full                   Full quantity update
-    --update-before-encrypt  Perform 'git fetch --all' before run encryption
+    --full                   full quantity update
+    --update-before-encrypt  perform 'git fetch --all' before run encryption
     -h, --help               display help for command
   ```
 
@@ -105,7 +105,7 @@
   Usage: barusu-git-cipher decrypt|d [options] <workspace>
 
   Options:
-    --out-dir <outDir>  Root dir of outputs (decrypted files)
+    --out-dir <outDir>  root dir of outputs (decrypted files)
     -h, --help          display help for command
   ```
 
@@ -127,6 +127,7 @@
     },
     "@barusu/tool-git-cipher": {
       "__globalOptions__": {
+        "logLevel": "info",
         "encoding": "utf-8",
         "secretFilepath": ".barusu-secret",
         "secretFileEncoding": "utf-8",
