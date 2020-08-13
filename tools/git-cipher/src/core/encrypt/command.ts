@@ -46,8 +46,8 @@ export function createSubCommandEncrypt(
     .name(commandName)
     .aliases(aliases)
     .arguments('<workspace>')
-    .option('--full', 'Full quantity update')
-    .option('--update-before-encrypt', 'Perform \'git fetch --all\' before run encryption')
+    .option('--full', 'full quantity update')
+    .option('--update-before-encrypt', 'perform \'git fetch --all\' before run encryption')
     .action(async function ([_workspaceDir], options: SubCommandEncryptOptions) {
       logger.setName(commandName)
 

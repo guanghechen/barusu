@@ -161,9 +161,9 @@ export function createTopCommand(
   logger.registerToCommander(program)
 
   program
-    .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
-    .option('--parastic-config-path <parastic config filepath>', '')
-    .option('--parastic-config-entry <parastic config filepath>', '')
+    .option('-c, --config-path <configFilepath>', 'config filepaths', (val, acc: string[]) => acc.concat(val), [])
+    .option('--parastic-config-path <parasticConfigFilepath>', 'parastic config filepath')
+    .option('--parastic-config-entry <parasticConfigFilepath>', 'parastic config filepath')
 
   return program
 }
