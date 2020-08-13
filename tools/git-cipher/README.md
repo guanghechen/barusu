@@ -127,6 +127,7 @@
     },
     "@barusu/tool-git-cipher": {
       "__globalOptions__": {
+        "logLevel": "info",
         "encoding": "utf-8",
         "secretFilepath": ".barusu-secret",
         "secretFileEncoding": "utf-8",

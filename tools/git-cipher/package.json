@@ -11,6 +11,9 @@
     "url": "https://github.com/lemon-clown/barusu.git"
   },
   "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/git-cipher#readme",
+  "keywords": [
+    "cipher tool"
+  ],
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
