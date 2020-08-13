@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-sort-imports",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "sort import/export statement",
   "author": {
     "name": "lemon-clown",
@@ -39,16 +39,16 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.24",
-    "@barusu/util-cli": "^0.0.24",
-    "@barusu/util-option": "^0.0.24",
+    "@barusu/chalk-logger": "^0.0.25",
+    "@barusu/util-cli": "^0.0.25",
+    "@barusu/util-option": "^0.0.25",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.24",
-    "@barusu/rollup-config": "^0.0.24",
+    "@barusu/eslint-config": "^0.0.25",
+    "@barusu/rollup-config": "^0.0.25",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^8.0.2",
     "chai": "^4.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-restful-api",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "quickly create restful style mock server.",
   "author": {
     "name": "lemon-clown",
@@ -45,12 +45,12 @@
     "answer": "TS_NODE_FILES=true cross-env node -r ts-node/register test/answer.ts"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.24",
-    "@barusu/configuration-master": "^0.0.24",
-    "@barusu/event-bus": "^0.0.24",
-    "@barusu/typescript-json-schema": "^0.0.24",
-    "@barusu/util-cli": "^0.0.24",
-    "@barusu/util-option": "^0.0.24",
+    "@barusu/chalk-logger": "^0.0.25",
+    "@barusu/configuration-master": "^0.0.25",
+    "@barusu/event-bus": "^0.0.25",
+    "@barusu/typescript-json-schema": "^0.0.25",
+    "@barusu/util-cli": "^0.0.25",
+    "@barusu/util-option": "^0.0.25",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^9.3.1",
     "@types/command-exists": "^1.2.0",
@@ -76,10 +76,10 @@
     "typescript": "^3.8.2"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.24",
-    "@barusu/rollup-config": "^0.0.24",
-    "@barusu/rollup-plugin-copy": "^0.0.24",
-    "@barusu/util-mocha": "^0.0.24",
+    "@barusu/eslint-config": "^0.0.25",
+    "@barusu/rollup-config": "^0.0.25",
+    "@barusu/rollup-plugin-copy": "^0.0.25",
+    "@barusu/util-mocha": "^0.0.25",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^8.0.2",
     "chai": "^4.2.0",
