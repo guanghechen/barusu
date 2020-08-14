@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import commandExists from 'command-exists'
-import execa from 'execa'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import path from 'path'
