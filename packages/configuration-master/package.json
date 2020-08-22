@@ -49,14 +49,8 @@
     "@barusu/eslint-config": "^0.0.25",
     "@barusu/rollup-config": "^0.0.25",
     "@barusu/util-mocha": "^0.0.25",
-    "@types/chai": "^4.2.11",
     "@types/fs-extra": "^8.1.0",
-    "@types/mocha": "^8.0.2",
-    "chai": "^4.2.0",
-    "chai-exclude": "^2.0.2",
-    "cross-env": "^7.0.2",
     "fs-extra": "^8.1.0",
-    "mocha": "^8.1.1",
     "rollup": "2.16.1"
   }
 }

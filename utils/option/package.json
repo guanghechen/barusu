@@ -36,19 +36,14 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@types/chai": "^4.2.11",
-    "@types/mocha": "^8.0.2",
-    "chai": "^4.2.0",
     "change-case": "^4.1.1",
     "lower-case": "^2.0.1",
-    "mocha": "^8.1.1",
     "title-case": "^3.0.2",
     "upper-case": "^2.0.1"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.25",
     "@barusu/rollup-config": "^0.0.25",
-    "cross-env": "^7.0.2",
     "rollup": "2.16.1"
   }
 }

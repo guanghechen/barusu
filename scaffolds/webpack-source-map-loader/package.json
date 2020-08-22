@@ -42,7 +42,6 @@
     "rollup": "2.16.1"
   },
   "dependencies": {
-    "cross-env": "^7.0.2",
     "loader-utils": "^2.0.0"
   }
 }
