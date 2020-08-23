@@ -15,6 +15,7 @@
     "ciphertext",
     "colorette",
     "cond",
+    "deduplication",
     "dirpath",
     "downlevel",
     "editorconfig",
