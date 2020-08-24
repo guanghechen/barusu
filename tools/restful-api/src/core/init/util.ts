@@ -6,11 +6,11 @@ import { runPlop } from '@barusu/util-cli'
 import { toLowerCase } from '@barusu/util-option'
 import { templateRootDir } from '../../util/env'
 import { logger } from '../../util/logger'
-import { RestfulApiInitializerContext } from './context'
+import { RestfulApiInitContext } from './context'
 
 
 export async function renderTemplates(
-  context: RestfulApiInitializerContext
+  context: RestfulApiInitContext
 ): Promise<void> {
   const availableTemplates: string[] = ['simple']
   const { templateName } = await inquirer.prompt([

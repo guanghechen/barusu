@@ -4,11 +4,11 @@ import { name } from '@barusu/tool-restful-api/package.json'
 import Router from '@koa/router'
 import {
   COMMAND_NAME,
-  RestfulApiServer,
-  RestfulApiServerContext,
+  RestfulApiServeContext,
+  RestfulApiServeProcessor,
   SubCommandServeOptions,
   createProgram,
-  createRestfulApiServerContext,
+  createRestfulApiServeContext,
   createSubCommandServe,
 } from '../src'
 
@@ -18,7 +18,7 @@ async function testServeCommand (caseDir: string) {
   program.addCommand(createSubCommandServe(
     name,
     async (options: SubCommandServeOptions): Promise<void> => {
-      const context: RestfulApiServerContext = await createRestfulApiServerContext({
+      const context: RestfulApiServeContext = await createRestfulApiServeContext({
         cwd: options.cwd,
         workspace: options.workspace,
         tsconfigPath: options.tsconfigPath,
@@ -35,7 +35,7 @@ async function testServeCommand (caseDir: string) {
         mockDataFileRootPath: options.mockDataFileRootPath,
       })
 
-      const server = new RestfulApiServer(context)
+      const processor = new RestfulApiServeProcessor(context)
 
       const router = new Router()
       router.get(context.prefixUrl + '/uu/vv', ctx => {
@@ -46,9 +46,9 @@ async function testServeCommand (caseDir: string) {
           message: 'Got it!',
         }
       })
-      server.registerRouter(router)
+      processor.registerRouter(router)
 
-      server.start()
+      processor.start()
     }
   ))
 

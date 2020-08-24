@@ -3,8 +3,8 @@ import {
   SubCommandInitOptions,
   createSubCommandInit,
 } from '../core/init/command'
-import { GitCipherInitializerContext } from '../core/init/context'
-import { GitCipherInitializer } from '../core/init/initializer'
+import { GitCipherInitContext } from '../core/init/context'
+import { GitCipherInitProcessor } from '../core/init/processor'
 import { EventTypes, eventBus } from '../util/events'
 import { handleError } from './_util'
 
@@ -18,7 +18,7 @@ export function loadSubCommandInit(
 ): void | never {
   const handle = async (options: SubCommandInitOptions): Promise<void> => {
     try {
-      const context: GitCipherInitializerContext = {
+      const context: GitCipherInitContext = {
         cwd: options.cwd,
         workspace: options.workspace,
         encoding: options.encoding,
@@ -34,8 +34,8 @@ export function loadSubCommandInit(
       }
 
       // create
-      const initializer = new GitCipherInitializer(context)
-      await initializer.init()
+      const processor = new GitCipherInitProcessor(context)
+      await processor.init()
     } catch (error) {
       handleError(error)
     } finally {

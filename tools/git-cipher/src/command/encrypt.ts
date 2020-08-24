@@ -3,8 +3,8 @@ import {
   SubCommandEncryptOptions,
   createSubCommandEncrypt,
 } from '../core/encrypt/command'
-import { GitCipherEncryptorContext } from '../core/encrypt/context'
-import { GitCipherEncryptor } from '../core/encrypt/encryptor'
+import { GitCipherEncryptContext } from '../core/encrypt/context'
+import { GitCipherEncryptProcessor } from '../core/encrypt/processor'
 import { EventTypes, eventBus } from '../util/events'
 import { handleError } from './_util'
 
@@ -18,7 +18,7 @@ export function loadSubCommandEncrypt(
 ): void | never {
   const handle = async (options: SubCommandEncryptOptions): Promise<void> => {
     try {
-      const context: GitCipherEncryptorContext = {
+      const context: GitCipherEncryptContext = {
         cwd: options.cwd,
         workspace: options.workspace,
         encoding: options.encoding,
@@ -35,8 +35,8 @@ export function loadSubCommandEncrypt(
         updateBeforeEncrypt: options.updateBeforeEncrypt,
       }
 
-      const encryptor = new GitCipherEncryptor(context)
-      await encryptor.encrypt()
+      const processor = new GitCipherEncryptProcessor(context)
+      await processor.encrypt()
     } catch (error) {
       handleError(error)
     } finally {

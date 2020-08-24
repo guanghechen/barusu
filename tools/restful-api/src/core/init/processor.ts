@@ -6,14 +6,14 @@ import {
   isNonExistentOrEmpty,
 } from '@barusu/util-cli'
 import { logger } from '../../util/logger'
-import { RestfulApiInitializerContext } from './context'
+import { RestfulApiInitContext } from './context'
 import { renderTemplates } from './util'
 
 
-export class RestfulApiInitializer {
-  protected readonly context: RestfulApiInitializerContext
+export class RestfulApiInitProcessor {
+  protected readonly context: RestfulApiInitContext
 
-  public constructor(context: RestfulApiInitializerContext) {
+  public constructor(context: RestfulApiInitContext) {
     this.context = context
   }
 

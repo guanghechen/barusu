@@ -1,9 +1,9 @@
 import { Command } from '@barusu/util-cli'
 import {
-  RestfulApiInitializer,
-  RestfulApiInitializerContext,
+  RestfulApiInitContext,
+  RestfulApiInitProcessor,
   SubCommandInitOptions,
-  createRestfulApiInitializerContext,
+  createRestfulApiInitContext,
   createSubCommandInit,
 } from '../index'
 import { EventTypes, eventBus, handleError } from './_util'
@@ -18,15 +18,15 @@ export function loadSubCommandInit(
 ): void {
   const process = async (options: SubCommandInitOptions): Promise<void> => {
     try {
-      const context: RestfulApiInitializerContext = createRestfulApiInitializerContext({
+      const context: RestfulApiInitContext = createRestfulApiInitContext({
         cwd: options.cwd,
         workspace: options.workspace,
         tsconfigPath: options.tsconfigPath,
         encoding: options.encoding,
       })
 
-      const initializer = new RestfulApiInitializer(context)
-      await initializer.init()
+      const processor = new RestfulApiInitProcessor(context)
+      await processor.init()
     } catch (error) {
       handleError(error)
     } finally {

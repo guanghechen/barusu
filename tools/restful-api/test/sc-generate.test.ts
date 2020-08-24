@@ -4,11 +4,11 @@ import path from 'path'
 import { name } from '@barusu/tool-restful-api/package.json'
 import {
   COMMAND_NAME,
-  RestfulApiGenerator,
-  RestfulApiGeneratorContext,
+  RestfulApiGenerateContext,
+  RestfulApiGenerateProcessor,
   SubCommandGenerateOptions,
   createProgram,
-  createRestfulApiGeneratorContext,
+  createRestfulApiGenerateContext,
   createSubCommandGenerate,
 } from '../src'
 import { CommandTestCaseMaster } from './util/command-case-util'
@@ -29,7 +29,7 @@ before(async function test() {
           program.addCommand(createSubCommandGenerate(
             name,
             async (options: SubCommandGenerateOptions): Promise<void> => {
-              const context: RestfulApiGeneratorContext = await createRestfulApiGeneratorContext({
+              const context: RestfulApiGenerateContext = await createRestfulApiGenerateContext({
                 cwd: options.cwd,
                 workspace: options.workspace,
                 tsconfigPath: options.tsconfigPath,
@@ -43,8 +43,8 @@ before(async function test() {
                 additionalCompilerOptions: options.additionalCompilerOptions,
               })
 
-              const generator = new RestfulApiGenerator(context)
-              await generator.generate()
+              const processor = new RestfulApiGenerateProcessor(context)
+              await processor.generate()
 
               // test whether the result is matched with the answer
               const outputPath = path.resolve(projectDir, 'schemas/output')

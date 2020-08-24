@@ -1,9 +1,9 @@
 import { Command } from '@barusu/util-cli'
 import {
-  RestfulApiServer,
-  RestfulApiServerContext,
+  RestfulApiServeContext,
+  RestfulApiServeProcessor,
   SubCommandServeOptions,
-  createRestfulApiServerContext,
+  createRestfulApiServeContext,
   createSubCommandServe,
 } from '../index'
 import { handleError } from './_util'
@@ -18,7 +18,7 @@ export function loadSubCommandServe(
 ): void {
   const process = async (options: SubCommandServeOptions): Promise<void> => {
     try {
-      const context: RestfulApiServerContext = await createRestfulApiServerContext({
+      const context: RestfulApiServeContext = await createRestfulApiServeContext({
         cwd: options.cwd,
         workspace: options.workspace,
         tsconfigPath: options.tsconfigPath,
@@ -35,8 +35,8 @@ export function loadSubCommandServe(
         mockDataFileRootPath: options.mockDataFileRootPath,
       })
 
-      const server = new RestfulApiServer(context)
-      server.start()
+      const processor = new RestfulApiServeProcessor(context)
+      processor.start()
     } catch (error) {
       handleError(error)
     }
