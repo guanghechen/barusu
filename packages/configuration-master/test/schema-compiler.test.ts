@@ -1,4 +1,3 @@
-import { before, it } from 'mocha'
 import path from 'path'
 import { configurationMaster } from '../src'
 import {
@@ -7,6 +6,10 @@ import {
 
 
 it('This is a required placeholder to allow before() to work', () => { })
+
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 before(async function test() {
   const caseRootDirectory = path.resolve('test/cases')
   const caseMaster = new DataSchemaCompilerTestCaseMaster(configurationMaster, { caseRootDirectory })

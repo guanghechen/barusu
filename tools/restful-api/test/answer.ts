@@ -4,11 +4,11 @@ import { name } from '@barusu/tool-restful-api/package.json'
 import {
   ApiItemParser,
   COMMAND_NAME,
-  RestfulApiGenerator,
-  RestfulApiGeneratorContext,
+  RestfulApiGenerateContext,
+  RestfulApiGenerateProcessor,
   SubCommandGenerateOptions,
   createProgram,
-  createRestfulApiGeneratorContext,
+  createRestfulApiGenerateContext,
   createSubCommandGenerate,
 } from '../src'
 import { ApiItemParserTestCaseMaster } from './util/api-parser-case-util'
@@ -35,7 +35,7 @@ async function answer() {
     program.addCommand(createSubCommandGenerate(
       name,
       async (options: SubCommandGenerateOptions): Promise<void> => {
-        const context: RestfulApiGeneratorContext = await createRestfulApiGeneratorContext({
+        const context: RestfulApiGenerateContext = await createRestfulApiGenerateContext({
           cwd: options.cwd,
           workspace: options.workspace,
           tsconfigPath: options.tsconfigPath,
@@ -49,8 +49,8 @@ async function answer() {
           additionalCompilerOptions: options.additionalCompilerOptions,
         })
 
-        const generator = new RestfulApiGenerator(context)
-        await generator.generate()
+        const processor = new RestfulApiGenerateProcessor(context)
+        await processor.generate()
       },
     ))
 

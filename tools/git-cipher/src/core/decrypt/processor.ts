@@ -5,14 +5,14 @@ import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
 import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
-import { GitCipherDecryptorContext } from './context'
+import { GitCipherDecryptContext } from './context'
 
 
-export class GitCipherDecryptor {
-  protected readonly context: GitCipherDecryptorContext
+export class GitCipherDecryptProcessor {
+  protected readonly context: GitCipherDecryptContext
   protected readonly secretMaster: SecretMaster
 
-  public constructor(context: GitCipherDecryptorContext) {
+  public constructor(context: GitCipherDecryptContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
       cipherFactory: { create: () => new AESCipher() },

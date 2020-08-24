@@ -2,14 +2,14 @@ import fs from 'fs-extra'
 import * as TJS from '@barusu/typescript-json-schema'
 import { mkdirsIfNotExists } from '@barusu/util-cli'
 import { logger } from '../../util/logger'
-import { RestfulApiGeneratorContext } from './context'
+import { RestfulApiGenerateContext } from './context'
 import { clearSchemaRootPath, removeIgnoredDataTypes } from './util'
 
 
-export class RestfulApiGenerator {
-  protected readonly context: RestfulApiGeneratorContext
+export class RestfulApiGenerateProcessor {
+  protected readonly context: RestfulApiGenerateContext
 
-  public constructor(context: RestfulApiGeneratorContext) {
+  public constructor(context: RestfulApiGenerateContext) {
     this.context = context
   }
 

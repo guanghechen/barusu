@@ -12,7 +12,7 @@
 
   * Usage
     ```shell
-    npx sort-imports 'src/**/*.ts'
+    npx barusu-sort-imports 'src/**/*.ts'
     ```
 
 # Options
@@ -20,8 +20,8 @@
 ## Overview
 
   ```shell
-  $ sort-imports --help
-  Usage: sort-imports <cwd> [options]
+  $ barusu-sort-imports --help
+  Usage: barusu-sort-imports <cwd> [options]
 
   Options:
     -V, --version                  output the version number

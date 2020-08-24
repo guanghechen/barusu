@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rumengling 1`] = `
+Object {
+  "details": Array [
+    Object {
+      "blank": false,
+      "char": "，",
+      "count": 7,
+    },
+    Object {
+      "blank": false,
+      "char": "。",
+      "count": 6,
+    },
+    Object {
+      "blank": true,
+      "char": "
+",
+      "count": 5,
+    },
+    Object {
+      "blank": false,
+      "char": "知",
+      "count": 3,
+    },
+    Object {
+      "blank": false,
+      "char": "#",
+      "count": 2,
+    },
+    Object {
+      "blank": true,
+      "char": " ",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "如",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "梦",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "令",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "·",
+      "count": 2,
+    },
+  ],
+  "nonBlankTotal": 102,
+  "total": 109,
+  "uniqueNonBlankTotal": 68,
+  "uniqueTotal": 70,
+}
+`;

@@ -14,9 +14,9 @@ import { logger } from '../../util/logger'
 
 
 /**
- * Context variables for RestfulApiGenerator
+ * Context variables for RestfulApiGenerateProcessor
  */
-export interface RestfulApiGeneratorContext {
+export interface RestfulApiGenerateContext {
   /**
    * Path of currently executing command
    */
@@ -123,11 +123,11 @@ interface Params {
 
 
 /**
- * Create RestfulApiGeneratorContext
+ * Create RestfulApiGenerateContext
  */
-export async function createRestfulApiGeneratorContext(
+export async function createRestfulApiGenerateContext(
   params: Params
-): Promise<RestfulApiGeneratorContext> {
+): Promise<RestfulApiGenerateContext> {
   const apiItemParser = new ApiItemParser(params.schemaRootPath)
   const apiConfigPaths: string[] = await globby(params.apiConfigPath, { cwd: params.workspace })
   for (const apiConfigPath of apiConfigPaths) {
@@ -150,7 +150,7 @@ export async function createRestfulApiGeneratorContext(
     throw new Error('Failed to build JsonSchemaGenerator.')
   }
 
-  const context: RestfulApiGeneratorContext = {
+  const context: RestfulApiGenerateContext = {
     cwd: params.cwd,
     workspace: params.workspace,
     tsconfigPath: params.workspace,

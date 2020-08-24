@@ -16,14 +16,14 @@ import { AESCipher, Cipher } from '../../util/cipher'
 import { resolveTemplateFilepath, version } from '../../util/env'
 import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
-import { GitCipherInitializerContext } from './context'
+import { GitCipherInitContext } from './context'
 
 
-export class GitCipherInitializer {
-  protected readonly context: GitCipherInitializerContext
+export class GitCipherInitProcessor {
+  protected readonly context: GitCipherInitContext
   protected secretMaster: SecretMaster
 
-  public constructor(context: GitCipherInitializerContext) {
+  public constructor(context: GitCipherInitContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
       cipherFactory: { create: () => new AESCipher() },

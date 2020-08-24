@@ -12,14 +12,14 @@ import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
 import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
-import { GitCipherEncryptorContext } from './context'
+import { GitCipherEncryptContext } from './context'
 
 
-export class GitCipherEncryptor {
-  protected readonly context: GitCipherEncryptorContext
+export class GitCipherEncryptProcessor {
+  protected readonly context: GitCipherEncryptContext
   protected readonly secretMaster: SecretMaster
 
-  public constructor(context: GitCipherEncryptorContext) {
+  public constructor(context: GitCipherEncryptContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
       cipherFactory: { create: () => new AESCipher() },

@@ -1,7 +1,7 @@
 /**
- * Context variables for GitCipherEncryptorContext
+ * Context variables for GitCipherEncryptContext
  */
-export interface GitCipherEncryptorContext {
+export interface GitCipherEncryptContext {
   /**
    * Path of currently executing command
    */
@@ -124,14 +124,14 @@ interface Params {
 
 
 /**
- * Create GitCipherEncryptorContext
+ * Create GitCipherEncryptContext
  *
  * @param params
  */
-export async function createGitCipherEncryptorContext(
+export async function createGitCipherEncryptContext(
   params: Params
-): Promise<GitCipherEncryptorContext> {
-  const context: GitCipherEncryptorContext = {
+): Promise<GitCipherEncryptContext> {
+  const context: GitCipherEncryptContext = {
     cwd: params.cwd,
     workspace: params.workspace,
     encoding: params.encoding,

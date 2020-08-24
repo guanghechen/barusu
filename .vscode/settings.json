@@ -1,7 +1,6 @@
 {
   "cSpell.words": [
     "Builtins",
-    "Decryptor",
     "Encryptor",
     "Lerna",
     "Subcommand",
@@ -15,6 +14,7 @@
     "ciphertext",
     "colorette",
     "cond",
+    "deduplication",
     "dirpath",
     "downlevel",
     "editorconfig",

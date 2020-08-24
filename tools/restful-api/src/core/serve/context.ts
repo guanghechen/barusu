@@ -6,9 +6,9 @@ import { logger } from '../../util/logger'
 
 
 /**
- * Context variables for RestfulApiServerContext
+ * Context variables for RestfulApiServeContext
  */
-export interface RestfulApiServerContext {
+export interface RestfulApiServeContext {
   /**
    * Path of currently executing command
    */
@@ -141,11 +141,11 @@ interface Params {
 
 
 /**
- * Create RestfulApiServerContext
+ * Create RestfulApiServeContext
  */
-export async function createRestfulApiServerContext(
+export async function createRestfulApiServeContext(
   params: Params
-): Promise<RestfulApiServerContext> {
+): Promise<RestfulApiServeContext> {
   const apiItemParser = new ApiItemParser(params.schemaRootPath)
   const apiConfigPaths: string[] = await globby(params.apiConfigPath, { cwd: params.workspace })
   for (const apiConfigPath of apiConfigPaths) {
@@ -158,7 +158,7 @@ export async function createRestfulApiServerContext(
     throw new Error('no valid api item found.')
   }
 
-  const context: RestfulApiServerContext = {
+  const context: RestfulApiServeContext = {
     cwd: params.cwd,
     workspace: params.workspace,
     tsconfigPath: params.workspace,

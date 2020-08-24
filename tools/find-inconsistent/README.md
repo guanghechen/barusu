@@ -12,5 +12,5 @@
 
 * Check if the version number of the same library is the same in the monorepo
   ```shell
-  yarn find-inconsistent
+  npx barusu-find-inconsistent
   ```

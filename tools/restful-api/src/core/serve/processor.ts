@@ -8,18 +8,18 @@ import { isFile } from '@barusu/util-cli'
 import koaCors from '@koa/cors'
 import Router from '@koa/router'
 import { logger } from '../../util/logger'
-import { RestfulApiServerContext } from './context'
+import { RestfulApiServeContext } from './context'
 import { accessLog } from './middleware/access-log'
 import { dataFileMock } from './middleware/data-file-mock'
 
 
-export class RestfulApiServer {
-  protected readonly context: RestfulApiServerContext
+export class RestfulApiServeProcessor {
+  protected readonly context: RestfulApiServeContext
   protected readonly routers: Router[]
   protected server: http.Server | null
   protected running: boolean
 
-  public constructor(context: RestfulApiServerContext) {
+  public constructor(context: RestfulApiServeContext) {
     this.context = context
     this.routers = []
     this.server = null

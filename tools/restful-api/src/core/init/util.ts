@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import commandExists from 'command-exists'
-import execa from 'execa'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import path from 'path'
@@ -8,11 +6,11 @@ import { runPlop } from '@barusu/util-cli'
 import { toLowerCase } from '@barusu/util-option'
 import { templateRootDir } from '../../util/env'
 import { logger } from '../../util/logger'
-import { RestfulApiInitializerContext } from './context'
+import { RestfulApiInitContext } from './context'
 
 
 export async function renderTemplates(
-  context: RestfulApiInitializerContext
+  context: RestfulApiInitContext
 ): Promise<void> {
   const availableTemplates: string[] = ['simple']
   const { templateName } = await inquirer.prompt([

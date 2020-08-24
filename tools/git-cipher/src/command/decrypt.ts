@@ -3,8 +3,8 @@ import {
   SubCommandDecryptOptions,
   createSubCommandDecrypt,
 } from '../core/decrypt/command'
-import { GitCipherDecryptorContext } from '../core/decrypt/context'
-import { GitCipherDecryptor } from '../core/decrypt/decryptor'
+import { GitCipherDecryptContext } from '../core/decrypt/context'
+import { GitCipherDecryptProcessor } from '../core/decrypt/processor'
 import { EventTypes, eventBus } from '../util/events'
 import { handleError } from './_util'
 
@@ -18,7 +18,7 @@ export function loadSubCommandDecrypt(
 ): void | never {
   const handle = async (options: SubCommandDecryptOptions): Promise<void> => {
     try {
-      const context: GitCipherDecryptorContext = {
+      const context: GitCipherDecryptContext = {
         cwd: options.cwd,
         workspace: options.workspace,
         encoding: options.encoding,
@@ -34,8 +34,8 @@ export function loadSubCommandDecrypt(
         outDir: options.outDir,
       }
 
-      const decryptor = new GitCipherDecryptor(context)
-      await decryptor.decrypt()
+      const processor = new GitCipherDecryptProcessor(context)
+      await processor.decrypt()
     } catch (error) {
       handleError(error)
     } finally {

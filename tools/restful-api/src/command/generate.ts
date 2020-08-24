@@ -1,9 +1,9 @@
 import { Command } from '@barusu/util-cli'
 import {
-  RestfulApiGenerator,
-  RestfulApiGeneratorContext,
+  RestfulApiGenerateContext,
+  RestfulApiGenerateProcessor,
   SubCommandGenerateOptions,
-  createRestfulApiGeneratorContext,
+  createRestfulApiGenerateContext,
   createSubCommandGenerate,
 } from '../index'
 import { EventTypes, eventBus, handleError } from './_util'
@@ -18,7 +18,7 @@ export function loadSubCommandGenerate(
 ): void {
   const process = async (options: SubCommandGenerateOptions): Promise<void> => {
     try {
-      const context: RestfulApiGeneratorContext = await createRestfulApiGeneratorContext({
+      const context: RestfulApiGenerateContext = await createRestfulApiGenerateContext({
         cwd: options.cwd,
         workspace: options.workspace,
         tsconfigPath: options.tsconfigPath,
@@ -32,8 +32,8 @@ export function loadSubCommandGenerate(
         additionalCompilerOptions: options.additionalCompilerOptions,
       })
 
-      const generator = new RestfulApiGenerator(context)
-      await generator.generate()
+      const processor = new RestfulApiGenerateProcessor(context)
+      await processor.generate()
     } catch (error) {
       handleError(error)
     } finally {
