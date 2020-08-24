@@ -3,8 +3,8 @@ import {
   SubCommandStatOptions,
   createSubCommandStat,
 } from '../core/stat/command'
-import { WordCountStatContext } from '../core/stat/context'
-import { WordCountStatProcessor } from '../core/stat/processor'
+import { WordStatContext } from '../core/stat/context'
+import { WordStatProcessor } from '../core/stat/processor'
 import { EventTypes, eventBus, handleError } from './_util'
 
 
@@ -17,7 +17,7 @@ export function loadSubCommandStat(
 ): void | never {
   const handle = async (options: SubCommandStatOptions): Promise<void> => {
     try {
-      const context: WordCountStatContext = {
+      const context: WordStatContext = {
         cwd: options.cwd,
         workspace: options.workspace,
         encoding: options.encoding,
@@ -27,7 +27,7 @@ export function loadSubCommandStat(
         showSummaryOnly: options.showSummaryOnly,
       }
 
-      const processor = new WordCountStatProcessor(context)
+      const processor = new WordStatProcessor(context)
       await processor.stat()
     } catch (error) {
       handleError(error)

@@ -1,4 +1,4 @@
-import { version } from '@barusu/tool-restful-api/package.json'
+import { version } from '@barusu/tool-word/package.json'
 import { Command, createTopCommand } from '@barusu/util-cli'
 import { COMMAND_NAME } from '../util/env'
 import { logger } from '../util/logger'

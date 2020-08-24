@@ -1,18 +1,18 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/tool-word-count.svg)](https://www.npmjs.com/package/@barusu/tool-word-count)
-[![npm download](https://img.shields.io/npm/dm/@barusu/tool-word-count.svg)](https://www.npmjs.com/package/@barusu/tool-word-count)
-[![npm license](https://img.shields.io/npm/l/@barusu/tool-word-count.svg)](https://www.npmjs.com/package/@barusu/tool-word-count)
+[![npm version](https://img.shields.io/npm/v/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
+[![npm download](https://img.shields.io/npm/dm/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
+[![npm license](https://img.shields.io/npm/l/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
 
 
 # Usage
 
   * Install
     ```shell
-    yarn add --dev @barusu/tool-word-count
+    yarn add --dev @barusu/tool-word
     ```
 
   * Usage
     ```shell
-    npx barusu-word-count 'src/**/*.ts'
+    npx barusu-word 'src/**/*.ts'
     ```
 
 # Options
@@ -20,8 +20,8 @@
 ## Overview
 
   ```shell
-  $ barusu-word-count --help
-  Usage: barusu-word-count <cwd> [options]
+  $ barusu-word --help
+  Usage: barusu-word <cwd> [options]
 
   Options:
     -V, --version                  output the version number
@@ -60,7 +60,7 @@
   You can also specify options in the `<cwd>/package.json`, for example:
   ```json
   {
-    "@barusu/tool-word-count": {
+    "@barusu/tool-word": {
       "pattern": [
         "src/**/*.{ts,tsx}",
         "test/**/*.{ts,tsx}"

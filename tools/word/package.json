@@ -1,5 +1,5 @@
 {
-  "name": "@barusu/tool-word-count",
+  "name": "@barusu/tool-word",
   "version": "0.0.25",
   "description": "sort import/export statement",
   "author": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/word-count#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/word#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
@@ -28,7 +28,7 @@
     "!lib/**/*.d.ts.map"
   ],
   "bin": {
-    "barusu-word-count": "./lib/cjs/cli.js"
+    "barusu-word": "./lib/cjs/cli.js"
   },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",

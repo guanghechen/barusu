@@ -2,20 +2,18 @@ import fs from 'fs-extra'
 import globby from 'globby'
 import {
   CharacterDetail,
-  performCharacterStatistics,
-} from '@barusu/tool-word-count'
-import {
   calcCharacterStat,
   mergeCharacterStat,
+  performCharacterStatistics,
   printCharacterStat,
 } from '../../util/character-stats'
-import { WordCountStatContext } from './context'
+import { WordStatContext } from './context'
 
 
-export class WordCountStatProcessor {
-  protected readonly context: WordCountStatContext
+export class WordStatProcessor {
+  protected readonly context: WordStatContext
 
-  public constructor(context: WordCountStatContext) {
+  public constructor(context: WordStatContext) {
     this.context = context
   }
 

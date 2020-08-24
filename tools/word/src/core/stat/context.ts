@@ -1,7 +1,7 @@
 /**
- * Context variables for WordCountStatContext
+ * Context variables for WordStatContext
  */
-export interface WordCountStatContext {
+export interface WordStatContext {
   /**
    * Path of currently executing command
    */
@@ -66,14 +66,14 @@ interface Params {
 
 
 /**
- * Create WordCountStatContext
+ * Create WordStatContext
  *
  * @param params
  */
-export async function createWordCountStatContext(
+export async function createWordStatContext(
   params: Params
-): Promise<WordCountStatContext> {
-  const context: WordCountStatContext = {
+): Promise<WordStatContext> {
+  const context: WordStatContext = {
     cwd: params.cwd,
     workspace: params.workspace,
     encoding: params.encoding,

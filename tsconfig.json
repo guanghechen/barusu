@@ -42,8 +42,8 @@
       "@barusu/tool-tsconfig-paths": [
         "./tools/tsconfig-paths/src"
       ],
-      "@barusu/tool-word-count": [
-        "./tools/word-count/src"
+      "@barusu/tool-word": [
+        "./tools/word/src"
       ],
       "@barusu/util-blob": [
         "./utils/blob/src"
