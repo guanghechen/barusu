@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import { describe, it } from 'mocha'
 import fs from 'fs-extra'
 import path from 'path'
 import { toKebabCase } from '@barusu/util-option'
@@ -25,6 +24,10 @@ interface CaseItem {
 
 
 it('This is a required placeholder to allow before() to work', () => { })
+
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 before(async function () {
   const scanDir = async function (rootDir: string, p: string): Promise<CaseItem[]> {
     const files = await fs.readdir(p)

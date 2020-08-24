@@ -37,7 +37,6 @@
   "dependencies": {
     "@types/chai": "^4.2.11",
     "@types/fs-extra": "^8.1.0",
-    "@types/mocha": "^8.0.2",
     "chai": "^4.2.0",
     "fs-extra": "^8.1.0",
     "mocha": "^8.1.1"

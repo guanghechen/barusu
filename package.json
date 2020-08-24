@@ -37,7 +37,7 @@
   ],
   "devDependencies": {
     "@types/chai": "^4.2.11",
-    "@types/mocha": "^8.0.2",
+    "@types/jest": "^26.0.10",
     "chai": "^4.2.0",
     "chai-exclude": "^2.0.2",
     "cross-env": "^7.0.2",

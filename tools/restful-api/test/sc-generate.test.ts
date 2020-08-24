@@ -1,4 +1,3 @@
-import { describe, it } from 'mocha'
 import chalk from 'chalk'
 import path from 'path'
 import { name } from '@barusu/tool-restful-api/package.json'
@@ -15,12 +14,19 @@ import { CommandTestCaseMaster } from './util/command-case-util'
 
 
 it('This is a required placeholder to allow before() to work', () => { })
+
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 before(async function test() {
   const caseRootDirectory = path.resolve('test/cases')
   const caseMaster = new CommandTestCaseMaster({ caseRootDirectory })
   await caseMaster.scan('sub-command/generate/simple')
   describe('SubCommand:generate test cases', function () {
-    this.timeout(5000)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const self = this as any
+    self.timeout(5000)
     caseMaster.test(function* (kase) {
       yield kase.title
       yield function (): Promise<void> {
