@@ -120,7 +120,10 @@ export function calcCharacterStat(
 
   if (topOfDetails > 0) {
     const details: CharacterDetail[] = Object.values(detailMap)
-      .sort((x, y) => y.count - x.count)
+      .sort((x, y) => {
+        if (x.count !== y.count) return y.count - x.count
+        return x < y ? -1 : 1
+      })
       .slice(0, topOfDetails)
     result.details = details
   }
