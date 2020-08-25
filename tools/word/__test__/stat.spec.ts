@@ -1,7 +1,11 @@
 import fs from 'fs-extra'
-import path from 'path'
-import { performCharacterStatistics, calcCharacterStat, formatCharacterStat } from '../src'
 import globby from 'globby'
+import path from 'path'
+import {
+  calcCharacterStat,
+  formatCharacterStat,
+  performCharacterStatistics,
+} from '../src'
 
 
 /**
