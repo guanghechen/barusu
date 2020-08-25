@@ -84,7 +84,7 @@ export function createSubCommandStat(
         const fileStat = fs.statSync(_workspaceDir)
         if (fileStat.isFile()) {
           // it's a file path
-          defaultFilepath.push(_workspaceDir)
+          defaultFilepath.push(path.basename(_workspaceDir))
 
           // eslint-disable-next-line no-param-reassign
           _workspaceDir = path.dirname(_workspaceDir)

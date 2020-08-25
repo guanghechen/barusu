@@ -50,9 +50,11 @@ export class WordStatProcessor {
       mergeCharacterStat(detailMap, result)
     }
 
-    // Output summary
-    const stat = calcCharacterStat(result, context.showDetails, context.showDetailsPretty)
-    console.log('Summary')
-    console.log(formatCharacterStat(stat))
+    // Print Summary only when multiple files are counted or showSummaryOnly is specified
+    if (context.showSummaryOnly || filePaths.length > 1) {
+      const stat = calcCharacterStat(result, context.showDetails, context.showDetailsPretty)
+      console.log('Summary')
+      console.log(formatCharacterStat(stat))
+    }
   }
 }
