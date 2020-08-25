@@ -186,7 +186,11 @@ export class Logger {
       })
 
     let idx = 0
-    let message: string = messageFormat.replace(this.placeholderRegex, m => items[idx++] || m)
+    let message: string = messageFormat.replace(this.placeholderRegex, m => {
+      const value = items[idx++]
+      if (value !== undefined) return value
+      return m
+    })
     if (idx < items.length) message += ' ' + items.slice(idx).join(' ')
     if (!newline && !message.endsWith('\n')) message += '\n'
 
