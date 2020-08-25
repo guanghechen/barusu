@@ -39,7 +39,7 @@ export class WordStatProcessor {
     for (const filePath of filePaths) {
       const content = await fs.readFile(filePath, context.encoding)
       const detailMap = performCharacterStatistics(content)
-      const stat = calcCharacterStat(detailMap, context.showDetails)
+      const stat = calcCharacterStat(detailMap, context.showDetails, context.showDetailsPretty)
 
       // display statistics for each file
       if (!context.showSummaryOnly) {
@@ -51,7 +51,7 @@ export class WordStatProcessor {
     }
 
     // Output summary
-    const stat = calcCharacterStat(result, context.showDetails)
+    const stat = calcCharacterStat(result, context.showDetails, context.showDetailsPretty)
     console.log('Summary')
     printCharacterStat(stat)
   }

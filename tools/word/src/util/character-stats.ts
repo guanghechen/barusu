@@ -108,11 +108,15 @@ export function mergeCharacterStat(
 
 /**
  * Map Record<string, CharacterDetail> to CharacterStat
+ *
  * @param detailMap
+ * @param topOfDetails
+ * @param pretty
  */
 export function calcCharacterStat(
   detailMap: Record<string, CharacterDetail>,
   topOfDetails: number,
+  pretty: boolean,
 ): CharacterStat {
   let total = 0, blankTotal = 0, punctuationTotal = 0
   let uniqueTotal = 0, uniqueBlankTotal = 0, uniquePunctuationTotal = 0
@@ -139,12 +143,18 @@ export function calcCharacterStat(
   }
 
   if (topOfDetails > 0) {
-    const details: CharacterDetail[] = Object.values(detailMap)
+    const stableSortedDetails: CharacterDetail[] = Object.values(detailMap)
       .sort((x, y) => {
         if (x.count !== y.count) return y.count - x.count
         return x < y ? -1 : 1
       })
-      .slice(0, topOfDetails)
+    const details: CharacterDetail[] = []
+    for (let i = 0, k = 0; i < stableSortedDetails.length && k < topOfDetails; ++i) {
+      const detail = stableSortedDetails[i]
+      if (pretty && (detail.blank || detail.punctuation)) continue
+      k += 1
+      details.push(detail)
+    }
     result.details = details
   }
 

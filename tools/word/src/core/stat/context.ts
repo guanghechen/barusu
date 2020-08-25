@@ -27,6 +27,10 @@ export interface WordStatContext {
    */
   readonly showDetails: number
   /**
+   * Show details pretty: filter out blank and punctuation characters
+   */
+  readonly showDetailsPretty: boolean
+  /**
    * Do not display statistics for each file, but only display summary information
    */
   readonly showSummaryOnly: boolean
@@ -59,6 +63,10 @@ interface Params {
    */
   readonly showDetails: number
   /**
+   * Show details pretty: filter out blank and punctuation characters
+   */
+  readonly showDetailsPretty: boolean
+  /**
    * Do not display statistics for each file, but only display summary information
    */
   readonly showSummaryOnly: boolean
@@ -80,6 +88,7 @@ export async function createWordStatContext(
     filePath: params.filePath,
     filePattern: params.filePattern,
     showDetails: params.showDetails,
+    showDetailsPretty: params.showDetailsPretty,
     showSummaryOnly: params.showSummaryOnly,
   }
   return context
