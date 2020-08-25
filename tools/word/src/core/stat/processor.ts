@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import globby from 'globby'
+import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import {
   CharacterDetail,
   calcCharacterStat,
@@ -21,13 +22,16 @@ export class WordStatProcessor {
     const { context } = this
 
     const filePaths = [
-      ...context.filePath,
-      ...await globby(context.filePattern, {
-        cwd: context.workspace,
-        onlyFiles: true,
-        expandDirectories: false,
-      }),
-    ]
+      ...new Set(
+        context.filePath.concat(
+          await globby(context.filePattern, {
+            cwd: context.workspace,
+            onlyFiles: true,
+            expandDirectories: false,
+          }))
+          .map(p => absoluteOfWorkspace(context.workspace, p))
+      )
+    ].sort()
 
     console.log()
 
@@ -39,7 +43,7 @@ export class WordStatProcessor {
 
       // display statistics for each file
       if (!context.showSummaryOnly) {
-        console.log(filePath)
+        console.log(relativeOfWorkspace(context.cwd, filePath))
         printCharacterStat(stat)
       }
 
