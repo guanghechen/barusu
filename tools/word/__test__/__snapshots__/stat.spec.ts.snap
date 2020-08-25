@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`calcCharacterStat chou_nu_er 1`] = `
+exports[`util calcCharacterStat chou_nu_er 1`] = `
 Object {
   "blankTotal": 7,
   "details": Array [
@@ -74,7 +74,7 @@ Object {
 }
 `;
 
-exports[`calcCharacterStat chou_nu_er 2`] = `
+exports[`util calcCharacterStat chou_nu_er 2`] = `
 Object {
   "blankTotal": 7,
   "details": Array [
@@ -147,7 +147,7 @@ Object {
 }
 `;
 
-exports[`calcCharacterStat ru_meng_ling 1`] = `
+exports[`util calcCharacterStat ru_meng_ling 1`] = `
 Object {
   "blankTotal": 7,
   "details": Array [
@@ -221,7 +221,7 @@ Object {
 }
 `;
 
-exports[`calcCharacterStat ru_meng_ling 2`] = `
+exports[`util calcCharacterStat ru_meng_ling 2`] = `
 Object {
   "blankTotal": 7,
   "details": Array [
@@ -292,4 +292,96 @@ Object {
   "uniquePunctuationTotal": 5,
   "uniqueTotal": 70,
 }
+`;
+
+exports[`util formatCharacterStat chou_nu_er 1`] = `
+"======================================================
+                   total: 76
+             blank total:  7
+       punctuation total: 12
+            unique total: 49
+      unique blank total:  1
+unique punctuation total:  6
+                 details:
+                 ---------------
+                    \\"\\\\n\\":  7
+                     \\"，\\":  4
+                     \\"。\\":  4
+                     \\"愁\\":  3
+                     \\"说\\":  3
+                     \\"道\\":  2
+                     \\"识\\":  2
+                     \\"滋\\":  2
+                     \\"味\\":  2
+                     \\"爱\\":  2
+"
+`;
+
+exports[`util formatCharacterStat chou_nu_er 2`] = `
+"======================================================
+                   total: 76
+             blank total:  7
+       punctuation total: 12
+            unique total: 49
+      unique blank total:  1
+unique punctuation total:  6
+                 details:
+                 ---------------
+                     \\"愁\\":  3
+                     \\"说\\":  3
+                     \\"道\\":  2
+                     \\"识\\":  2
+                     \\"滋\\":  2
+                     \\"味\\":  2
+                     \\"爱\\":  2
+                     \\"上\\":  2
+                     \\"层\\":  2
+                     \\"楼\\":  2
+"
+`;
+
+exports[`util formatCharacterStat ru_meng_ling 1`] = `
+"======================================================
+                   total: 109
+             blank total:   7
+       punctuation total:  18
+            unique total:  70
+      unique blank total:   2
+unique punctuation total:   5
+                 details:
+                 ----------------
+                     \\"，\\":   7
+                     \\"。\\":   6
+                    \\"\\\\n\\":   5
+                     \\"知\\":   3
+                     \\"#\\":   2
+                     \\" \\":   2
+                     \\"如\\":   2
+                     \\"梦\\":   2
+                     \\"令\\":   2
+                     \\"·\\":   2
+"
+`;
+
+exports[`util formatCharacterStat ru_meng_ling 2`] = `
+"======================================================
+                   total: 109
+             blank total:   7
+       punctuation total:  18
+            unique total:  70
+      unique blank total:   2
+unique punctuation total:   5
+                 details:
+                 ----------------
+                     \\"知\\":   3
+                     \\"如\\":   2
+                     \\"梦\\":   2
+                     \\"令\\":   2
+                     \\"常\\":   2
+                     \\"记\\":   2
+                     \\"溪\\":   2
+                     \\"亭\\":   2
+                     \\"日\\":   2
+                     \\"暮\\":   2
+"
 `;
