@@ -1,26 +1,69 @@
 import path from 'path'
 import chalk from 'chalk'
-import { execCommand, Router, ServeCommand, SubCommandHook } from 'restful-api-tool'
+import Router from '@koa/router'
+import {
+  COMMAND_NAME,
+  RestfulApiServeContext,
+  RestfulApiServeProcessor,
+  SubCommandServeOptions,
+  createProgram,
+  createRestfulApiServeContext,
+  createSubCommandServe,
+} from '@barusu/tool-restful-api'
 
 
 async function serve () {
+  const program = createProgram()
+  program.addCommand(createSubCommandServe(
+    'serve',
+    async (options: SubCommandServeOptions): Promise<void> => {
+      const context: RestfulApiServeContext = await createRestfulApiServeContext({
+        cwd: options.cwd,
+        workspace: options.workspace,
+        tsconfigPath: options.tsconfigPath,
+        schemaRootPath: options.schemaRootPath,
+        apiConfigPath: options.apiConfigPath,
+        encoding: options.encoding,
+        host: options.host,
+        port: options.port,
+        prefixUrl: options.prefixUrl,
+        mockRequiredOnly: options.mockRequiredOnly,
+        mockOptionalsAlways: options.mockOptionalsAlways,
+        mockOptionalsProbability: options.mockOptionalsProbability,
+        mockDataFileFirst: options.mockDataFileFirst,
+        mockDataFileRootPath: options.mockDataFileRootPath,
+      })
+
+      const processor = new RestfulApiServeProcessor(context)
+
+      const router = new Router()
+      router.get('/hello/world', ctx => {
+        // eslint-disable-next-line no-param-reassign
+        ctx.body = {
+          code: 200,
+          message: 'Got it!',
+        }
+      })
+      processor.registerRouter(router)
+
+      processor.start()
+    }
+  ))
+
   const projectDir = path.resolve()
-  const args = ['', '', 'serve', projectDir, '--log-level=debug', '-s', 'schemas/answer']
+  const args = [
+    '',
+    COMMAND_NAME,
+    'serve',
+    projectDir,
+    '--log-level=debug',
+    '-s',
+    'schemas/answer',
+    '--api-config-path',
+    'api.yml',
+  ]
   console.log(chalk.gray('--> ' + args.join(' ')))
-
-  const serve = new ServeCommand()
-  serve.onHook(SubCommandHook.BEFORE_START, (server, context) => {
-    const router = new Router({ prefix: context.prefixUrl })
-    router.get('/hello/world', ctx => {
-      ctx.body = {
-        code: 200,
-        message: 'Got it!',
-      }
-    })
-    server.registerRouter(router)
-  })
-
-  execCommand(args, { serve })
+  program.parse(args)
 }
 
 
