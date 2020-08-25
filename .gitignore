@@ -11,6 +11,7 @@ node_modules/
 
 *.tsbuildinfo
 tmp/
+__tmp__/
 
 # local env files
 .env.local

@@ -1,0 +1,356 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`api-parser request-full-model: api items 1`] = `
+Array [
+  Object {
+    "active": true,
+    "desc": "",
+    "fullName": "user",
+    "items": Array [
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "GET",
+        "name": "me",
+        "path": "/api/user/me",
+        "request": Object {
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-request-model.json",
+          "voName": "CurrentUserInfoRequestModel",
+        },
+        "response": Object {
+          "headers": Object {
+            "Authorize": "<token>",
+            "Content-Type": "application/json; UTF-8",
+          },
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/current-user-info-response-model.json",
+          "voName": "CurrentUserInfoResponseModel",
+        },
+        "title": "获取当前用户信息",
+      },
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "GET",
+        "name": "UserInfo",
+        "path": "/api/user/:id",
+        "request": Object {},
+        "response": Object {
+          "headers": Object {
+            "Authorize": "<token>",
+            "Content-Type": "application/json; UTF-8",
+          },
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-user-info-response-vo.json",
+          "voName": "UserUserInfoResponseVo",
+        },
+        "title": "获取指定用户信息",
+      },
+    ],
+    "name": "user",
+    "path": "/api/user",
+    "request": Object {
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo",
+    },
+    "response": Object {
+      "headers": Object {
+        "Authorize": "<token>",
+        "Content-Type": "application/json; UTF-8",
+      },
+      "voNamePrefix": "",
+      "voNameSuffix": "ResponseVo",
+    },
+    "subGroups": Array [],
+    "title": "user",
+  },
+]
+`;
+
+exports[`api-parser simple: api items 1`] = `
+Array [
+  Object {
+    "active": true,
+    "desc": "",
+    "fullName": "user",
+    "items": Array [
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "POST",
+        "name": "login",
+        "path": "/api/user/login",
+        "request": Object {},
+        "response": Object {
+          "headers": Object {
+            "Content-Type": "application/json; UTF-8",
+          },
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-login-response-vo.json",
+          "voName": "UserLoginResponseVo",
+        },
+        "title": "登录",
+      },
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "POST",
+        "name": "logout",
+        "path": "/api/user/logout",
+        "request": Object {},
+        "response": Object {
+          "headers": Object {
+            "Content-Type": "application/json; UTF-8",
+          },
+          "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user/user-logout-response-vo.json",
+          "voName": "UserLogoutResponseVo",
+        },
+        "title": "退出登录",
+      },
+    ],
+    "name": "user",
+    "path": "/api/user",
+    "request": Object {
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo",
+    },
+    "response": Object {
+      "headers": Object {
+        "Content-Type": "application/json; UTF-8",
+      },
+      "voNamePrefix": "",
+      "voNameSuffix": "ResponseVo",
+    },
+    "subGroups": Array [
+      Object {
+        "active": true,
+        "desc": "",
+        "fullName": "user-info",
+        "items": Array [
+          Object {
+            "active": true,
+            "desc": "",
+            "method": "GET",
+            "name": "me",
+            "path": "/api/user/me",
+            "request": Object {
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/current-user-info-request-model.json",
+              "voName": "CurrentUserInfoRequestModel",
+            },
+            "response": Object {
+              "headers": Object {
+                "Authorize": "<token>",
+                "Content-Type": "application/json; UTF-8",
+              },
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/current-user-info-response-model.json",
+              "voName": "CurrentUserInfoResponseModel",
+            },
+            "title": "获取当前用户信息",
+          },
+          Object {
+            "active": true,
+            "desc": "",
+            "method": "GET",
+            "name": "UserInfo",
+            "path": "/api/user/:id",
+            "request": Object {},
+            "response": Object {
+              "headers": Object {
+                "Authorize": "<token>",
+                "Content-Type": "application/json; UTF-8",
+              },
+              "schemaPath": "<PROJECT_DIR>/test/cases/schemas/user-info/xx-user-info-user-info-response-vo.json",
+              "voName": "XxUserInfoUserInfoResponseVo",
+            },
+            "title": "获取指定用户信息",
+          },
+        ],
+        "name": "info",
+        "path": "/api/user",
+        "request": Object {
+          "voNamePrefix": "",
+          "voNameSuffix": "RequestVo",
+        },
+        "response": Object {
+          "headers": Object {
+            "Authorize": "<token>",
+            "Content-Type": "application/json; UTF-8",
+          },
+          "voNamePrefix": "Xx",
+          "voNameSuffix": "ResponseVo",
+        },
+        "subGroups": Array [],
+        "title": "info",
+      },
+    ],
+    "title": "user",
+  },
+]
+`;
+
+exports[`api-parser user-blog: api items 1`] = `
+Array [
+  Object {
+    "active": true,
+    "desc": "basic api",
+    "fullName": "user",
+    "items": Array [
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "GET",
+        "name": "query",
+        "path": "/api/user/me",
+        "request": Object {},
+        "response": Object {
+          "schemaPath": "<PROJECT_DIR>/user/user-query-response-vo.json",
+          "voName": "UserQueryResponseVo",
+        },
+        "title": "get current user information",
+      },
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "POST",
+        "name": "update",
+        "path": "/api/user/me",
+        "request": Object {
+          "schemaPath": "<PROJECT_DIR>/user/update-current-user-request-vo.json",
+          "voName": "UpdateCurrentUserRequestVo",
+        },
+        "response": Object {
+          "schemaPath": "<PROJECT_DIR>/user/update-current-user-response-vo.json",
+          "voName": "UpdateCurrentUserResponseVo",
+        },
+        "title": "update current user information",
+      },
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "POST",
+        "name": "login",
+        "path": "/api/user/login",
+        "request": Object {},
+        "response": Object {
+          "schemaPath": "<PROJECT_DIR>/user/user-login-response-vo.json",
+          "voName": "UserLoginResponseVo",
+        },
+        "title": "login",
+      },
+    ],
+    "name": "user",
+    "path": "/api/user",
+    "request": Object {
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo",
+    },
+    "response": Object {
+      "voNamePrefix": "",
+      "voNameSuffix": "ResponseVo",
+    },
+    "subGroups": Array [],
+    "title": "user",
+  },
+  Object {
+    "active": true,
+    "desc": "the user's blog",
+    "fullName": "blog",
+    "items": Array [
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "GET",
+        "name": "query-articles",
+        "path": "/api/blog/articles",
+        "request": Object {},
+        "response": Object {
+          "schemaPath": "<PROJECT_DIR>/blog/blog-query-articles-pagination-response-vo.json",
+          "voName": "BlogQueryArticlesPaginationResponseVo",
+        },
+        "title": "query articles under the blog",
+      },
+      Object {
+        "active": true,
+        "desc": "",
+        "method": "POST",
+        "name": "create-article",
+        "path": "/api/blog/articles",
+        "request": Object {},
+        "response": Object {
+          "schemaPath": "<PROJECT_DIR>/blog/blog-create-article-pagination-response-vo.json",
+          "voName": "BlogCreateArticlePaginationResponseVo",
+        },
+        "title": "create an article",
+      },
+    ],
+    "name": "blog",
+    "path": "/api/blog",
+    "request": Object {
+      "voNamePrefix": "",
+      "voNameSuffix": "RequestVo",
+    },
+    "response": Object {
+      "voNamePrefix": "",
+      "voNameSuffix": "PaginationResponseVo",
+    },
+    "subGroups": Array [
+      Object {
+        "active": true,
+        "desc": "blog articles",
+        "fullName": "blog-article",
+        "items": Array [
+          Object {
+            "active": true,
+            "desc": "",
+            "method": "GET",
+            "name": "query",
+            "path": "/api/blog/article/:articleId",
+            "request": Object {},
+            "response": Object {
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-query-response-vo.json",
+              "voName": "BlogArticleQueryResponseVo",
+            },
+            "title": "get article with specified \`articleId\`",
+          },
+          Object {
+            "active": true,
+            "desc": "",
+            "method": "POST",
+            "name": "update",
+            "path": "/api/blog/article/:articleId",
+            "request": Object {},
+            "response": Object {
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-update-response-vo.json",
+              "voName": "BlogArticleUpdateResponseVo",
+            },
+            "title": "update article with specified \`articleId\`",
+          },
+          Object {
+            "active": true,
+            "desc": "",
+            "method": "DELETE",
+            "name": "delete",
+            "path": "/api/blog/article/:articleId",
+            "request": Object {},
+            "response": Object {
+              "schemaPath": "<PROJECT_DIR>/blog-article/blog-article-delete-response-vo.json",
+              "voName": "BlogArticleDeleteResponseVo",
+            },
+            "title": "delete an article with specified \`articleId\`",
+          },
+        ],
+        "name": "article",
+        "path": "/api/blog/article/:articleId",
+        "request": Object {
+          "voNamePrefix": "",
+          "voNameSuffix": "RequestVo",
+        },
+        "response": Object {
+          "voNamePrefix": "",
+          "voNameSuffix": "ResponseVo",
+        },
+        "subGroups": Array [],
+        "title": "article",
+      },
+    ],
+    "title": "blog",
+  },
+]
+`;

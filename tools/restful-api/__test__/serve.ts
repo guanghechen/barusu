@@ -52,7 +52,7 @@ async function testServeCommand (caseDir: string) {
     }
   ))
 
-  const projectDir = path.resolve('test/cases/sub-command', caseDir)
+  const projectDir = path.resolve(__dirname, 'cases/sub-command', caseDir)
   const args = [
     '',
     COMMAND_NAME,

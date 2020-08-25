@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate simple: schema files 1`] = `
+Array [
+  "xx-schemas/user-info/current-user-info-request-model.json",
+  "xx-schemas/user-info/current-user-info-response-model.json",
+  "xx-schemas/user-info/xx-user-info-oo-response-vo.json",
+  "xx-schemas/user/user-login-response-vo.json",
+  "xx-schemas/user/user-logout-response-vo.json",
+]
+`;
+
+exports[`generate simple: xx-schemas/user/user-login-response-vo.json 1`] = `
+Object {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": Object {
+    "ResponseCode": Object {
+      "description": "200 OK",
+      "enum": Array [
+        200,
+      ],
+      "type": "number",
+    },
+  },
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "$ref": "#/definitions/ResponseCode",
+      "default": 200,
+      "description": "响应码",
+    },
+    "message": Object {
+      "description": "响应消息",
+      "type": "string",
+    },
+    "result": Object {
+      "description": "响应结果",
+      "properties": Object {
+        "token": Object {
+          "description": "校验身份的令牌",
+          "type": "string",
+        },
+        "username": Object {
+          "description": "登录账号",
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+  },
+  "title": "UserLoginResponseVo",
+  "type": "object",
+}
+`;
+
+exports[`generate simple: xx-schemas/user/user-logout-response-vo.json 1`] = `
+Object {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": Object {
+    "ResponseCode": Object {
+      "description": "200 OK",
+      "enum": Array [
+        200,
+      ],
+      "type": "number",
+    },
+  },
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "$ref": "#/definitions/ResponseCode",
+      "default": 200,
+      "description": "响应码",
+    },
+    "message": Object {
+      "description": "响应消息",
+      "type": "string",
+    },
+  },
+  "title": "UserLogoutResponseVo",
+  "type": "object",
+}
+`;
+
+exports[`generate simple: xx-schemas/user-info/current-user-info-request-model.json 1`] = `
+Object {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": Object {},
+  "description": "获取当前用户信息的请求对象",
+  "properties": Object {
+    "token": Object {
+      "description": "校验身份的令牌",
+      "type": "string",
+    },
+  },
+  "title": "CurrentUserInfoRequestModel",
+  "type": "object",
+}
+`;
+
+exports[`generate simple: xx-schemas/user-info/current-user-info-response-model.json 1`] = `
+Object {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": Object {
+    "ResponseCode": Object {
+      "description": "200 OK",
+      "enum": Array [
+        200,
+      ],
+      "type": "number",
+    },
+  },
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "$ref": "#/definitions/ResponseCode",
+      "default": 200,
+      "description": "响应码",
+    },
+    "message": Object {
+      "description": "响应消息",
+      "type": "string",
+    },
+    "result": Object {
+      "description": "响应结果",
+      "properties": Object {
+        "age": Object {
+          "description": "年龄",
+          "type": "number",
+        },
+        "gender": Object {
+          "description": "性别",
+          "enum": Array [
+            "female",
+            "male",
+          ],
+          "type": "string",
+        },
+        "username": Object {
+          "description": "用户名称",
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+  },
+  "title": "CurrentUserInfoResponseModel",
+  "type": "object",
+}
+`;
+
+exports[`generate simple: xx-schemas/user-info/xx-user-info-oo-response-vo.json 1`] = `
+Object {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": Object {
+    "ResponseCode": Object {
+      "description": "200 OK",
+      "enum": Array [
+        200,
+      ],
+      "type": "number",
+    },
+  },
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "$ref": "#/definitions/ResponseCode",
+      "default": 200,
+      "description": "响应码",
+    },
+    "message": Object {
+      "description": "响应消息",
+      "type": "string",
+    },
+    "result": Object {
+      "description": "响应结果",
+      "properties": Object {
+        "age": Object {
+          "description": "年龄",
+          "type": "number",
+        },
+        "gender": Object {
+          "description": "性别",
+          "enum": Array [
+            "female",
+            "male",
+          ],
+          "type": "string",
+        },
+        "username": Object {
+          "description": "用户名称",
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+  },
+  "title": "XxUserInfoOoResponseVo",
+  "type": "object",
+}
+`;
