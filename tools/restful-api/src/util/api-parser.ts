@@ -122,7 +122,11 @@ export class ApiItemParser {
    * @param context
    * @param parent
    */
-  public extractRawApiItemGroup(data: RawApiItemGroup, context: ApiConfigContext, parent?: ResolvedApiItemGroup): ResolvedApiItemGroup {
+  public extractRawApiItemGroup(
+    data: RawApiItemGroup,
+    context: ApiConfigContext,
+    parent?: ResolvedApiItemGroup,
+  ): ResolvedApiItemGroup {
     const items: ResolvedApiItem[] = []
     const subGroups: ResolvedApiItemGroup[] = []
     const defaultMethod: HttpVerb | undefined = (parent != null && parent.method != null) ? parent.method : undefined
@@ -302,11 +306,13 @@ export class ApiItemParser {
       desc: coverString(data.desc || '', data.description, isNotEmptyString),
       path: coverString(defaultPath, data.fullPath, isNotEmptyString),
       method: coverString(defaultMethod || HttpVerb.GET, data.method, isNotEmptyString) as HttpVerb,
-      request: {
-        voName:requestModelName,
-        schemaPath: requestSchemaPath,
-        headers: requestHeaders,
-      },
+      request: (isObject(rawRequest) && rawRequest.voName == null && rawRequest.voFullName == null)
+        ? { headers: requestHeaders }
+        : {
+          voName: requestModelName,
+          schemaPath: requestSchemaPath,
+          headers: requestHeaders,
+        },
       response: {
         voName: responseModelName,
         schemaPath: responseSchemaPath,

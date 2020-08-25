@@ -1,11 +1,12 @@
 import fs from 'fs-extra'
 import globby from 'globby'
+import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import {
   CharacterDetail,
   calcCharacterStat,
+  formatCharacterStat,
   mergeCharacterStat,
   performCharacterStatistics,
-  printCharacterStat,
 } from '../../util/character-stats'
 import { WordStatContext } from './context'
 
@@ -21,13 +22,16 @@ export class WordStatProcessor {
     const { context } = this
 
     const filePaths = [
-      ...context.filePath,
-      ...await globby(context.filePattern, {
-        cwd: context.workspace,
-        onlyFiles: true,
-        expandDirectories: false,
-      }),
-    ]
+      ...new Set(
+        context.filePath.concat(
+          await globby(context.filePattern, {
+            cwd: context.workspace,
+            onlyFiles: true,
+            expandDirectories: false,
+          }))
+          .map(p => absoluteOfWorkspace(context.workspace, p))
+      )
+    ].sort()
 
     console.log()
 
@@ -35,20 +39,22 @@ export class WordStatProcessor {
     for (const filePath of filePaths) {
       const content = await fs.readFile(filePath, context.encoding)
       const detailMap = performCharacterStatistics(content)
-      const stat = calcCharacterStat(detailMap, context.showDetails)
+      const stat = calcCharacterStat(detailMap, context.showDetails, context.showDetailsPretty)
 
       // display statistics for each file
       if (!context.showSummaryOnly) {
-        console.log(filePath)
-        printCharacterStat(stat)
+        console.log(relativeOfWorkspace(context.cwd, filePath))
+        console.log(formatCharacterStat(stat))
       }
 
       mergeCharacterStat(detailMap, result)
     }
 
-    // Output summary
-    const stat = calcCharacterStat(result, context.showDetails)
-    console.log('Summary')
-    printCharacterStat(stat)
+    // Print Summary only when multiple files are counted or showSummaryOnly is specified
+    if (context.showSummaryOnly || filePaths.length > 1) {
+      const stat = calcCharacterStat(result, context.showDetails, context.showDetailsPretty)
+      console.log('Summary')
+      console.log(formatCharacterStat(stat))
+    }
   }
 }

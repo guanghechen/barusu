@@ -1,22 +1,55 @@
 import fs from 'fs-extra'
+import globby from 'globby'
 import path from 'path'
-import { performCharacterStatistics, calcCharacterStat } from '../src'
+import {
+  calcCharacterStat,
+  formatCharacterStat,
+  performCharacterStatistics,
+} from '../src'
 
 
 /**
- * load content from filepath
- * @param filepath
+ * load content from absoluteFilepath
+ * @param absoluteFilepath
  */
-export async function loadContent(filepath: string): Promise<string> {
-  const absoluteFilepath = path.resolve(__dirname, 'cases', filepath)
+export async function loadContent(absoluteFilepath: string): Promise<string> {
   const content: string = await fs.readFile(absoluteFilepath, 'utf-8')
   return content
 }
 
 
-test('rumengling', async function () {
-  const content: string = await loadContent('rumengling.md')
-  const detailMap = performCharacterStatistics(content)
-  const stat = calcCharacterStat(detailMap, 10)
-  expect(stat).toMatchSnapshot()
+describe('util', function () {
+  const rootDir = path.resolve(__dirname, 'cases/files')
+  const filenames = globby.sync('*', {
+    cwd: rootDir,
+    onlyFiles: true,
+    expandDirectories: false,
+  })
+  const filepaths: string[] = filenames.map(p => path.resolve(rootDir, p)).sort()
+
+  describe('calcCharacterStat', function () {
+    for (const filepath of filepaths) {
+      const { name } = path.parse(filepath)
+      test(name, async function () {
+        const content: string = await loadContent(filepath)
+        const detailMap = performCharacterStatistics(content)
+
+        expect(calcCharacterStat(detailMap, 10, false)).toMatchSnapshot()
+        expect(calcCharacterStat(detailMap, 10, true)).toMatchSnapshot()
+      })
+    }
+  })
+
+  describe('formatCharacterStat', function () {
+    for (const filepath of filepaths) {
+      const { name } = path.parse(filepath)
+      test(name, async function () {
+        const content: string = await loadContent(filepath)
+        const detailMap = performCharacterStatistics(content)
+
+        expect(formatCharacterStat(calcCharacterStat(detailMap, 10, false))).toMatchSnapshot()
+        expect(formatCharacterStat(calcCharacterStat(detailMap, 10, true))).toMatchSnapshot()
+      })
+    }
+  })
 })

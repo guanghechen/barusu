@@ -3,16 +3,25 @@
 [![npm license](https://img.shields.io/npm/l/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
 
 
+Count the frequency of characters in the file(s).
+
+
 # Usage
 
   * Install
     ```shell
-    yarn add --dev @barusu/tool-word
+    yarn global add @barusu/tool-word
     ```
 
   * Usage
     ```shell
-    npx barusu-word 'src/**/*.ts'
+    barusu-word stat src --show-details-pretty
+
+    # specify file patterns
+    barusu-word stat . -p 'src/**/*.ts' -p '!src/**/*.tmp.ts' --show-details-pretty
+
+    # specify file paths
+    barusu-word stat . -f src/a.md -f src/b.ts --show-details-pretty
     ```
 
 # Options
@@ -21,90 +30,37 @@
 
   ```shell
   $ barusu-word --help
-  Usage: barusu-word <cwd> [options]
+  Usage: barusu-word [options] [command]
 
   Options:
-    -V, --version                  output the version number
-    --log-level <level>            specify logger's level.
-    --log-name <name>              specify logger's name.
-    --log-flag <option>            specify logger' option. [[no-]<date|colorful|inline>] (default: [])
-    --log-output <filepath>        specify logger' output path.
-    --log-encoding <encoding>      specify output file encoding.
-    -P, --pattern <pattern>        glob pattern of source file (default: [])
-    -e, --encoding <encoding>      encoding of source file
-    --max-column <maxColumn>       maximum column width
-    --indent <indent>              indent of source codes
-    --quote <quote>                quotation marker surround the module path
-    ----semicolon                  whether to add a semicolon at the end of import/export statement
-    -h, --help                     display help for command
+    -V, --version                                     output the version number
+    --log-level <level>                               specify logger's level.
+    --log-name <name>                                 specify logger's name.
+    --log-mode <'normal' | 'loose'>                   specify logger's name.
+    --log-flag <option>                               specify logger' option. [[no-]<date|colorful|inline>] (default: [])
+    --log-output <filepath>                           specify logger' output path.
+    --log-encoding <encoding>                         specify output file encoding.
+    -c, --config-path <configFilepath>                config filepaths (default: [])
+    --parastic-config-path <parasticConfigFilepath>   parastic config filepath
+    --parastic-config-entry <parasticConfigFilepath>  parastic config filepath
+    --encoding <encoding>                             default encoding of files in the workspace
+    -h, --help                                        display help for command
+
+  Commands:
+    stat|s [options] <workspac>
+    help [command]                                    display help for command
   ```
 
+## stat
+  ```shell
+  $ barusu-word stat --help
+  Usage: barusu-word stat|s [options] <workspace | filepath>
 
-## Details
-  * `--log-*`: see [cli-options | @barusu-logger](https://github.com/lemon-clown/barusu/tree/master/packages/chalk-logger#cli-options)
-
-  * `-e, --encoding <encoding>`: Specify the encoding of the source files. Default value is `utf-8`
-
-  * `-p, --pattern <pattern>`: Specify the glob pattern of source files, see [patterns option | globby](https://github.com/sindresorhus/globby#patterns). Default value is empty array `[]`
-
-  * `--max-column <maxColumn>`: Specify the maximum column width, if the number of characters in one `import/export` statement exceeds this limit, line breaks will be performed. Default value is `1000`
-
-  * `--indent <indent>`: Specify indent of source codes. Default value is two spaces `  `.
-
-  * `--quote <quote>`: Specify the quotation marker surround the module path. Default value is single quotes `'`
-
-  * `--semicolon`: Specify whether to add a semicolon at the end of `import/export` statement. Default value is `false`
-
-## Options in <cwd>/package.json
-
-  You can also specify options in the `<cwd>/package.json`, for example:
-  ```json
-  {
-    "@barusu/tool-word": {
-      "pattern": [
-        "src/**/*.{ts,tsx}",
-        "test/**/*.{ts,tsx}"
-      ],
-      "moduleRanks": [
-        {
-          "regex": "^(react|vue|angular)(?:[\/\\-][\\w\\-.\/]*)?$",
-          "rank": 1.1
-        },
-        {
-          "regex": "^mocha|chai(?:[\/][\\w\\-.\/]*)?$",
-          "rank": 1.2
-        },
-        {
-          "regex": "^[a-zA-Z\\d][\\w\\-.]*",
-          "rank": 1.3
-        },
-        {
-          "regex": "^@[a-zA-Z\\d][\\w\\-.]*\\/[a-zA-Z\\d][\\w\\-.]*",
-          "rank": 1.4
-        },
-        {
-          "regex": "^@\\/",
-          "rank": 2.1
-        },
-        {
-          "regex": "^(?:\\/|[a-zA-Z]:)",
-          "rank": 3.1
-        },
-        {
-          "regex": "^[.]{2}[\\/\\\\][^\\n]*",
-          "rank": 3.2
-        },
-        {
-          "regex": "^[.][\\/\\\\][^\\n]*",
-          "rank": 3.3
-        }
-      ],
-      "indent": "  ",
-      "quote": "'",
-      "semicolon": false,
-      "maxColumn": 100
-    }
-  }
+  Options:
+    -f, --file-path <filePath>        source file path using to give statistics (default: [])
+    -p, --file-pattern <filePattern>  file wildcard list using to give statistics (default: [])
+    --show-details <lineNumber>       rows in the word frequency ranking list to be displayed
+    --show-details-pretty             Filter out blank and punctuation characters & set --show-details default to 10
+    --show-summary-only               display summary statistics only
+    -h, --help                        display help for command                                   display help for command
   ```
-
-  * `moduleRanks` specified module rank when sort `import/export` statements. If a module path matches multiple items, only the first matched item is taken.

@@ -24,6 +24,7 @@ export function loadSubCommandStat(
         filePath: options.filePath,
         filePattern: options.filePattern,
         showDetails: options.showDetails,
+        showDetailsPretty: options.showDetailsPretty,
         showSummaryOnly: options.showSummaryOnly,
       }
 

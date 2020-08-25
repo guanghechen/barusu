@@ -23,7 +23,7 @@
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
     "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes && yarn install",
-    "rebuild": "lerna exec -- yarn build",
+    "rebuild": "yarn clean && yarn build",
     "exec:ts": "node -r ts-node/register -r tsconfig-path/register",
     "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js . --log-level=verbose",
     "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose"
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/jest": "^26.0.10",
+    "@types/rimraf": "^3.0.0",
     "chai": "^4.2.0",
     "chai-exclude": "^2.0.2",
     "cross-env": "^7.0.2",
@@ -53,7 +54,7 @@
   "@barusu/tool-sort-imports": {
     "pattern": [
       "{packages,scaffolds,templates,tools,utils}/*/src/**/*.{ts,tsx}",
-      "{packages,scaffolds,templates,tools,utils}/*/test/**/*.{ts,tsx}"
+      "{packages,scaffolds,templates,tools,utils}/*/{test,__test__}/*.{ts,tsx}"
     ],
     "moduleRanks": [
       {

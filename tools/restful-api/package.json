@@ -37,12 +37,11 @@
   "scripts": {
     "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "test": "TS_NODE_FILES=true mocha -r ts-node/register test/**/*.test.ts",
+    "test": "TS_NODE_FILES=true jest --config ../../jest.config.json --rootDir .",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
     "lint:fix": "eslint src/**/*.ts --fix",
     "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.schema.ts",
-    "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts",
-    "answer": "TS_NODE_FILES=true cross-env node -r ts-node/register test/answer.ts"
+    "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.26",
@@ -77,7 +76,6 @@
     "@barusu/eslint-config": "^0.0.26",
     "@barusu/rollup-config": "^0.0.26",
     "@barusu/rollup-plugin-copy": "^0.0.26",
-    "@barusu/util-mocha": "^0.0.26",
     "rollup": "2.16.1"
   }
 }

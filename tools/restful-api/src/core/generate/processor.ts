@@ -28,7 +28,7 @@ export class RestfulApiGenerateProcessor {
     const tasks: Promise<void>[] = []
     for (const item of context.apiItems) {
       // RequestData
-      if (item.request.voName != null) {
+      if (item.request.voName != null && item.request.schemaPath != null) {
         const task = self.generateDataSchema(item.request.voName, item.request.schemaPath)
         tasks.push(task)
       }

@@ -11,9 +11,13 @@ export interface CharacterDetail {
    */
   count: number
   /**
-   * Whether is blank space
+   * Whether is a blank character
    */
   blank: boolean
+  /**
+   * Whether is a punctuation character
+   */
+  punctuation: boolean
 }
 
 
@@ -26,17 +30,25 @@ export interface CharacterStat {
    */
   total: number
   /**
-   * Total number of non-blank characters
+   * Total number of blank characters
    */
-  nonBlankTotal: number
+  blankTotal: number
+  /**
+   * Total number of punctuation characters
+   */
+  punctuationTotal: number
   /**
    * Total number of characters after deduplication
    */
   uniqueTotal: number
   /**
-   * Total number of non-blank characters after deduplication
+   * Total number of blank characters after deduplication
    */
-  uniqueNonBlankTotal: number
+  uniqueBlankTotal: number
+  /**
+   * Total number of punctuation characters after deduplication
+   */
+  uniquePunctuationTotal: number
   /**
    * Word frequency statistics of characters
    */
@@ -63,7 +75,8 @@ export function performCharacterStatistics(
     detail = {
       char: c,
       count: 1,
-      blank: /\s/.test(c),
+      blank: /\s/u.test(c),
+      punctuation: /\p{P}/u.test(c),
     }
     detailMap[c] = detail
   }
@@ -95,36 +108,53 @@ export function mergeCharacterStat(
 
 /**
  * Map Record<string, CharacterDetail> to CharacterStat
+ *
  * @param detailMap
+ * @param topOfDetails
+ * @param pretty
  */
 export function calcCharacterStat(
   detailMap: Record<string, CharacterDetail>,
   topOfDetails: number,
+  pretty: boolean,
 ): CharacterStat {
-  let total = 0, nonBlankTotal = 0, uniqueTotal = 0, uniqueNonBlankTotal = 0
+  let total = 0, blankTotal = 0, punctuationTotal = 0
+  let uniqueTotal = 0, uniqueBlankTotal = 0, uniquePunctuationTotal = 0
   for (const detail of Object.values(detailMap)) {
     total += detail.count
     uniqueTotal += 1
-    if (!detail.blank) {
-      nonBlankTotal += detail.count
-      uniqueNonBlankTotal += 1
+    if (detail.blank) {
+      blankTotal += detail.count
+      uniqueBlankTotal += 1
+    }
+    if (detail.punctuation) {
+      punctuationTotal += detail.count
+      uniquePunctuationTotal += 1
     }
   }
 
   const result: CharacterStat = {
     total,
-    nonBlankTotal,
+    blankTotal,
+    punctuationTotal,
     uniqueTotal,
-    uniqueNonBlankTotal,
+    uniqueBlankTotal,
+    uniquePunctuationTotal,
   }
 
   if (topOfDetails > 0) {
-    const details: CharacterDetail[] = Object.values(detailMap)
+    const stableSortedDetails: CharacterDetail[] = Object.values(detailMap)
       .sort((x, y) => {
         if (x.count !== y.count) return y.count - x.count
         return x < y ? -1 : 1
       })
-      .slice(0, topOfDetails)
+    const details: CharacterDetail[] = []
+    for (let i = 0, k = 0; i < stableSortedDetails.length && k < topOfDetails; ++i) {
+      const detail = stableSortedDetails[i]
+      if (pretty && (detail.blank || detail.punctuation)) continue
+      k += 1
+      details.push(detail)
+    }
     result.details = details
   }
 
@@ -133,24 +163,30 @@ export function calcCharacterStat(
 
 
 /**
- * Print CharacterStat
+ * Format CharacterStat
  * @param stat
  */
-export function printCharacterStat(stat: CharacterStat): void {
+export function formatCharacterStat(stat: CharacterStat): string {
   const length = stat.total.toString().length
   const format = (n: number) => n.toString().padStart(length)
-  console.log('======================================================')
-  console.log('              total:', format(stat.total))
-  console.log('      nonBlankTotal:', format(stat.nonBlankTotal))
-  console.log('        uniqueTotal:', format(stat.uniqueTotal))
-  console.log('uniqueNonBlankTotal:', format(stat.uniqueNonBlankTotal))
+  let output: string = (
+    '======================================================'      + '\n' +
+    '                   total: ' + format(stat.total)             + '\n' +
+    '             blank total: ' + format(stat.blankTotal)        + '\n' +
+    '       punctuation total: ' + format(stat.punctuationTotal)  + '\n' +
+    '            unique total: ' + format(stat.uniqueTotal)       + '\n' +
+    '      unique blank total: ' + format(stat.uniqueBlankTotal)  + '\n' +
+    'unique punctuation total: ' + format(stat.uniquePunctuationTotal) + '\n'
+  )
 
   if (stat.details != null) {
-    console.log('            details:')
-    console.log('            -----------------------')
+    output += (
+      '                 details:\n' +
+      '                 ' + '-'.padStart(13 + length, '-') + '\n'
+    )
     for (const detail of stat.details) {
-      console.log(JSON.stringify(detail.char).padStart(19) + ':' +  format(detail.count))
+      output += JSON.stringify(detail.char).padStart(24) + ': ' +  format(detail.count) + '\n'
     }
   }
-  console.log()
+  return output
 }
