@@ -2,124 +2,148 @@
 
 exports[`calcCharacterStat chou_nu_er 1`] = `
 Object {
+  "blankTotal": 7,
   "details": Array [
     Object {
       "blank": true,
       "char": "
 ",
       "count": 7,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "，",
       "count": 4,
+      "punctuation": true,
     },
     Object {
       "blank": false,
       "char": "。",
       "count": 4,
+      "punctuation": true,
     },
     Object {
       "blank": false,
       "char": "愁",
       "count": 3,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "说",
       "count": 3,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "道",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "识",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "滋",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "味",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "爱",
       "count": 2,
+      "punctuation": false,
     },
   ],
-  "nonBlankTotal": 69,
+  "punctuationTotal": 12,
   "total": 76,
-  "uniqueNonBlankTotal": 48,
+  "uniqueBlankTotal": 1,
+  "uniquePunctuationTotal": 6,
   "uniqueTotal": 49,
 }
 `;
 
 exports[`calcCharacterStat ru_meng_ling 1`] = `
 Object {
+  "blankTotal": 7,
   "details": Array [
     Object {
       "blank": false,
       "char": "，",
       "count": 7,
+      "punctuation": true,
     },
     Object {
       "blank": false,
       "char": "。",
       "count": 6,
+      "punctuation": true,
     },
     Object {
       "blank": true,
       "char": "
 ",
       "count": 5,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "知",
       "count": 3,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "#",
       "count": 2,
+      "punctuation": true,
     },
     Object {
       "blank": true,
       "char": " ",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "如",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "梦",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "令",
       "count": 2,
+      "punctuation": false,
     },
     Object {
       "blank": false,
       "char": "·",
       "count": 2,
+      "punctuation": true,
     },
   ],
-  "nonBlankTotal": 102,
+  "punctuationTotal": 18,
   "total": 109,
-  "uniqueNonBlankTotal": 68,
+  "uniqueBlankTotal": 2,
+  "uniquePunctuationTotal": 5,
   "uniqueTotal": 70,
 }
 `;

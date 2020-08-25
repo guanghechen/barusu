@@ -99,7 +99,7 @@ export function createSubCommandStat(
       const filePattern: string[] = cover<string[]>(
         defaultOptions.filePattern, options.filePattern, isNotEmptyArray)
       if (filePath.length <= 0 && filePattern.length <= 0) {
-        filePattern.push('*')
+        filePattern.push('{*,**/*}')
       }
       logger.debug('filePattern:', filePattern)
 
