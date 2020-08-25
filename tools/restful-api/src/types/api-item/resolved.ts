@@ -45,12 +45,12 @@ export interface ResolvedApiItem {
      * 请求数据对应的数据模型的 TypeScript 接口名
      * @description The corresponding RequestVo interface name of current ApiItem in TypeScript
      */
-    voName: string
+    voName?: string
     /**
      * 请求对象的数据模型对应的 JSON-Schema 的文件路径
      * @description The JSON-Schema path of the corresponding RequestVo
      */
-    schemaPath: string
+    schemaPath?: string
     /**
      * 请求对象的 HTTP headers
      * @description HTTP request headers (Received from client)
