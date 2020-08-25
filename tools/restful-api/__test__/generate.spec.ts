@@ -2,9 +2,9 @@ import chalk from 'chalk'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
+import rimraf from 'rimraf'
 import { name } from '@barusu/tool-restful-api/package.json'
 import { absoluteOfWorkspace } from '@barusu/util-cli'
-import rimraf from 'rimraf'
 import {
   COMMAND_NAME,
   RestfulApiGenerateContext,
