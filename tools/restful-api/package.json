@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-restful-api",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "quickly create restful style mock server.",
   "author": {
     "name": "lemon-clown",
@@ -44,12 +44,12 @@
     "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.26",
-    "@barusu/configuration-master": "^0.0.26",
-    "@barusu/event-bus": "^0.0.26",
-    "@barusu/typescript-json-schema": "^0.0.26",
-    "@barusu/util-cli": "^0.0.26",
-    "@barusu/util-option": "^0.0.26",
+    "@barusu/chalk-logger": "^0.0.27",
+    "@barusu/configuration-master": "^0.0.27",
+    "@barusu/event-bus": "^0.0.27",
+    "@barusu/typescript-json-schema": "^0.0.27",
+    "@barusu/util-cli": "^0.0.27",
+    "@barusu/util-option": "^0.0.27",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^9.3.1",
     "@types/fs-extra": "^8.1.0",
@@ -73,9 +73,9 @@
     "typescript": "^3.8.2"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.26",
-    "@barusu/rollup-config": "^0.0.26",
-    "@barusu/rollup-plugin-copy": "^0.0.26",
+    "@barusu/eslint-config": "^0.0.27",
+    "@barusu/rollup-config": "^0.0.27",
+    "@barusu/rollup-plugin-copy": "^0.0.27",
     "rollup": "2.16.1"
   }
 }

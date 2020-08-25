@@ -1,6 +1,6 @@
 {
   "name": "@barusu/typescript-json-schema",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "typescript-json-schema generates JSON Schema files from you Typescript sources",
   "author": {
     "name": "lemon-clown",
@@ -43,8 +43,8 @@
     "typescript": "^3.8.2"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.26",
-    "@barusu/rollup-config": "^0.0.26",
+    "@barusu/eslint-config": "^0.0.27",
+    "@barusu/rollup-config": "^0.0.27",
     "ajv": "^6.12.2",
     "rollup": "2.16.1"
   }
