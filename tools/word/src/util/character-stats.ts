@@ -163,26 +163,30 @@ export function calcCharacterStat(
 
 
 /**
- * Print CharacterStat
+ * Format CharacterStat
  * @param stat
  */
-export function printCharacterStat(stat: CharacterStat): void {
+export function formatCharacterStat(stat: CharacterStat): string {
   const length = stat.total.toString().length
   const format = (n: number) => n.toString().padStart(length)
-  console.log('======================================================')
-  console.log('                   total:', format(stat.total))
-  console.log('             blank total:', format(stat.blankTotal))
-  console.log('       punctuation total:', format(stat.punctuationTotal))
-  console.log('            unique total:', format(stat.uniqueTotal))
-  console.log('      unique blank total:', format(stat.uniqueBlankTotal))
-  console.log('unique punctuation total:', format(stat.uniquePunctuationTotal))
+  let output: string = (
+    '======================================================'      + '\n' +
+    '                   total: ' + format(stat.total)             + '\n' +
+    '             blank total: ' + format(stat.blankTotal)        + '\n' +
+    '       punctuation total: ' + format(stat.punctuationTotal)  + '\n' +
+    '            unique total: ' + format(stat.uniqueTotal)       + '\n' +
+    '      unique blank total: ' + format(stat.uniqueBlankTotal)  + '\n' +
+    'unique punctuation total: ' + format(stat.uniquePunctuationTotal) + '\n'
+  )
 
   if (stat.details != null) {
-    console.log('                 details:')
-    console.log('                 -----------------------')
+    output += (
+      '                 details:\n' +
+      '                 ' + '-'.padStart(13 + length, '-') + '\n'
+    )
     for (const detail of stat.details) {
-      console.log(JSON.stringify(detail.char).padStart(23) + ':' +  format(detail.count))
+      output += JSON.stringify(detail.char).padStart(24) + ': ' +  format(detail.count) + '\n'
     }
   }
-  console.log()
+  return output
 }

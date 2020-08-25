@@ -4,9 +4,9 @@ import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import {
   CharacterDetail,
   calcCharacterStat,
+  formatCharacterStat,
   mergeCharacterStat,
   performCharacterStatistics,
-  printCharacterStat,
 } from '../../util/character-stats'
 import { WordStatContext } from './context'
 
@@ -44,7 +44,7 @@ export class WordStatProcessor {
       // display statistics for each file
       if (!context.showSummaryOnly) {
         console.log(relativeOfWorkspace(context.cwd, filePath))
-        printCharacterStat(stat)
+        console.log(formatCharacterStat(stat))
       }
 
       mergeCharacterStat(detailMap, result)
@@ -53,6 +53,6 @@ export class WordStatProcessor {
     // Output summary
     const stat = calcCharacterStat(result, context.showDetails, context.showDetailsPretty)
     console.log('Summary')
-    printCharacterStat(stat)
+    console.log(formatCharacterStat(stat))
   }
 }
