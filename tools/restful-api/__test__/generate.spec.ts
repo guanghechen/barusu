@@ -4,6 +4,7 @@ import globby from 'globby'
 import path from 'path'
 import { name } from '@barusu/tool-restful-api/package.json'
 import { absoluteOfWorkspace } from '@barusu/util-cli'
+import rimraf from 'rimraf'
 import {
   COMMAND_NAME,
   RestfulApiGenerateContext,
@@ -55,6 +56,11 @@ describe('generate', function () {
       })
 
       const schemaRootDir = '__tmp__/schemas/output'
+      const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
+
+      // clear output directory before run test
+      rimraf.sync(absoluteSchemaRootDir)
+
       const args = [
         '',
         COMMAND_NAME,
@@ -72,7 +78,6 @@ describe('generate', function () {
       await promise
 
       // write the outputs to snapshots
-      const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
       const files = (await globby(['*', '**/*'], {
         cwd: absoluteSchemaRootDir,
         onlyFiles: true,
