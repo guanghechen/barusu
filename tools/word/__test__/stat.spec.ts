@@ -14,7 +14,7 @@ export async function loadContent(absoluteFilepath: string): Promise<string> {
 }
 
 
-describe('calcCharacterStat', function () {
+describe('stat characters', function () {
   const rootDir = path.resolve(__dirname, 'cases/files')
   const filenames = globby.sync('*', {
     cwd: rootDir,
@@ -29,8 +29,9 @@ describe('calcCharacterStat', function () {
     test(name, async function () {
       const content: string = await loadContent(filepath)
       const detailMap = performCharacterStatistics(content)
-      const stat = calcCharacterStat(detailMap, 10)
-      expect(stat).toMatchSnapshot()
+
+      expect(calcCharacterStat(detailMap, 10, false)).toMatchSnapshot()
+      expect(calcCharacterStat(detailMap, 10, true)).toMatchSnapshot()
     })
   }
 })

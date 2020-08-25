@@ -74,6 +74,79 @@ Object {
 }
 `;
 
+exports[`calcCharacterStat chou_nu_er 2`] = `
+Object {
+  "blankTotal": 7,
+  "details": Array [
+    Object {
+      "blank": false,
+      "char": "愁",
+      "count": 3,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "说",
+      "count": 3,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "道",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "识",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "滋",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "味",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "爱",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "上",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "层",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "楼",
+      "count": 2,
+      "punctuation": false,
+    },
+  ],
+  "punctuationTotal": 12,
+  "total": 76,
+  "uniqueBlankTotal": 1,
+  "uniquePunctuationTotal": 6,
+  "uniqueTotal": 49,
+}
+`;
+
 exports[`calcCharacterStat ru_meng_ling 1`] = `
 Object {
   "blankTotal": 7,
@@ -138,6 +211,79 @@ Object {
       "char": "·",
       "count": 2,
       "punctuation": true,
+    },
+  ],
+  "punctuationTotal": 18,
+  "total": 109,
+  "uniqueBlankTotal": 2,
+  "uniquePunctuationTotal": 5,
+  "uniqueTotal": 70,
+}
+`;
+
+exports[`calcCharacterStat ru_meng_ling 2`] = `
+Object {
+  "blankTotal": 7,
+  "details": Array [
+    Object {
+      "blank": false,
+      "char": "知",
+      "count": 3,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "如",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "梦",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "令",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "常",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "记",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "溪",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "亭",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "日",
+      "count": 2,
+      "punctuation": false,
+    },
+    Object {
+      "blank": false,
+      "char": "暮",
+      "count": 2,
+      "punctuation": false,
     },
   ],
   "punctuationTotal": 18,
