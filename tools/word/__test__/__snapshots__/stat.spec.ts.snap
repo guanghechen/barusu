@@ -1,6 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rumengling 1`] = `
+exports[`calcCharacterStat chou_nu_er 1`] = `
+Object {
+  "details": Array [
+    Object {
+      "blank": true,
+      "char": "
+",
+      "count": 7,
+    },
+    Object {
+      "blank": false,
+      "char": "，",
+      "count": 4,
+    },
+    Object {
+      "blank": false,
+      "char": "。",
+      "count": 4,
+    },
+    Object {
+      "blank": false,
+      "char": "愁",
+      "count": 3,
+    },
+    Object {
+      "blank": false,
+      "char": "说",
+      "count": 3,
+    },
+    Object {
+      "blank": false,
+      "char": "道",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "识",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "滋",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "味",
+      "count": 2,
+    },
+    Object {
+      "blank": false,
+      "char": "爱",
+      "count": 2,
+    },
+  ],
+  "nonBlankTotal": 69,
+  "total": 76,
+  "uniqueNonBlankTotal": 48,
+  "uniqueTotal": 49,
+}
+`;
+
+exports[`calcCharacterStat ru_meng_ling 1`] = `
 Object {
   "details": Array [
     Object {

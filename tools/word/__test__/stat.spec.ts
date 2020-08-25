@@ -1,22 +1,36 @@
 import fs from 'fs-extra'
 import path from 'path'
 import { performCharacterStatistics, calcCharacterStat } from '../src'
+import globby from 'globby'
 
 
 /**
- * load content from filepath
- * @param filepath
+ * load content from absoluteFilepath
+ * @param absoluteFilepath
  */
-export async function loadContent(filepath: string): Promise<string> {
-  const absoluteFilepath = path.resolve(__dirname, 'cases', filepath)
+export async function loadContent(absoluteFilepath: string): Promise<string> {
   const content: string = await fs.readFile(absoluteFilepath, 'utf-8')
   return content
 }
 
 
-test('rumengling', async function () {
-  const content: string = await loadContent('rumengling.md')
-  const detailMap = performCharacterStatistics(content)
-  const stat = calcCharacterStat(detailMap, 10)
-  expect(stat).toMatchSnapshot()
+describe('calcCharacterStat', function () {
+  const rootDir = path.resolve(__dirname, 'cases/files')
+  const filenames = globby.sync('*', {
+    cwd: rootDir,
+    onlyFiles: true,
+    expandDirectories: false,
+  })
+  const filepaths: string[] = filenames.map(p => path.resolve(rootDir, p)).sort()
+  console.log('filepath:', filepaths)
+
+  for (const filepath of filepaths) {
+    const { name } = path.parse(filepath)
+    test(name, async function () {
+      const content: string = await loadContent(filepath)
+      const detailMap = performCharacterStatistics(content)
+      const stat = calcCharacterStat(detailMap, 10)
+      expect(stat).toMatchSnapshot()
+    })
+  }
 })
