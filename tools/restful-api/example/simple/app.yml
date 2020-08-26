@@ -7,7 +7,7 @@ generate:
   muteMissingModel: true
   ignoredDataTypes:
     - 'undefined'
-  schemaArgs:
+  additionalSchemaArgs:
     ref: false
     required: true
 

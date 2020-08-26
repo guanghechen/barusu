@@ -12,7 +12,27 @@ export enum ResponseCode {
 /**
  * response result
  */
-export interface ResponseResult<T = undefined> {
+export interface ResponseResult<T = unknown> {
+  /**
+   * response code
+   * @default 200
+   */
+  code: ResponseCode
+  /**
+   * response message
+   */
+  message: string
+  /**
+   * response data
+   */
+  result: T
+}
+
+
+/**
+ * response result
+ */
+export interface OptionalResponseResult<T = unknown> {
   /**
    * response code
    * @default 200
@@ -32,7 +52,7 @@ export interface ResponseResult<T = undefined> {
 /**
  * 分页响应数据
  */
-export interface PaginationResponseResult<T = undefined> extends ResponseResult<T> {
+export interface PaginationResponseResult<T = unknown> extends ResponseResult<T> {
   /**
    * pagination info
    */

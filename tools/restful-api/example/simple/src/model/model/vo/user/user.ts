@@ -1,4 +1,4 @@
-import { ResponseResult } from '../../../core/response'
+import { OptionalResponseResult, ResponseResult } from '../../../core/response'
 import { User } from '../../user/user'
 
 
@@ -6,7 +6,7 @@ import { User } from '../../user/user'
  * update current user information
  */
 export interface UpdateCurrentUserRequestVo extends User {}
-export type UpdateCurrentUserResponseVo = ResponseResult<undefined>
+export type UpdateCurrentUserResponseVo = OptionalResponseResult<undefined>
 
 
 /**

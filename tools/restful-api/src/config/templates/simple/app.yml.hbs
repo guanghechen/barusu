@@ -1,6 +1,9 @@
 __globalOptions__:
   encoding: {{{encoding}}}
   logLevel: {{{lowerCase logLevel}}}
+  schemaRootPath: data/schemas
+  apiConfigPath:
+    - api.yml
 
 # options for sub-command `generate`
 generate:
@@ -8,7 +11,7 @@ generate:
   muteMissingModel: true
   ignoredDataTypes:
     - 'undefined'
-  schemaArgs:
+  additionalSchemaArgs:
     ref: false
     required: true
 
