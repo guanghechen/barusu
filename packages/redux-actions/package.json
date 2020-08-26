@@ -1,6 +1,6 @@
 {
   "name": "@barusu/redux-actions",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -36,8 +36,8 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.27",
-    "@barusu/rollup-config": "^0.0.27",
+    "@barusu/eslint-config": "^0.0.28",
+    "@barusu/rollup-config": "^0.0.28",
     "rollup": "2.16.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-git-cipher",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "cipher git repository",
   "author": {
     "name": "lemon-clown",
@@ -42,10 +42,10 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.27",
-    "@barusu/event-bus": "^0.0.27",
-    "@barusu/util-cli": "^0.0.27",
-    "@barusu/util-option": "^0.0.27",
+    "@barusu/chalk-logger": "^0.0.28",
+    "@barusu/event-bus": "^0.0.28",
+    "@barusu/util-cli": "^0.0.28",
+    "@barusu/util-option": "^0.0.28",
     "@types/fs-extra": "^8.1.0",
     "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",
@@ -56,9 +56,9 @@
     "node-plop": "~0.26.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.27",
-    "@barusu/rollup-config": "^0.0.27",
-    "@barusu/rollup-plugin-copy": "^0.0.27",
+    "@barusu/eslint-config": "^0.0.28",
+    "@barusu/rollup-config": "^0.0.28",
+    "@barusu/rollup-plugin-copy": "^0.0.28",
     "rollup": "2.16.1"
   }
 }
