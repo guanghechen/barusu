@@ -47,7 +47,7 @@
   # or use npm: npm install -g @barusu/tool-restful-api
 
   # Init mock server project
-  rapit init demo-mock-server --log-level verbose
+  barusu-rapit init demo-mock-server --log-level verbose
 
   # or use npx: npx @barusu/tool-restful-api init demo-mock-server -- --log-level verbose
   ```
@@ -60,54 +60,59 @@
 
 ## Usage
   ```shell
-  $ rapit --help
-
-  Usage: command [options] [command]
+  $ barusu-rapit --help
+  Usage: barusu-rapit [options] [command]
 
   Options:
-    -V, --version                              output the version number
-    -c, --config-path <config-path>            specify the file path of main config (absolute or relative to the cwd) (default: "app.yml")
-    -f, --api-config-path <api-config-path>    specify the file/directory path of api-item config file (absolute or relative to the cwd) (default: "api.yml")
-    -s, --schema-root-path <schema-root-path>  specify the root path of schema (absolute or relative to the cwd) (default: "schemas")
-    --encoding <encoding>                      specify encoding of all files. (default: "utf-8")
-    --log-level <level>                        specify logger's level.
-    -h, --help                                 output usage information
+    -V, --version                                     output the version number
+    --log-level <level>                               specify logger's level.
+    --log-name <name>                                 specify logger's name.
+    --log-mode <'normal' | 'loose'>                   specify logger's name.
+    --log-flag <option>                               specify logger' option. [[no-]<date|colorful|inline>] (default: [])
+    --log-output <filepath>                           specify logger' output path.
+    --log-encoding <encoding>                         specify output file encoding.
+    -c, --config-path <configFilepath>                config filepaths (default: [])
+    --parastic-config-path <parasticConfigFilepath>   parastic config filepath
+    --parastic-config-entry <parasticConfigFilepath>  parastic config filepath
+    -h, --help                                        display help for command
 
   Commands:
-    generate|g [options] <project-dir>
-    serve|s [options] <project-dir>
-    init|i <project-dir>
+    init|i <workspace>
+    generate|g [options] <workspace>
+    serve|s [options] <workspace>
+    help [command]                                    display help for command
   ```
 
 ### init
   ```shell
-  $ rapit init --help
-  Usage: rapit init|i [options] <project-dir>
+  $ barusu-rapit init --help
+  Usage: barusu-rapit init|i [options] <workspace>
 
   Options:
-    -h, --help  output usage information
+    -h, --help  display help for command
   ```
 
 ### generate
   ```shell
-  $ rapit generate --help
-
-  Usage: command generate|g [options] <project-dir>
+  $ barusu-rapit generate --help
+  Usage: barusu-rapit generate|g [options] <workspace>
 
   Options:
-    -p, --tsconfig-path <tsconfigPath>  specify the location (absolute or relative to the projectDir) of typescript config file.
-    -I, --ignore-missing-models         ignore missing model.
-    --clean                             clean schema folders before generate.
-    -h, --help                          output usage information
+    -C, --api-config-path <api-config-path>  filepath of api-item config (glob patterns / strings) (default: [])
+    -s, --schema-root-path <schemaRootPath>  root path of schema files
+    --mute-missing-model                     quiet when model not found
+    --clean                                  clean schema folders before generate.
+    -h, --help                               display help for command
   ```
 
 ### serve
   ```shell
-  $ rapit serve --help
-
-  Usage: command serve|s [options] <project-dir>
+  $ barusu-rapit serve --help
+  Usage: barusu-rapit serve|s [options] <workspace>
 
   Options:
+    -C, --api-config-path <api-config-path>              filepath of api-item config (glob patterns / strings) (default: [])
+    -s, --schema-root-path <schemaRootPath>              root path of schema files
     -h, --host <host>                                    specify the ip/domain address to which the mock-server listens.
     -p, --port <port>                                    specify the port on which the mock-server listens.
     --prefix-url <prefixUrl>                             specify the prefix url of routes.
@@ -116,7 +121,7 @@
     --mock-optionals-probability <optionalsProbability>  json-schema-faker's option `optionalsProbability`
     --mock-use-data-file-first <mockDataFileRootPath>    specify the mock data file root path.
     --mock-data-file-first                               preferred use data file as mock data source.
-    -h, --help                                           output usage information
+    --help                                               display help for command
   ```
 
 # Programming Usage
@@ -132,27 +137,72 @@
     ```typescript
     import path from 'path'
     import chalk from 'chalk'
-    import { execCommand, Router, ServeCommand, SubCommandHook } from '@barusu/tool-restful-api'
+    import Router from '@koa/router'
+    import {
+      COMMAND_NAME,
+      RestfulApiServeContext,
+      RestfulApiServeProcessor,
+      SubCommandServeOptions,
+      createProgram,
+      createRestfulApiServeContext,
+      createSubCommandServe,
+    } from '@barusu/tool-restful-api'
+
 
     async function serve () {
+      const program = createProgram()
+      program.addCommand(createSubCommandServe(
+        'serve',
+        async (options: SubCommandServeOptions): Promise<void> => {
+          const context: RestfulApiServeContext = await createRestfulApiServeContext({
+            cwd: options.cwd,
+            workspace: options.workspace,
+            tsconfigPath: options.tsconfigPath,
+            schemaRootPath: options.schemaRootPath,
+            apiConfigPath: options.apiConfigPath,
+            encoding: options.encoding,
+            host: options.host,
+            port: options.port,
+            prefixUrl: options.prefixUrl,
+            mockRequiredOnly: options.mockRequiredOnly,
+            mockOptionalsAlways: options.mockOptionalsAlways,
+            mockOptionalsProbability: options.mockOptionalsProbability,
+            mockDataFileFirst: options.mockDataFileFirst,
+            mockDataFileRootPath: options.mockDataFileRootPath,
+          })
+
+          const processor = new RestfulApiServeProcessor(context)
+
+          const router = new Router()
+          router.get('/hello/world', ctx => {
+            // eslint-disable-next-line no-param-reassign
+            ctx.body = {
+              code: 200,
+              message: 'Got it!',
+            }
+          })
+          processor.registerRouter(router)
+
+          processor.start()
+        }
+      ))
+
       const projectDir = path.resolve()
-      const args = ['', '', 'serve', projectDir, '--log-level=debug', '-s', 'schemas/answer']
+      const args = [
+        '',
+        COMMAND_NAME,
+        'serve',
+        projectDir,
+        '--log-level=verbose',
+        '-s',
+        'data/schemas',
+        '--config-path',
+        'app.yml',
+      ]
       console.log(chalk.gray('--> ' + args.join(' ')))
-
-      const serve = new ServeCommand()
-      serve.onHook(SubCommandHook.BEFORE_START, (server, context) => {
-        const router = new Router({ prefix: context.prefixUrl })
-        router.get('/hello/world', ctx => {
-          ctx.body = {
-            code: 200,
-            message: 'Got it!',
-          }
-        })
-        server.registerRouter(router)
-      })
-
-      execCommand(args, { serve })
+      program.parse(args)
     }
+
     serve()
     ```
 
@@ -166,24 +216,37 @@
     ```json
     {
       "compilerOptions": {
-        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "declaration": true,
+        "declarationMap": true,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
         "moduleResolution": "node",
-        "strictNullChecks": true,
+        "newLine": "LF",
+        "noEmit": false,
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": false,
+        "noImplicitThis": true,
+        "noImplicitUseStrict": false,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "noImplicitReturns": false,
-        "alwaysStrict": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "newLine": "LF",
-        "noEmitOnError": true,
         "pretty": false,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true
+        "removeComments": false,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "suppressImplicitAnyIndexErrors": true
       },
       "include": [
-        "src"
+        "src",
+        "script"
       ]
     }
     ```
@@ -191,42 +254,53 @@
   * Add a `package.json` file, like this:
     ```json
     {
-      "name": "@barusu/tool-restful-api---demo",
+      "name": "restful-api---demo",
       "version": "0.0.0",
       "private": true,
       "scripts": {
-        "build:schemas": "rapit generate .",
-        "serve:cli": "nodemon --exec \"yarn build:schemas && rapit serve .\"",
-        "serve:program": "nodemon --exec \"yarn build:schemas && node -r ts-node/register script/serve.ts\""
+        "build:schemas": "barusu-rapit generate . -c app.yml",
+        "serve:cli": "nodemon --exec \"yarn build:schemas && barusu-rapit serve . -c app.yml\"",
+        "serve:program": "nodemon --exec \"yarn build:schemas && node -r ts-node/register script/serve.ts\"",
+        "serve": "yarn serve:program"
+      },
+      "dependencies": {
+        "@barusu/tool-restful-api": "^0.0.27"
       },
       "devDependencies": {
+        "@barusu/eslint-config": "^0.0.27",
+        "@barusu/rollup-config": "^0.0.27",
         "nodemon": "^1.19.1",
-        "@barusu/tool-restful-api": "^0.0.5",
-        "ts-node": "^8.4.1",
-        "typescript": "^3.6.3"
+        "ts-node": "^8.8.2",
+        "typescript": "^3.8.2"
       }
     }
     ```
 
   * Add a project configuration file named `app.yml` (other paths can be used, but the command-line option `-c, --config-path <config-path>` needs to be used to specify the path of the custom project configuration file), the content is as follows:
     ```yaml
-    globalOptions:
+    __globalOptions__:
       encoding: utf-8
-      logLevel: debug
+      logLevel: verbose
+      schemaRootPath: data/schemas
+      apiConfigPath:
+        - api.yml
 
+    # options for sub-command `generate`
     generate:
       clean: true
       muteMissingModel: true
       ignoredDataTypes:
         - 'undefined'
-      schemaArgs:
+      additionalSchemaArgs:
         ref: false
         required: true
 
+    # options for sub-command `serve`
     serve:
       host: '0.0.0.0'
       port: 8091
       prefixUrl: /mock
+      schemaRootPath: data/schema
       mockDataFileFirst: true
       mockDataFileRootPath: data/
       mockOptionalsAlways: true
@@ -235,7 +309,7 @@
 
     - Here we specify the `generate` and` serve` command options. Please note that command line parameters can override the values of these options.
 
-    - For more configuration details, see the class [GenerateContextConfig][app-config-generate] and [ServeContextConfig][app-config-serve] defined in [src/core/types/context.ts][app-config]
+    - For more configuration details, see the option interface: [SubCommandGenerateOptions][generate-command] and [SubCommandServeOptions][serve-command].
 
   * Add a configuration file `api.yml` that defines the API routes (you can specify other paths through the `-f, --api-config-path <api-config-path>`option), the content is like:
     ```yaml
@@ -251,7 +325,7 @@
             method: POST
             title: 登录
             response:
-              fullModelName: CurrentUserInfoResponseVo
+              voFullName: CurrentUserInfoResponseVo
           logout:
             path: /logout
             method: POST
@@ -259,7 +333,7 @@
     ```
 
     - Here we define two routes:
-      - `POST /api/user/login`, with request object model named `UserLoginRequestVo` (specified by `response.fullModelName` in the configuration) and response object model named `CurrentUserInfoResponseVo`
+      - `POST /api/user/login`, with request object model named `UserLoginRequestVo` (specified by `response.voFullName` in the configuration) and response object model named `CurrentUserInfoResponseVo`
 
       - `POST /api/user/logout`, with request object model named `UserLogoutRequestVo` and response object model named `UserLogoutResponseVo`
 
@@ -275,7 +349,9 @@
 <!-- 参考链接 -->
 [json-schema]: https://json-schema.org/
 [json-schema-faker]: https://github.com/json-schema-faker/json-schema-faker
-[@barusu/typescript-json-schema]: https://github.com/lemon-clown/typescript-json-schema
+[@barusu/typescript-json-schema]: https://github.com/lemon-clown/barusu/blob/master/packages/typescript-json-schema
+[generate-command]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/core/generate/command.ts#L74
+[serve-command]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/core/serve/command.ts#L93
 [api-config]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/types/api-config.ts
 [api-config-rawapiconfig]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/types/api-config.ts#L7
 [example]: https://github.com/lemon-clown/barusu/tree/master/tools/restful-api/example

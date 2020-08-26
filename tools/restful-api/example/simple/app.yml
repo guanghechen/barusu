@@ -1,7 +1,11 @@
-globalOptions:
+__globalOptions__:
   encoding: utf-8
-  logLevel: debug
+  logLevel: verbose
+  schemaRootPath: data/schemas
+  apiConfigPath:
+    - api.yml
 
+# options for sub-command `generate`
 generate:
   clean: true
   muteMissingModel: true
@@ -11,10 +15,12 @@ generate:
     ref: false
     required: true
 
+# options for sub-command `serve`
 serve:
   host: '0.0.0.0'
   port: 8091
   prefixUrl: /mock
+  schemaRootPath: data/schema
   mockDataFileFirst: true
   mockDataFileRootPath: data/
   mockOptionalsAlways: true
