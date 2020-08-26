@@ -58,9 +58,9 @@ async function serve () {
     projectDir,
     '--log-level=debug',
     '-s',
-    'schemas/answer',
-    '--api-config-path',
-    'api.yml',
+    'data/schemas',
+    '--config-path',
+    'app.yml',
   ]
   console.log(chalk.gray('--> ' + args.join(' ')))
   program.parse(args)
