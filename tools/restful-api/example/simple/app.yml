@@ -22,6 +22,6 @@ serve:
   prefixUrl: /mock
   schemaRootPath: data/schema
   mockDataFileFirst: true
-  mockDataFileRootPath: data/
+  mockDataFileRootPath: data/mock
   mockOptionalsAlways: true
   mockOptionalsProbability: 0.7

@@ -72,7 +72,7 @@
           "description": "目标工程的文件编码（简单起见，只考虑所有的源码使用同一种编码格式）\n可覆盖 globalOption.encoding 的值",
           "type": "string"
         },
-        "schemaArgs": {
+        "additionalSchemaArgs": {
           "description": "额外的构建 Schema 的选项",
           "type": "object",
           "properties": {

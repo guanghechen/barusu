@@ -3,14 +3,61 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build:schemas": "rapit generate .",
-    "serve:cli": "nodemon --exec \"yarn build:schemas && rapit serve .\"",
-    "serve:program": "nodemon --exec \"yarn build:schemas && node -r ts-node/register script/serve.ts\""
+    "build:schemas": "barusu-rapit generate . -c app.yml",
+    "serve:cli": "nodemon --exec \"yarn build:schemas && barusu-rapit serve . -c app.yml\"",
+    "serve:program": "nodemon --exec \"yarn build:schemas && node -r ts-node/register script/serve.ts\"",
+    "serve": "yarn serve:program",
+    "format": "barusu-sort-imports ."
+  },
+  "dependencies": {
+    "@barusu/tool-restful-api": "^0.0.28"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1",
-    "restful-api-tool": "^0.0.1",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "@barusu/eslint-config": "^0.0.28",
+    "@barusu/rollup-config": "^0.0.28",
+    "@barusu/tool-sort-imports": "^0.0.28",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.2"
+  },
+  "@barusu/tool-sort-imports": {
+    "pattern": [
+      "{src,test,__test__}/**/*.{ts,tsx}"
+    ],
+    "moduleRanks": [
+      {
+        "regex": "^(react|vue|angular)(?:[/\\-][\\w\\-./]*)?$",
+        "rank": 1.1
+      },
+      {
+        "regex": "^[a-zA-Z\\d][\\w\\-.]*",
+        "rank": 1.3
+      },
+      {
+        "regex": "^@[a-zA-Z\\d][\\w\\-.]*\\/[a-zA-Z\\d][\\w\\-.]*",
+        "rank": 1.4
+      },
+      {
+        "regex": "^@\\/",
+        "rank": 2.1
+      },
+      {
+        "regex": "^(?:\\/|[a-zA-Z]:)",
+        "rank": 3.1
+      },
+      {
+        "regex": "^[.]{2}[\\/\\\\][^\\n]*",
+        "rank": 3.2
+      },
+      {
+        "regex": "^[.][\\/\\\\][^\\n]*",
+        "rank": 3.3
+      }
+    ],
+    "indent": "  ",
+    "quote": "'",
+    "semicolon": false,
+    "maxColumn": 80,
+    "logLevel": "verbose"
   }
 }

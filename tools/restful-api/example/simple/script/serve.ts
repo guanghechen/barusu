@@ -56,9 +56,6 @@ async function serve () {
     COMMAND_NAME,
     'serve',
     projectDir,
-    '--log-level=debug',
-    '-s',
-    'data/schemas',
     '--config-path',
     'app.yml',
   ]
