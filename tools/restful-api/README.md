@@ -120,8 +120,7 @@
     --mock-required-only                                 json-schema-faker's option `requiredOnly`
     --mock-optionals-always                              json-schema-faker's option `alwaysFakeOptionals`
     --mock-optionals-probability <optionalsProbability>  json-schema-faker's option `optionalsProbability`
-    --mock-use-data-file-first <mockDataFileRootPath>    specify the mock data file root path.
-    --mock-data-file-first                               preferred use data file as mock data source.
+    --mock-data-file-root-path <mockDataFileRootPath>    specify the mock data file root path.
     --help                                               display help for command
   ```
 

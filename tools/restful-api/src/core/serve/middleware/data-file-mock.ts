@@ -10,10 +10,6 @@ interface Params {
    */
   prefixUrl: string
   /**
-   * 是否优先使用数据文件作为 mock 数据源
-   */
-  mockDataFileFirst: boolean
-  /**
    * mock 数据文件所在的根目录
    */
   mockDataFileRootPath: string
@@ -23,7 +19,7 @@ interface Params {
 /**
  * 以 <dataFileRootPath> 下的 json 文件作为优先数据源
  */
-export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPath }: Params) {
+export function dataFileMock({ prefixUrl, mockDataFileRootPath }: Params) {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return async function (ctx: Koa.Context, next: Function): Promise<any> {
     // 以数据文件作为 mock 数据源
@@ -42,9 +38,7 @@ export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPat
     }
 
     // 调整 mock 数据源的优先顺序
-    const mockProviders = mockDataFileFirst
-      ? [loadFromDataFile, loadFromNext]
-      : [loadFromNext, loadFromDataFile]
+    const mockProviders = [loadFromDataFile, loadFromNext]
 
     // 尝试所有可行的方式，值得返回非 null 的结果
     for (const mockProvider of mockProviders) {

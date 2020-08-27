@@ -241,8 +241,7 @@
         "prefixUrl",
         "mockRequiredOnly",
         "mockOptionalsAlways",
-        "mockOptionalsProbability",
-        "mockDataFileFirst"
+        "mockOptionalsProbability"
       ],
       "allowAdditionalProperties": false,
       "silentIgnore": false,
@@ -299,12 +298,6 @@
           "default": 0.8,
           "required": true,
           "description": "返回数据中，包含非 required 的属性的几率"
-        },
-        "mockDataFileFirst": {
-          "type": "boolean",
-          "default": false,
-          "required": true,
-          "description": "是否优先使用数据文件作为 mock 数据"
         },
         "mockDataFileRootPath": {
           "type": "string",

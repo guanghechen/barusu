@@ -54,10 +54,6 @@ export interface RestfulApiServeContext {
    */
   readonly mockOptionalsProbability: number
   /**
-   * Whether to prioritize using data files as mock data
-   */
-  readonly mockDataFileFirst: boolean
-  /**
    * The root directory where the mock data file is located
    */
   readonly mockDataFileRootPath?: string
@@ -129,11 +125,6 @@ interface Params {
    */
   mockOptionalsProbability?: number
   /**
-   * Whether to prioritize using data files as mock data
-   * @default false
-   */
-  mockDataFileFirst?: boolean
-  /**
    * The root directory where the mock data file is located
    */
   mockDataFileRootPath?: string
@@ -170,7 +161,6 @@ export async function createRestfulApiServeContext(
     mockRequiredOnly: coverBoolean(false, params.mockRequiredOnly),
     mockOptionalsAlways: coverBoolean(false, params.mockOptionalsAlways),
     mockOptionalsProbability: coverNumber(0.8, params.mockOptionalsProbability),
-    mockDataFileFirst: coverBoolean(false, params.mockDataFileFirst),
     mockDataFileRootPath: params.mockDataFileRootPath,
     apiItems,
   }

@@ -35,7 +35,7 @@ export class RestfulApiServeProcessor {
   * start server
   */
   public async start(): Promise<void> {
-    const { host, port, prefixUrl, mockDataFileFirst, mockDataFileRootPath } = this.context
+    const { host, port, prefixUrl, mockDataFileRootPath } = this.context
     const app = new Koa()
 
     app
@@ -62,7 +62,7 @@ export class RestfulApiServeProcessor {
 
     // If mockDataFileRootPath is specified, the file data source is used as a simulated data source
     if (mockDataFileRootPath != null) {
-      app.use(dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPath }))
+      app.use(dataFileMock({ prefixUrl, mockDataFileRootPath }))
     }
 
     // run generated router from api-items

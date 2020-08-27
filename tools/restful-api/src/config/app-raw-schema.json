@@ -205,12 +205,6 @@
           "type": "number",
           "required": true
         },
-        "mockDataFileFirst": {
-          "description": "是否优先使用数据文件作为 mock 数据",
-          "default": false,
-          "type": "boolean",
-          "required": true
-        },
         "mockDataFileRootPath": {
           "description": "mock 数据文件所在的根目录",
           "type": "string"

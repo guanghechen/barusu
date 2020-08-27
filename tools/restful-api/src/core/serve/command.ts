@@ -64,11 +64,6 @@ interface SubCommandOptions extends GlobalCommandOptions {
    */
   mockOptionalsProbability: number
   /**
-   * Whether to prioritize using data files as mock data
-   * @default false
-   */
-  mockDataFileFirst: boolean
-  /**
    * The root directory where the mock data file is located
    */
   mockDataFileRootPath?: string
@@ -86,7 +81,6 @@ const __defaultCommandOptions: SubCommandOptions = {
   mockOptionalsAlways: false,
   mockDataFileRootPath: undefined,
   mockOptionalsProbability: 0.8,
-  mockDataFileFirst: false,
 }
 
 
@@ -116,8 +110,7 @@ export function createSubCommandServe(
     .option('--mock-required-only', 'json-schema-faker\'s option `requiredOnly`')
     .option('--mock-optionals-always', 'json-schema-faker\'s option `alwaysFakeOptionals`')
     .option('--mock-optionals-probability <optionalsProbability>', 'json-schema-faker\'s option `optionalsProbability`')
-    .option('--mock-use-data-file-first <mockDataFileRootPath>', 'specify the mock data file root path.')
-    .option('--mock-data-file-first', 'preferred use data file as mock data source.')
+    .option('--mock-data-file-root-path <mockDataFileRootPath>', 'specify the mock data file root path.')
     .action(async function ([_workspaceDir], options: SubCommandOptions) {
       logger.setName(commandName)
 
@@ -165,11 +158,6 @@ export function createSubCommandServe(
         defaultOptions.mockOptionalsProbability, options.mockOptionalsProbability)
       logger.debug('mockOptionalsProbability:', mockOptionalsProbability)
 
-      // resolve mockOptionalsAlways
-      const mockDataFileFirst: boolean = coverBoolean(
-        defaultOptions.mockDataFileFirst, options.mockDataFileFirst)
-      logger.debug('mockDataFileFirst:', mockDataFileFirst)
-
       // resolve mockDataFileRootPath
       const mockDataFileRootPath: string | undefined = absoluteOfWorkspace(workspace,
         cover<string | undefined>(defaultOptions.mockDataFileRootPath,
@@ -186,7 +174,6 @@ export function createSubCommandServe(
         mockRequiredOnly,
         mockOptionalsAlways,
         mockOptionalsProbability,
-        mockDataFileFirst,
         mockDataFileRootPath,
       }
 

@@ -31,7 +31,6 @@ export function loadSubCommandServe(
         mockRequiredOnly: options.mockRequiredOnly,
         mockOptionalsAlways: options.mockOptionalsAlways,
         mockOptionalsProbability: options.mockOptionalsProbability,
-        mockDataFileFirst: options.mockDataFileFirst,
         mockDataFileRootPath: options.mockDataFileRootPath,
       })
 
