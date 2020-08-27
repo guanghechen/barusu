@@ -31,7 +31,7 @@ export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPat
       let u = ctx.path.startsWith(prefixUrl) ? ctx.path.slice(prefixUrl.length) : ctx.path
       u = u.replace(/^[/\\]+/, '').replace(/[/\\]+$/, '')
       const dataPath = path.join(mockDataFileRootPath, u)
-      const data = await loadMockData(dataPath)
+      const data = await loadMockData(ctx.method, dataPath)
       return data
     }
 
@@ -42,11 +42,13 @@ export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPat
     }
 
     // 调整 mock 数据源的优先顺序
-    const methods = mockDataFileFirst ? [loadFromDataFile, loadFromNext] : [loadFromNext, loadFromDataFile]
+    const mockProviders = mockDataFileFirst
+      ? [loadFromDataFile, loadFromNext]
+      : [loadFromNext, loadFromDataFile]
 
     // 尝试所有可行的方式，值得返回非 null 的结果
-    for (const method of methods) {
-      const data = await method()
+    for (const mockProvider of mockProviders) {
+      const data = await mockProvider()
       if (data != null) {
         // eslint-disable-next-line no-param-reassign
         ctx.body = data
@@ -59,12 +61,24 @@ export function dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPat
 
 /**
  * 加载数据文件作为 mock 数据；会依次尝试原文件名、json 后缀的文件名
- * @param dataPath  mock 数据所在的地址； json 格式
+ * @param method    http verb
+ * @param dataPath  filepath of mock data, format with json
  */
-async function loadMockData<T = any>(dataPath: string): Promise<T | null> {
+async function loadMockData<T = any>(
+  method: string,
+  dataPath: string
+): Promise<T | null> {
   const resolvePath = (p: string) => {
-    if (fs.existsSync(p)) return p
-    if (fs.existsSync(p + '.json')) return p + '.json'
+    const potentialDataPaths = [
+      '__' + method,
+      '__' + method + '.json',
+      '',
+      '.json',
+    ].map(x => p + x)
+
+    for (const x of potentialDataPaths) {
+      if (fs.existsSync(x)) return x
+    }
     return null
   }
 
