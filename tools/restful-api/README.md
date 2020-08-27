@@ -43,19 +43,20 @@
 
   ```shell
   # Global installation
-  yarn global add @barusu/tool-restful-api
+  $ yarn global add @barusu/tool-restful-api
   # or use npm: npm install -g @barusu/tool-restful-api
-
-  # Init mock server project
-  barusu-rapit init demo-mock-server --log-level verbose
-
-  # or use npx: npx @barusu/tool-restful-api init demo-mock-server -- --log-level verbose
   ```
 
 # Cli Usage
   ```shell
-  cd demo-mock-server
-  yarn serve:cli
+  # Init mock server project
+  $ barusu-rapit init demo-mock-server --log-level verbose
+
+  # # or use with npx
+  # $ npx @barusu/tool-restful-api init demo-mock-server -- --log-level verbose
+
+  $ cd demo-mock-server
+  $ yarn serve:cli
   ```
 
 ## Usage
@@ -123,6 +124,12 @@
     --mock-data-file-first                               preferred use data file as mock data source.
     --help                                               display help for command
   ```
+
+  * If `mockDataFileRootPath` is specified, and the http verb of the current request is recorded as `httpMethod` and the url path is recorded as `httpPath` (not including `prefixUrl`), the following mock data path will be tried:
+    - `<httpPath>__<httpMethod>`
+    - `<httpPath>__<httpMethod>.json`
+    - `<httpPath>`
+    - `<httpPath>.json`
 
 # Programming Usage
   ```shell
