@@ -31,8 +31,10 @@ async function testServeCommand (caseDir: string) {
         mockRequiredOnly: options.mockRequiredOnly,
         mockOptionalsAlways: options.mockOptionalsAlways,
         mockOptionalsProbability: options.mockOptionalsProbability,
-        mockDataFileFirst: options.mockDataFileFirst,
-        mockDataFileRootPath: options.mockDataFileRootPath,
+        mockDataPrefixUrl: options.mockDataPrefixUrl,
+        mockDataRootDir: options.mockDataRootDir,
+        mockResourcePrefixUrl: options.mockResourcePrefixUrl,
+        mockResourceRootDir: options.mockResourceRootDir,
       })
 
       const processor = new RestfulApiServeProcessor(context)

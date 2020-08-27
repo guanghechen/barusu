@@ -10,6 +10,7 @@ import {
   coverString,
   isNotEmptyArray,
   isNotEmptyString,
+  isString,
 } from '@barusu/util-option'
 import { logger } from '../../util/logger'
 import {
@@ -64,14 +65,21 @@ interface SubCommandOptions extends GlobalCommandOptions {
    */
   mockOptionalsProbability: number
   /**
-   * Whether to prioritize using data files as mock data
-   * @default false
+   * Base url of mock data files
    */
-  mockDataFileFirst: boolean
+  mockDataPrefixUrl?: string
   /**
-   * The root directory where the mock data file is located
+   * The root directory where the mock data files is located
    */
-  mockDataFileRootPath?: string
+  mockDataRootDir?: string
+  /**
+   * Base url of resource files
+   */
+  mockResourcePrefixUrl?: string
+  /**
+   * The root directory where the resource files is located
+   */
+  mockResourceRootDir?: string
 }
 
 
@@ -84,9 +92,11 @@ const __defaultCommandOptions: SubCommandOptions = {
   prefixUrl: '',
   mockRequiredOnly: false,
   mockOptionalsAlways: false,
-  mockDataFileRootPath: undefined,
   mockOptionalsProbability: 0.8,
-  mockDataFileFirst: false,
+  mockDataPrefixUrl: undefined,
+  mockDataRootDir: undefined,
+  mockResourcePrefixUrl: undefined,
+  mockResourceRootDir: undefined,
 }
 
 
@@ -116,8 +126,10 @@ export function createSubCommandServe(
     .option('--mock-required-only', 'json-schema-faker\'s option `requiredOnly`')
     .option('--mock-optionals-always', 'json-schema-faker\'s option `alwaysFakeOptionals`')
     .option('--mock-optionals-probability <optionalsProbability>', 'json-schema-faker\'s option `optionalsProbability`')
-    .option('--mock-use-data-file-first <mockDataFileRootPath>', 'specify the mock data file root path.')
-    .option('--mock-data-file-first', 'preferred use data file as mock data source.')
+    .option('--mock-data-prefix-url <mockDataPrefixUrl>', 'base url of mock data files')
+    .option('--mock-data-root-dir <mockDataRootDir>', 'specify the root dirpath of mock data files')
+    .option('--mock-resource-prefix-url <mockResourcePrefixUrl>', 'base url of resource files')
+    .option('--mock-resource-root-dir <mockResourceRootDir>', 'specify the root dirpath of resource files')
     .action(async function ([_workspaceDir], options: SubCommandOptions) {
       logger.setName(commandName)
 
@@ -165,16 +177,27 @@ export function createSubCommandServe(
         defaultOptions.mockOptionalsProbability, options.mockOptionalsProbability)
       logger.debug('mockOptionalsProbability:', mockOptionalsProbability)
 
-      // resolve mockOptionalsAlways
-      const mockDataFileFirst: boolean = coverBoolean(
-        defaultOptions.mockDataFileFirst, options.mockDataFileFirst)
-      logger.debug('mockDataFileFirst:', mockDataFileFirst)
+      // resolve mockDataPrefixUrl
+      const mockDataPrefixUrl: string | undefined = cover<string | undefined>(
+        defaultOptions.mockDataPrefixUrl, options.mockDataPrefixUrl, isString)
+      logger.debug('mockDataPrefixUrl:', mockDataPrefixUrl)
 
-      // resolve mockDataFileRootPath
-      const mockDataFileRootPath: string | undefined = absoluteOfWorkspace(workspace,
-        cover<string | undefined>(defaultOptions.mockDataFileRootPath,
-          options.mockDataFileRootPath, isNotEmptyString))
-      logger.debug('mockDataFileRootPath:', mockDataFileRootPath)
+      // resolve mockDataRootDir
+      const mockDataRootDir: string | undefined = absoluteOfWorkspace(workspace,
+        cover<string | undefined>(defaultOptions.mockDataRootDir,
+          options.mockDataRootDir, isNotEmptyString))
+      logger.debug('mockDataRootDir:', mockDataRootDir)
+
+      // resolve mockResourcePrefixUrl
+      const mockResourcePrefixUrl: string | undefined = cover<string | undefined>(
+        defaultOptions.mockResourcePrefixUrl, options.mockResourcePrefixUrl, isString)
+      logger.debug('mockResourcePrefixUrl:', mockResourcePrefixUrl)
+
+      // resolve mockResourceRootDir
+      const mockResourceRootDir: string | undefined = absoluteOfWorkspace(workspace,
+        cover<string | undefined>(defaultOptions.mockResourceRootDir,
+          options.mockResourceRootDir, isNotEmptyString))
+      logger.debug('mockResourceRootDir:', mockResourceRootDir)
 
       const resolvedOptions: SubCommandServeOptions = {
         ...defaultOptions,
@@ -186,8 +209,10 @@ export function createSubCommandServe(
         mockRequiredOnly,
         mockOptionalsAlways,
         mockOptionalsProbability,
-        mockDataFileFirst,
-        mockDataFileRootPath,
+        mockDataPrefixUrl,
+        mockDataRootDir,
+        mockResourcePrefixUrl,
+        mockResourceRootDir,
       }
 
       if (handle != null) {

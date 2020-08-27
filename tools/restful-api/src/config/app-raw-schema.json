@@ -72,7 +72,7 @@
           "description": "目标工程的文件编码（简单起见，只考虑所有的源码使用同一种编码格式）\n可覆盖 globalOption.encoding 的值",
           "type": "string"
         },
-        "schemaArgs": {
+        "additionalSchemaArgs": {
           "description": "额外的构建 Schema 的选项",
           "type": "object",
           "properties": {
@@ -205,14 +205,20 @@
           "type": "number",
           "required": true
         },
-        "mockDataFileFirst": {
-          "description": "是否优先使用数据文件作为 mock 数据",
-          "default": false,
-          "type": "boolean",
-          "required": true
+        "mockDataPrefixUrl": {
+          "description": "mock 数据文件对应的路由前缀",
+          "type": "string"
         },
-        "mockDataFileRootPath": {
+        "mockDataRootDir": {
           "description": "mock 数据文件所在的根目录",
+          "type": "string"
+        },
+        "mockResourcePrefixUrl": {
+          "description": "静态资源数据文件对应的路由前缀",
+          "type": "string"
+        },
+        "mockResourceRootDir": {
+          "description": "静态资源数据文件所在的根目录",
           "type": "string"
         }
       }

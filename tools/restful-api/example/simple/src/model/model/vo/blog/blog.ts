@@ -1,4 +1,5 @@
 import {
+  OptionalResponseResult,
   PaginationResponseResult,
   ResponseResult,
 } from '../../../core/response'
@@ -45,4 +46,4 @@ export type BlogArticleUpdateResponseVo = ResponseResult<Article>
 /**
  * delete an article with specified `articleId`
  */
-export type BlogArticleDeleteResponseVo = ResponseResult
+export type BlogArticleDeleteResponseVo = OptionalResponseResult

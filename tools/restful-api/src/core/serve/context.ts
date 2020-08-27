@@ -54,13 +54,21 @@ export interface RestfulApiServeContext {
    */
   readonly mockOptionalsProbability: number
   /**
-   * Whether to prioritize using data files as mock data
+   * Base url of mock data files
    */
-  readonly mockDataFileFirst: boolean
+  readonly mockDataPrefixUrl?: string
   /**
-   * The root directory where the mock data file is located
+   * The root directory where the mock data files is located
    */
-  readonly mockDataFileRootPath?: string
+  readonly mockDataRootDir?: string
+  /**
+   * Base url of resource files
+   */
+  readonly mockResourcePrefixUrl?: string
+  /**
+   * The root directory where the resource files is located
+   */
+  readonly mockResourceRootDir?: string
   /**
    * Api items
    */
@@ -129,14 +137,21 @@ interface Params {
    */
   mockOptionalsProbability?: number
   /**
-   * Whether to prioritize using data files as mock data
-   * @default false
+   * Base url of mock data files
    */
-  mockDataFileFirst?: boolean
+  mockDataPrefixUrl?: string
   /**
-   * The root directory where the mock data file is located
+   * The root directory where the mock data files is located
    */
-  mockDataFileRootPath?: string
+  mockDataRootDir?: string
+  /**
+   * Base url of resource files
+   */
+  mockResourcePrefixUrl?: string
+  /**
+   * The root directory where the resource files is located
+   */
+  mockResourceRootDir?: string
 }
 
 
@@ -170,8 +185,10 @@ export async function createRestfulApiServeContext(
     mockRequiredOnly: coverBoolean(false, params.mockRequiredOnly),
     mockOptionalsAlways: coverBoolean(false, params.mockOptionalsAlways),
     mockOptionalsProbability: coverNumber(0.8, params.mockOptionalsProbability),
-    mockDataFileFirst: coverBoolean(false, params.mockDataFileFirst),
-    mockDataFileRootPath: params.mockDataFileRootPath,
+    mockDataPrefixUrl: params.mockDataPrefixUrl,
+    mockDataRootDir: params.mockDataRootDir,
+    mockResourcePrefixUrl: params.mockResourcePrefixUrl,
+    mockResourceRootDir: params.mockResourceRootDir,
     apiItems,
   }
 

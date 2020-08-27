@@ -21,7 +21,9 @@ serve:
   port: 8091
   prefixUrl: /mock
   schemaRootPath: data/schema
-  mockDataFileFirst: true
-  mockDataFileRootPath: data/
+  mockDataPrefixUrl: /mock
+  mockDataRootDir: /mock/data
+  mockResourcePrefixUrl: /mock/resources
+  mockResourceRootDir: /mock/resources
   mockOptionalsAlways: true
   mockOptionalsProbability: 0.7

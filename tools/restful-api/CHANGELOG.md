@@ -1,3 +1,8 @@
+# v0.0.18 - v0.0.28 (2020-08-27)
+* Rewritten to be consistent with the style of the @barusu/tool-* tool library
+* Fixed known bugs
+* Updated configuration file options & documents
+
 # v0.0.7 (2019-01-08)
 * Upgrade @lemon-clown/typescript-json-schema to `^0.42.4`
   - fix: comments of properties of non-native type should override comments on that reffed type

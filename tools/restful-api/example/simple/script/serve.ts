@@ -31,7 +31,7 @@ async function serve () {
         mockOptionalsAlways: options.mockOptionalsAlways,
         mockOptionalsProbability: options.mockOptionalsProbability,
         mockDataFileFirst: options.mockDataFileFirst,
-        mockDataFileRootPath: options.mockDataFileRootPath,
+        mockDataRootDir: options.mockDataRootDir,
       })
 
       const processor = new RestfulApiServeProcessor(context)
@@ -56,9 +56,6 @@ async function serve () {
     COMMAND_NAME,
     'serve',
     projectDir,
-    '--log-level=debug',
-    '-s',
-    'data/schemas',
     '--config-path',
     'app.yml',
   ]

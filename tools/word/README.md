@@ -64,3 +64,84 @@ Count the frequency of characters in the file(s).
     --show-summary-only               display summary statistics only
     -h, --help                        display help for command                                   display help for command
   ```
+
+# Example
+
+## stat
+
+  * Stat file
+    ```shell
+    $ barusu-word stat package.json --show-details-pretty
+
+    package.json
+    ======================================================
+                       total: 1454
+                 blank total:  273
+           punctuation total:  388
+                unique total:   68
+          unique blank total:    2
+    unique punctuation total:   17
+                     details:
+                     -----------------
+                         "s":   59
+                         "e":   57
+                         "t":   52
+                         "o":   50
+                         "i":   50
+                         "r":   49
+                         "l":   49
+                         "n":   42
+                         "u":   38
+    ```
+
+  * Stat directory
+    ```shell
+    $ barusu-word stat src/util --show-details-pretty --show-summary-only
+
+    Summary
+    ======================================================
+                       total: 4867
+                 blank total: 1226
+           punctuation total:  504
+                unique total:   74
+          unique blank total:    2
+    unique punctuation total:   20
+                     details:
+                     -----------------
+                         "t":  399
+                         "a":  321
+                         "e":  242
+                         "r":  210
+                         "n":  202
+                         "o":  197
+                         "l":  175
+                         "i":  162
+                         "u":  154
+                         "c":  146
+    ```
+
+  * Stat with pattern
+    ```shell
+    $ barusu-word stat src -p 'util/*.ts' -p '!util/logger.ts' --show-details-pretty --show-summary-only
+
+    Summary
+    ======================================================
+                      total: 4655
+                blank total: 1194
+          punctuation total:  477
+                unique total:   72
+          unique blank total:    2
+    unique punctuation total:   20
+                    details:
+                    -----------------
+                        "t":  393
+                        "a":  315
+                        "e":  230
+                        "n":  199
+                        "r":  195
+                        "o":  182
+                        "l":  164
+                        "i":  160
+                        "u":  149
+                        "c":  143
+    ```

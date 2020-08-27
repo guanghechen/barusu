@@ -43,19 +43,20 @@
 
   ```shell
   # Global installation
-  yarn global add @barusu/tool-restful-api
+  $ yarn global add @barusu/tool-restful-api
   # or use npm: npm install -g @barusu/tool-restful-api
-
-  # Init mock server project
-  barusu-rapit init demo-mock-server --log-level verbose
-
-  # or use npx: npx @barusu/tool-restful-api init demo-mock-server -- --log-level verbose
   ```
 
 # Cli Usage
   ```shell
-  cd demo-mock-server
-  yarn serve:cli
+  # Init mock server project
+  $ barusu-rapit init demo-mock-server --log-level verbose
+
+  # # or use with npx
+  # $ npx @barusu/tool-restful-api init demo-mock-server -- --log-level verbose
+
+  $ cd demo-mock-server
+  $ yarn serve:cli
   ```
 
 ## Usage
@@ -119,10 +120,18 @@
     --mock-required-only                                 json-schema-faker's option `requiredOnly`
     --mock-optionals-always                              json-schema-faker's option `alwaysFakeOptionals`
     --mock-optionals-probability <optionalsProbability>  json-schema-faker's option `optionalsProbability`
-    --mock-use-data-file-first <mockDataFileRootPath>    specify the mock data file root path.
-    --mock-data-file-first                               preferred use data file as mock data source.
+    --mock-data-prefix-url <mockDataPrefixUrl>           base url of mock data files
+    --mock-data-root-dir <mockDataRootDir>               specify the root dirpath of mock data files
+    --mock-resource-prefix-url <mockResourcePrefixUrl>   base url of resource files
+    --mock-resource-root-dir <mockResourceRootDir>       specify the root dirpath of resource files
     --help                                               display help for command
   ```
+
+  * If `mockDataRootDir` is specified, and the http verb of the current request is recorded as `httpMethod` and the url path is recorded as `httpPath` (not including `prefixUrl`), the following mock data path will be tried:
+    - `<httpPath>__<httpMethod>`
+    - `<httpPath>__<httpMethod>.json`
+    - `<httpPath>`
+    - `<httpPath>.json`
 
 # Programming Usage
   ```shell
@@ -168,7 +177,7 @@
             mockOptionalsAlways: options.mockOptionalsAlways,
             mockOptionalsProbability: options.mockOptionalsProbability,
             mockDataFileFirst: options.mockDataFileFirst,
-            mockDataFileRootPath: options.mockDataFileRootPath,
+            mockDataRootDir: options.mockDataRootDir,
           })
 
           const processor = new RestfulApiServeProcessor(context)
@@ -302,7 +311,7 @@
       prefixUrl: /mock
       schemaRootPath: data/schema
       mockDataFileFirst: true
-      mockDataFileRootPath: data/
+      mockDataRootDir: data/
       mockOptionalsAlways: true
       mockOptionalsProbability: 0.7
     ```

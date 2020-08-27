@@ -1,0 +1,10 @@
+{
+  "code": 200,
+  "message": "Okay",
+  "result": {
+      "email": "A6UV30hM@XV.six",
+      "name": "ming",
+      "nickname": "ming ming",
+      "phone": "7777-777777"
+  }
+}
