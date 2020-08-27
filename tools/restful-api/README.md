@@ -120,11 +120,14 @@
     --mock-required-only                                 json-schema-faker's option `requiredOnly`
     --mock-optionals-always                              json-schema-faker's option `alwaysFakeOptionals`
     --mock-optionals-probability <optionalsProbability>  json-schema-faker's option `optionalsProbability`
-    --mock-data-file-root-path <mockDataFileRootPath>    specify the mock data file root path.
+    --mock-data-prefix-url <mockDataPrefixUrl>           base url of mock data files
+    --mock-data-root-dir <mockDataRootDir>               specify the root dirpath of mock data files
+    --mock-resource-prefix-url <mockResourcePrefixUrl>   base url of resource files
+    --mock-resource-root-dir <mockResourceRootDir>       specify the root dirpath of resource files
     --help                                               display help for command
   ```
 
-  * If `mockDataFileRootPath` is specified, and the http verb of the current request is recorded as `httpMethod` and the url path is recorded as `httpPath` (not including `prefixUrl`), the following mock data path will be tried:
+  * If `mockDataRootDir` is specified, and the http verb of the current request is recorded as `httpMethod` and the url path is recorded as `httpPath` (not including `prefixUrl`), the following mock data path will be tried:
     - `<httpPath>__<httpMethod>`
     - `<httpPath>__<httpMethod>.json`
     - `<httpPath>`
@@ -174,7 +177,7 @@
             mockOptionalsAlways: options.mockOptionalsAlways,
             mockOptionalsProbability: options.mockOptionalsProbability,
             mockDataFileFirst: options.mockDataFileFirst,
-            mockDataFileRootPath: options.mockDataFileRootPath,
+            mockDataRootDir: options.mockDataRootDir,
           })
 
           const processor = new RestfulApiServeProcessor(context)
@@ -308,7 +311,7 @@
       prefixUrl: /mock
       schemaRootPath: data/schema
       mockDataFileFirst: true
-      mockDataFileRootPath: data/
+      mockDataRootDir: data/
       mockOptionalsAlways: true
       mockOptionalsProbability: 0.7
     ```

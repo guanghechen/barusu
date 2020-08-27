@@ -31,7 +31,7 @@ async function serve () {
         mockOptionalsAlways: options.mockOptionalsAlways,
         mockOptionalsProbability: options.mockOptionalsProbability,
         mockDataFileFirst: options.mockDataFileFirst,
-        mockDataFileRootPath: options.mockDataFileRootPath,
+        mockDataRootDir: options.mockDataRootDir,
       })
 
       const processor = new RestfulApiServeProcessor(context)
