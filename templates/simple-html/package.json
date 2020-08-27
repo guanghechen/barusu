@@ -1,6 +1,6 @@
 {
   "name": "@barusu/template-simple-html",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -31,7 +31,7 @@
     "lint:fix": "echo 'no lint action needed'"
   },
   "dependencies": {
-    "@barusu/rollup-plugin-copy": "^0.0.28",
+    "@barusu/rollup-plugin-copy": "^0.0.29",
     "fs-extra": "^8.1.0",
     "plop": "^2.7.0",
     "semver-regex": "^3.1.1",

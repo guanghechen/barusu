@@ -1,6 +1,6 @@
 {
   "name": "@barusu/configuration-master",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -43,12 +43,12 @@
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
   },
   "dependencies": {
-    "@barusu/util-option": "^0.0.28"
+    "@barusu/util-option": "^0.0.29"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.28",
-    "@barusu/rollup-config": "^0.0.28",
-    "@barusu/util-mocha": "^0.0.28",
+    "@barusu/eslint-config": "^0.0.29",
+    "@barusu/rollup-config": "^0.0.29",
+    "@barusu/util-mocha": "^0.0.29",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0",
     "rollup": "2.16.1"
