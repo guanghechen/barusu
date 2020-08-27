@@ -41,12 +41,6 @@ export class RestfulApiServeProcessor {
     app
       .use(accessLog())
       .use(koaCors())
-      .use(koaJson())
-
-    // 如果指定了 mockDataFileRootPath，则将文件数据源作为一种 mock 数据源
-    if (mockDataFileRootPath != null) {
-      app.use(dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPath }))
-    }
 
     // run custom router first
     for (const router of this.routers) {
@@ -60,6 +54,15 @@ export class RestfulApiServeProcessor {
       app
         .use(router.routes())
         .use(router.allowedMethods())
+    }
+
+    // run koa-json after custom router
+    app
+      .use(koaJson())
+
+    // If mockDataFileRootPath is specified, the file data source is used as a simulated data source
+    if (mockDataFileRootPath != null) {
+      app.use(dataFileMock({ prefixUrl, mockDataFileFirst, mockDataFileRootPath }))
     }
 
     // run generated router from api-items
