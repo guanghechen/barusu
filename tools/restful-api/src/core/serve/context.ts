@@ -54,9 +54,21 @@ export interface RestfulApiServeContext {
    */
   readonly mockOptionalsProbability: number
   /**
-   * The root directory where the mock data file is located
+   * Base url of mock data files
    */
-  readonly mockDataFileRootPath?: string
+  readonly mockDataPrefixUrl?: string
+  /**
+   * The root directory where the mock data files is located
+   */
+  readonly mockDataRootDir?: string
+  /**
+   * Base url of resource files
+   */
+  readonly mockResourcePrefixUrl?: string
+  /**
+   * The root directory where the resource files is located
+   */
+  readonly mockResourceRootDir?: string
   /**
    * Api items
    */
@@ -125,9 +137,21 @@ interface Params {
    */
   mockOptionalsProbability?: number
   /**
-   * The root directory where the mock data file is located
+   * Base url of mock data files
    */
-  mockDataFileRootPath?: string
+  mockDataPrefixUrl?: string
+  /**
+   * The root directory where the mock data files is located
+   */
+  mockDataRootDir?: string
+  /**
+   * Base url of resource files
+   */
+  mockResourcePrefixUrl?: string
+  /**
+   * The root directory where the resource files is located
+   */
+  mockResourceRootDir?: string
 }
 
 
@@ -161,7 +185,10 @@ export async function createRestfulApiServeContext(
     mockRequiredOnly: coverBoolean(false, params.mockRequiredOnly),
     mockOptionalsAlways: coverBoolean(false, params.mockOptionalsAlways),
     mockOptionalsProbability: coverNumber(0.8, params.mockOptionalsProbability),
-    mockDataFileRootPath: params.mockDataFileRootPath,
+    mockDataPrefixUrl: params.mockDataPrefixUrl,
+    mockDataRootDir: params.mockDataRootDir,
+    mockResourcePrefixUrl: params.mockResourcePrefixUrl,
+    mockResourceRootDir: params.mockResourceRootDir,
     apiItems,
   }
 

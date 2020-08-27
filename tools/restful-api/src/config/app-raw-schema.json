@@ -205,8 +205,20 @@
           "type": "number",
           "required": true
         },
-        "mockDataFileRootPath": {
+        "mockDataPrefixUrl": {
+          "description": "mock 数据文件对应的路由前缀",
+          "type": "string"
+        },
+        "mockDataRootDir": {
           "description": "mock 数据文件所在的根目录",
+          "type": "string"
+        },
+        "mockResourcePrefixUrl": {
+          "description": "静态资源数据文件对应的路由前缀",
+          "type": "string"
+        },
+        "mockResourceRootDir": {
+          "description": "静态资源数据文件所在的根目录",
           "type": "string"
         }
       }

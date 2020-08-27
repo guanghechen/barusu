@@ -299,10 +299,21 @@
           "required": true,
           "description": "返回数据中，包含非 required 的属性的几率"
         },
-        "mockDataFileRootPath": {
-          "type": "string",
-          "required": false,
-          "description": "mock 数据文件所在的根目录"
+        "mockDataPrefixUrl": {
+          "description": "mock 数据文件对应的路由前缀",
+          "type": "string"
+        },
+        "mockDataRootDir": {
+          "description": "mock 数据文件所在的根目录",
+          "type": "string"
+        },
+        "mockResourcePrefixUrl": {
+          "description": "静态资源数据文件对应的路由前缀",
+          "type": "string"
+        },
+        "mockResourceRootDir": {
+          "description": "静态资源数据文件所在的根目录",
+          "type": "string"
         }
       }
     },

@@ -10,7 +10,8 @@ import Router from '@koa/router'
 import { logger } from '../../util/logger'
 import { RestfulApiServeContext } from './context'
 import { accessLog } from './middleware/access-log'
-import { dataFileMock } from './middleware/data-file-mock'
+import { serveDataFile } from './middleware/serve-data-file'
+import { serveResourceFile } from './middleware/serve-resource-file'
 
 
 export class RestfulApiServeProcessor {
@@ -35,7 +36,15 @@ export class RestfulApiServeProcessor {
   * start server
   */
   public async start(): Promise<void> {
-    const { host, port, prefixUrl, mockDataFileRootPath } = this.context
+    const {
+      host,
+      port,
+      prefixUrl,
+      mockDataPrefixUrl = prefixUrl,
+      mockDataRootDir,
+      mockResourcePrefixUrl = prefixUrl,
+      mockResourceRootDir,
+    } = this.context
     const app = new Koa()
 
     app
@@ -56,13 +65,20 @@ export class RestfulApiServeProcessor {
         .use(router.allowedMethods())
     }
 
+    // If mockResourceRootDir is specified, the file data source is used
+    // as a resource file data source
+    if (mockResourceRootDir != null) {
+      app.use(serveResourceFile({ prefixUrl: mockDataPrefixUrl, mockResourceRootDir }))
+    }
+
     // run koa-json after custom router
     app
       .use(koaJson())
 
-    // If mockDataFileRootPath is specified, the file data source is used as a simulated data source
-    if (mockDataFileRootPath != null) {
-      app.use(dataFileMock({ prefixUrl, mockDataFileRootPath }))
+    // If mockDataRootDir is specified, the file data source is used as a
+    // json data source and be prior than mock data generated from schemas
+    if (mockDataRootDir != null) {
+      app.use(serveDataFile({ prefixUrl: mockResourcePrefixUrl, mockDataRootDir }))
     }
 
     // run generated router from api-items

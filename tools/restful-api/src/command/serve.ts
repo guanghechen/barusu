@@ -31,7 +31,7 @@ export function loadSubCommandServe(
         mockRequiredOnly: options.mockRequiredOnly,
         mockOptionalsAlways: options.mockOptionalsAlways,
         mockOptionalsProbability: options.mockOptionalsProbability,
-        mockDataFileRootPath: options.mockDataFileRootPath,
+        mockDataRootDir: options.mockDataRootDir,
       })
 
       const processor = new RestfulApiServeProcessor(context)
