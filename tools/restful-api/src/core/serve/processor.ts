@@ -36,15 +36,7 @@ export class RestfulApiServeProcessor {
   * start server
   */
   public async start(): Promise<void> {
-    const {
-      host,
-      port,
-      prefixUrl,
-      mockDataPrefixUrl = prefixUrl,
-      mockDataRootDir,
-      mockResourcePrefixUrl = prefixUrl,
-      mockResourceRootDir,
-    } = this.context
+    const { context } = this
     const app = new Koa()
 
     app
@@ -67,8 +59,12 @@ export class RestfulApiServeProcessor {
 
     // If mockResourceRootDir is specified, the file data source is used
     // as a resource file data source
-    if (mockResourceRootDir != null) {
-      app.use(serveResourceFile({ prefixUrl: mockDataPrefixUrl, mockResourceRootDir }))
+    if (context.mockResourceRootDir != null) {
+      app.use(serveResourceFile({
+        workspaceDir: context.workspace,
+        prefixUrl: context.mockDataPrefixUrl,
+        mockResourceRootDir: context.mockResourceRootDir,
+      }))
     }
 
     // run koa-json after custom router
@@ -77,8 +73,12 @@ export class RestfulApiServeProcessor {
 
     // If mockDataRootDir is specified, the file data source is used as a
     // json data source and be prior than mock data generated from schemas
-    if (mockDataRootDir != null) {
-      app.use(serveDataFile({ prefixUrl: mockResourcePrefixUrl, mockDataRootDir }))
+    if (context.mockDataRootDir != null) {
+      app.use(serveDataFile({
+        workspaceDir: context.workspace,
+        prefixUrl: context.mockResourcePrefixUrl,
+        mockDataRootDir: context.mockDataRootDir,
+      }))
     }
 
     // run generated router from api-items
@@ -90,8 +90,8 @@ export class RestfulApiServeProcessor {
       .use(router.allowedMethods())
 
     // start server
-    const server = app.listen(port, host, () => {
-      const url = `http://${ host }:${ port }`
+    const server = app.listen(context.port, context.host, () => {
+      const url = `http://${ context.host }:${ context.port }`
       const address = JSON.stringify(server.address())
       logger.info(`address: ${ address }`)
       logger.info(`listening on ${ url }`)
