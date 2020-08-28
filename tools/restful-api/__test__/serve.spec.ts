@@ -11,13 +11,13 @@ import {
   RestfulApiServeProcessor,
   SubCommandServeOptions,
   createProgram,
-  createRestfulApiServeContext,
+  createRestfulApiServeContextFromOptions,
   createSubCommandServe,
 } from '../src'
 
 
 describe('serve', function () {
-  const caseRootDirectory = path.resolve(__dirname, 'cases', 'generate')
+  const caseRootDirectory = path.resolve(__dirname, 'cases', 'mock-workspaces')
   const kases = fs.readdirSync(caseRootDirectory)
 
   for (const kase of kases) {
@@ -35,24 +35,8 @@ describe('serve', function () {
         program.addCommand(createSubCommandServe(
           name,
           async (options: SubCommandServeOptions): Promise<void> => {
-            const context: RestfulApiServeContext = await createRestfulApiServeContext({
-              cwd: options.cwd,
-              workspace: options.workspace,
-              tsconfigPath: options.tsconfigPath,
-              schemaRootPath: options.schemaRootPath,
-              apiConfigPath: options.apiConfigPath,
-              encoding: options.encoding,
-              host: options.host,
-              port: options.port,
-              prefixUrl: options.prefixUrl,
-              mockRequiredOnly: options.mockRequiredOnly,
-              mockOptionalsAlways: options.mockOptionalsAlways,
-              mockOptionalsProbability: options.mockOptionalsProbability,
-              mockDataPrefixUrl: options.mockDataPrefixUrl,
-              mockDataRootDir: options.mockDataRootDir,
-              mockResourcePrefixUrl: options.mockResourcePrefixUrl,
-              mockResourceRootDir: options.mockResourceRootDir,
-            })
+            const context: RestfulApiServeContext =
+              await createRestfulApiServeContextFromOptions(options)
             resolve(context)
           }
         ))
@@ -72,10 +56,10 @@ describe('serve', function () {
       program.parse(args)
 
       const context = await promise
+      const server = new RestfulApiServeProcessor(context)
 
       const router = new Router()
       router.get(context.prefixUrl + '/uu/vv', ctx => {
-        console.log('okay')
         // eslint-disable-next-line no-param-reassign
         ctx.body = {
           code: 200,
@@ -83,14 +67,10 @@ describe('serve', function () {
         }
       })
 
-      const server = new RestfulApiServeProcessor(context)
       server.registerRouter(router)
       await server.start()
 
-
-      // waiting the program finished
       const request = supertest(server.app!.callback())
-
       const requestItem = [
         { url: context.prefixUrl + '/uu/vv', method: 'get' },
       ]

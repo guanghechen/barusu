@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
@@ -11,55 +10,36 @@ import {
   RestfulApiGenerateProcessor,
   SubCommandGenerateOptions,
   createProgram,
-  createRestfulApiGenerateContext,
+  createRestfulApiGenerateContextFromOptions,
   createSubCommandGenerate,
 } from '../src'
 
 
 describe('generate', function () {
-  const caseRootDirectory = path.resolve(__dirname, 'cases', 'generate')
+  const caseRootDirectory = path.resolve(__dirname, 'cases', 'mock-workspaces')
   const kases = fs.readdirSync(caseRootDirectory)
 
   for (const kase of kases) {
     const title = kase
     const projectDir = absoluteOfWorkspace(caseRootDirectory, kase)
 
+    // clear output directory before run test
+    const schemaRootDir = '__tmp__/schemas/output'
+    const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
+    rimraf.sync(absoluteSchemaRootDir)
+
     test(title, async function () {
       const program = createProgram()
-      const promise = new Promise((resolve, reject) => {
+      const promise = new Promise<RestfulApiGenerateContext>(resolve => {
         program.addCommand(createSubCommandGenerate(
           name,
           async (options: SubCommandGenerateOptions): Promise<void> => {
-            const context: RestfulApiGenerateContext = await createRestfulApiGenerateContext({
-              cwd: options.cwd,
-              workspace: options.workspace,
-              tsconfigPath: options.tsconfigPath,
-              schemaRootPath: options.schemaRootPath,
-              apiConfigPath: options.apiConfigPath,
-              encoding: options.encoding,
-              clean: options.clean,
-              muteMissingModel: options.muteMissingModel,
-              ignoredDataTypes: options.ignoredDataTypes,
-              additionalSchemaArgs: options.additionalSchemaArgs,
-              additionalCompilerOptions: options.additionalCompilerOptions,
-            })
-
-            try {
-              const processor = new RestfulApiGenerateProcessor(context)
-              await processor.generate()
-              resolve()
-            } catch (error) {
-              reject(error)
-            }
-          },
+            const context: RestfulApiGenerateContext =
+              await createRestfulApiGenerateContextFromOptions(options)
+            resolve(context)
+          }
         ))
       })
-
-      const schemaRootDir = '__tmp__/schemas/output'
-      const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
-
-      // clear output directory before run test
-      rimraf.sync(absoluteSchemaRootDir)
 
       const args = [
         '',
@@ -71,11 +51,12 @@ describe('generate', function () {
         '--api-config-path=api.yml',
         '--schema-root-path=' + schemaRootDir,
       ]
-      console.log(chalk.gray('--> ' + args.join(' ')))
+
       program.parse(args)
 
-      // waiting the program finished
-      await promise
+      const context = await promise
+      const processor = new RestfulApiGenerateProcessor(context)
+      await processor.generate()
 
       // write the outputs to snapshots
       const files = (await globby(['*', '**/*'], {
