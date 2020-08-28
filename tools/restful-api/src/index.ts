@@ -1,3 +1,6 @@
+export * from './command/generate'
+export * from './command/init'
+export * from './command/serve'
 export * from './core/command'
 export * from './core/generate/command'
 export * from './core/generate/context'

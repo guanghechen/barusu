@@ -5,6 +5,7 @@ import {
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
+import { RestfulApiInitContext, createRestfulApiInitContext } from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -51,4 +52,21 @@ export function createSubCommandInit(
     })
 
   return command
+}
+
+
+/**
+ * Create RestfulApiInitContext
+ * @param options
+ */
+export async function createRestfulApiInitContextFromOptions(
+  options: SubCommandInitOptions,
+): Promise<RestfulApiInitContext> {
+  const context: RestfulApiInitContext = createRestfulApiInitContext({
+    cwd: options.cwd,
+    workspace: options.workspace,
+    tsconfigPath: options.tsconfigPath,
+    encoding: options.encoding,
+  })
+  return context
 }

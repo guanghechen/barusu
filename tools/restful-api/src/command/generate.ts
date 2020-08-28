@@ -3,7 +3,7 @@ import {
   RestfulApiGenerateContext,
   RestfulApiGenerateProcessor,
   SubCommandGenerateOptions,
-  createRestfulApiGenerateContext,
+  createRestfulApiGenerateContextFromOptions,
   createSubCommandGenerate,
 } from '../index'
 import { EventTypes, eventBus, handleError } from './_util'
@@ -18,20 +18,8 @@ export function loadSubCommandGenerate(
 ): void {
   const process = async (options: SubCommandGenerateOptions): Promise<void> => {
     try {
-      const context: RestfulApiGenerateContext = await createRestfulApiGenerateContext({
-        cwd: options.cwd,
-        workspace: options.workspace,
-        tsconfigPath: options.tsconfigPath,
-        schemaRootPath: options.schemaRootPath,
-        apiConfigPath: options.apiConfigPath,
-        encoding: options.encoding,
-        clean: options.clean,
-        muteMissingModel: options.muteMissingModel,
-        ignoredDataTypes: options.ignoredDataTypes,
-        additionalSchemaArgs: options.additionalSchemaArgs,
-        additionalCompilerOptions: options.additionalCompilerOptions,
-      })
-
+      const context: RestfulApiGenerateContext =
+        await createRestfulApiGenerateContextFromOptions(options)
       const processor = new RestfulApiGenerateProcessor(context)
       await processor.generate()
     } catch (error) {

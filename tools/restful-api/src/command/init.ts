@@ -3,7 +3,7 @@ import {
   RestfulApiInitContext,
   RestfulApiInitProcessor,
   SubCommandInitOptions,
-  createRestfulApiInitContext,
+  createRestfulApiInitContextFromOptions,
   createSubCommandInit,
 } from '../index'
 import { EventTypes, eventBus, handleError } from './_util'
@@ -18,13 +18,8 @@ export function loadSubCommandInit(
 ): void {
   const process = async (options: SubCommandInitOptions): Promise<void> => {
     try {
-      const context: RestfulApiInitContext = createRestfulApiInitContext({
-        cwd: options.cwd,
-        workspace: options.workspace,
-        tsconfigPath: options.tsconfigPath,
-        encoding: options.encoding,
-      })
-
+      const context: RestfulApiInitContext =
+        await createRestfulApiInitContextFromOptions(options)
       const processor = new RestfulApiInitProcessor(context)
       await processor.init()
     } catch (error) {

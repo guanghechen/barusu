@@ -18,6 +18,10 @@ import {
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
+import {
+  RestfulApiServeContext,
+  createRestfulApiServeContext,
+} from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -222,4 +226,33 @@ export function createSubCommandServe(
     })
 
   return command
+}
+
+
+/**
+ * Create RestfulApiServeContext
+ * @param options
+ */
+export async function createRestfulApiServeContextFromOptions(
+  options: SubCommandServeOptions,
+): Promise<RestfulApiServeContext> {
+  const context: RestfulApiServeContext = await createRestfulApiServeContext({
+    cwd: options.cwd,
+    workspace: options.workspace,
+    tsconfigPath: options.tsconfigPath,
+    schemaRootPath: options.schemaRootPath,
+    apiConfigPath: options.apiConfigPath,
+    encoding: options.encoding,
+    host: options.host,
+    port: options.port,
+    prefixUrl: options.prefixUrl,
+    mockRequiredOnly: options.mockRequiredOnly,
+    mockOptionalsAlways: options.mockOptionalsAlways,
+    mockOptionalsProbability: options.mockOptionalsProbability,
+    mockDataPrefixUrl: options.mockDataPrefixUrl,
+    mockDataRootDir: options.mockDataRootDir,
+    mockResourcePrefixUrl: options.mockResourcePrefixUrl,
+    mockResourceRootDir: options.mockResourceRootDir,
+  })
+  return context
 }
