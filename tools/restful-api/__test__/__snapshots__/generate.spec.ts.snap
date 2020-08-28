@@ -13,21 +13,15 @@ Array [
 exports[`generate simple: xx-schemas/user/user-login-response-vo.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": Object {
-    "ResponseCode": Object {
-      "description": "200 OK",
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "default": 200,
+      "description": "响应码",
       "enum": Array [
         200,
       ],
       "type": "number",
-    },
-  },
-  "description": "响应数据",
-  "properties": Object {
-    "code": Object {
-      "$ref": "#/definitions/ResponseCode",
-      "default": 200,
-      "description": "响应码",
     },
     "message": Object {
       "description": "响应消息",
@@ -45,9 +39,17 @@ Object {
           "type": "string",
         },
       },
+      "required": Array [
+        "token",
+        "username",
+      ],
       "type": "object",
     },
   },
+  "required": Array [
+    "code",
+    "message",
+  ],
   "title": "UserLoginResponseVo",
   "type": "object",
 }
@@ -56,27 +58,25 @@ Object {
 exports[`generate simple: xx-schemas/user/user-logout-response-vo.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": Object {
-    "ResponseCode": Object {
-      "description": "200 OK",
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "default": 200,
+      "description": "响应码",
       "enum": Array [
         200,
       ],
       "type": "number",
-    },
-  },
-  "description": "响应数据",
-  "properties": Object {
-    "code": Object {
-      "$ref": "#/definitions/ResponseCode",
-      "default": 200,
-      "description": "响应码",
     },
     "message": Object {
       "description": "响应消息",
       "type": "string",
     },
   },
+  "required": Array [
+    "code",
+    "message",
+  ],
   "title": "UserLogoutResponseVo",
   "type": "object",
 }
@@ -85,7 +85,6 @@ Object {
 exports[`generate simple: xx-schemas/user-info/current-user-info-request-model.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": Object {},
   "description": "获取当前用户信息的请求对象",
   "properties": Object {
     "token": Object {
@@ -93,6 +92,9 @@ Object {
       "type": "string",
     },
   },
+  "required": Array [
+    "token",
+  ],
   "title": "CurrentUserInfoRequestModel",
   "type": "object",
 }
@@ -101,21 +103,15 @@ Object {
 exports[`generate simple: xx-schemas/user-info/current-user-info-response-model.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": Object {
-    "ResponseCode": Object {
-      "description": "200 OK",
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "default": 200,
+      "description": "响应码",
       "enum": Array [
         200,
       ],
       "type": "number",
-    },
-  },
-  "description": "响应数据",
-  "properties": Object {
-    "code": Object {
-      "$ref": "#/definitions/ResponseCode",
-      "default": 200,
-      "description": "响应码",
     },
     "message": Object {
       "description": "响应消息",
@@ -141,9 +137,16 @@ Object {
           "type": "string",
         },
       },
+      "required": Array [
+        "username",
+      ],
       "type": "object",
     },
   },
+  "required": Array [
+    "code",
+    "message",
+  ],
   "title": "CurrentUserInfoResponseModel",
   "type": "object",
 }
@@ -152,21 +155,15 @@ Object {
 exports[`generate simple: xx-schemas/user-info/xx-user-info-oo-response-vo.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": Object {
-    "ResponseCode": Object {
-      "description": "200 OK",
+  "description": "响应数据",
+  "properties": Object {
+    "code": Object {
+      "default": 200,
+      "description": "响应码",
       "enum": Array [
         200,
       ],
       "type": "number",
-    },
-  },
-  "description": "响应数据",
-  "properties": Object {
-    "code": Object {
-      "$ref": "#/definitions/ResponseCode",
-      "default": 200,
-      "description": "响应码",
     },
     "message": Object {
       "description": "响应消息",
@@ -192,9 +189,16 @@ Object {
           "type": "string",
         },
       },
+      "required": Array [
+        "username",
+      ],
       "type": "object",
     },
   },
+  "required": Array [
+    "code",
+    "message",
+  ],
   "title": "XxUserInfoOoResponseVo",
   "type": "object",
 }

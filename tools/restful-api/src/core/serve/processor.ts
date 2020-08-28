@@ -15,14 +15,16 @@ import { serveResourceFile } from './middleware/serve-resource-file'
 
 
 export class RestfulApiServeProcessor {
+  public app: Koa | null
+  public server: http.Server | null
   protected readonly context: RestfulApiServeContext
   protected readonly routers: Router[]
-  protected server: http.Server | null
   protected running: boolean
 
   public constructor(context: RestfulApiServeContext) {
     this.context = context
     this.routers = []
+    this.app = null
     this.server = null
     this.running = false
     jsf.option({
@@ -35,7 +37,7 @@ export class RestfulApiServeProcessor {
   /**
   * start server
   */
-  public async start(): Promise<void> {
+  public async start(): Promise<Koa> {
     const { context } = this
     const app = new Koa()
 
@@ -97,16 +99,24 @@ export class RestfulApiServeProcessor {
       logger.info(`listening on ${ url }`)
     })
 
+    this.app = app
     this.server = server
+    return app
   }
 
   /**
    * stop server
    */
-  public stop(): void {
-    if (this.server != null) {
+  public async stop(): Promise<void> {
+    const server = this.server
+    if (server != null) {
       logger.info('server closing...')
-      this.server.close()
+      await new Promise((resolve, reject) => {
+        server.close(err => {
+          if (err) reject(err)
+          else resolve()
+        })
+      })
       this.server = null
       this.running = false
     }

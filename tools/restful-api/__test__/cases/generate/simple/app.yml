@@ -1,12 +1,28 @@
-# config for sub-command generate
+__globalOptions__:
+  encoding: utf-8
+  logLevel: debug
+  schemaRootPath: data/schemas
+  apiConfigPath:
+    - api.yml
+
+# options for sub-command `generate`
 generate:
   clean: true
+  muteMissingModel: true
   ignoredDataTypes:
     - 'undefined'
+  additionalSchemaArgs:
+    ref: false
+    required: true
 
-# config for sub-command serve
+# options for sub-command `serve`
 serve:
-  port: 8081
+  host: '127.0.0.1'
+  port: 17025
   prefixUrl: /mock
+  mockDataPrefixUrl: /mock
+  mockDataRootDir: mock/data
+  mockResourcePrefixUrl: /mock
+  mockResourceRootDir: mock/resources
   mockOptionalsAlways: true
   mockOptionalsProbability: 0.7
