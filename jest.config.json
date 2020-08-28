@@ -4,6 +4,11 @@
     "^.+\\.tsx?$": "ts-jest"
   },
   "testRegex": "/(__test__|test)/[^/]+\\.spec\\.tsx?$",
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "/build/",
+    "/coverage/"
+  ],
   "moduleFileExtensions": [
     "ts",
     "tsx",
@@ -11,5 +16,25 @@
     "jsx",
     "json",
     "node"
+  ],
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "**/*.{ts,tsx}",
+    "!**/node_modules/**",
+    "!**/build/**",
+    "!**/lib/**",
+    "!**/coverage/**"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 20,
+      "functions": 20,
+      "lines": 20,
+      "statements": 20
+    }
+  },
+  "coverageReporters": [
+    "text",
+    "text-summary"
   ]
 }

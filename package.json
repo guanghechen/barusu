@@ -20,6 +20,7 @@
     ":publish": "lerna publish --no-private",
     "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "bootstrap": "lerna bootstrap",
+    "test": "lerna exec --concurrency 1 -- 'echo && pwd && yarn test'",
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
     "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes && yarn install",
