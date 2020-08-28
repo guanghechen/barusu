@@ -1,5 +1,5 @@
 import globby from 'globby'
-import { coverBoolean, coverNumber, coverString } from '@barusu/util-option'
+import { coverString } from '@barusu/util-option'
 import { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 import { logger } from '../../util/logger'
@@ -56,7 +56,7 @@ export interface RestfulApiServeContext {
   /**
    * Base url of mock data files
    */
-  readonly mockDataPrefixUrl?: string
+  readonly mockDataPrefixUrl: string
   /**
    * The root directory where the mock data files is located
    */
@@ -64,7 +64,7 @@ export interface RestfulApiServeContext {
   /**
    * Base url of resource files
    */
-  readonly mockResourcePrefixUrl?: string
+  readonly mockResourcePrefixUrl: string
   /**
    * The root directory where the resource files is located
    */
@@ -104,54 +104,48 @@ interface Params {
   readonly apiConfigPath: string[]
   /**
    * The encoding format of files in the working directory
-   * @default 'utf-8'
    */
-  encoding?: string
+  readonly encoding: string
   /**
    * Server ip / domain
-   * @default 'localhost'
    */
-  host?: string
+  readonly host: string
   /**
    * The port on which the server is listening
-   * @default 3000
    */
-  port?: number
+  readonly port: number
   /**
    * Routing prefix
    */
-  prefixUrl?: string
+  readonly prefixUrl: string
   /**
    * Whether to return only the required attributes in JSON-Schema
-   * @default false
    */
-  mockRequiredOnly?: boolean
+  readonly mockRequiredOnly: boolean
   /**
    * Whether all optional attributes are always returned
-   * @default false
    */
-  mockOptionalsAlways?: boolean
+  readonly mockOptionalsAlways: boolean
   /**
    * The probability that an optional attribute will be returned
-   * @default 0.8
    */
-  mockOptionalsProbability?: number
+  readonly mockOptionalsProbability: number
   /**
    * Base url of mock data files
    */
-  mockDataPrefixUrl?: string
+  readonly mockDataPrefixUrl?: string
   /**
    * The root directory where the mock data files is located
    */
-  mockDataRootDir?: string
+  readonly mockDataRootDir?: string
   /**
    * Base url of resource files
    */
-  mockResourcePrefixUrl?: string
+  readonly mockResourcePrefixUrl?: string
   /**
    * The root directory where the resource files is located
    */
-  mockResourceRootDir?: string
+  readonly mockResourceRootDir?: string
 }
 
 
@@ -178,16 +172,16 @@ export async function createRestfulApiServeContext(
     workspace: params.workspace,
     tsconfigPath: params.workspace,
     schemaRootPath: params.schemaRootPath,
-    encoding: coverString('utf-8', params.encoding),
-    host: coverString('localhost', params.host),
-    port: Number.parseInt(coverNumber(3000, params.port).toFixed(0)),
-    prefixUrl: coverString('', params.prefixUrl),
-    mockRequiredOnly: coverBoolean(false, params.mockRequiredOnly),
-    mockOptionalsAlways: coverBoolean(false, params.mockOptionalsAlways),
-    mockOptionalsProbability: coverNumber(0.8, params.mockOptionalsProbability),
-    mockDataPrefixUrl: params.mockDataPrefixUrl,
+    encoding: params.encoding,
+    host: params.host,
+    port: params.port,
+    prefixUrl: params.prefixUrl,
+    mockRequiredOnly: params.mockRequiredOnly,
+    mockOptionalsAlways: params.mockOptionalsAlways,
+    mockOptionalsProbability: params.mockOptionalsProbability,
+    mockDataPrefixUrl: coverString(params.prefixUrl, params.mockDataPrefixUrl),
     mockDataRootDir: params.mockDataRootDir,
-    mockResourcePrefixUrl: params.mockResourcePrefixUrl,
+    mockResourcePrefixUrl: coverString(params.prefixUrl, params.mockResourcePrefixUrl),
     mockResourceRootDir: params.mockResourceRootDir,
     apiItems,
   }
