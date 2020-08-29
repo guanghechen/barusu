@@ -2,7 +2,6 @@ import fs from 'fs-extra'
 import path from 'path'
 import rimraf from 'rimraf'
 import supertest from 'supertest'
-import { name } from '@barusu/tool-restful-api/package.json'
 import { absoluteOfWorkspace } from '@barusu/util-cli'
 import Router from '@koa/router'
 import {
@@ -33,7 +32,6 @@ describe('serve', function () {
       const program = createProgram()
       const promise = new Promise<RestfulApiServeContext>(resolve => {
         program.addCommand(createSubCommandServe(
-          name,
           async (options: SubCommandServeOptions): Promise<void> => {
             const context: RestfulApiServeContext =
               await createRestfulApiServeContextFromOptions(options)

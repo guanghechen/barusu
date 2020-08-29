@@ -161,7 +161,6 @@
       const program = createProgram()
       const promise = new Promise<RestfulApiServeContext>(resolve => {
         program.addCommand(createSubCommandServe(
-          'serve',
           async (options: SubCommandServeOptions): Promise<void> => {
             const context: RestfulApiServeContext =
               await createRestfulApiServeContextFromOptions(options)

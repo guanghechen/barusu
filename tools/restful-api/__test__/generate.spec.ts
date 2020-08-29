@@ -2,17 +2,8 @@ import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
 import rimraf from 'rimraf'
-import { name } from '@barusu/tool-restful-api/package.json'
 import { absoluteOfWorkspace } from '@barusu/util-cli'
-import {
-  COMMAND_NAME,
-  RestfulApiGenerateContext,
-  RestfulApiGenerateProcessor,
-  SubCommandGenerateOptions,
-  createProgram,
-  createRestfulApiGenerateContextFromOptions,
-  createSubCommandGenerate,
-} from '../src'
+import { COMMAND_NAME, createProgram, execSubCommandGenerate } from '../src'
 
 
 describe('generate', function () {
@@ -30,18 +21,7 @@ describe('generate', function () {
 
     test(title, async function () {
       const program = createProgram()
-      const promise = new Promise<RestfulApiGenerateContext>(resolve => {
-        program.addCommand(createSubCommandGenerate(
-          name,
-          async (options: SubCommandGenerateOptions): Promise<void> => {
-            const context: RestfulApiGenerateContext =
-              await createRestfulApiGenerateContextFromOptions(options)
-            resolve(context)
-          }
-        ))
-      })
-
-      const args = [
+      await execSubCommandGenerate(program, [
         '',
         COMMAND_NAME,
         'generate',
@@ -50,13 +30,7 @@ describe('generate', function () {
         '--config-path=app.yml',
         '--api-config-path=api.yml',
         '--schema-root-path=' + schemaRootDir,
-      ]
-
-      program.parse(args)
-
-      const context = await promise
-      const processor = new RestfulApiGenerateProcessor(context)
-      await processor.generate()
+      ])
 
       // write the outputs to snapshots
       const files = (await globby(['*', '**/*'], {
