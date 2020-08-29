@@ -4,6 +4,7 @@ import {
   SubCommandCreator,
   SubCommandProcessor,
 } from '@barusu/util-cli'
+import { cover, isNotEmptyArray } from '@barusu/util-option'
 import { packageName } from '../../util/env'
 import { logger } from '../../util/logger'
 import {
@@ -15,12 +16,16 @@ import { RestfulApiInitContext, createRestfulApiInitContext } from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
-
+  /**
+   * Pass to plop
+   */
+  readonly plopBypass: string[]
 }
 
 
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
+  plopBypass: [],
 }
 
 
@@ -42,14 +47,21 @@ export const createSubCommandInit: SubCommandCreator<SubCommandInitOptions> =
       .name(commandName)
       .aliases(aliases)
       .arguments('<workspace>')
+      .option('--plop-bypass <plopBypass>', 'bypass array to plop', (val, acc: string[]) => acc.concat(val), [])
       .action(async function ([_workspaceDir], options: SubCommandOptions) {
         logger.setName(commandName)
 
         const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
           packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
 
+        // resolve plopBypass
+        const plopBypass: string[] = cover<string[]>(
+          defaultOptions.plopBypass, options.plopBypass, isNotEmptyArray)
+        logger.debug('plopBypass:', plopBypass)
+
         const resolvedOptions: SubCommandInitOptions = {
           ...defaultOptions,
+          plopBypass,
         }
 
         if (handle != null) {
@@ -73,6 +85,7 @@ export async function createRestfulApiInitContextFromOptions(
     workspace: options.workspace,
     tsconfigPath: options.tsconfigPath,
     encoding: options.encoding,
+    plopBypass: options.plopBypass,
   })
   return context
 }

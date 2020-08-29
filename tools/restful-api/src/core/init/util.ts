@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import path from 'path'
@@ -9,27 +8,56 @@ import { logger } from '../../util/logger'
 import { RestfulApiInitContext } from './context'
 
 
+/**
+ * Render handlebar boilerplates
+ * @param context
+ * @param plopBypass
+ */
 export async function renderTemplates(
-  context: RestfulApiInitContext
+  context: RestfulApiInitContext,
+  plopBypass: string[],
 ): Promise<void> {
   const availableTemplates: string[] = ['simple']
-  const { templateName } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'templateName',
-      default: availableTemplates[0],
-      message: 'Which mock server template preferred?',
-      choices: availableTemplates,
-      filter: x => toLowerCase(x).trim(),
-      transformer: (x: string) => toLowerCase(x).trim(),
-    },
-  ])
+
+  let templateName: string
+  if (plopBypass.length > 0) {
+    templateName = plopBypass.shift()!
+  } else {
+    templateName = (await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'templateName',
+        default: availableTemplates[0],
+        message: 'Which mock server template preferred?',
+        choices: availableTemplates,
+        filter: x => toLowerCase(x).trim(),
+        transformer: (x: string) => toLowerCase(x).trim(),
+      },
+    ])).templateName
+  }
 
   const templateDir = path.join(templateRootDir, templateName)
   const templateConfig = path.join(templateDir, 'plop.js')
+  logger.debug('templateName:', templateName)
   logger.debug('templateDir:', templateDir)
   logger.debug('templateConfig:', templateConfig)
 
   const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
-  await runPlop(plop, logger, undefined, { workspace: context.workspace })
+
+  // get prompts length to calculate the number of bypass parameters consumed
+  let bypassForPlopConfigCount = 0
+  const generators = plop.getGeneratorList()
+  if (generators.length === 1) {
+    const generator = plop.getGenerator(generators[0].name)
+    bypassForPlopConfigCount = generator.prompts.length
+  } else {
+    const generateName = plopBypass[0]
+    const generator = plop.getGenerator(generateName)
+    bypassForPlopConfigCount = generator.prompts.length + 1
+  }
+
+  const bypassForPlopConfig = plopBypass.splice(0, bypassForPlopConfigCount)
+  logger.debug('bypassForPlopConfig:', bypassForPlopConfig)
+
+  await runPlop(plop, logger, bypassForPlopConfig, { workspace: context.workspace })
 }

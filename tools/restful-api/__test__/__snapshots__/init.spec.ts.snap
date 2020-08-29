@@ -1,0 +1,382 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`init simple: api.yml 1`] = `
+"api:
+  user:
+    path: /api/user
+    description: basic api
+    items:
+      query:
+        path: /me
+        method: GET
+        title: get current user information
+        response: QueryCurrentUserResponseVo
+"
+`;
+
+exports[`init simple: app.yml 1`] = `
+"__globalOptions__:
+  encoding: utf-8
+  logLevel: verbose
+  schemaRootPath: data/schemas
+  apiConfigPath:
+    - api.yml
+
+# options for sub-command \`generate\`
+generate:
+  clean: true
+  muteMissingModel: true
+  ignoredDataTypes:
+    - 'undefined'
+  additionalSchemaArgs:
+    ref: false
+    required: true
+
+# options for sub-command \`serve\`
+serve:
+  host: '0.0.0.0'
+  port: 8091
+  prefixUrl: /mock
+  mockDataPrefixUrl: /mock
+  mockDataRootDir: /mock/data
+  mockResourcePrefixUrl: /mock
+  mockResourceRootDir: /mock/resources
+  mockOptionalsAlways: true
+  mockOptionalsProbability: 0.7
+"
+`;
+
+exports[`init simple: ecosystem.config.js 1`] = `
+"const path = require('path')
+const manifest = require('./package.json')
+
+
+const name = manifest.name
+module.exports = {
+  apps: {
+    name,
+    cwd: path.resolve(),
+    script: 'yarn',
+    args: 'serve',
+    env: {
+      NODE_ENV: 'development'
+    },
+    error_file: \`./logs/\${ name }-err.log\`,
+    out_file: \`./logs/\${ name }-out.log\`,
+    merge_logs: true,
+    autorestart: true,
+  }
+}
+"
+`;
+
+exports[`init simple: initialized files 1`] = `
+Array [
+  "api.yml",
+  "app.yml",
+  "ecosystem.config.js",
+  "nodemon.json",
+  "package.json",
+  "script/serve.ts",
+  "src/model/core/response.ts",
+  "src/model/model/user.ts",
+  "src/model/vo/user.ts",
+  "tsconfig.json",
+]
+`;
+
+exports[`init simple: nodemon.json 1`] = `
+"{
+  \\"watch\\": [\\"src/\\", \\"app.json\\", \\"api.yml\\"],
+  \\"ext\\": \\"ts yml yaml json\\"
+}
+"
+`;
+
+exports[`init simple: package.json 1`] = `
+"{
+  \\"name\\": \\"simple\\",
+  \\"version\\": \\"0.0.0\\",
+  \\"private\\": true,
+  \\"scripts\\": {
+    \\"build:schemas\\": \\"barusu-rapit generate . -c app.yml\\",
+    \\"serve:cli\\": \\"nodemon --exec \\\\\\"yarn build:schemas && barusu-rapit serve . -c app.yml\\\\\\"\\",
+    \\"serve:program\\": \\"nodemon --exec \\\\\\"yarn build:schemas && node -r ts-node/register script/serve.ts\\\\\\"\\",
+    \\"serve\\": \\"yarn serve:program\\",
+    \\"format\\": \\"barusu-sort-imports .\\"
+  },
+  \\"dependencies\\": {
+    \\"@barusu/tool-restful-api\\": \\"^0.0.29\\"
+  },
+  \\"devDependencies\\": {
+    \\"@barusu/eslint-config\\": \\"^0.0.29\\",
+    \\"@barusu/rollup-config\\": \\"^0.0.29\\",
+    \\"@barusu/tool-sort-imports\\": \\"^0.0.29\\",
+    \\"nodemon\\": \\"^1.19.1\\",
+    \\"ts-node\\": \\"^8.8.2\\",
+    \\"typescript\\": \\"^3.8.2\\"
+  },
+  \\"@barusu/tool-sort-imports\\": {
+    \\"pattern\\": [
+      \\"{src,test,__test__}/**/*.{ts,tsx}\\"
+    ],
+    \\"moduleRanks\\": [
+      {
+        \\"regex\\": \\"^(react|vue|angular)(?:[/\\\\\\\\-][\\\\\\\\w\\\\\\\\-./]*)?$\\",
+        \\"rank\\": 1.1
+      },
+      {
+        \\"regex\\": \\"^[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\",
+        \\"rank\\": 1.3
+      },
+      {
+        \\"regex\\": \\"^@[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\\\\\\\/[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\",
+        \\"rank\\": 1.4
+      },
+      {
+        \\"regex\\": \\"^@\\\\\\\\/\\",
+        \\"rank\\": 2.1
+      },
+      {
+        \\"regex\\": \\"^(?:\\\\\\\\/|[a-zA-Z]:)\\",
+        \\"rank\\": 3.1
+      },
+      {
+        \\"regex\\": \\"^[.]{2}[\\\\\\\\/\\\\\\\\\\\\\\\\][^\\\\\\\\n]*\\",
+        \\"rank\\": 3.2
+      },
+      {
+        \\"regex\\": \\"^[.][\\\\\\\\/\\\\\\\\\\\\\\\\][^\\\\\\\\n]*\\",
+        \\"rank\\": 3.3
+      }
+    ],
+    \\"indent\\": \\"  \\",
+    \\"quote\\": \\"'\\",
+    \\"semicolon\\": false,
+    \\"maxColumn\\": 80,
+    \\"logLevel\\": \\"verbose\\"
+  }
+}
+"
+`;
+
+exports[`init simple: script/serve.ts 1`] = `
+"import path from 'path'
+import chalk from 'chalk'
+import Router from '@koa/router'
+import {
+  COMMAND_NAME,
+  RestfulApiServeContext,
+  RestfulApiServeProcessor,
+  SubCommandServeOptions,
+  createProgram,
+  createRestfulApiServeContextFromOptions,
+  createSubCommandServe,
+} from '@barusu/tool-restful-api'
+
+
+async function serve () {
+  const program = createProgram()
+  const promise = new Promise<RestfulApiServeContext>(resolve => {
+    program.addCommand(createSubCommandServe(
+      async (options: SubCommandServeOptions): Promise<void> => {
+        const context: RestfulApiServeContext =
+          await createRestfulApiServeContextFromOptions(options)
+        resolve(context)
+      }
+    ))
+  })
+
+  const projectDir = path.resolve()
+  const args = [
+    '',
+    COMMAND_NAME,
+    'serve',
+    projectDir,
+    '--config-path',
+    'app.yml',
+  ]
+  console.log(chalk.gray('--> ' + args.join(' ')))
+  program.parse(args)
+
+  const context = await promise
+  const processor = new RestfulApiServeProcessor(context)
+
+  const router = new Router()
+  router.get('/hello/world', ctx => {
+    // eslint-disable-next-line no-param-reassign
+    ctx.body = {
+      code: 200,
+      message: 'Got it!',
+    }
+  })
+  processor.registerRouter(router)
+
+  processor.start()
+}
+
+
+serve()
+"
+`;
+
+exports[`init simple: src/model/core/response.ts 1`] = `
+"/**
+ * response code
+ */
+export enum ResponseCode {
+  /**
+   * 200 OK
+   */
+  S_OK = 200,
+}
+
+
+/**
+ * response result
+ */
+export interface ResponseResult<T = unknown> {
+  /**
+   * response code
+   * @default 200
+   */
+  code: ResponseCode
+  /**
+   * response message
+   */
+  message: string
+  /**
+   * response data
+   */
+  result: T
+}
+
+
+/**
+ * response result
+ */
+export interface OptionalResponseResult<T = unknown> {
+  /**
+   * response code
+   * @default 200
+   */
+  code: ResponseCode
+  /**
+   * response message
+   */
+  message: string
+  /**
+   * response data
+   */
+  result?: T
+}
+
+
+/**
+ * Paginated response data
+ */
+export interface PaginationResponseResult<T = unknown> extends ResponseResult<T> {
+  /**
+   * pagination info
+   */
+  pagination: {
+    /**
+     * current page
+     * @TJS-type integer
+     * @minimum 1
+     */
+    current: number
+    /**
+     * number of records per page
+     * @minimum 10
+     * @maximum 100
+     * @TJS-type integer
+     */
+    size: number
+    /**
+     * total records
+     * @TJS-type integer
+     * @minimum 1
+     */
+    total: number
+  }
+}
+"
+`;
+
+exports[`init simple: src/model/model/user.ts 1`] = `
+"/**
+ * user info
+ */
+export interface User {
+  /**
+   * user name
+   */
+  name: string
+  /**
+   * nickname
+   */
+  nickname: string
+  /**
+   * phone number
+   */
+  phone: string
+  /**
+   * email
+   * @format email
+   */
+  email: string
+}
+"
+`;
+
+exports[`init simple: src/model/vo/user.ts 1`] = `
+"import { User } from '../model/user'
+import { ResponseResult } from '../core/response'
+
+
+/**
+ * get current user information
+ */
+export type QueryCurrentUserResponseVo = ResponseResult<User>
+"
+`;
+
+exports[`init simple: tsconfig.json 1`] = `
+"{
+  \\"compilerOptions\\": {
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"alwaysStrict\\": true,
+    \\"declaration\\": true,
+    \\"declarationMap\\": true,
+    \\"downlevelIteration\\": true,
+    \\"esModuleInterop\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"forceConsistentCasingInFileNames\\": true,
+    \\"moduleResolution\\": \\"node\\",
+    \\"newLine\\": \\"LF\\",
+    \\"noEmit\\": false,
+    \\"noEmitOnError\\": true,
+    \\"noImplicitAny\\": true,
+    \\"noImplicitReturns\\": false,
+    \\"noImplicitThis\\": true,
+    \\"noImplicitUseStrict\\": false,
+    \\"noUnusedLocals\\": false,
+    \\"noUnusedParameters\\": false,
+    \\"pretty\\": false,
+    \\"removeComments\\": false,
+    \\"resolveJsonModule\\": true,
+    \\"sourceMap\\": true,
+    \\"strict\\": true,
+    \\"strictFunctionTypes\\": true,
+    \\"strictNullChecks\\": true,
+    \\"strictPropertyInitialization\\": true,
+    \\"suppressImplicitAnyIndexErrors\\": true
+  },
+  \\"include\\": [
+    \\"src\\",
+    \\"script\\"
+  ]
+}
+"
+`;

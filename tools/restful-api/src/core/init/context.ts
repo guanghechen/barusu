@@ -1,6 +1,3 @@
-import { coverString, isNotEmptyString } from '@barusu/util-option'
-
-
 /**
  * Context variables for RestfulApiInitContext
  */
@@ -21,6 +18,10 @@ export interface RestfulApiInitContext {
    * The encoding format of files in the working directory
    */
   readonly encoding: string
+  /**
+   * Pass to plop
+   */
+  readonly plopBypass: string[]
 }
 
 
@@ -41,7 +42,11 @@ interface Params {
    * The encoding format of files in the working directory
    * @default 'utf-8'
    */
-  encoding?: string
+  readonly encoding: string
+  /**
+   * Pass to plop
+   */
+  readonly plopBypass: string[]
 }
 
 
@@ -56,7 +61,8 @@ export function createRestfulApiInitContext(
     cwd: params.cwd,
     workspace: params.workspace,
     tsconfigPath: params.tsconfigPath,
-    encoding: coverString('utf-8', params.encoding, isNotEmptyString),
+    encoding: params.encoding,
+    plopBypass: params.plopBypass,
   }
   return context
 }
