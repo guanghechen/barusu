@@ -1,4 +1,10 @@
-import { Command, CommandConfigurationFlatOpts } from '@barusu/util-cli'
+import {
+  Command,
+  CommandConfigurationFlatOpts,
+  SubCommandCreator,
+  SubCommandProcessor,
+} from '@barusu/util-cli'
+import { packageName } from '../../util/env'
 import { logger } from '../../util/logger'
 import {
   GlobalCommandOptions,
@@ -24,35 +30,35 @@ export type SubCommandInitOptions = SubCommandOptions & CommandConfigurationFlat
 /**
  * create Sub-command: init
  */
-export function createSubCommandInit(
-  packageName: string,
-  handle?: (options: SubCommandInitOptions) => void | Promise<void>,
-  commandName = 'init',
-  aliases: string[] = ['i'],
-): Command {
-  const command = new Command()
+export const createSubCommandInit: SubCommandCreator<SubCommandInitOptions> =
+  function (
+    handle?: SubCommandProcessor<SubCommandInitOptions>,
+    commandName = 'init',
+    aliases: string[] = ['i'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .action(async function ([_workspaceDir], options: SubCommandOptions) {
-      logger.setName(commandName)
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .action(async function ([_workspaceDir], options: SubCommandOptions) {
+        logger.setName(commandName)
 
-      const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
-        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+        const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
+          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
 
-      const resolvedOptions: SubCommandInitOptions = {
-        ...defaultOptions,
-      }
+        const resolvedOptions: SubCommandInitOptions = {
+          ...defaultOptions,
+        }
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
 
-  return command
-}
+    return command
+  }
 
 
 /**

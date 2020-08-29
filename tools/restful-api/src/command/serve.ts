@@ -1,4 +1,10 @@
-import { Command } from '@barusu/util-cli'
+import {
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
 import {
   RestfulApiServeContext,
   RestfulApiServeProcessor,
@@ -10,13 +16,15 @@ import { handleError } from './_util'
 
 
 /**
- * load Sub-command: serve
+ * Process sub-command: 'serve'
+ *
+ * @param options
+ * @returns {void|Promise<void>}
  */
-export function loadSubCommandServe(
-  packageName: string,
-  program: Command,
-): void {
-  const process = async (options: SubCommandServeOptions): Promise<void> => {
+export const processSubCommandServe: SubCommandProcessor<SubCommandServeOptions, void> =
+  async function (
+    options: SubCommandServeOptions
+  ): Promise<void> {
     try {
       const context: RestfulApiServeContext =
         await createRestfulApiServeContextFromOptions(options)
@@ -27,6 +35,26 @@ export function loadSubCommandServe(
     }
   }
 
-  const command = createSubCommandServe(packageName, process)
-  program.addCommand(command)
-}
+
+/**
+ * Mount Sub-command: serve
+ */
+export const mountSubCommandServe: SubCommandMounter =
+  createSubCommandMounter<SubCommandServeOptions, void>(
+    createSubCommandServe,
+    processSubCommandServe,
+  )
+
+
+/**
+ * Execute sub-command: 'serve'
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export const execSubCommandServe: SubCommandExecutor<void>
+  = createSubCommandExecutor<SubCommandServeOptions, void>(
+    createSubCommandServe,
+    processSubCommandServe,
+  )

@@ -1,26 +1,20 @@
-import { name, version } from '@barusu/tool-restful-api/package.json'
-import { createTopCommand } from '@barusu/util-cli'
-import { loadSubCommandGenerate } from './command/generate'
-import { loadSubCommandInit } from './command/init'
-import { loadSubCommandServe } from './command/serve'
-import { COMMAND_NAME, logger } from './index'
+import { mountSubCommandGenerate } from './command/generate'
+import { mountSubCommandInit } from './command/init'
+import { mountSubCommandServe } from './command/serve'
+import { createProgram } from './index'
 
 
-const program = createTopCommand(
-  COMMAND_NAME,
-  version,
-  logger
-)
+const program = createProgram()
 
 
 // load sub-command: init
-loadSubCommandInit(name, program)
+mountSubCommandInit(program)
 
 // load sub-command: generate
-loadSubCommandGenerate(name, program)
+mountSubCommandGenerate(program)
 
 // load sub-command: serve
-loadSubCommandServe(name, program)
+mountSubCommandServe(program)
 
 
 program

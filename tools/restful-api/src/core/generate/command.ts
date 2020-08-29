@@ -3,6 +3,8 @@ import * as TJS from '@barusu/typescript-json-schema'
 import {
   Command,
   CommandConfigurationFlatOpts,
+  SubCommandCreator,
+  SubCommandProcessor,
   absoluteOfWorkspace,
 } from '@barusu/util-cli'
 import {
@@ -12,6 +14,7 @@ import {
   isNotEmptyArray,
   isNotEmptyString,
 } from '@barusu/util-option'
+import { packageName } from '../../util/env'
 import { logger } from '../../util/logger'
 import {
   GlobalCommandOptions,
@@ -81,82 +84,80 @@ export type SubCommandGenerateOptions = SubCommandOptions & CommandConfiguration
 /**
  * create Sub-command: generate
  */
-export function createSubCommandGenerate(
-  packageName: string,
-  handle?: (options: SubCommandGenerateOptions) => void | Promise<void>,
-  commandName = 'generate',
-  aliases: string[] = ['g'],
-): Command {
-  const command = new Command()
+export const createSubCommandGenerate: SubCommandCreator<SubCommandGenerateOptions> =
+  function (
+    handle?: SubCommandProcessor<SubCommandGenerateOptions>,
+    commandName = 'generate',
+    aliases: string[] = ['g'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .storeOptionsAsProperties(false)
-    .passCommandToAction(false)
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .option('-C, --api-config-path <api-config-path>', 'filepath of api-item config (glob patterns / strings)', (val, acc: string[]) => acc.concat(val), [])
-    .option('-s, --schema-root-path <schemaRootPath>', 'root path of schema files')
-    .option('--mute-missing-model', 'quiet when model not found')
-    .option('--clean', 'clean schema folders before generate.')
-    .action(async function ([_workspaceDir], options: SubCommandOptions) {
-      logger.setName(commandName)
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .option('-C, --api-config-path <api-config-path>', 'filepath of api-item config (glob patterns / strings)', (val, acc: string[]) => acc.concat(val), [])
+      .option('-s, --schema-root-path <schemaRootPath>', 'root path of schema files')
+      .option('--mute-missing-model', 'quiet when model not found')
+      .option('--clean', 'clean schema folders before generate.')
+      .action(async function ([_workspaceDir], options: SubCommandOptions) {
+        logger.setName(commandName)
 
-      const defaultOptions: SubCommandGenerateOptions = resolveGlobalCommandOptions(
-        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
-      const { workspace } = defaultOptions
+        const defaultOptions: SubCommandGenerateOptions = resolveGlobalCommandOptions(
+          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+        const { workspace } = defaultOptions
 
-      // resolve apConfigPath
-      const apiConfigPath: string[] = cover<string[]>(
-        defaultOptions.apiConfigPath, options.apiConfigPath, isNotEmptyArray)
-        .map((p: string): string => absoluteOfWorkspace(workspace, p))
-      logger.debug('apiConfigPath:', apiConfigPath)
+        // resolve apConfigPath
+        const apiConfigPath: string[] = cover<string[]>(
+          defaultOptions.apiConfigPath, options.apiConfigPath, isNotEmptyArray)
+          .map((p: string): string => absoluteOfWorkspace(workspace, p))
+        logger.debug('apiConfigPath:', apiConfigPath)
 
-      // resolve schemaRootPath
-      const schemaRootPath: string = absoluteOfWorkspace(workspace, coverString(
-        defaultOptions.schemaRootPath, options.schemaRootPath, isNotEmptyString))
-      logger.debug('schemaRootPath:', schemaRootPath)
+        // resolve schemaRootPath
+        const schemaRootPath: string = absoluteOfWorkspace(workspace, coverString(
+          defaultOptions.schemaRootPath, options.schemaRootPath, isNotEmptyString))
+        logger.debug('schemaRootPath:', schemaRootPath)
 
-      // resolve clean
-      const clean: boolean = coverBoolean(defaultOptions.clean, options.clean)
-      logger.debug('clean:', clean)
+        // resolve clean
+        const clean: boolean = coverBoolean(defaultOptions.clean, options.clean)
+        logger.debug('clean:', clean)
 
-      // resolve muteMissingModel
-      const muteMissingModel: boolean = coverBoolean(
-        defaultOptions.muteMissingModel, options.muteMissingModel)
-      logger.debug('muteMissingModel:', muteMissingModel)
+        // resolve muteMissingModel
+        const muteMissingModel: boolean = coverBoolean(
+          defaultOptions.muteMissingModel, options.muteMissingModel)
+        logger.debug('muteMissingModel:', muteMissingModel)
 
-      // resolve ignoredDataTypes
-      const ignoredDataTypes: string[] = defaultOptions.ignoredDataTypes
-      logger.debug('ignoredDataTypes:', ignoredDataTypes)
+        // resolve ignoredDataTypes
+        const ignoredDataTypes: string[] = defaultOptions.ignoredDataTypes
+        logger.debug('ignoredDataTypes:', ignoredDataTypes)
 
-      // resolve additionalSchemaArgs
-      const additionalSchemaArgs: TJS.PartialArgs | undefined =
-        defaultOptions.additionalSchemaArgs
-      logger.debug('additionalSchemaArgs:', additionalSchemaArgs)
+        // resolve additionalSchemaArgs
+        const additionalSchemaArgs: TJS.PartialArgs | undefined =
+          defaultOptions.additionalSchemaArgs
+        logger.debug('additionalSchemaArgs:', additionalSchemaArgs)
 
-      // resolve additionalCompilerOptions
-      const additionalCompilerOptions: ts.CompilerOptions | undefined =
-        defaultOptions.additionalCompilerOptions
-      logger.debug('additionalCompilerOptions:', additionalCompilerOptions)
-      const resolvedOptions: SubCommandGenerateOptions = {
-        ...defaultOptions,
-        schemaRootPath,
-        apiConfigPath,
-        clean,
-        muteMissingModel,
-        ignoredDataTypes,
-        additionalSchemaArgs,
-        additionalCompilerOptions,
-      }
+        // resolve additionalCompilerOptions
+        const additionalCompilerOptions: ts.CompilerOptions | undefined =
+          defaultOptions.additionalCompilerOptions
+        logger.debug('additionalCompilerOptions:', additionalCompilerOptions)
+        const resolvedOptions: SubCommandGenerateOptions = {
+          ...defaultOptions,
+          schemaRootPath,
+          apiConfigPath,
+          clean,
+          muteMissingModel,
+          ignoredDataTypes,
+          additionalSchemaArgs,
+          additionalCompilerOptions,
+        }
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
 
-  return command
-}
+    return command
+  }
 
 
 /**
