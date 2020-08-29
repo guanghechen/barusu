@@ -15,7 +15,7 @@ describe('generate', function () {
     const projectDir = absoluteOfWorkspace(caseRootDirectory, kase)
 
     // clear output directory before run test
-    const schemaRootDir = '__tmp__/schemas/output'
+    const schemaRootDir = 'mock/schemas'
     const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
     rimraf.sync(absoluteSchemaRootDir)
 
@@ -28,7 +28,6 @@ describe('generate', function () {
         projectDir,
         '--log-level=warn',
         '--config-path=app.yml',
-        '--api-config-path=api.yml',
         '--schema-root-path=' + schemaRootDir,
       ])
 

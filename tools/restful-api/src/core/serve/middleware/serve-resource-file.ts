@@ -30,33 +30,31 @@ export function serveResourceFile(
 ): Koa.Middleware {
   logger.info(`[serveResourceFile]: mount ${ prefixUrl } --> ${ relativeOfWorkspace(workspaceDir, mockResourceRootDir) }`)
   return async function (ctx: Koa.Context, next: () => Promise<void>): Promise<any> {
-    const filepath = (
-      ctx.path.startsWith(prefixUrl)
-        ? ctx.path.slice(prefixUrl.length)
-        : ctx.path
-    ).replace(/^[/\\]/, '')
+    if (ctx.path.startsWith(prefixUrl)) {
+      const filepath = ctx.path.slice(prefixUrl.length).replace(/^[/\\]/, '')
 
-    const resolvedFilepath: string | null = (() => {
-      const potentialDataPaths = ['']
-        .map(ext => filepath + ext)
+      const resolvedFilepath: string | null = (() => {
+        const potentialDataPaths = ['']
+          .map(ext => filepath + ext)
 
-      for (const p of potentialDataPaths) {
-        const absoluteFilepath = path.resolve(mockResourceRootDir, p)
-        const relativeFilepath = relativeOfWorkspace(workspaceDir, absoluteFilepath)
+        for (const p of potentialDataPaths) {
+          const absoluteFilepath = path.resolve(mockResourceRootDir, p)
+          const relativeFilepath = relativeOfWorkspace(workspaceDir, absoluteFilepath)
 
-        if (fs.existsSync(absoluteFilepath)) {
-          logger.debug(`[serveResourceFile hit] try filepath: ${ relativeFilepath }`)
-          return p
+          if (fs.existsSync(absoluteFilepath)) {
+            logger.debug(`[serveResourceFile hit] try filepath: ${ relativeFilepath }`)
+            return p
+          }
+          logger.debug(`[serveResourceFile miss] try filepath: ${ relativeFilepath }`)
         }
-        logger.debug(`[serveResourceFile miss] try filepath: ${ relativeFilepath }`)
-      }
-      return null
-    })()
+        return null
+      })()
 
-    // Hit, return matching static resource file
-    if (resolvedFilepath != null) {
-      await send(ctx, resolvedFilepath, { root: mockResourceRootDir })
-      return
+      // Hit, return matching static resource file
+      if (resolvedFilepath != null) {
+        await send(ctx, resolvedFilepath, { root: mockResourceRootDir })
+        return
+      }
     }
 
     // No matching static resource file is found,

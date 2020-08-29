@@ -1,8 +1,234 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`serve simple: /mock/uu/vv__get 1`] = `
+exports[`serve simple: /api/user/me get 1`] = `
 Object {
-  "status": 200,
-  "text": "{\\"code\\":200,\\"message\\":\\"Got it!\\"}",
+  "headers": Object {
+    "connection": "close",
+    "content-type": "text/plain; charset=utf-8",
+    "vary": "Origin",
+  },
+  "text": "Not Found",
+  "type": "text/plain",
 }
+`;
+
+exports[`serve simple: /images/scribble.png undefined 1`] = `
+Object {
+  "headers": Object {
+    "connection": "close",
+    "content-type": "text/plain; charset=utf-8",
+    "vary": "Origin",
+  },
+  "type": "text/plain",
+}
+`;
+
+exports[`serve simple: /mock/api/invalid-json get 1`] = `
+Object {
+  "headers": Object {
+    "connection": "close",
+    "content-type": "text/plain; charset=utf-8",
+    "vary": "Origin",
+  },
+  "text": "Not Found",
+  "type": "text/plain",
+}
+`;
+
+exports[`serve simple: /mock/api/not-found get 1`] = `
+Object {
+  "dataKeys": Array [],
+  "headers": Object {
+    "connection": "close",
+    "content-type": "text/plain; charset=utf-8",
+    "vary": "Origin",
+  },
+  "type": "text/plain",
+}
+`;
+
+exports[`serve simple: /mock/api/user/alice get 1`] = `
+Object {
+  "dataKeys": Array [
+    "code",
+    "message",
+    "result",
+  ],
+  "dataResultKeys": Array [
+    "username",
+    "gender",
+    "age",
+  ],
+  "headers": Object {
+    "connection": "close",
+    "content-type": "application/json; charset=utf-8",
+    "vary": "Origin",
+  },
+  "type": "application/json",
+}
+`;
+
+exports[`serve simple: /mock/api/user/login patch 1`] = `
+Object {
+  "headers": Object {
+    "allow": "POST, HEAD, GET",
+    "connection": "close",
+    "content-type": "text/plain; charset=utf-8",
+    "vary": "Origin",
+  },
+  "text": "Method Not Allowed",
+  "type": "text/plain",
+}
+`;
+
+exports[`serve simple: /mock/api/user/login post 1`] = `
+Object {
+  "dataKeys": Array [
+    "code",
+    "message",
+    "result",
+  ],
+  "dataResultKeys": Array [
+    "token",
+    "username",
+  ],
+  "headers": Object {
+    "connection": "close",
+    "content-type": "application/json; charset=utf-8",
+    "vary": "Origin",
+  },
+  "type": "application/json",
+}
+`;
+
+exports[`serve simple: /mock/api/user/logout post 1`] = `
+Object {
+  "dataKeys": Array [
+    "code",
+    "message",
+  ],
+  "headers": Object {
+    "connection": "close",
+    "content-type": "application/json; charset=utf-8",
+    "vary": "Origin",
+  },
+  "type": "application/json",
+}
+`;
+
+exports[`serve simple: /mock/api/user/me get 1`] = `
+Object {
+  "headers": Object {
+    "connection": "close",
+    "content-type": "application/json; charset=utf-8",
+    "vary": "Origin",
+  },
+  "text": "{
+  \\"code\\": 200,
+  \\"message\\": \\"Okay\\",
+  \\"result\\": {
+    \\"email\\": \\"A6UV30hM@XV.six\\",
+    \\"name\\": \\"ming\\",
+    \\"nickname\\": \\"ming ming\\",
+    \\"phone\\": \\"7777-777777\\"
+  }
+}",
+  "type": "application/json",
+}
+`;
+
+exports[`serve simple: /mock/images/scribble.png undefined 1`] = `
+Object {
+  "headers": Object {
+    "cache-control": "max-age=0",
+    "connection": "close",
+    "content-type": "image/png",
+    "vary": "Origin",
+  },
+  "type": "image/png",
+}
+`;
+
+exports[`serve simple: /mock/uu/vv get 1`] = `
+Object {
+  "headers": Object {
+    "connection": "close",
+    "content-type": "application/json; charset=utf-8",
+    "vary": "Origin",
+  },
+  "text": "{\\"code\\":200,\\"message\\":\\"Got it!\\"}",
+  "type": "application/json",
+}
+`;
+
+exports[`serve simple: jsonRequestCases 1`] = `
+Array [
+  Object {
+    "absolutePath": false,
+    "exact": true,
+    "method": "get",
+    "url": "/mock/uu/vv",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": true,
+    "method": "get",
+    "url": "/mock/api/user/me",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": true,
+    "method": "get",
+    "url": "/mock/api/invalid-json",
+  },
+  Object {
+    "absolutePath": true,
+    "exact": true,
+    "method": "get",
+    "url": "/api/user/me",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": true,
+    "method": "patch",
+    "url": "/mock/api/user/login",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": false,
+    "method": "get",
+    "url": "/mock/api/user/alice",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": false,
+    "method": "post",
+    "url": "/mock/api/user/login",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": false,
+    "method": "post",
+    "url": "/mock/api/user/logout",
+  },
+  Object {
+    "absolutePath": false,
+    "exact": false,
+    "method": "get",
+    "url": "/mock/api/not-found",
+  },
+]
+`;
+
+exports[`serve simple: resourceRequestCases 1`] = `
+Array [
+  Object {
+    "absolutePath": false,
+    "url": "/mock/images/scribble.png",
+  },
+  Object {
+    "absolutePath": true,
+    "url": "/images/scribble.png",
+  },
+]
 `;

@@ -1,7 +1,7 @@
 __globalOptions__:
   encoding: utf-8
   logLevel: debug
-  schemaRootPath: data/schemas
+  schemaRootPath: mock/schemas
   apiConfigPath:
     - api.yml
 
