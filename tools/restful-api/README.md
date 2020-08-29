@@ -153,48 +153,21 @@
       RestfulApiServeProcessor,
       SubCommandServeOptions,
       createProgram,
-      createRestfulApiServeContext,
+      createRestfulApiServeContextFromOptions,
       createSubCommandServe,
     } from '@barusu/tool-restful-api'
 
-
     async function serve () {
       const program = createProgram()
-      program.addCommand(createSubCommandServe(
-        'serve',
-        async (options: SubCommandServeOptions): Promise<void> => {
-          const context: RestfulApiServeContext = await createRestfulApiServeContext({
-            cwd: options.cwd,
-            workspace: options.workspace,
-            tsconfigPath: options.tsconfigPath,
-            schemaRootPath: options.schemaRootPath,
-            apiConfigPath: options.apiConfigPath,
-            encoding: options.encoding,
-            host: options.host,
-            port: options.port,
-            prefixUrl: options.prefixUrl,
-            mockRequiredOnly: options.mockRequiredOnly,
-            mockOptionalsAlways: options.mockOptionalsAlways,
-            mockOptionalsProbability: options.mockOptionalsProbability,
-            mockDataFileFirst: options.mockDataFileFirst,
-            mockDataRootDir: options.mockDataRootDir,
-          })
-
-          const processor = new RestfulApiServeProcessor(context)
-
-          const router = new Router()
-          router.get('/hello/world', ctx => {
-            // eslint-disable-next-line no-param-reassign
-            ctx.body = {
-              code: 200,
-              message: 'Got it!',
-            }
-          })
-          processor.registerRouter(router)
-
-          processor.start()
-        }
-      ))
+      const promise = new Promise<RestfulApiServeContext>(resolve => {
+        program.addCommand(createSubCommandServe(
+          async (options: SubCommandServeOptions): Promise<void> => {
+            const context: RestfulApiServeContext =
+              await createRestfulApiServeContextFromOptions(options)
+            resolve(context)
+          }
+        ))
+      })
 
       const projectDir = path.resolve()
       const args = [
@@ -202,14 +175,26 @@
         COMMAND_NAME,
         'serve',
         projectDir,
-        '--log-level=verbose',
-        '-s',
-        'data/schemas',
         '--config-path',
         'app.yml',
       ]
       console.log(chalk.gray('--> ' + args.join(' ')))
       program.parse(args)
+
+      const context = await promise
+      const processor = new RestfulApiServeProcessor(context)
+
+      const router = new Router()
+      router.get('/hello/world', ctx => {
+        // eslint-disable-next-line no-param-reassign
+        ctx.body = {
+          code: 200,
+          message: 'Got it!',
+        }
+      })
+      processor.registerRouter(router)
+
+      processor.start()
     }
 
     serve()

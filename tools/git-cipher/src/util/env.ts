@@ -1,5 +1,8 @@
 import path from 'path'
-export { name, version } from '@barusu/tool-git-cipher/package.json'
+export {
+  name as packageName,
+  version as packageVersion,
+} from '@barusu/tool-git-cipher/package.json'
 
 
 // Command name

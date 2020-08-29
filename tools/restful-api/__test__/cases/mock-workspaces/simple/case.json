@@ -1,0 +1,62 @@
+{
+  "jsonRequestCases": [
+    {
+      "url": "/api/user/me",
+      "method": "get",
+      "exact": true,
+      "absolutePath": false
+    },
+    {
+      "url": "/api/invalid-json",
+      "method": "get",
+      "exact": true,
+      "absolutePath": false
+    },
+    {
+      "url": "/api/user/me",
+      "method": "get",
+      "exact": true,
+      "absolutePath": true
+    },
+    {
+      "url": "/api/user/login",
+      "method": "patch",
+      "exact": true,
+      "absolutePath": false
+    },
+    {
+      "url": "/api/user/alice",
+      "method": "get",
+      "exact": false,
+      "absolutePath": false
+    },
+    {
+      "url": "/api/user/login",
+      "method": "post",
+      "exact": false,
+      "absolutePath": false
+    },
+    {
+      "url": "/api/user/logout",
+      "method": "post",
+      "exact": false,
+      "absolutePath": false
+    },
+    {
+      "url": "/api/not-found",
+      "method": "get",
+      "exact": false,
+      "absolutePath": false
+    }
+  ],
+  "resourceRequestCases": [
+    {
+      "url": "/images/scribble.png",
+      "absolutePath": false
+    },
+    {
+      "url": "/images/scribble.png",
+      "absolutePath": true
+    }
+  ]
+}

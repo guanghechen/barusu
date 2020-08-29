@@ -1,11 +1,16 @@
 import { Command, CommandConfigurationFlatOpts } from '@barusu/util-cli'
 import { coverBoolean } from '@barusu/util-option'
+import { packageName } from '../../util/env'
 import { logger } from '../../util/logger'
 import {
   GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
+import {
+  GitCipherEncryptContext,
+  createGitCipherEncryptContext,
+} from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -13,11 +18,11 @@ interface SubCommandOptions extends GlobalCommandOptions {
    * Whether to update in full, if not, only update files whose mtime is less
    * than the mtime recorded in the index file
    */
-  full: boolean
+  readonly full: boolean
   /**
    * Perform `git fetch --all` before encrypt
    */
-  updateBeforeEncrypt: boolean
+  readonly updateBeforeEncrypt: boolean
 }
 
 
@@ -34,45 +39,72 @@ export type SubCommandEncryptOptions = SubCommandOptions & CommandConfigurationF
 /**
  * create Sub-command: encrypt (e)
  */
-export function createSubCommandEncrypt(
-  packageName: string,
-  handle?: (options: SubCommandEncryptOptions) => void | Promise<void>,
-  commandName = 'encrypt',
-  aliases: string[] = ['e'],
-): Command {
-  const command = new Command()
+export const createSubCommandEncrypt =
+  function (
+    handle?: (options: SubCommandEncryptOptions) => void | Promise<void>,
+    commandName = 'encrypt',
+    aliases: string[] = ['e'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .option('--full', 'full quantity update')
-    .option('--update-before-encrypt', 'perform \'git fetch --all\' before run encryption')
-    .action(async function ([_workspaceDir], options: SubCommandEncryptOptions) {
-      logger.setName(commandName)
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .option('--full', 'full quantity update')
+      .option('--update-before-encrypt', 'perform \'git fetch --all\' before run encryption')
+      .action(async function ([_workspaceDir], options: SubCommandEncryptOptions) {
+        logger.setName(commandName)
 
-      const defaultOptions: SubCommandEncryptOptions = resolveGlobalCommandOptions(
-        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+        const defaultOptions: SubCommandEncryptOptions = resolveGlobalCommandOptions(
+          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
 
-      // resolve full
-      const full: boolean = coverBoolean(defaultOptions.full, options.full)
-      logger.debug('full:', full)
+        // resolve full
+        const full: boolean = coverBoolean(defaultOptions.full, options.full)
+        logger.debug('full:', full)
 
-      // resolve updateBeforeEncrypt
-      const updateBeforeEncrypt: boolean = coverBoolean(
-        defaultOptions.updateBeforeEncrypt, options.updateBeforeEncrypt)
-      logger.debug('updateBeforeEncrypt:', updateBeforeEncrypt)
+        // resolve updateBeforeEncrypt
+        const updateBeforeEncrypt: boolean = coverBoolean(
+          defaultOptions.updateBeforeEncrypt, options.updateBeforeEncrypt)
+        logger.debug('updateBeforeEncrypt:', updateBeforeEncrypt)
 
-      const resolvedOptions: SubCommandEncryptOptions = {
-        ...defaultOptions,
-        full,
-        updateBeforeEncrypt,
-      }
+        const resolvedOptions: SubCommandEncryptOptions = {
+          ...defaultOptions,
+          full,
+          updateBeforeEncrypt,
+        }
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
 
-  return command
+    return command
+  }
+
+
+/**
+ * Create GitCipherEncryptContext
+ * @param options
+ */
+export async function createGitCipherEncryptContextFromOptions(
+  options: SubCommandEncryptOptions,
+): Promise<GitCipherEncryptContext> {
+  const context: GitCipherEncryptContext = await createGitCipherEncryptContext({
+    cwd: options.cwd,
+    workspace: options.workspace,
+    encoding: options.encoding,
+    secretFilepath: options.secretFilepath,
+    secretFileEncoding: options.secretFileEncoding,
+    indexFilepath: options.indexFilepath,
+    indexFileEncoding: options.indexFileEncoding,
+    ciphertextRootDir: options.ciphertextRootDir,
+    plaintextRootDir: options.plaintextRootDir,
+    showAsterisk: options.showAsterisk,
+    minPasswordLength: options.minPasswordLength,
+    maxPasswordLength: options.maxPasswordLength,
+    full: options.full,
+    updateBeforeEncrypt: options.updateBeforeEncrypt,
+  })
+  return context
 }

@@ -2,13 +2,20 @@ import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
 import { toLowerCase } from '@barusu/util-option'
+import { Logger } from './types'
 
 
 /**
  * Run `npm/yarn install` to Install node.js dependencies
  * @param execaOptions
+ * @param plopBypass
+ * @param logger
  */
-export async function installDependencies(execaOptions: execa.Options): Promise<void> {
+export async function installDependencies(
+  execaOptions: execa.Options,
+  plopBypass: string[],
+  logger?: Logger,
+): Promise<void> {
   const hasYarnInstalled: boolean = commandExists.sync('yarn')
 
   /**
@@ -19,17 +26,26 @@ export async function installDependencies(execaOptions: execa.Options): Promise<
     if (!hasNpmInstalled) return
   }
 
-  const { npmScript } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'npmScript',
-      default: hasYarnInstalled ? 'yarn' : 'npm',
-      message: 'npm or yarn?',
-      choices: ['npm', 'yarn', 'skip'],
-      filter: x => toLowerCase(x).trim(),
-      transformer: (x: string) => toLowerCase(x).trim(),
-    },
-  ])
+  let npmScript: string
+  if (plopBypass.length > 0) {
+    npmScript = plopBypass.shift()!
+  } else {
+    npmScript = (await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'npmScript',
+        default: hasYarnInstalled ? 'yarn' : 'npm',
+        message: 'npm or yarn?',
+        choices: ['npm', 'yarn', 'skip'],
+        filter: x => toLowerCase(x).trim(),
+        transformer: (x: string) => toLowerCase(x).trim(),
+      },
+    ])).npmScript
+  }
+
+  if (logger != null && logger.debug != null) {
+    logger.debug('npmScript:', npmScript)
+  }
 
   // skip installing dependencies
   if (npmScript === 'skip') return

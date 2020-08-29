@@ -1,10 +1,12 @@
 import { Command, CommandConfigurationFlatOpts } from '@barusu/util-cli'
+import { packageName } from '../../util/env'
 import { logger } from '../../util/logger'
 import {
   GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
+import { GitCipherInitContext, createGitCipherInitContext } from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -23,32 +25,57 @@ export type SubCommandInitOptions = SubCommandOptions & CommandConfigurationFlat
 /**
  * create Sub-command: init (i)
  */
-export function createSubCommandInit(
-  packageName: string,
-  handle?: (options: SubCommandInitOptions) => void | Promise<void>,
-  commandName = 'init',
-  aliases: string[] = ['i'],
-): Command {
-  const command = new Command()
+export const createSubCommandInit =
+  function (
+    handle?: (options: SubCommandInitOptions) => void | Promise<void>,
+    commandName = 'init',
+    aliases: string[] = ['i'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .action(async function ([_workspaceDir], options: SubCommandInitOptions) {
-      logger.setName(commandName)
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .action(async function ([_workspaceDir], options: SubCommandInitOptions) {
+        logger.setName(commandName)
 
-      const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
-        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+        const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
+          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
 
-      const resolvedOptions: SubCommandInitOptions = {
-        ...defaultOptions,
-      }
+        const resolvedOptions: SubCommandInitOptions = {
+          ...defaultOptions,
+        }
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
 
-  return command
+    return command
+  }
+
+
+/**
+ * Create GitCipherInitContext
+ * @param options
+ */
+export async function createGitCipherInitContextFromOptions(
+  options: SubCommandInitOptions,
+): Promise<GitCipherInitContext> {
+  const context: GitCipherInitContext = await createGitCipherInitContext({
+    cwd: options.cwd,
+    workspace: options.workspace,
+    encoding: options.encoding,
+    secretFilepath: options.secretFilepath,
+    secretFileEncoding: options.secretFileEncoding,
+    indexFilepath: options.indexFilepath,
+    indexFileEncoding: options.indexFileEncoding,
+    ciphertextRootDir: options.ciphertextRootDir,
+    plaintextRootDir: options.plaintextRootDir,
+    showAsterisk: options.showAsterisk,
+    minPasswordLength: options.minPasswordLength,
+    maxPasswordLength: options.maxPasswordLength,
+  })
+  return context
 }

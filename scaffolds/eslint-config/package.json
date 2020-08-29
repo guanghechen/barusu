@@ -28,6 +28,7 @@
   ],
   "scripts": {
     "build": "echo 'no build action needed'",
+    "test": "echo 'no test yet.'",
     "lint:fix": "echo 'no lint action needed'"
   },
   "dependencies": {

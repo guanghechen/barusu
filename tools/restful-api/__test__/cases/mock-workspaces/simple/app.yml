@@ -1,7 +1,7 @@
 __globalOptions__:
-  encoding: {{{encoding}}}
-  logLevel: {{{lowerCase logLevel}}}
-  schemaRootPath: data/schemas
+  encoding: utf-8
+  logLevel: debug
+  schemaRootPath: mock/schemas
   apiConfigPath:
     - api.yml
 
@@ -17,12 +17,12 @@ generate:
 
 # options for sub-command `serve`
 serve:
-  host: '0.0.0.0'
-  port: 8091
+  host: '127.0.0.1'
+  port: 17025
   prefixUrl: /mock
   mockDataPrefixUrl: /mock
-  mockDataRootDir: /mock/data
+  mockDataRootDir: mock/data
   mockResourcePrefixUrl: /mock
-  mockResourceRootDir: /mock/resources
+  mockResourceRootDir: mock/resources
   mockOptionalsAlways: true
   mockOptionalsProbability: 0.7

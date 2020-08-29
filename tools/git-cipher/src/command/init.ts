@@ -1,48 +1,63 @@
-import { Command } from '@barusu/util-cli'
+import {
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
 import {
   SubCommandInitOptions,
+  createGitCipherInitContextFromOptions,
   createSubCommandInit,
 } from '../core/init/command'
 import { GitCipherInitContext } from '../core/init/context'
 import { GitCipherInitProcessor } from '../core/init/processor'
-import { EventTypes, eventBus } from '../util/events'
 import { handleError } from './_util'
 
 
 /**
- * load Sub-command: init
+ * Process sub-command: 'init'
+ *
+ * @param options
+ * @returns {void|Promise<void>}
  */
-export function loadSubCommandInit(
-  packageName: string,
-  program: Command,
-): void | never {
-  const handle = async (options: SubCommandInitOptions): Promise<void> => {
+export const processSubCommandInit: SubCommandProcessor<SubCommandInitOptions, void> =
+  async function (
+    options: SubCommandInitOptions
+  ): Promise<void> {
     try {
-      const context: GitCipherInitContext = {
-        cwd: options.cwd,
-        workspace: options.workspace,
-        encoding: options.encoding,
-        secretFilepath: options.secretFilepath,
-        secretFileEncoding: options.secretFileEncoding,
-        indexFilepath: options.indexFilepath,
-        indexFileEncoding: options.indexFileEncoding,
-        ciphertextRootDir: options.ciphertextRootDir,
-        plaintextRootDir: options.plaintextRootDir,
-        showAsterisk: options.showAsterisk,
-        minPasswordLength: options.minPasswordLength,
-        maxPasswordLength: options.maxPasswordLength,
-      }
-
-      // create
-      const processor = new GitCipherInitProcessor(context)
-      await processor.init()
+      const context: GitCipherInitContext =
+        await createGitCipherInitContextFromOptions(options)
+        const processor = new GitCipherInitProcessor(context)
+        await processor.init()
     } catch (error) {
       handleError(error)
-    } finally {
-      eventBus.dispatch({ type: EventTypes.EXITING })
     }
   }
 
-  const command = createSubCommandInit(packageName, handle)
-  program.addCommand(command)
-}
+
+/**
+ * Mount Sub-command: init
+ *
+ * @param {Command}   parentCommand
+ * @returns {void}
+ */
+export const mountSubCommandInit: SubCommandMounter =
+  createSubCommandMounter<SubCommandInitOptions, void>(
+    createSubCommandInit,
+    processSubCommandInit,
+  )
+
+
+/**
+ * Execute sub-command: 'init'
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export const execSubCommandInit: SubCommandExecutor<void>
+  = createSubCommandExecutor<SubCommandInitOptions, void>(
+    createSubCommandInit,
+    processSubCommandInit,
+  )

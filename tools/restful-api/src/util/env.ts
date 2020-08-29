@@ -8,6 +8,10 @@ import {
 } from '@barusu/configuration-master'
 import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import { logger } from './logger'
+export {
+  name as packageName,
+  version as packageVersion,
+} from '@barusu/tool-restful-api/package.json'
 
 
 export const configRootDir = path.resolve(__dirname, '../config')

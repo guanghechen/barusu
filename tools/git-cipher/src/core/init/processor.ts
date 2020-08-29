@@ -13,7 +13,7 @@ import {
 import { isNotEmptyString, toLowerCase } from '@barusu/util-option'
 import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
-import { resolveTemplateFilepath, version } from '../../util/env'
+import { packageVersion, resolveTemplateFilepath } from '../../util/env'
 import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherInitContext } from './context'
@@ -55,13 +55,13 @@ export class GitCipherInitProcessor {
     await installDependencies({
       stdio: 'inherit',
       cwd: context.workspace,
-    })
+    }, [], logger)
 
     // create initial commit
     await createInitialCommit({
       stdio: 'inherit',
       cwd: context.workspace,
-    })
+    }, [], logger)
   }
 
   /**
@@ -98,7 +98,7 @@ export class GitCipherInitProcessor {
     const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
     await runPlop(plop, logger, undefined, {
       workspace: context.workspace,
-      templateVersion: version,
+      templateVersion: packageVersion,
       encoding: context.encoding,
       secretFilepath: relativeOfWorkspace(context.workspace, context.secretFilepath),
       secretFileEncoding: context.secretFileEncoding,

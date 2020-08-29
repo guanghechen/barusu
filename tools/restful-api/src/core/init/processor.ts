@@ -30,14 +30,16 @@ export class RestfulApiInitProcessor {
       return
     }
 
-    await renderTemplates(context)
+    const plopBypass = [...context.plopBypass]
+
+    await renderTemplates(context, plopBypass)
 
     const execaOptions: execa.Options = { stdio: 'inherit', cwd: context.workspace }
 
     // install dependencies
-    await installDependencies(execaOptions)
+    await installDependencies(execaOptions, plopBypass, logger)
 
     // create init commit
-    await createInitialCommit(execaOptions)
+    await createInitialCommit(execaOptions, plopBypass, logger)
   }
 }

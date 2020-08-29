@@ -1,39 +1,63 @@
-import { Command } from '@barusu/util-cli'
 import {
-  RestfulApiInitContext,
-  RestfulApiInitProcessor,
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
+import {
   SubCommandInitOptions,
-  createRestfulApiInitContext,
+  createRestfulApiInitContextFromOptions,
   createSubCommandInit,
-} from '../index'
-import { EventTypes, eventBus, handleError } from './_util'
+} from '../core/init/command'
+import { RestfulApiInitContext } from '../core/init/context'
+import { RestfulApiInitProcessor } from '../core/init/processor'
+import { handleError } from './_util'
 
 
 /**
- * load Sub-command: init
+ * Process sub-command: 'init'
+ *
+ * @param options
+ * @returns {void|Promise<void>}
  */
-export function loadSubCommandInit(
-  packageName: string,
-  program: Command,
-): void {
-  const process = async (options: SubCommandInitOptions): Promise<void> => {
+export const processSubCommandInit: SubCommandProcessor<SubCommandInitOptions, void> =
+  async function (
+    options: SubCommandInitOptions
+  ): Promise<void> {
     try {
-      const context: RestfulApiInitContext = createRestfulApiInitContext({
-        cwd: options.cwd,
-        workspace: options.workspace,
-        tsconfigPath: options.tsconfigPath,
-        encoding: options.encoding,
-      })
-
+      const context: RestfulApiInitContext =
+        await createRestfulApiInitContextFromOptions(options)
       const processor = new RestfulApiInitProcessor(context)
       await processor.init()
     } catch (error) {
       handleError(error)
-    } finally {
-      eventBus.dispatch({ type: EventTypes.EXITING })
     }
   }
 
-  const command = createSubCommandInit(packageName, process)
-  program.addCommand(command)
-}
+
+/**
+ * Mount Sub-command: init
+ *
+ * @param {Command}   parentCommand
+ * @returns {void}
+ */
+export const mountSubCommandInit: SubCommandMounter =
+  createSubCommandMounter<SubCommandInitOptions, void>(
+    createSubCommandInit,
+    processSubCommandInit,
+  )
+
+
+/**
+ * Execute sub-command: 'init'
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export const execSubCommandInit: SubCommandExecutor<void>
+  = createSubCommandExecutor<SubCommandInitOptions, void>(
+    createSubCommandInit,
+    processSubCommandInit,
+  )

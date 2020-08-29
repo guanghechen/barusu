@@ -1,39 +1,33 @@
-import { Command } from '@barusu/util-cli'
 import {
-  RestfulApiServeContext,
-  RestfulApiServeProcessor,
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
+import {
   SubCommandServeOptions,
-  createRestfulApiServeContext,
+  createRestfulApiServeContextFromOptions,
   createSubCommandServe,
-} from '../index'
+} from '../core/serve/command'
+import { RestfulApiServeContext } from '../core/serve/context'
+import { RestfulApiServeProcessor } from '../core/serve/processor'
 import { handleError } from './_util'
 
 
 /**
- * load Sub-command: serve
+ * Process sub-command: 'serve'
+ *
+ * @param options
+ * @returns {void|Promise<void>}
  */
-export function loadSubCommandServe(
-  packageName: string,
-  program: Command,
-): void {
-  const process = async (options: SubCommandServeOptions): Promise<void> => {
+export const processSubCommandServe: SubCommandProcessor<SubCommandServeOptions, void> =
+  async function (
+    options: SubCommandServeOptions
+  ): Promise<void> {
     try {
-      const context: RestfulApiServeContext = await createRestfulApiServeContext({
-        cwd: options.cwd,
-        workspace: options.workspace,
-        tsconfigPath: options.tsconfigPath,
-        schemaRootPath: options.schemaRootPath,
-        apiConfigPath: options.apiConfigPath,
-        encoding: options.encoding,
-        host: options.host,
-        port: options.port,
-        prefixUrl: options.prefixUrl,
-        mockRequiredOnly: options.mockRequiredOnly,
-        mockOptionalsAlways: options.mockOptionalsAlways,
-        mockOptionalsProbability: options.mockOptionalsProbability,
-        mockDataRootDir: options.mockDataRootDir,
-      })
-
+      const context: RestfulApiServeContext =
+        await createRestfulApiServeContextFromOptions(options)
       const processor = new RestfulApiServeProcessor(context)
       processor.start()
     } catch (error) {
@@ -41,6 +35,26 @@ export function loadSubCommandServe(
     }
   }
 
-  const command = createSubCommandServe(packageName, process)
-  program.addCommand(command)
-}
+
+/**
+ * Mount Sub-command: serve
+ */
+export const mountSubCommandServe: SubCommandMounter =
+  createSubCommandMounter<SubCommandServeOptions, void>(
+    createSubCommandServe,
+    processSubCommandServe,
+  )
+
+
+/**
+ * Execute sub-command: 'serve'
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export const execSubCommandServe: SubCommandExecutor<void>
+  = createSubCommandExecutor<SubCommandServeOptions, void>(
+    createSubCommandServe,
+    processSubCommandServe,
+  )

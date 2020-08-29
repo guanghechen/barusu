@@ -101,3 +101,97 @@ export class Command extends commander.Command {
 
 
 export { commander }
+
+
+/**
+ * Process sub-command
+ *
+ * @param options
+ * @returns {V|Promise<V>}
+ */
+export type SubCommandProcessor<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void,
+  > = (options: O) => V | Promise<V>
+
+
+/**
+ * Create sub-command
+ */
+export type SubCommandCreator<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void,
+  > = (
+    handle?: SubCommandProcessor<O, V>,
+    commandName?: string,
+    aliases?: string[],
+  ) => Command
+
+
+/**
+ * Mount sub-command
+ *
+ * @param {Command}   parentCommand
+ * @returns {void}
+ */
+export type SubCommandMounter = (parentCommand: Command) => void
+
+
+/**
+ * Execute sub-command
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export type SubCommandExecutor<V extends unknown = void>
+  = (parentCommand: Command, args: string[]) => Promise<V>
+
+
+/**
+ * Create sub-command mounter
+ *
+ * @param create  sub command creator
+ * @param handle  sub command processor
+ */
+export function createSubCommandMounter<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void
+>(
+  create: SubCommandCreator<O, V>,
+  handle: SubCommandProcessor<O, V>,
+): SubCommandMounter {
+  return (program: Command): void => {
+    const command = create(handle)
+    program.addCommand(command)
+  }
+}
+
+
+/**
+ * Create sub-command executor
+ *
+ * @param create    sub command creator
+ * @param handle    sub command processor
+ */
+export function createSubCommandExecutor<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void
+>(
+  create: SubCommandCreator<O, V>,
+  handle: SubCommandProcessor<O, V>,
+): SubCommandExecutor<V> {
+  return (parentCommand: Command, args: string[]): Promise<V> => {
+    return new Promise(resolve => {
+      const wrappedHandler = async (options: O) => {
+        const result = await handle(options)
+        resolve(result)
+        return result
+      }
+
+      const command = create(wrappedHandler)
+      parentCommand.addCommand(command)
+      parentCommand.parse(args)
+    })
+  }
+}
