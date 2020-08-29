@@ -1,48 +1,63 @@
-import { Command } from '@barusu/util-cli'
+import {
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
 import {
   SubCommandDecryptOptions,
+  createGitCipherDecryptContextFromOptions,
   createSubCommandDecrypt,
 } from '../core/decrypt/command'
 import { GitCipherDecryptContext } from '../core/decrypt/context'
 import { GitCipherDecryptProcessor } from '../core/decrypt/processor'
-import { EventTypes, eventBus } from '../util/events'
 import { handleError } from './_util'
 
 
 /**
- * load Sub-command: decrypt
+ * Process sub-command: 'decrypt'
+ *
+ * @param options
+ * @returns {void|Promise<void>}
  */
-export function loadSubCommandDecrypt(
-  packageName: string,
-  program: Command,
-): void | never {
-  const handle = async (options: SubCommandDecryptOptions): Promise<void> => {
+export const processSubCommandDecrypt: SubCommandProcessor<SubCommandDecryptOptions, void> =
+  async function (
+    options: SubCommandDecryptOptions
+  ): Promise<void> {
     try {
-      const context: GitCipherDecryptContext = {
-        cwd: options.cwd,
-        workspace: options.workspace,
-        encoding: options.encoding,
-        secretFilepath: options.secretFilepath,
-        secretFileEncoding: options.secretFileEncoding,
-        indexFilepath: options.indexFilepath,
-        indexFileEncoding: options.indexFileEncoding,
-        ciphertextRootDir: options.ciphertextRootDir,
-        plaintextRootDir: options.plaintextRootDir,
-        showAsterisk: options.showAsterisk,
-        minPasswordLength: options.minPasswordLength,
-        maxPasswordLength: options.maxPasswordLength,
-        outDir: options.outDir,
-      }
-
+      const context: GitCipherDecryptContext =
+        await createGitCipherDecryptContextFromOptions(options)
       const processor = new GitCipherDecryptProcessor(context)
       await processor.decrypt()
     } catch (error) {
       handleError(error)
-    } finally {
-      eventBus.dispatch({ type: EventTypes.EXITING })
     }
   }
 
-  const command = createSubCommandDecrypt(packageName, handle)
-  program.addCommand(command)
-}
+
+/**
+ * Mount Sub-command: decrypt
+ *
+ * @param {Command}   parentCommand
+ * @returns {void}
+ */
+export const mountSubCommandDecrypt: SubCommandMounter =
+  createSubCommandMounter<SubCommandDecryptOptions, void>(
+    createSubCommandDecrypt,
+    processSubCommandDecrypt,
+  )
+
+
+/**
+ * Execute sub-command: 'decrypt'
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export const execSubCommandDecrypt: SubCommandExecutor<void>
+  = createSubCommandExecutor<SubCommandDecryptOptions, void>(
+    createSubCommandDecrypt,
+    processSubCommandDecrypt,
+  )

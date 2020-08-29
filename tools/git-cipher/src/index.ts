@@ -1,3 +1,6 @@
+export * from './command/decrypt'
+export * from './command/encrypt'
+export * from './command/init'
 export * from './core/command'
 export * from './core/decrypt/command'
 export * from './core/decrypt/context'

@@ -1,15 +1,21 @@
 import {
   Command,
   CommandConfigurationFlatOpts,
+  SubCommandProcessor,
   absoluteOfWorkspace,
 } from '@barusu/util-cli'
 import { cover } from '@barusu/util-option'
+import { packageName } from '../../util/env'
 import { logger } from '../../util/logger'
 import {
   GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
+import {
+  GitCipherDecryptContext,
+  createGitCipherDecryptContext,
+} from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {
@@ -17,7 +23,7 @@ interface SubCommandOptions extends GlobalCommandOptions {
    * root dir of outputs
    * @default null
    */
-  outDir: string | null
+  readonly outDir: string | null
 }
 
 
@@ -33,43 +39,69 @@ export type SubCommandDecryptOptions = SubCommandOptions & CommandConfigurationF
 /**
  * create Sub-command: decrypt (e)
  */
-export function createSubCommandDecrypt(
-  packageName: string,
-  handle?: (options: SubCommandDecryptOptions) => void | Promise<void>,
-  commandName = 'decrypt',
-  aliases: string[] = ['d'],
-): Command {
-  const command = new Command()
+export const createSubCommandDecrypt =
+  function (
+    handle?: SubCommandProcessor<SubCommandDecryptOptions>,
+    commandName = 'decrypt',
+    aliases: string[] = ['d'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .option('--out-dir <outDir>', 'root dir of outputs (decrypted files)')
-    .action(async function ([_workspaceDir], options: SubCommandDecryptOptions) {
-      logger.setName(commandName)
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .option('--out-dir <outDir>', 'root dir of outputs (decrypted files)')
+      .action(async function ([_workspaceDir], options: SubCommandDecryptOptions) {
+        logger.setName(commandName)
 
-      const defaultOptions: SubCommandDecryptOptions = resolveGlobalCommandOptions(
-        packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+        const defaultOptions: SubCommandDecryptOptions = resolveGlobalCommandOptions(
+          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
 
-      // resolve outDir
-      const outDir: string | null = (() => {
-        const _rawOutDir = cover<string | null>(defaultOptions.outDir, options.outDir)
-        if (_rawOutDir == null) return null
-        return absoluteOfWorkspace(defaultOptions.workspace, _rawOutDir)
-      })()
-      logger.debug('outDir:', outDir)
+        // resolve outDir
+        const outDir: string | null = (() => {
+          const _rawOutDir = cover<string | null>(defaultOptions.outDir, options.outDir)
+          if (_rawOutDir == null) return null
+          return absoluteOfWorkspace(defaultOptions.workspace, _rawOutDir)
+        })()
+        logger.debug('outDir:', outDir)
 
 
-      const resolvedOptions: SubCommandDecryptOptions = {
-        ...defaultOptions,
-        outDir,
-      }
+        const resolvedOptions: SubCommandDecryptOptions = {
+          ...defaultOptions,
+          outDir,
+        }
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
 
-  return command
+    return command
+  }
+
+
+/**
+ * Create GitCipherDecryptContext
+ * @param options
+ */
+export async function createGitCipherDecryptContextFromOptions(
+  options: SubCommandDecryptOptions,
+): Promise<GitCipherDecryptContext> {
+  const context: GitCipherDecryptContext = await createGitCipherDecryptContext({
+    cwd: options.cwd,
+    workspace: options.workspace,
+    encoding: options.encoding,
+    secretFilepath: options.secretFilepath,
+    secretFileEncoding: options.secretFileEncoding,
+    indexFilepath: options.indexFilepath,
+    indexFileEncoding: options.indexFileEncoding,
+    ciphertextRootDir: options.ciphertextRootDir,
+    plaintextRootDir: options.plaintextRootDir,
+    showAsterisk: options.showAsterisk,
+    minPasswordLength: options.minPasswordLength,
+    maxPasswordLength: options.maxPasswordLength,
+    outDir: options.outDir,
+  })
+  return context
 }
