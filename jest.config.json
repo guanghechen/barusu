@@ -19,10 +19,17 @@
   ],
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "**/*.{ts,tsx}",
+    "**/src/**/*.{ts,tsx}",
+    "**/src/*.{ts,tsx}",
+    "!**/src/cli.ts",
+    "!**/test/cases/**",
+    "!**/__test__/cases/**",
     "!**/node_modules/**",
     "!**/build/**",
     "!**/lib/**",
+    "!**/demo/**",
+    "!**/script/**",
+    "!**/example/**",
     "!**/coverage/**"
   ],
   "coverageThreshold": {
