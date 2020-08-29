@@ -6,12 +6,12 @@ import {
   createSubCommandMounter,
 } from '@barusu/util-cli'
 import {
-  RestfulApiGenerateContext,
-  RestfulApiGenerateProcessor,
   SubCommandGenerateOptions,
   createRestfulApiGenerateContextFromOptions,
   createSubCommandGenerate,
-} from '../index'
+} from '../core/generate/command'
+import { RestfulApiGenerateContext } from '../core/generate/context'
+import { RestfulApiGenerateProcessor } from '../core/generate/processor'
 import { handleError } from './_util'
 
 

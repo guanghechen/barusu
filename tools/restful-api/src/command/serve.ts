@@ -6,12 +6,12 @@ import {
   createSubCommandMounter,
 } from '@barusu/util-cli'
 import {
-  RestfulApiServeContext,
-  RestfulApiServeProcessor,
   SubCommandServeOptions,
   createRestfulApiServeContextFromOptions,
   createSubCommandServe,
-} from '../index'
+} from '../core/serve/command'
+import { RestfulApiServeContext } from '../core/serve/context'
+import { RestfulApiServeProcessor } from '../core/serve/processor'
 import { handleError } from './_util'
 
 
