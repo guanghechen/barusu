@@ -106,12 +106,12 @@ exports[`init simple: package.json 1`] = `
     \\"format\\": \\"barusu-sort-imports .\\"
   },
   \\"dependencies\\": {
-    \\"@barusu/tool-restful-api\\": \\"^0.0.29\\"
+    \\"@barusu/tool-restful-api\\": \\"^latest\\"
   },
   \\"devDependencies\\": {
-    \\"@barusu/eslint-config\\": \\"^0.0.29\\",
-    \\"@barusu/rollup-config\\": \\"^0.0.29\\",
-    \\"@barusu/tool-sort-imports\\": \\"^0.0.29\\",
+    \\"@barusu/eslint-config\\": \\"^latest\\",
+    \\"@barusu/rollup-config\\": \\"^latest\\",
+    \\"@barusu/tool-sort-imports\\": \\"^latest\\",
     \\"nodemon\\": \\"^1.19.1\\",
     \\"ts-node\\": \\"^8.8.2\\",
     \\"typescript\\": \\"^3.8.2\\"

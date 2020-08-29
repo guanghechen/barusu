@@ -37,7 +37,10 @@ describe('init', function () {
     expect(files).toMatchSnapshot('initialized files')
     for (const filepath of files) {
       const absoluteFilepath = absoluteOfWorkspace(projectDir, filepath)
-      const content: string = await fs.readFile(absoluteFilepath, 'utf-8')
+      let content: string = await fs.readFile(absoluteFilepath, 'utf-8')
+      if (filepath === 'package.json') {
+        content = content.replace(/"(@barusu\/[^"\s]+)":\s*"[^"\s]+"/g, '"$1": "^latest"')
+      }
       expect(content).toMatchSnapshot(filepath)
     }
   }, 1000 * 30)
