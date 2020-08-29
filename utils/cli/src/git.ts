@@ -1,13 +1,20 @@
 import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
+import { Logger } from './types'
 
 
 /**
  * Create initial commit
  * @param execaOptions
+ * @param plopBypass
+ * @param logger
  */
-export async function createInitialCommit(execaOptions: execa.Options): Promise<void> {
+export async function createInitialCommit(
+  execaOptions: execa.Options,
+  plopBypass: string[],
+  logger?: Logger,
+): Promise<void> {
   /**
    * If git is not installed yet, this operation will be skipped
    */
@@ -16,14 +23,28 @@ export async function createInitialCommit(execaOptions: execa.Options): Promise<
     return
   }
 
-  const { doInitialCommit } = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'doInitialCommit',
-      default: false,
-      message: 'Create initial commit?',
-    },
-  ])
+  let doInitialCommit: boolean
+  if (plopBypass.length > 0) {
+    const booleanString = plopBypass.shift()!.toLowerCase()
+    doInitialCommit = (
+      booleanString === 'true' ||
+      booleanString === 'yes' ||
+      booleanString === 'y'
+    )
+  } else {
+    doInitialCommit = (await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'doInitialCommit',
+        default: false,
+        message: 'Create initial commit?',
+      },
+    ])).doInitialCommit
+  }
+
+  if (logger != null && logger.debug != null) {
+    logger.debug('doInitialCommit:', doInitialCommit)
+  }
 
   // skip
   if (!doInitialCommit) return
