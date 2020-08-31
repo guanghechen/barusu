@@ -41,30 +41,30 @@ interface SubCommandOptions extends GlobalCommandOptions {
    * Root path of schema files
    * @default __data-schemas
    */
-  schemaRootPath: string
+  readonly schemaRootPath: string
   /**
    * Clean schema folders before generate
    * @default false
    */
-  clean: boolean
+  readonly clean: boolean
   /**
    * Ignore missing models
    * @default false
    */
-  muteMissingModel: boolean
+  readonly muteMissingModel: boolean
   /**
    *
    * @default []
    */
-  ignoredDataTypes: string[]
+  readonly ignoredDataTypes: string[]
   /**
    * Additional schema options
    */
-  additionalSchemaArgs?: TJS.PartialArgs
+  readonly additionalSchemaArgs?: TJS.PartialArgs
   /**
    * Additional compiler options (identified with tsconfig.json#compilerOptions)
    */
-  additionalCompilerOptions?: ts.CompilerOptions
+  readonly additionalCompilerOptions?: ts.CompilerOptions
 }
 
 
@@ -82,7 +82,7 @@ export type SubCommandGenerateOptions = SubCommandOptions & CommandConfiguration
 
 
 /**
- * create Sub-command: generate
+ * create Sub-command: generate (g)
  */
 export const createSubCommandGenerate: SubCommandCreator<SubCommandGenerateOptions> =
   function (

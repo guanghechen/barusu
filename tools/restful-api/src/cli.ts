@@ -1,19 +1,19 @@
 import { mountSubCommandGenerate } from './command/generate'
 import { mountSubCommandInit } from './command/init'
 import { mountSubCommandServe } from './command/serve'
-import { createProgram } from './index'
+import { createProgram } from './core/command'
 
 
 const program = createProgram()
 
 
-// load sub-command: init
+// mount sub-command: init
 mountSubCommandInit(program)
 
-// load sub-command: generate
+// mount sub-command: generate
 mountSubCommandGenerate(program)
 
-// load sub-command: serve
+// mount sub-command: serve
 mountSubCommandServe(program)
 
 

@@ -1,3 +1,4 @@
+export * from './command/stat'
 export * from './core/command'
 export * from './core/option'
 export * from './core/stat/command'
