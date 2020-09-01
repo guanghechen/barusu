@@ -3,9 +3,6 @@ import { Logger, Options } from './logger'
 export { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
 
 
-let registered = false
-
-
 export class ColorfulChalkLogger extends Logger {
   /**
    * prefix of logger.name
@@ -17,18 +14,18 @@ export class ColorfulChalkLogger extends Logger {
    * @param program {commander.Command}
    */
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public static registerToCommander(program: any) {
+  public static registerToCommander(program: any): void {
     // register into commander
-    if (!registered) {
-      registered = true
-      program
-        .option('--log-level <level>', 'specify logger\'s level.')
-        .option('--log-name <name>', 'specify logger\'s name.')
-        .option('--log-mode <\'normal\' | \'loose\'>', 'specify logger\'s name.')
-        .option('--log-flag <option>', 'specify logger\' option. [[no-]<date|colorful|inline>]', () => { }, [])
-        .option('--log-output <filepath>', 'specify logger\' output path.')
-        .option('--log-encoding <encoding>', 'specify output file encoding.')
-    }
+    program
+      .option('--log-level <level>', 'specify logger\'s level.')
+      .option('--log-name <name>', 'specify logger\'s name.')
+      .option('--log-mode <\'normal\' | \'loose\'>', 'specify logger\'s name.')
+      .option(
+        '--log-flag <option>',
+        'specify logger\' option. [[no-]<date|colorful|inline>]',
+        (val: string, acc: string[]) => acc.concat(val), [])
+      .option('--log-output <filepath>', 'specify logger\' output path.')
+      .option('--log-encoding <encoding>', 'specify output file encoding.')
   }
 
   /**
