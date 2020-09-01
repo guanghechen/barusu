@@ -180,6 +180,8 @@ export function createSubCommandExecutor<
 >(
   create: SubCommandCreator<O, V>,
   handle: SubCommandProcessor<O, V>,
+  commandName?: string,
+  aliases?: string[],
 ): SubCommandExecutor<V> {
   return (parentCommand: Command, args: string[]): Promise<V> => {
     return new Promise(resolve => {
@@ -189,7 +191,7 @@ export function createSubCommandExecutor<
         return result
       }
 
-      const command = create(wrappedHandler)
+      const command = create(wrappedHandler, commandName, aliases)
       parentCommand.addCommand(command)
       parentCommand.parse(args)
     })
