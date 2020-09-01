@@ -14,6 +14,9 @@ export {
 } from '@barusu/tool-restful-api/package.json'
 
 
+export const COMMAND_NAME = 'barusu-rapit'
+
+
 export const configRootDir = path.resolve(__dirname, '../config')
 export const templateRootDir = path.join(configRootDir, 'templates')
 

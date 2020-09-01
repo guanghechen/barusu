@@ -4,6 +4,7 @@ import {
   Command,
   CommandConfigurationFlatOpts,
   SubCommandCreator,
+  SubCommandProcessor,
   absoluteOfWorkspace,
 } from '@barusu/util-cli'
 import {
@@ -64,7 +65,7 @@ export type SubCommandStatOptions = SubCommandOptions & CommandConfigurationFlat
  */
 export const createSubCommandStat: SubCommandCreator<SubCommandStatOptions> =
   function (
-    handle?: (options: SubCommandStatOptions) => void | Promise<void>,
+    handle?: SubCommandProcessor<SubCommandStatOptions>,
     commandName = 'stat',
     aliases: string[] = ['s'],
   ): Command {

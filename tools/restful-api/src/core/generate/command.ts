@@ -140,6 +140,7 @@ export const createSubCommandGenerate: SubCommandCreator<SubCommandGenerateOptio
         const additionalCompilerOptions: ts.CompilerOptions | undefined =
           defaultOptions.additionalCompilerOptions
         logger.debug('additionalCompilerOptions:', additionalCompilerOptions)
+
         const resolvedOptions: SubCommandGenerateOptions = {
           ...defaultOptions,
           schemaRootPath,
