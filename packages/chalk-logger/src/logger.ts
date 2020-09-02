@@ -6,7 +6,7 @@ import { Color, colorToChalk } from './color'
 import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
 
 
-export interface Options {
+export interface LoggerOptions {
   mode?: 'normal' | 'loose'
   placeholderRegex?: RegExp
   name?: string
@@ -27,9 +27,9 @@ export class Logger {
   private static get defaultDateChalk() { return chalk.gray.bind(chalk) }
   private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
 
-  protected name: string
-  protected mode: 'normal' | 'loose' = 'normal'
-  protected level = Logger.defaultLevel
+  public readonly name: string
+  public readonly mode: 'normal' | 'loose' = 'normal'
+  public readonly level = Logger.defaultLevel
   public readonly write = (text: string): void => { process.stdout.write(text) }
   public readonly dateChalk = Logger.defaultDateChalk
   public readonly nameChalk = Logger.defaultNameChalk
@@ -40,7 +40,7 @@ export class Logger {
     colorful: true,
   }
 
-  public constructor(name: string, options?: Options) {
+  public constructor(name: string, options?: LoggerOptions) {
     this.name = name
     if (!options) return
 
@@ -128,7 +128,7 @@ export class Logger {
         text = '' + message
         break
       case 'function':
-        text = message.toString()
+        text = message()
         break
       default:
         try {
