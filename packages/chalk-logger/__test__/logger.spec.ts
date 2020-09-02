@@ -1,5 +1,6 @@
+import path from 'path'
 import { colorToChalk } from '../src/color'
-import { DEBUG, Level } from '../src/level'
+import { DEBUG, Level, VERBOSE } from '../src/level'
 import { Logger, LoggerOptions } from '../src/logger'
 import { createLoggerMock } from './util'
 
@@ -99,4 +100,43 @@ describe('Logger', function () {
     loggerMock.restore()
   })
 
+  test('init', function () {
+    const dateChalk = colorToChalk([25, 104, 179], false)
+    const nameChalk = colorToChalk([25, 104, 179], true)
+    const logger = new Logger('complex', {
+      mode: 'normal',
+      level: DEBUG,
+      inline: false,
+      colorful: true,
+      date: true,
+      dateChalk,
+      nameChalk,
+    })
+
+    expect(logger.name).toBe('complex')
+    expect(logger.mode).toBe('normal')
+    expect(logger.level).toBe(DEBUG)
+    expect(logger.flags.inline).toBe(false)
+    expect(logger.flags.colorful).toBe(true)
+    expect(logger.flags.date).toBe(true)
+    expect(logger.dateChalk).toBe(dateChalk)
+    expect(logger.nameChalk).toBe(nameChalk)
+
+    logger.init({
+      name: 'waw',
+      mode: 'loose',
+      level: VERBOSE,
+      inline: true,
+      colorful: false,
+    })
+
+    expect(logger.name).toBe('waw')
+    expect(logger.mode).toBe('loose')
+    expect(logger.level).toBe(VERBOSE)
+    expect(logger.flags.inline).toBe(true)
+    expect(logger.flags.colorful).toBe(false)
+    expect(logger.flags.date).toBe(true)
+    expect(logger.dateChalk).toBe(dateChalk)
+    expect(logger.nameChalk).toBe(nameChalk)
+  })
 })

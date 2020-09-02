@@ -1,6 +1,7 @@
 import { calcLoggerOptionsFromArgs } from './command'
 import { Level } from './level'
 import { Logger, LoggerOptions } from './logger'
+import { Writeable } from './types'
 export * from './command'
 export * from './level'
 
@@ -29,9 +30,8 @@ export class ColorfulChalkLogger extends Logger {
    */
   public setLevel(level: Level | null | undefined): void {
     if (level == null) return
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.level = level
+    const self = this as Writeable<this>
+    self.level = level
   }
 
   /**
@@ -42,9 +42,8 @@ export class ColorfulChalkLogger extends Logger {
     const resolvedName: string = [this.basename, name]
       .filter((x): x is string => x != null && x.length > 0)
       .join(' ')
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.name = resolvedName
+    const self = this as Writeable<this>
+    self.name = resolvedName
     this.divisionName = name
   }
 
@@ -62,8 +61,7 @@ export class ColorfulChalkLogger extends Logger {
    * @param mode
    */
   public setMode(mode: 'normal' | 'loose'): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.mode = mode
+    const self = this as Writeable<this>
+    self.mode = mode
   }
 }
