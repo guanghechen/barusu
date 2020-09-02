@@ -1,5 +1,9 @@
 import path from 'path'
-import { DEBUG, calcLoggerOptionsFromArgs, registerCommanderOptions } from '../src'
+import {
+  DEBUG,
+  calcLoggerOptionsFromArgs,
+  registerCommanderOptions,
+} from '../src'
 
 
 describe('command funcs', function () {

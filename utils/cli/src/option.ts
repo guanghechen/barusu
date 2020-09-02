@@ -1,5 +1,9 @@
 import path from 'path'
-import { ColorfulChalkLogger, Level } from '@barusu/chalk-logger'
+import {
+  ColorfulChalkLogger,
+  Level,
+  registerCommanderOptions,
+} from '@barusu/chalk-logger'
 import {
   MergeStrategy,
   cover,
@@ -148,7 +152,6 @@ export function flatOptionsFromConfiguration<C extends CommandConfigurationOptio
 export function createTopCommand(
   commandName: string,
   version: string,
-  logger: ColorfulChalkLogger,
 ): Command {
   const program = new Command()
 
@@ -158,7 +161,7 @@ export function createTopCommand(
     .version(version)
     .name(commandName)
 
-  logger.registerToCommander(program)
+  registerCommanderOptions(program)
 
   program
     .option('-c, --config-path <configFilepath>', 'config filepaths', (val, acc: string[]) => acc.concat(val), [])
