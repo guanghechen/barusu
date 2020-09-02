@@ -16,7 +16,6 @@ import { COMMAND_NAME, defaultCommandOptions, logger } from './util'
 const program = createTopCommand(
   COMMAND_NAME,
   version,
-  logger
 )
 
 program

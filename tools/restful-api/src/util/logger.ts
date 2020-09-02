@@ -1,7 +1,5 @@
 import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
-
-
-export const COMMAND_NAME = 'barusu-rapit'
+import { COMMAND_NAME } from './env'
 
 
 export const logger = new ColorfulChalkLogger(COMMAND_NAME, {

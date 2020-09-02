@@ -1,42 +1,63 @@
-import { Command } from '@barusu/util-cli'
+import {
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
 import {
   SubCommandStatOptions,
   createSubCommandStat,
+  createWordStatContextFromOptions,
 } from '../core/stat/command'
 import { WordStatContext } from '../core/stat/context'
 import { WordStatProcessor } from '../core/stat/processor'
-import { EventTypes, eventBus, handleError } from './_util'
+import { handleError } from './_util'
 
 
 /**
- * load Sub-command: stat
+ * Process sub-command: 'stat'
+ *
+ * @param options
+ * @returns {void|Promise<void>}
  */
-export function loadSubCommandStat(
-  packageName: string,
-  program: Command,
-): void | never {
-  const handle = async (options: SubCommandStatOptions): Promise<void> => {
+export const processSubCommandStat: SubCommandProcessor<SubCommandStatOptions, void> =
+  async function (
+    options: SubCommandStatOptions
+  ): Promise<void> {
     try {
-      const context: WordStatContext = {
-        cwd: options.cwd,
-        workspace: options.workspace,
-        encoding: options.encoding,
-        filePath: options.filePath,
-        filePattern: options.filePattern,
-        showDetails: options.showDetails,
-        showDetailsPretty: options.showDetailsPretty,
-        showSummaryOnly: options.showSummaryOnly,
-      }
-
+      const context: WordStatContext =
+        await createWordStatContextFromOptions(options)
       const processor = new WordStatProcessor(context)
       await processor.stat()
     } catch (error) {
       handleError(error)
-    } finally {
-      eventBus.dispatch({ type: EventTypes.EXITING })
     }
   }
 
-  const command = createSubCommandStat(packageName, handle)
-  program.addCommand(command)
-}
+
+/**
+ * Mount Sub-command: stat
+ *
+ * @param {Command}   parentCommand
+ * @returns {void}
+ */
+export const mountSubCommandStat: SubCommandMounter =
+  createSubCommandMounter<SubCommandStatOptions, void>(
+    createSubCommandStat,
+    processSubCommandStat,
+  )
+
+
+/**
+ * Execute sub-command: 'stat'
+ *
+ * @param {Command}   parentCommand
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export const execSubCommandStat: SubCommandExecutor<void>
+  = createSubCommandExecutor<SubCommandStatOptions, void>(
+    createSubCommandStat,
+    processSubCommandStat,
+  )

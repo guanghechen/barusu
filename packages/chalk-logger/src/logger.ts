@@ -4,9 +4,10 @@ import moment from 'moment'
 import { inspect } from 'util'
 import { Color, colorToChalk } from './color'
 import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
+import { Writeable } from './types'
 
 
-export interface Options {
+export interface LoggerOptions {
   mode?: 'normal' | 'loose'
   placeholderRegex?: RegExp
   name?: string
@@ -27,24 +28,32 @@ export class Logger {
   private static get defaultDateChalk() { return chalk.gray.bind(chalk) }
   private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
 
-  protected name: string
-  protected mode: 'normal' | 'loose' = 'normal'
-  protected level = Logger.defaultLevel
-  protected readonly write = (text: string): void => { process.stdout.write(text) }
-  protected readonly dateChalk = Logger.defaultDateChalk
-  protected readonly nameChalk = Logger.defaultNameChalk
-  protected readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
-  protected readonly flags = {
+  public readonly name: string
+  public readonly mode: 'normal' | 'loose' = 'normal'
+  public readonly level = Logger.defaultLevel
+  public readonly write = (text: string): void => { process.stdout.write(text) }
+  public readonly dateChalk = Logger.defaultDateChalk
+  public readonly nameChalk = Logger.defaultNameChalk
+  public readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
+  public readonly flags = {
     date: false,
     inline: false,
     colorful: true,
   }
 
-  public constructor(name: string, options?: Options) {
+  public constructor(name: string, options?: LoggerOptions) {
     this.name = name
+    this.init(options)
+  }
+
+  public init(options?: LoggerOptions): void {
     if (!options) return
 
-    if (options.name != null) this.name = options.name
+    const self = this as Writeable<this>
+
+    if (options.name != null) {
+      self.name = options.name
+    }
     const {
       mode,
       level,
@@ -59,29 +68,42 @@ export class Logger {
       placeholderRegex
     } = options
 
-    if (mode) this.mode = mode
-    if (level) this.level = level
-    if (date != null) this.flags.date = date
-    if (inline != null) this.flags.inline = inline
-    if (colorful != null) this.flags.colorful = colorful
+    // set log mode
+    if (mode != null) self.mode = mode
+
+    // set log level
+    if (level != null) self.level = level
+
+    // set flags
+    if (date != null) self.flags.date = date
+    if (inline != null) self.flags.inline = inline
+    if (colorful != null) self.flags.colorful = colorful
+
+    // set placeholderRegex
     if (placeholderRegex != null) {
       let flags: string = this.placeholderRegex.flags
       if (!flags.includes('g')) flags += 'g'
-      this.placeholderRegex = new RegExp(placeholderRegex.source, `${ flags }`)
+      self.placeholderRegex = new RegExp(placeholderRegex.source, `${ flags }`)
     }
 
-    if (write != null) this.write = write
+    // set log write function
+    if (write != null) self.write = write
     else if (filepath != null) {
-      this.write = (text: string) => fs.appendFileSync(filepath!, text, encoding)
+      self.write = (text: string) => fs.appendFileSync(filepath!, text, encoding)
     }
 
-    if (dateChalk) {
-      if (typeof dateChalk === 'function') this.dateChalk = dateChalk as any
-      else this.dateChalk = colorToChalk(dateChalk, true)
+    // set dateChalk
+    if (dateChalk != null) {
+      self.dateChalk = (typeof dateChalk === 'function')
+        ? dateChalk
+        : colorToChalk(dateChalk, true)
     }
-    if (nameChalk) {
-      if (typeof nameChalk === 'function') this.nameChalk = nameChalk as any
-      else this.nameChalk = colorToChalk(nameChalk, true)
+
+    // set nameChalk
+    if (nameChalk != null) {
+      self.nameChalk = (typeof nameChalk === 'function')
+        ? nameChalk
+        : colorToChalk(nameChalk, true)
     }
   }
 
@@ -128,7 +150,7 @@ export class Logger {
         text = '' + message
         break
       case 'function':
-        text = message.toString()
+        text = message()
         break
       default:
         try {

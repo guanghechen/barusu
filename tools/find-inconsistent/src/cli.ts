@@ -21,7 +21,6 @@ import {
 const program = createTopCommand(
   COMMAND_NAME,
   version,
-  logger
 )
 
 program

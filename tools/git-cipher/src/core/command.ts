@@ -1,7 +1,5 @@
-import { version } from '@barusu/tool-restful-api/package.json'
 import { Command, createTopCommand } from '@barusu/util-cli'
-import { COMMAND_NAME } from '../util/env'
-import { logger } from '../util/logger'
+import { COMMAND_NAME, packageVersion } from '../util/env'
 
 
 /**
@@ -10,8 +8,7 @@ import { logger } from '../util/logger'
 export function createProgram(): Command {
   const program = createTopCommand(
     COMMAND_NAME,
-    version,
-    logger
+    packageVersion,
   )
 
   // global options

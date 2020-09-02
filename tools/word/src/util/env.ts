@@ -1,4 +1,7 @@
-export { name, version } from '@barusu/tool-word/package.json'
+export {
+  name as packageName,
+  version as packageVersion,
+} from '@barusu/tool-word/package.json'
 
 
 // Command name

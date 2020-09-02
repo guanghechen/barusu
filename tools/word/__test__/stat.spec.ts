@@ -1,55 +1,61 @@
 import fs from 'fs-extra'
-import globby from 'globby'
 import path from 'path'
+import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 import {
-  calcCharacterStat,
-  formatCharacterStat,
-  performCharacterStatistics,
+  COMMAND_NAME,
+  createProgram,
+  execSubCommandStat,
+  logger,
 } from '../src'
 
 
-/**
- * load content from absoluteFilepath
- * @param absoluteFilepath
- */
-export async function loadContent(absoluteFilepath: string): Promise<string> {
-  const content: string = await fs.readFile(absoluteFilepath, 'utf-8')
-  return content
-}
+describe('stat', function () {
+  const caseRootDirectory = path.resolve(__dirname, 'cases', 'files')
+  const kases = fs.readdirSync(caseRootDirectory)
 
+  for (const kase of kases) {
+    const { name: title } = path.parse(kase)
+    const projectDir = caseRootDirectory
+    const filepath = kase
 
-describe('util', function () {
-  const rootDir = path.resolve(__dirname, 'cases/files')
-  const filenames = globby.sync('*', {
-    cwd: rootDir,
-    onlyFiles: true,
-    expandDirectories: false,
-  })
-  const filepaths: string[] = filenames.map(p => path.resolve(rootDir, p)).sort()
+    test(title, async function () {
+      const cliInfos: string[][] = []
+      const collectCliInfos = (...args: any[]) => {
+        cliInfos.push(args.map(x => JSON.stringify(x)))
+      }
 
-  describe('calcCharacterStat', function () {
-    for (const filepath of filepaths) {
-      const { name } = path.parse(filepath)
-      test(name, async function () {
-        const content: string = await loadContent(filepath)
-        const detailMap = performCharacterStatistics(content)
+      const writeMock = jest
+        .spyOn(logger, 'write')
+        .mockImplementation(collectCliInfos)
+      const consoleLogMock = jest
+        .spyOn(global.console, 'log')
+        .mockImplementation(collectCliInfos)
 
-        expect(calcCharacterStat(detailMap, 10, false)).toMatchSnapshot()
-        expect(calcCharacterStat(detailMap, 10, true)).toMatchSnapshot()
-      })
-    }
-  })
+      const program = createProgram()
+      const args = [
+        '',
+        COMMAND_NAME,
+        'stat',
+        projectDir,
+        '-f',
+        filepath,
+        '--log-level=debug',
+      ]
 
-  describe('formatCharacterStat', function () {
-    for (const filepath of filepaths) {
-      const { name } = path.parse(filepath)
-      test(name, async function () {
-        const content: string = await loadContent(filepath)
-        const detailMap = performCharacterStatistics(content)
+      await execSubCommandStat(program, args)
 
-        expect(formatCharacterStat(calcCharacterStat(detailMap, 10, false))).toMatchSnapshot()
-        expect(formatCharacterStat(calcCharacterStat(detailMap, 10, true))).toMatchSnapshot()
-      })
-    }
-  })
+      const formattedInfos = cliInfos.map(info => (
+        info.map(text =>
+          text
+          .replace(path.resolve(), '<RootDir>')
+          .replace(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/, '<Date>')
+        )
+      ))
+      expect(formattedInfos).toMatchSnapshot('log info')
+
+      // restore original funcs
+      writeMock.mockRestore()
+      consoleLogMock.mockRestore()
+    })
+  }
 })
