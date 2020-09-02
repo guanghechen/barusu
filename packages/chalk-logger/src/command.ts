@@ -33,12 +33,33 @@ interface CommanderOptions {
 }
 
 
+interface Command {
+  option(
+    flags: string,
+    description?: string,
+    defaultValue?: string | boolean
+  ): this
+  option(
+    flags: string,
+    description: string,
+    regexp: RegExp,
+    defaultValue?: string | boolean
+  ): this
+  option<T>(
+    flags: string,
+    description: string,
+    fn: (value: string, previous: T) => T,
+    defaultValue?: T
+  ): this
+}
+
+
 /**
  * register to commander
  * @param program {commander.Command}
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function registerCommanderOptions(program: any): void {
+export function registerCommanderOptions(program: Command): void {
   program
     .option('--log-level <level>', 'specify logger\'s level.')
     .option('--log-name <name>', 'specify logger\'s name.')
