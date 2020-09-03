@@ -1,7 +1,6 @@
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
-import { name, version } from '@barusu/tool-sort-imports/package.json'
 import {
   createTopCommand,
   resolveCommandConfigurationOptions,
@@ -13,19 +12,21 @@ import {
   isNotEmptyArray,
   isNotEmptyString,
 } from '@barusu/util-option'
-import { StaticImportStatement } from './index'
 import {
   COMMAND_NAME,
   CommandOptions,
   ModuleRankItem,
+  StaticImportStatement,
   defaultCommandOptions,
   logger,
-} from './util'
+  packageName,
+  packageVersion,
+} from './index'
 
 
 const program = createTopCommand(
   COMMAND_NAME,
-  version,
+  packageVersion,
 )
 
 program
@@ -39,7 +40,7 @@ program
   .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
   .action(function ([_workspaceDir], options: CommandOptions) {
     const defaultOptions = resolveCommandConfigurationOptions(
-      logger, name, false,
+      logger, packageName, false,
       defaultCommandOptions, _workspaceDir, options)
 
     // resolve pattern

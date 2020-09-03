@@ -1,6 +1,5 @@
 import path from 'path'
 import { Level } from '@barusu/chalk-logger'
-import { name, version } from '@barusu/tool-tsconfig-paths/package.json'
 import {
   CommandConfigurationFlatOpts,
   absoluteOfWorkspace,
@@ -9,13 +8,19 @@ import {
   flatOptionsFromConfiguration,
 } from '@barusu/util-cli'
 import { cover, coverString } from '@barusu/util-option'
-import { TsconfigPathAliasResolver } from './index'
-import { COMMAND_NAME, defaultCommandOptions, logger } from './util'
+import {
+  COMMAND_NAME,
+  TsconfigPathAliasResolver,
+  defaultCommandOptions,
+  logger,
+  packageName,
+  packageVersion,
+} from './index'
 
 
 const program = createTopCommand(
   COMMAND_NAME,
-  version,
+  packageVersion,
 )
 
 program
@@ -32,7 +37,7 @@ program
     const parasticConfigPath: string | null | undefined = cover<string | null>(
       (): string | null => findPackageJsonPath(workspaceDir),
       options.parasticConfigPath)
-    const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
+    const parasticConfigEntry: string = coverString(packageName, options.parasticConfigEntry)
     const flatOpts: CommandConfigurationFlatOpts = {
       cwd,
       workspace: workspaceDir,

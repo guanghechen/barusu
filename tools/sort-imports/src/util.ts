@@ -1,14 +1,4 @@
-import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 import { CommandConfigurationOptions } from '@barusu/util-cli'
-
-
-export const COMMAND_NAME = 'barusu-sort-imports'
-
-
-export const logger = new ColorfulChalkLogger(COMMAND_NAME, {
-  level: INFO,
-  date: true,
-}, process.argv)
 
 
 /**

@@ -1,14 +1,4 @@
-import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 import { CommandConfigurationOptions } from '@barusu/util-cli'
-
-
-export const COMMAND_NAME = 'barusu-find-inconsistent'
-
-
-export const logger = new ColorfulChalkLogger(COMMAND_NAME, {
-  level: INFO,
-  date: true,
-}, process.argv)
 
 
 export const checkFatalError = (hasError: boolean): never | void => {
