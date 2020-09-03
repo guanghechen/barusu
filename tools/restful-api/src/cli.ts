@@ -1,7 +1,9 @@
-import { mountSubCommandGenerate } from './command/generate'
-import { mountSubCommandInit } from './command/init'
-import { mountSubCommandServe } from './command/serve'
-import { createProgram } from './core/command'
+import {
+  createProgram,
+  mountSubCommandGenerate,
+  mountSubCommandInit,
+  mountSubCommandServe,
+} from './index'
 
 
 const program = createProgram()

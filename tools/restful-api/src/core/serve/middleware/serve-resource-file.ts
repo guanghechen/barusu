@@ -3,7 +3,7 @@ import Koa from 'koa'
 import send from 'koa-send'
 import path from 'path'
 import { relativeOfWorkspace } from '@barusu/util-cli'
-import { logger } from '../../../util/logger'
+import { logger } from '../../../env/logger'
 
 
 interface Params {

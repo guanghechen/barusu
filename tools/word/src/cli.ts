@@ -1,5 +1,4 @@
-import { mountSubCommandStat } from './command/stat'
-import { createProgram } from './core/command'
+import { createProgram, mountSubCommandStat } from './index'
 
 
 const program = createProgram()

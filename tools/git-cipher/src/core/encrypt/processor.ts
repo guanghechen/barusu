@@ -8,9 +8,9 @@ import {
   createCommitAll,
   relativeOfWorkspace,
 } from '@barusu/util-cli'
+import { logger } from '../../env/logger'
 import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
-import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherEncryptContext } from './context'
 

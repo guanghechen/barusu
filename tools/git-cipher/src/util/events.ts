@@ -1,5 +1,5 @@
 import { SimpleEventBus } from '@barusu/event-bus'
-import { logger } from './logger'
+import { logger } from '../env/logger'
 
 
 /**

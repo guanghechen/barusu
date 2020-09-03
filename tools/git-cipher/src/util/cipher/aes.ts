@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import fs from 'fs-extra'
 import { mkdirsIfNotExists } from '@barusu/util-cli'
+import { logger } from '../../env/logger'
 import {
   createRandomIv,
   createRandomKey,
@@ -8,7 +9,6 @@ import {
   destroyBuffers,
 } from '../buffer'
 import { ErrorCode } from '../events'
-import { logger } from '../logger'
 import { BaseCipher, Cipher } from './_base'
 
 

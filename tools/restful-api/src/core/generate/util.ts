@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import { isArray, isObject } from '@barusu/util-option'
-import { logger } from '../../util/logger'
+import { logger } from '../../env/logger'
 
 
 /**

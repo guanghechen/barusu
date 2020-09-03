@@ -5,8 +5,8 @@ import {
   absoluteOfWorkspace,
 } from '@barusu/util-cli'
 import { cover } from '@barusu/util-option'
-import { packageName } from '../../util/env'
-import { logger } from '../../util/logger'
+import { packageName } from '../../env/constant'
+import { logger } from '../../env/logger'
 import {
   GlobalCommandOptions,
   __defaultGlobalCommandOptions,
