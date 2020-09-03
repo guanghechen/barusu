@@ -56,7 +56,7 @@
       ],
       "@barusu/util-option": [
         "./utils/option/src"
-      ],
+      ]
     }
   }
 }

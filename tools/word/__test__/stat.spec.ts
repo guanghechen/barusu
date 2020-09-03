@@ -1,6 +1,5 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { ColorfulChalkLogger, INFO } from '@barusu/chalk-logger'
 import {
   COMMAND_NAME,
   createProgram,
