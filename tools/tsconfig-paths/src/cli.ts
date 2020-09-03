@@ -1,17 +1,14 @@
-import path from 'path'
-import { Level } from '@barusu/chalk-logger'
 import {
   CommandConfigurationFlatOpts,
+  CommandConfigurationOptions,
   absoluteOfWorkspace,
   createTopCommand,
-  findPackageJsonPath,
-  flatOptionsFromConfiguration,
+  resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
-import { cover, coverString } from '@barusu/util-option'
+import { cover, isNotEmptyString } from '@barusu/util-option'
 import {
   COMMAND_NAME,
   TsconfigPathAliasResolver,
-  defaultCommandOptions,
   logger,
   packageName,
   packageVersion,
@@ -23,55 +20,50 @@ const program = createTopCommand(
   packageVersion,
 )
 
+
+interface CommandOptions extends CommandConfigurationOptions {
+  /**
+   * path of tsconfig.json
+   */
+  readonly tsconfigPath: string
+  /**
+   * root path of declarations
+   */
+  readonly dts?: string
+}
+
+
+const defaultCommandOptions: CommandOptions = {
+  dts: undefined,
+  tsconfigPath: 'tsconfig.json',
+}
+
+
 program
-  .usage('[options]')
-  .option('-c, --config-path <config filepath>', '', (val, acc: string[]) => acc.concat(val), [])
-  .option('--parastic-config-path <parastic config filepath>', '')
-  .option('--parastic-config-entry <parastic config filepath>', '')
-  .option('-dts, <dtsRootPath>', 'root path of declarations')
+  .usage('<workspace> [options]')
+  .arguments('<workspace>')
   .requiredOption('-p, --project <tsconfigPath>', 'path of tsconfig.json', 'tsconfig.json')
-  .action(function (options: any) {
-    const cwd: string = path.resolve()
-    const workspaceDir: string = path.resolve(cwd)
-    const configPath: string[] = options.configPath!.map((p: string) => absoluteOfWorkspace(workspaceDir, p))
-    const parasticConfigPath: string | null | undefined = cover<string | null>(
-      (): string | null => findPackageJsonPath(workspaceDir),
-      options.parasticConfigPath)
-    const parasticConfigEntry: string = coverString(packageName, options.parasticConfigEntry)
-    const flatOpts: CommandConfigurationFlatOpts = {
-      cwd,
-      workspace: workspaceDir,
-      configPath,
-      parasticConfigPath,
-      parasticConfigEntry,
-    }
+  .option('--dts <dtsRootPath>', 'root path of declarations')
+  .action(async function ([_workspaceDir], options: CommandOptions) {
+    logger.setName(COMMAND_NAME)
 
-    const defaultOptions = flatOptionsFromConfiguration(
-      defaultCommandOptions,
-      flatOpts,
-      false,
-      {},
-    )
+    type R = CommandOptions & CommandConfigurationFlatOpts
+    const defaultOptions: R = resolveCommandConfigurationOptions<
+      CommandOptions, CommandOptions>(
+        logger, packageName, false,
+        defaultCommandOptions, _workspaceDir, options)
 
-    // reset log-level
-    const logLevel = cover<string | undefined>(defaultOptions.logLevel, options.logLevel)
-    if (logLevel != null) {
-      const level = Level.valueOf(logLevel)
-      if (level != null) logger.setLevel(level)
-    }
-
-    logger.debug('cwd:', flatOpts.cwd)
-    logger.debug('workspace:', flatOpts.workspace)
-    logger.debug('configPath:', flatOpts.configPath)
-    logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
-    logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
-
-    const tsconfigPath = options.p || 'tsconfig.json'
-    const dtsRootPath = options.dts
+    // resolve tsconfig.json filepath
+    const tsconfigPath: string = absoluteOfWorkspace(defaultOptions.workspace,
+      cover<string>(defaultOptions.tsconfigPath, options.tsconfigPath, isNotEmptyString))
     logger.debug('tsconfigPath:', tsconfigPath)
-    logger.debug('dtsRootPath:', dtsRootPath)
 
-    const pathResolver = new TsconfigPathAliasResolver(cwd, tsconfigPath)
-    pathResolver.processDts(dtsRootPath)
+    // resolve declaration root path
+    const dts: string | undefined = absoluteOfWorkspace(defaultOptions.workspace,
+      cover<string | undefined>(defaultOptions.dts, options.dts, isNotEmptyString))
+    logger.debug('dts:', dts)
+
+    const pathResolver = new TsconfigPathAliasResolver(defaultOptions.cwd, tsconfigPath)
+    pathResolver.processDts(dts)
   })
   .parse(process.argv)
