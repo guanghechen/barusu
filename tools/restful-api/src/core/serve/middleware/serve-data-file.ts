@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import Koa from 'koa'
 import path from 'path'
 import { relativeOfWorkspace } from '@barusu/util-cli'
-import { logger } from '../../../util/logger'
+import { logger } from '../../../env/logger'
 
 
 interface Params {

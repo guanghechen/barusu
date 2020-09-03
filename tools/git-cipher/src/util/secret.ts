@@ -5,11 +5,11 @@ import {
   coverString,
   isNotEmptyString,
 } from '@barusu/util-option'
+import { logger } from '../env/logger'
 import { calcMac, destroyBuffer } from './buffer'
 import { Cipher, CipherFactory } from './cipher'
 import { ErrorCode, EventTypes, eventBus } from './events'
 import * as io from './io'
-import { logger } from './logger'
 
 
 /**

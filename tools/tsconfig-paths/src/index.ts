@@ -2,8 +2,11 @@ import fs from 'fs-extra'
 import path from 'path'
 import * as TsconfigUtil from 'tsconfig'
 import { createMatchPath } from 'tsconfig-paths'
+import './env/constant'
 import { correctModulePath } from './util'
-export { correctModulePath } from './util'
+export * from './env/constant'
+export * from './env/logger'
+export * from './util'
 
 
 export interface Paths {

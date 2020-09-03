@@ -5,7 +5,7 @@ import {
   resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
 import { MergeStrategy, cover, isNotEmptyString } from '@barusu/util-option'
-import { logger } from '../util/logger'
+import { logger } from '../env/logger'
 
 
 /**

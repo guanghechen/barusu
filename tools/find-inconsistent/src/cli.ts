@@ -1,68 +1,49 @@
-import path from 'path'
-import { Level } from '@barusu/chalk-logger'
-import { name, version } from '@barusu/tool-find-inconsistent/package.json'
 import {
   CommandConfigurationFlatOpts,
-  absoluteOfWorkspace,
+  CommandConfigurationOptions,
   createTopCommand,
   findPackageJsonPath,
-  flatOptionsFromConfiguration,
+  resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
-import { cover, coverString } from '@barusu/util-option'
-import { PackageManager } from './index'
 import {
   COMMAND_NAME,
-  CommandOptions,
-  defaultCommandOptions,
+  PackageManager,
   logger,
-} from './util'
+  packageName,
+  packageVersion,
+} from './index'
 
 
 const program = createTopCommand(
   COMMAND_NAME,
-  version,
+  packageVersion,
 )
+
+
+
+interface CommandOptions extends CommandConfigurationOptions {
+
+}
+
+
+const defaultCommandOptions: CommandOptions = {
+}
+
+
 
 program
   .usage('<workspace> [options]')
   .arguments('<workspace>')
-  .action(function ([workspace], options: CommandOptions) {
-    const cwd: string = path.resolve()
-    const workspaceDir: string = path.resolve(cwd, workspace)
-    const configPath: string[] = options.configPath!.map((p: string) => absoluteOfWorkspace(workspaceDir, p))
-    const parasticConfigPath: string | null | undefined = cover<string | null>(
-      (): string | null => findPackageJsonPath(workspaceDir),
-      options.parasticConfigPath)
-    const parasticConfigEntry: string = coverString(name, options.parasticConfigEntry)
-    const flatOpts: CommandConfigurationFlatOpts = {
-      cwd,
-      workspace: workspaceDir,
-      configPath,
-      parasticConfigPath,
-      parasticConfigEntry,
-    }
+  .action(function ([_workspaceDir], options: CommandOptions) {
+    logger.setName(COMMAND_NAME)
 
-    const defaultOptions = flatOptionsFromConfiguration(
-      defaultCommandOptions,
-      flatOpts,
-      false,
-      {},
-    )
+    type R = CommandOptions & CommandConfigurationFlatOpts
+    const defaultOptions: R = resolveCommandConfigurationOptions<
+      CommandOptions, CommandOptions>(
+        logger, packageName, false,
+        defaultCommandOptions, _workspaceDir, options)
 
-    // reset log-level
-    const logLevel = cover<string | undefined>(defaultOptions.logLevel, options.logLevel)
-    if (logLevel != null) {
-      const level = Level.valueOf(logLevel)
-      if (level != null) logger.setLevel(level)
-    }
-
-    logger.debug('cwd:', flatOpts.cwd)
-    logger.debug('workspace:', flatOpts.workspace)
-    logger.debug('configPath:', flatOpts.configPath)
-    logger.debug('parasticConfigPath:', flatOpts.parasticConfigPath)
-    logger.debug('parasticConfigEntry:', flatOpts.parasticConfigEntry)
-
-    const rootPackageJsonPath: string | null = findPackageJsonPath(workspaceDir)
+    const rootPackageJsonPath: string | null = findPackageJsonPath(defaultOptions.workspace)
     logger.debug('rootPackageJsonPath:', rootPackageJsonPath)
 
     if (rootPackageJsonPath == null) {

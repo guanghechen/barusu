@@ -1,5 +1,5 @@
 import Koa from 'koa'
-import { logger } from '../../../util/logger'
+import { logger } from '../../../env/logger'
 
 
 /**

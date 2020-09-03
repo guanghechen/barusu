@@ -1,17 +1,5 @@
 import path from 'path'
-export {
-  name as packageName,
-  version as packageVersion,
-} from '@barusu/tool-git-cipher/package.json'
-
-
-// Command name
-export const COMMAND_NAME = 'barusu-git-cipher'
-
-
-// Config root dir
-export const configRootDir = path.resolve(__dirname, '../config')
-export const templateRootDir = path.join(configRootDir, 'templates')
+import { configRootDir, templateRootDir } from './constant'
 
 
 /**

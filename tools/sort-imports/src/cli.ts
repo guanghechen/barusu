@@ -1,8 +1,8 @@
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
-import { name, version } from '@barusu/tool-sort-imports/package.json'
 import {
+  CommandConfigurationOptions,
   createTopCommand,
   resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
@@ -13,19 +13,78 @@ import {
   isNotEmptyArray,
   isNotEmptyString,
 } from '@barusu/util-option'
-import { StaticImportStatement } from './index'
 import {
   COMMAND_NAME,
-  CommandOptions,
   ModuleRankItem,
-  defaultCommandOptions,
+  StaticImportStatement,
   logger,
-} from './util'
+  packageName,
+  packageVersion,
+} from './index'
+
+
+/**
+ *
+ */
+export interface CommandOptions extends CommandConfigurationOptions {
+  /**
+   * log level
+   * @default undefined
+   */
+  logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string
+  /**
+   * glob pattern of source file
+   * @default []
+   */
+  pattern: string[]
+  /**
+   * encoding of source file
+   * @default 'utf-8'
+   */
+  encoding: string
+  /**
+   * maximum column width
+   * @default 80
+   */
+  maxColumn: number
+  /**
+   * indent of import/export statements in source codes
+   * @default '  '
+   */
+  indent: string
+  /**
+   * quotation marker surround the module path
+   * @default '\''
+   */
+  quote: string
+  /**
+   * whether to add a semicolon at the end of import/export statement
+   * @default false
+   */
+  semicolon: boolean
+  /**
+   *
+   * @default undefined
+   */
+  moduleRanks: ModuleRankItem[]
+}
+
+
+export const defaultCommandOptions: CommandOptions = {
+  logLevel: undefined,
+  pattern: [],
+  encoding: 'utf-8',
+  maxColumn: 80,
+  indent: '  ',
+  quote: '\'',
+  semicolon: false,
+  moduleRanks: [],
+}
 
 
 const program = createTopCommand(
   COMMAND_NAME,
-  version,
+  packageVersion,
 )
 
 program
@@ -38,8 +97,10 @@ program
   .option('--quote <quote>', 'quotation marker surround the module path')
   .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
   .action(function ([_workspaceDir], options: CommandOptions) {
+    logger.setName(COMMAND_NAME)
+
     const defaultOptions = resolveCommandConfigurationOptions(
-      logger, name, false,
+      logger, packageName, false,
       defaultCommandOptions, _workspaceDir, options)
 
     // resolve pattern

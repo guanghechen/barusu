@@ -1,9 +1,9 @@
 import commandExists from 'command-exists'
 import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import { coverString } from '@barusu/util-option'
+import { logger } from '../../env/logger'
 import { WorkspaceCatalog } from '../../util/catalog'
 import { AESCipher, Cipher } from '../../util/cipher'
-import { logger } from '../../util/logger'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherDecryptContext } from './context'
 

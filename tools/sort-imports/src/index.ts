@@ -1,3 +1,4 @@
+import './env/constant'
 import {
   ModuleRankItem,
   StaticImportOrExportStatItem,
@@ -7,13 +8,9 @@ import {
   defaultModuleRankItems,
   formatImportOrExportStatItem,
 } from './util'
-export {
-  StaticImportOrExportStatItem,
-  compareModulePath,
-  createCommentRegex,
-  createStaticImportOrExportRegex,
-  formatImportOrExportStatItem,
-} from './util'
+export * from './env/constant'
+export * from './env/logger'
+export * from './util'
 
 
 export class StaticImportStatement {

@@ -1,7 +1,9 @@
-import { mountSubCommandDecrypt } from './command/decrypt'
-import { mountSubCommandEncrypt } from './command/encrypt'
-import { mountSubCommandInit } from './command/init'
-import { createProgram } from './core/command'
+import {
+  createProgram,
+  mountSubCommandDecrypt,
+  mountSubCommandEncrypt,
+  mountSubCommandInit,
+} from './index'
 
 
 const program = createProgram()

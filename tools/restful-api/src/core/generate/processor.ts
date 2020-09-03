@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import * as TJS from '@barusu/typescript-json-schema'
 import { mkdirsIfNotExists } from '@barusu/util-cli'
-import { logger } from '../../util/logger'
+import { logger } from '../../env/logger'
 import { RestfulApiGenerateContext } from './context'
 import { clearSchemaRootPath, removeIgnoredDataTypes } from './util'
 

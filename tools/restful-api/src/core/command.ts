@@ -1,5 +1,5 @@
 import { Command, createTopCommand } from '@barusu/util-cli'
-import { COMMAND_NAME, packageVersion } from '../util/env'
+import { COMMAND_NAME, packageVersion } from '../env/constant'
 
 
 /**

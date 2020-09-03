@@ -3,10 +3,10 @@ import fs from 'fs-extra'
 import path from 'path'
 import { collectAllFilesSync, relativeOfWorkspace } from '@barusu/util-cli'
 import { coverString, isNotEmptyString } from '@barusu/util-option'
+import { logger } from '../env/logger'
 import { destroyBuffer } from './buffer'
 import { Cipher } from './cipher'
 import { ErrorCode } from './events'
-import { logger } from './logger'
 
 
 /**
