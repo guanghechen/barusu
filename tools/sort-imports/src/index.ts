@@ -1,14 +1,15 @@
-import './env/constant'
+import a, * as waw from './env/constant'
 import {
   ModuleRankItem,
   StaticImportOrExportStatItem,
   compareModulePath,
   createCommentRegex,
-  createStaticImportOrExportRegex,
+  createStaticImportOrExportRegexList,
   defaultModuleRankItems,
   formatImportOrExportStatItem,
+  execWithMultipleRegex,
 } from './util'
-export * from './env/constant'
+export * as x from'./env/constant'
 export * from './env/logger'
 export * from './util'
 
@@ -20,7 +21,7 @@ export class StaticImportStatement {
   public readonly maxColumn: number
   public readonly itemRank: Record<StaticImportOrExportStatItem['type'], number>
   public readonly moduleRanks: ModuleRankItem[]
-  public readonly staticImportOrExportRegex: RegExp
+  public readonly staticImportOrExportRegexList: RegExp[]
   public readonly topCommentRegex: RegExp
 
   public constructor(
@@ -29,20 +30,22 @@ export class StaticImportStatement {
     semicolon = false,
     maxColumn = 100,
     moduleRanks: ModuleRankItem[] = defaultModuleRankItems.concat(),
-    staticImportOrExportRegex: RegExp = createStaticImportOrExportRegex('g'),
+    staticImportOrExportRegexList: RegExp[] = createStaticImportOrExportRegexList('g'),
     topCommentRegex: RegExp = createCommentRegex(),
   ) {
-    if (staticImportOrExportRegex.flags.indexOf('g') < 0) {
-      // eslint-disable-next-line no-param-reassign
-      staticImportOrExportRegex = new RegExp(
-        staticImportOrExportRegex, staticImportOrExportRegex.flags + 'g')
+    for (let i = 0; i < staticImportOrExportRegexList.length; ++i) {
+      const regex = staticImportOrExportRegexList[i]
+      if (regex.flags.indexOf('g') < 0) {
+        // eslint-disable-next-line no-param-reassign
+        staticImportOrExportRegexList[i] = new RegExp(regex, regex.flags + 'g')
+      }
     }
 
     this.quote = quote
     this.indent = indent
     this.semicolon = semicolon
     this.maxColumn = Number.isNaN(maxColumn) ? 100 : maxColumn,
-    this.staticImportOrExportRegex = staticImportOrExportRegex
+    this.staticImportOrExportRegexList = staticImportOrExportRegexList
     this.topCommentRegex = new RegExp('^(' + topCommentRegex.source + '|\\s*)*')
     this.itemRank = {
       'import': 1,
@@ -54,13 +57,16 @@ export class StaticImportStatement {
   public process(content: string): string {
     const self = this
     const items: StaticImportOrExportStatItem[] = []
-    const regex: RegExp = this.staticImportOrExportRegex
     const m = self.topCommentRegex.exec(content)
     const firstNonCommentIndex = m == null ? 0 : m[0].length
 
     let startIndex = firstNonCommentIndex
-    regex.lastIndex = startIndex
-    for (let m: RegExpExecArray | null; (m = regex.exec(content)) != null;) {
+    while (true) {
+      const execResult = execWithMultipleRegex([], content, startIndex)
+      if (execResult  == null) break
+      const m: RegExpExecArray = execResult.result
+      const regex = execResult.regex
+
       if (!/^[;\s]*$/.test(content.substring(startIndex, m.index))) break
       const { defaultExport, exportN: exportNStr, moduleName, type, remainOfLine } = m.groups!
       const exportN: string[] = exportNStr == null ? [] : exportNStr.split(/\s*,\s*/g)

@@ -1,21 +1,142 @@
-/**
- * 创建匹配静态 import/export 的正则表达式
- */
-export function createStaticImportOrExportRegex(flags?: string): RegExp {
-  const typeRegex = /(?<type>import|export)/
-  const defaultExportRegex = /(?:\s+(?<defaultExport>[\w*]+(?:\s+as\s+[\w]+)?(?:\s*,\s*[\w*]+\s+as\s+[\w]+)?)(?:\s*,)?)/
-  const exportNRegex = /(?:\s+\{\s*(?<exportN>(?:[\w]+(?:\s+as\s+[\w]+)?\s*,\s*)*[\w]+(?:\s+as\s+[\w]+)?(?:\s*,)?)\s*\})/
-  const moduleNameRegex = /(?:\s+(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>)(?:\s*;+)?/
+export interface StaticImportOrExportStatItem {
+  /**
+   *
+   */
+  type: 'import' | 'export'
+  /**
+   *
+   */
+  moduleName: string
+  /**
+   *
+   */
+  fullStatement: string
+  /**
+   *
+   */
+  exportN: string[]
+  /**
+   *
+   */
+  remainOfLine: string
+  /**
+   * Whether is type import (i.e. import type { Handler } from 'module')
+   */
+  typeImportOrExport?: 'type'
+  /**
+   *
+   */
+  defaultExport?: string
+}
+
+
+export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
+  const optionalSpacesRegex = /\s*/
+  const requiredSpacesRegex = /\s+/
   const remainOfLineRegex = /(?<remainOfLine>[^\n]*)/
-  const regex = new RegExp(
-    typeRegex.source
-    + defaultExportRegex.source + '?'
-    + exportNRegex.source + '?'
-    + /(?:\s+from)/.source + '?'
-    + moduleNameRegex.source
-    + remainOfLineRegex.source
-    , flags)
-  return regex
+  const fromRegex = /(?:(?<from>from)\s+)/
+  const moduleNameRegex = /(?:(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>(?:\s*;+)?)/
+  const typeRegex = /(?:\b(?<type>import|export))/
+  const importTypeRegex = /(?:\b(?<type>import))/
+  const exportTypeRegex = /(?:\b(?<type>export))/
+  const importDefaultRegex = /(?:(?<defaultExport>(?:\w+\s*,\s*)?(?:\w+|\w\s+as\s+\w+|\*\s*as\s+\w+)))/
+  const exportDefaultRegex = /(?:(?<defaultExport>(?:\*|\*\s*as\s+\w+)))/
+  const importOrExportNRegex = /(?:(?<typeImportOrExport>type)?\s*?\{\s*(?<exportN>(?:[\w]+(?:\s+as\s+[\w]+)?\s*,\s*)*[\w]+(?:\s+as\s+[\w]+)?(?:\s*,)?)\s*?\})/
+
+  const regexList = [
+    /**
+     * Import only
+     *
+     *  ```typescript
+     *  import 'module'
+     *  import 'module';
+     *  ```
+     */
+    new RegExp(
+      importTypeRegex.source + optionalSpacesRegex.source +
+      moduleNameRegex.source + remainOfLineRegex.source,
+      flags),
+    /**
+     * Import default
+     *
+     *  ```typescript
+     *  import a from 'module'
+     *  import a as b from 'module'
+     *  import * as b from 'module'
+     *  import a, * as b from 'module'
+     *  ```
+     */
+    new RegExp(
+      importTypeRegex.source + requiredSpacesRegex.source +
+      importDefaultRegex.source + requiredSpacesRegex.source + fromRegex.source +
+      moduleNameRegex.source + remainOfLineRegex.source,
+      flags),
+    /**
+     * Export default
+     *
+     *  ```typescript
+     *  export * as b from 'module'
+     *  export * from 'module'
+     *  ```
+     */
+    new RegExp(
+      exportTypeRegex.source + optionalSpacesRegex.source +
+      exportDefaultRegex.source + requiredSpacesRegex.source + fromRegex.source +
+      moduleNameRegex.source + remainOfLineRegex.source,
+      flags),
+    /**
+     * ImportN
+     *
+     *  ```typescript
+     *  import { a as b, c, d as e } from 'module'
+     *  import type { Logger } from '@barusu/chalk-logger'
+     *  export { a as b, c, d as e } from 'module'
+     *  export type { Logger } from '@barusu/chalk-logger'
+     *  ```
+     */
+    new RegExp(
+      typeRegex.source + optionalSpacesRegex.source +
+      importOrExportNRegex.source + optionalSpacesRegex.source + fromRegex.source +
+      moduleNameRegex.source + remainOfLineRegex.source,
+      flags),
+    /**
+     * Import default + ImportN
+     *  ```typescript
+     *  import x, { a as b, c, d as e } from 'module'
+     *  import a as b, type { Logger } from '@barusu/chalk-logger'
+     *  import * as e, type { Logger } from '@barusu/chalk-logger'
+     *  ```
+     */
+    new RegExp(
+      importTypeRegex.source + optionalSpacesRegex.source +
+      importDefaultRegex.source + /(?:\s*,\s*)/.source + importOrExportNRegex.source +
+      optionalSpacesRegex.source + fromRegex.source +
+      moduleNameRegex.source + remainOfLineRegex.source,
+      flags),
+  ]
+
+  return regexList
+}
+
+
+/**
+ * Run regex.exec all regexList, return the first non-null value
+ *
+ * @param regexList
+ * @param content
+ * @param lastIndex   first position of content to preform regex.exec
+ */
+export function execWithMultipleRegex(
+  regexList: RegExp[],
+  content: string,
+  lastIndex = 0
+): { regex: RegExp, result: RegExpExecArray } | null {
+  for (const regex of regexList) {
+    regex.lastIndex = lastIndex
+    const result = regex.exec(content)
+    if (result != null) return { regex, result }
+  }
+  return null
 }
 
 
@@ -110,21 +231,11 @@ export function compareModulePath(
    */
   if (rankOfP1 != null) {
     if (rankOfP2 == null) return -1
-    if (rankOfP1 === rankOfP2) return p1 < p2 ? -1: 1
+    if (rankOfP1 === rankOfP2) return p1 < p2 ? -1 : 1
     return rankOfP1 < rankOfP2 ? -1 : 1
   }
   if (rankOfP2 != null) return 1
   return p1 < p2 ? -1 : 1
-}
-
-
-export interface StaticImportOrExportStatItem {
-  type: 'import' | 'export'
-  moduleName: string
-  fullStatement: string
-  exportN: string[]
-  remainOfLine: string
-  defaultExport?: string
 }
 
 
