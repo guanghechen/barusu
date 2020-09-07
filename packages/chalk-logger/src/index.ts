@@ -4,6 +4,7 @@ import { Logger, LoggerOptions } from './logger'
 import { Writeable } from './types'
 export * from './command'
 export * from './level'
+export * from './logger'
 
 
 export class ColorfulChalkLogger extends Logger {

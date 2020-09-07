@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
+import { createLoggerMocker } from '@barusu/util-jest'
 import {
   COMMAND_NAME,
   createProgram,
@@ -18,17 +19,9 @@ describe('stat', function () {
     const filepath = kase
 
     test(title, async function () {
-      const cliInfos: string[][] = []
-      const collectCliInfos = (...args: any[]) => {
-        cliInfos.push(args.map(x => JSON.stringify(x)))
-      }
-
-      const writeMock = jest
-        .spyOn(logger, 'write')
-        .mockImplementation(collectCliInfos)
-      const consoleLogMock = jest
-        .spyOn(global.console, 'log')
-        .mockImplementation(collectCliInfos)
+      const workspaceRootDir: string = path.resolve(__dirname, '..')
+      const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
+      loggerMock.mock()
 
       const program = createProgram()
       const args = [
@@ -43,18 +36,9 @@ describe('stat', function () {
 
       await execSubCommandStat(program, args)
 
-      const formattedInfos = cliInfos.map(info => (
-        info.map(text =>
-          text
-          .replace(path.resolve(), '<RootDir>')
-          .replace(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/, '<Date>')
-        )
-      ))
-      expect(formattedInfos).toMatchSnapshot('log info')
-
-      // restore original funcs
-      writeMock.mockRestore()
-      consoleLogMock.mockRestore()
+      expect(loggerMock.data()).toMatchSnapshot('log info')
+      loggerMock.restore()
     })
   }
+
 })

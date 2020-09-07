@@ -1,13 +1,14 @@
 import path from 'path'
+import { createLoggerMocker } from '@barusu/util-jest'
 import { colorToChalk } from '../src/color'
 import { DEBUG, Level, VERBOSE } from '../src/level'
 import { Logger, LoggerOptions } from '../src/logger'
-import { createLoggerMock } from './util'
 
 
 describe('Logger', function () {
   const levels: string[] = ['debug', 'verbose', 'info', 'warn', 'error', 'fatal']
   const methods: string[] = ['debug', 'verbose', 'info', 'warn', 'error', 'fatal']
+  const workspaceRootDir = path.resolve(__dirname, '../../../')
 
   describe('base', function () {
     for (const mode of ['normal', 'loose']) {
@@ -30,7 +31,7 @@ describe('Logger', function () {
 
               test(title, function () {
                 const logger = new Logger(level, { ...options })
-                const loggerMock = createLoggerMock(logger)
+                const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
                 loggerMock.mock()
 
                 for (const method of methods) {
@@ -61,7 +62,7 @@ describe('Logger', function () {
       date: true,
       placeholderRegex: /(?<!\\)\<\>/g, // change placeholder of string format
     })
-    const loggerMock = createLoggerMock(logger)
+    const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
     loggerMock.mock()
 
     const log = logger.debug.bind(logger)
@@ -86,7 +87,7 @@ describe('Logger', function () {
       dateChalk: colorToChalk([25, 104, 179], false),
       nameChalk: colorToChalk([25, 104, 179], true),
     })
-    const loggerMock = createLoggerMock(logger)
+    const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
     loggerMock.mock()
 
     const log = logger.debug.bind(logger)
