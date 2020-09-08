@@ -128,7 +128,7 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
 
 
 /**
- * Run regex.exec all regexList, return the first non-null value
+ * Run regex.exec all regexList, return the exec-result with minimum index
  *
  * @param regexList
  * @param content
@@ -139,12 +139,17 @@ export function execWithMultipleRegex(
   content: string,
   lastIndex = 0
 ): { regex: RegExp, result: RegExpExecArray } | null {
+  let result: { regex: RegExp, result: RegExpExecArray } | null = null
   for (const regex of regexList) {
     regex.lastIndex = lastIndex
-    const result = regex.exec(content)
-    if (result != null) return { regex, result }
+    const m = regex.exec(content)
+    if (m != null) {
+      if (result == null || result.result.index > m.index) {
+        result = { regex, result: m }
+      }
+    }
   }
-  return null
+  return result
 }
 
 

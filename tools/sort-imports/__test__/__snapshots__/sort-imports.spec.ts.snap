@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stat a: [a.txt] resolved content 1`] = `
+"import {
+  SubCommandExecutor,
+  SubCommandMounter,
+  SubCommandProcessor,
+  createSubCommandExecutor,
+  createSubCommandMounter,
+} from '@barusu/util-cli'
+import {
+  SubCommandStatOptions,
+  createSubCommandStat,
+  createWordStatContextFromOptions,
+} from '../core/stat/command'
+import { WordStatContext } from '../core/stat/context'
+import { WordStatProcessor } from '../core/stat/processor'
+import { handleError } from './_util'
+"
+`;
+
+exports[`stat a: log info 1`] = `
+Array [
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mconfigPath: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/config.json\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-sort-imports[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mencoding: utf-8[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mpattern: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/files/a.txt\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mquote: '[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31msemicolon: false[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mindent: __[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmaxColumn: 80[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmoduleRanks: [[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^(react|vue|angular)(?:[/\\\\\\\\-][\\\\\\\\w\\\\\\\\-./]*)?$\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.1[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^mocha|chai(?:[/][\\\\\\\\w\\\\\\\\-./]*)?$\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.2[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.3[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^@[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\\\\\\\/[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.4[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^@\\\\\\\\/\\",[39m
+[38;2;188;162;31m    \\"rank\\": 2.1[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^(?:\\\\\\\\/|[a-zA-Z]:)\\",[39m
+[38;2;188;162;31m    \\"rank\\": 3.1[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^[.]{2}[\\\\\\\\/\\\\\\\\\\\\\\\\][^\\\\\\\\n]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 3.2[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^[.][\\\\\\\\/\\\\\\\\\\\\\\\\][^\\\\\\\\n]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 3.3[39m
+[38;2;188;162;31m  }[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mabsolutePath: <workspaceRootDir>/__test__/cases/files/a.txt[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;0;255;0minfo [39m [90mbarusu-sort-imports[39m]: [38;2;0;255;0mprocessing: <workspaceRootDir>/__test__/cases/files/a.txt[39m
+[38;2;0;255;0m[39m",
+  ],
+]
+`;
+
+exports[`stat b: [b.txt] resolved content 1`] = `
+"
+import fs from 'fs-extra'
+import globby from 'globby'
+import path from 'path'
+import { logger } from '../../env/logger'
+import { createCommentRegex } from '../../util/comment'
+import { compareModulePath } from '../../util/module-rank'
+import {
+  StaticModuleStatementItem,
+  createStaticImportOrExportRegexList,
+  execWithMultipleRegex,
+  extractStaticModuleStatementItem,
+  formatStaticModuleStatementItem,
+} from '../../util/module-statement'
+import './env/constant'
+export * from './command/main'
+export * from './core/command'
+export * from './core/main/command'
+export * from './core/main/context'
+export * from './core/main/processor'
+export * from './core/main/processor'
+export * from './core/option'
+export * from './env/constant'
+export * from './env/logger'
+export * from './util/comment'
+export * from './util/comment'
+export * from './util/module-rank'
+export * from './util/module-statement'
+"
+`;
+
+exports[`stat b: log info 1`] = `
+Array [
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mconfigPath: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/config.json\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-sort-imports[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mencoding: utf-8[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mpattern: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/files/b.txt\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mquote: '[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31msemicolon: false[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mindent: __[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmaxColumn: 80[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmoduleRanks: [[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^(react|vue|angular)(?:[/\\\\\\\\-][\\\\\\\\w\\\\\\\\-./]*)?$\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.1[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^mocha|chai(?:[/][\\\\\\\\w\\\\\\\\-./]*)?$\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.2[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.3[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^@[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\\\\\\\/[a-zA-Z\\\\\\\\d][\\\\\\\\w\\\\\\\\-.]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 1.4[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^@\\\\\\\\/\\",[39m
+[38;2;188;162;31m    \\"rank\\": 2.1[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^(?:\\\\\\\\/|[a-zA-Z]:)\\",[39m
+[38;2;188;162;31m    \\"rank\\": 3.1[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^[.]{2}[\\\\\\\\/\\\\\\\\\\\\\\\\][^\\\\\\\\n]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 3.2[39m
+[38;2;188;162;31m  },[39m
+[38;2;188;162;31m  {[39m
+[38;2;188;162;31m    \\"regex\\": \\"^[.][\\\\\\\\/\\\\\\\\\\\\\\\\][^\\\\\\\\n]*\\",[39m
+[38;2;188;162;31m    \\"rank\\": 3.3[39m
+[38;2;188;162;31m  }[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mabsolutePath: <workspaceRootDir>/__test__/cases/files/b.txt[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;0;255;0minfo [39m [90mbarusu-sort-imports[39m]: [38;2;0;255;0mprocessing: <workspaceRootDir>/__test__/cases/files/b.txt[39m
+[38;2;0;255;0m[39m",
+  ],
+]
+`;
