@@ -1,9 +1,5 @@
 import path from 'path'
-import {
-  ColorfulChalkLogger,
-  Level,
-  registerCommanderOptions,
-} from '@barusu/chalk-logger'
+import { ColorfulChalkLogger, Level } from '@barusu/chalk-logger'
 import {
   MergeStrategy,
   cover,
@@ -14,7 +10,6 @@ import {
   isNotEmptyString,
   merge,
 } from '@barusu/util-option'
-import { Command } from './commander'
 import { loadJsonOrYamlSync } from './fs'
 import { findPackageJsonPath } from './manifest'
 import { absoluteOfWorkspace } from './path'
@@ -140,35 +135,6 @@ export function flatOptionsFromConfiguration<C extends CommandConfigurationOptio
   }
 
   return result
-}
-
-
-/**
- * Create top command
- * @param commandName
- * @param version
- * @param logger
- */
-export function createTopCommand(
-  commandName: string,
-  version: string,
-): Command {
-  const program = new Command()
-
-  program
-    .storeOptionsAsProperties(false)
-    .passCommandToAction(false)
-    .version(version)
-    .name(commandName)
-
-  registerCommanderOptions(program)
-
-  program
-    .option('-c, --config-path <configFilepath>', 'config filepaths', (val, acc: string[]) => acc.concat(val), [])
-    .option('--parastic-config-path <parasticConfigFilepath>', 'parastic config filepath')
-    .option('--parastic-config-entry <parasticConfigFilepath>', 'parastic config filepath')
-
-  return program
 }
 
 
