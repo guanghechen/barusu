@@ -36,7 +36,9 @@
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.32",
+    "@types/fs-extra": "^8.1.0",
     "@types/jest": "^26.0.10",
+    "fs-extra": "^8.1.0",
     "jest": "^26.4.1"
   },
   "devDependencies": {
