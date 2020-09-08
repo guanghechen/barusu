@@ -15,3 +15,5 @@ export const configRootDir = path.resolve(__dirname, '../config')
 
 // Template files root dir
 export const templateRootDir = path.join(configRootDir, 'templates')
+
+export default 'x'

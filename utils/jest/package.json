@@ -1,7 +1,6 @@
 {
-  "name": "@barusu/tool-sort-imports",
+  "name": "@barusu/util-jest",
   "version": "0.0.32",
-  "description": "sort import/export statement",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -10,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/lemon-clown/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/sort-imports#readme",
+  "homepage": "https://github.com/lemon-clown/barusu/tree/master/utils/jest#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
@@ -27,29 +26,24 @@
     "!lib/**/*.js.map",
     "!lib/**/*.d.ts.map"
   ],
-  "bin": {
-    "barusu-sort-imports": "./lib/cjs/cli.js"
-  },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
     "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "test": "TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir .",
+    "test": "echo 'no test yet.'",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.32",
-    "@barusu/util-cli": "^0.0.32",
-    "@barusu/util-option": "^0.0.32",
     "@types/fs-extra": "^8.1.0",
+    "@types/jest": "^26.0.10",
     "fs-extra": "^8.1.0",
-    "globby": "^11.0.0"
+    "jest": "^26.4.1"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.32",
     "@barusu/rollup-config": "^0.0.32",
-    "@barusu/util-jest": "^0.0.32",
     "rollup": "2.16.1"
   }
 }

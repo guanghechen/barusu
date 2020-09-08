@@ -3,44 +3,64 @@
 exports[`stat chou_nu_er: log info 1`] = `
 Array [
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mcwd: <RootDir>\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mworkspace: <RootDir>/__test__/cases/files\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mconfigPath: []\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mconfigPath: [][39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mparasticConfigPath: <RootDir>/package.json\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mparasticConfigEntry: @barusu/tool-word\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-word[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mencoding: utf-8\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mencoding: utf-8[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mfilePath: [\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m  \\\\\\"<RootDir>/__test__/cases/files/chou_nu_er.md\\\\\\"\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m]\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mfilePath: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/files/chou_nu_er.md\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mfilePattern: []\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mfilePattern: [][39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mshowDetailsPretty: false\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mshowDetailsPretty: false[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mshowDetails: 0\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mshowDetails: 0[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mshowSummaryOnly: false\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mshowSummaryOnly: false[39m
+[38;2;188;162;31m[39m",
   ],
   Array [],
   Array [
-    "\\"__test__/cases/files/chou_nu_er.md\\"",
+    "__test__/cases/files/chou_nu_er.md",
   ],
   Array [
-    "\\"======================================================\\\\n                   total: 76\\\\n             blank total:  7\\\\n       punctuation total: 12\\\\n            unique total: 49\\\\n      unique blank total:  1\\\\nunique punctuation total:  6\\\\n\\"",
+    "======================================================
+                   total: 76
+             blank total:  7
+       punctuation total: 12
+            unique total: 49
+      unique blank total:  1
+unique punctuation total:  6
+",
   ],
 ]
 `;
@@ -48,44 +68,64 @@ Array [
 exports[`stat ru_meng_ling: log info 1`] = `
 Array [
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mcwd: <RootDir>\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mworkspace: <RootDir>/__test__/cases/files\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mconfigPath: []\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mconfigPath: [][39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mparasticConfigPath: <RootDir>/package.json\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mparasticConfigEntry: @barusu/tool-word\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-word[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mencoding: utf-8\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mencoding: utf-8[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mfilePath: [\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m  \\\\\\"<RootDir>/__test__/cases/files/ru_meng_ling.md\\\\\\"\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m]\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mfilePath: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/files/ru_meng_ling.md\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mfilePattern: []\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mfilePattern: [][39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mshowDetailsPretty: false\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mshowDetailsPretty: false[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mshowDetails: 0\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mshowDetails: 0[39m
+[38;2;188;162;31m[39m",
   ],
   Array [
-    "\\"\\\\u001b[90m<Date>\\\\u001b[39m [\\\\u001b[38;2;188;162;31mdebug\\\\u001b[39m \\\\u001b[90mbarusu-word stat\\\\u001b[39m]: \\\\u001b[38;2;188;162;31mshowSummaryOnly: false\\\\u001b[39m\\\\n\\\\u001b[38;2;188;162;31m\\\\u001b[39m\\"",
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-word stat[39m]: [38;2;188;162;31mshowSummaryOnly: false[39m
+[38;2;188;162;31m[39m",
   ],
   Array [],
   Array [
-    "\\"__test__/cases/files/ru_meng_ling.md\\"",
+    "__test__/cases/files/ru_meng_ling.md",
   ],
   Array [
-    "\\"======================================================\\\\n                   total: 109\\\\n             blank total:   7\\\\n       punctuation total:  18\\\\n            unique total:  70\\\\n      unique blank total:   2\\\\nunique punctuation total:   5\\\\n\\"",
+    "======================================================
+                   total: 109
+             blank total:   7
+       punctuation total:  18
+            unique total:  70
+      unique blank total:   2
+unique punctuation total:   5
+",
   ],
 ]
 `;

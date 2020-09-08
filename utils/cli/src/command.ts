@@ -1,4 +1,5 @@
 import commander from 'commander'
+import { registerCommanderOptions } from '@barusu/chalk-logger'
 import { CommandConfigurationOptions } from './option'
 
 
@@ -93,14 +94,43 @@ export class Command extends commander.Command {
   }
 
   // override
-  public addCommand(command: Command): this {
-    super.addCommand(command)
+  public addCommand(command: Command, opts?: commander.CommandOptions): this {
+    super.addCommand(command, opts)
     return this
   }
 }
 
 
 export { commander }
+
+
+/**
+ * Create top command
+ * @param commandName
+ * @param version
+ * @param logger
+ */
+export function createTopCommand(
+  commandName: string,
+  version: string,
+): Command {
+  const program = new Command()
+
+  program
+    .storeOptionsAsProperties(false)
+    .passCommandToAction(false)
+    .version(version)
+    .name(commandName)
+
+  registerCommanderOptions(program)
+
+  program
+    .option('-c, --config-path <configFilepath>', 'config filepaths', (val, acc: string[]) => acc.concat(val), [])
+    .option('--parastic-config-path <parasticConfigFilepath>', 'parastic config filepath')
+    .option('--parastic-config-entry <parasticConfigFilepath>', 'parastic config filepath')
+
+  return program
+}
 
 
 /**
@@ -132,9 +162,13 @@ export type SubCommandCreator<
  * Mount sub-command
  *
  * @param {Command}   parentCommand
+ * @param {commander.CommandOptions} opts
  * @returns {void}
  */
-export type SubCommandMounter = (parentCommand: Command) => void
+export type SubCommandMounter = (
+  parentCommand: Command,
+  opts?: commander.CommandOptions
+) => void
 
 
 /**
@@ -161,9 +195,9 @@ export function createSubCommandMounter<
   create: SubCommandCreator<O, V>,
   handle: SubCommandProcessor<O, V>,
 ): SubCommandMounter {
-  return (program: Command): void => {
+  return (program: Command, opts?: commander.CommandOptions): void => {
     const command = create(handle)
-    program.addCommand(command)
+    program.addCommand(command, opts)
   }
 }
 
@@ -171,8 +205,10 @@ export function createSubCommandMounter<
 /**
  * Create sub-command executor
  *
- * @param create    sub command creator
- * @param handle    sub command processor
+ * @param create        sub-command creator
+ * @param handle        sub-command processor
+ * @param commandName   sub-command name
+ * @param aliases       sub-command aliases
  */
 export function createSubCommandExecutor<
   O extends CommandConfigurationOptions,
@@ -194,6 +230,100 @@ export function createSubCommandExecutor<
       const command = create(wrappedHandler, commandName, aliases)
       parentCommand.addCommand(command)
       parentCommand.parse(args)
+    })
+  }
+}
+
+
+/**
+ * Process main command
+ */
+export type MainCommandProcessor<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void,
+  > = (options: O) => V | Promise<V>
+
+
+/**
+ * Create main command
+ */
+export type MainCommandCreator<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void,
+  > = (
+    handle?: MainCommandProcessor<O, V>,
+  ) => Command
+
+
+/**
+ * Mount main command
+ *
+ * @param {Command}   parentCommand
+ * @param {commander.CommandOptions} opts
+ * @returns {void}
+ */
+export type MainCommandMounter = (
+  parentCommand: Command,
+  opts?: commander.CommandOptions
+) => void
+
+
+/**
+ * Execute main command
+ *
+ * @param {string[]}  args
+ * @returns {Promise}
+ */
+export type MainCommandExecutor<V extends unknown = void>
+  = (args: string[]) => Promise<V>
+
+
+/**
+ * Create main command mounter
+ *
+ * @param create  main command creator
+ * @param handle  main command processor
+ */
+export function createMainCommandMounter<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void
+>(
+  create: MainCommandCreator<O, V>,
+  handle: MainCommandProcessor<O, V>,
+): MainCommandMounter {
+  return (program: Command, opts?: commander.CommandOptions): void => {
+    const command = create(handle)
+    if (command.name().length <= 0) {
+      command.name('__main__')
+    }
+    program.addCommand(command, { ...opts, isDefault: true })
+  }
+}
+
+
+/**
+ * Create main command executor
+ *
+ * @param create  main command creator
+ * @param handle  main command processor
+ */
+export function createMainCommandExecutor<
+  O extends CommandConfigurationOptions,
+  V extends unknown = void
+>(
+  create: MainCommandCreator<O, V>,
+  handle: MainCommandProcessor<O, V>,
+): MainCommandExecutor<V> {
+  return (args: string[]): Promise<V> => {
+    return new Promise(resolve => {
+      const wrappedHandler = async (options: O) => {
+        const result = await handle(options)
+        resolve(result)
+        return result
+      }
+
+      const command = create(wrappedHandler)
+      command.parse(args)
     })
   }
 }

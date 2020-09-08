@@ -59,6 +59,7 @@ module.exports = {
     '**/src/**/*.{js,jsx,ts,tsx}',
     '**/src/*.{js,jsx,ts,tsx}',
     '!**/src/cli.ts',
+    '!**/src/command/_util.ts',
     '!**/test/cases/**',
     '!**/__test__/cases/**',
     '!**/node_modules/**',

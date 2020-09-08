@@ -1,4 +1,4 @@
-export * from './commander'
+export * from './command'
 export * from './fs'
 export * from './git'
 export * from './manifest'
