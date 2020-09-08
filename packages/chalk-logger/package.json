@@ -1,6 +1,6 @@
 {
   "name": "@barusu/chalk-logger",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -42,9 +42,9 @@
     "moment": "^2.24.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.32",
-    "@barusu/rollup-config": "^0.0.32",
-    "@barusu/util-jest": "^0.0.32",
+    "@barusu/eslint-config": "^0.0.33",
+    "@barusu/rollup-config": "^0.0.33",
+    "@barusu/util-jest": "^0.0.33",
     "rollup": "2.16.1"
   }
 }
