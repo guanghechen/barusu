@@ -1,17 +1,21 @@
-import a, * as waw from './env/constant'
+import './env/constant'
+import {
+  StaticModuleStatementItem,
+  createStaticImportOrExportRegexList,
+  formatStaticModuleStatementItem,
+  execWithMultipleRegex,
+} from './util/module-statement'
 import {
   ModuleRankItem,
-  StaticImportOrExportStatItem,
   compareModulePath,
-  createCommentRegex,
-  createStaticImportOrExportRegexList,
   defaultModuleRankItems,
-  formatImportOrExportStatItem,
-  execWithMultipleRegex,
-} from './util'
-export * as x from'./env/constant'
+} from './util/module-rank'
+import { createCommentRegex } from './util/comment'
+export * from './env/constant'
 export * from './env/logger'
-export * from './util'
+export * from './util/comment'
+export * from './util/module-statement'
+export * from './util/module-rank'
 
 
 export class StaticImportStatement {
@@ -19,7 +23,7 @@ export class StaticImportStatement {
   public readonly indent: string
   public readonly semicolon: boolean
   public readonly maxColumn: number
-  public readonly itemRank: Record<StaticImportOrExportStatItem['type'], number>
+  public readonly itemRank: Record<StaticModuleStatementItem['type'], number>
   public readonly moduleRanks: ModuleRankItem[]
   public readonly staticImportOrExportRegexList: RegExp[]
   public readonly topCommentRegex: RegExp
@@ -45,7 +49,7 @@ export class StaticImportStatement {
     this.indent = indent
     this.semicolon = semicolon
     this.maxColumn = Number.isNaN(maxColumn) ? 100 : maxColumn,
-    this.staticImportOrExportRegexList = staticImportOrExportRegexList
+      this.staticImportOrExportRegexList = staticImportOrExportRegexList
     this.topCommentRegex = new RegExp('^(' + topCommentRegex.source + '|\\s*)*')
     this.itemRank = {
       'import': 1,
@@ -56,14 +60,14 @@ export class StaticImportStatement {
 
   public process(content: string): string {
     const self = this
-    const items: StaticImportOrExportStatItem[] = []
+    const items: StaticModuleStatementItem[] = []
     const m = self.topCommentRegex.exec(content)
     const firstNonCommentIndex = m == null ? 0 : m[0].length
 
     let startIndex = firstNonCommentIndex
     while (true) {
       const execResult = execWithMultipleRegex([], content, startIndex)
-      if (execResult  == null) break
+      if (execResult == null) break
       const m: RegExpExecArray = execResult.result
       const regex = execResult.regex
 
@@ -76,7 +80,7 @@ export class StaticImportStatement {
         moduleName: moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
         type: type as any,
         remainOfLine: remainOfLine as string,
-      } as StaticImportOrExportStatItem
+      } as StaticModuleStatementItem
       item.fullStatement = self.format(item)
       items.push(item)
       startIndex = regex.lastIndex
@@ -93,12 +97,12 @@ export class StaticImportStatement {
     )
   }
 
-  protected format(item: Omit<StaticImportOrExportStatItem, 'fullStatement'>): string {
+  protected format(item: Omit<StaticModuleStatementItem, 'fullStatement'>): string {
     const { quote, indent, semicolon, maxColumn } = this
-    return formatImportOrExportStatItem(item, quote, indent, semicolon, maxColumn)
+    return formatStaticModuleStatementItem(item, quote, indent, semicolon, maxColumn)
   }
 
-  protected compare(x: StaticImportOrExportStatItem, y: StaticImportOrExportStatItem): number {
+  protected compare(x: StaticModuleStatementItem, y: StaticModuleStatementItem): number {
     if (x.type !== y.type) {
       return this.itemRank[x.type] - this.itemRank[y.type]
     }
