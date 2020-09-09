@@ -7,9 +7,9 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: './tsconfig.json'
   },
-  rules: {
+  env: {
+    jest: true,
   },
-  ignorePatterns: [
-    "example/**/*"
-  ]
+  rules: {
+  }
 }
