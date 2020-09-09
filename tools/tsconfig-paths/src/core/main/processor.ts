@@ -26,15 +26,8 @@ export class TsconfigPathsProcessor {
       context.tsconfigPathAlias == null
     ) return
 
-    // eslint-disable-next-line no-param-reassign
     const paths = context.tsconfigPathAlias
-    const rootDir = path.resolve(context.workspace, context.tsconfigRootDir)
     const absoluteBaseUrl = path.resolve(context.workspace, context.tsconfigBaseUrl)
-
-    logger.debug('[processDts] paths:', paths)
-    logger.debug('[processDts] rootDir:', rootDir)
-    logger.debug('[processDts] absoluteBaseUrl:', absoluteBaseUrl)
-
     const extensions = Object.keys(require.extensions).concat(['.ts', '.d.ts'])
 
     // transform path alias

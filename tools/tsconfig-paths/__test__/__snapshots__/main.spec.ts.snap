@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`main simple: [<workspaceRootDir>/__test__/cases/main/simple/src/a.ts] resolved content 1`] = `
+"import { y } from './b'
+import { z } from './c'
+import yName from './b.ts.txt'
+import zName from './c.ts'
+
+
+export const x = 1
+export default 'x'
+"
+`;
+
+exports[`main simple: [<workspaceRootDir>/__test__/cases/main/simple/src/b.ts] resolved content 1`] = `
+"import { x } from './a'
+import { z } from './c'
+import xName from './a.ts.txt'
+import zName from './c.ts'
+
+
+export const y = 2
+export default 'y'
+"
+`;
+
+exports[`main simple: [<workspaceRootDir>/__test__/cases/main/simple/src/c.ts] resolved content 1`] = `
+"import { x } from './a'
+import { y } from './b'
+import xName from './a.ts.txt'
+import yName from './b.ts.txt'
+
+
+export const z = 3
+export default 'z'
+"
+`;
+
+exports[`main simple: log info 1`] = `
+Array [
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/main/simple[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mconfigPath: [[39m
+[38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/config.json\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-tsconfig-paths[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mencoding: utf-8[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mpattern: [[39m
+[38;2;188;162;31m  \\"src/**.ts\\"[39m
+[38;2;188;162;31m][39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mtsconfigPath: <workspaceRootDir>/__test__/cases/main/simple/tsconfig.json.txt[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/main/simple[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31msrcRootDir: <workspaceRootDir>/__test__/cases/main/simple/src[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31mdstRootDir: <workspaceRootDir>/__test__/cases/main/simple/src[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31m[createTsconfigPathsContext] workspace: <workspaceRootDir>/__test__/cases/main/simple[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31m[createTsconfigPathsContext] tsconfigRootDir: .[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31m[createTsconfigPathsContext] tsconfigBaseUrl: .[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m]: [38;2;188;162;31m[createTsconfigPathsContext] tsconfigPathAlias: {[39m
+[38;2;188;162;31m  \\"@/*\\": [[39m
+[38;2;188;162;31m    \\"src/*\\"[39m
+[38;2;188;162;31m  ][39m
+[38;2;188;162;31m}[39m
+[38;2;188;162;31m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;114;201;204mverbo[39m [90mbarusu-tsconfig-paths[39m]: [38;2;114;201;204m[processDts] correct module: (@/b) => (./b)[39m
+[38;2;114;201;204m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;114;201;204mverbo[39m [90mbarusu-tsconfig-paths[39m]: [38;2;114;201;204m[processDts] correct module: (@/c) => (./c)[39m
+[38;2;114;201;204m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;114;201;204mverbo[39m [90mbarusu-tsconfig-paths[39m]: [38;2;114;201;204m[processDts] correct module: (@/a) => (./a)[39m
+[38;2;114;201;204m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;114;201;204mverbo[39m [90mbarusu-tsconfig-paths[39m]: [38;2;114;201;204m[processDts] correct module: (@/c) => (./c)[39m
+[38;2;114;201;204m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;114;201;204mverbo[39m [90mbarusu-tsconfig-paths[39m]: [38;2;114;201;204m[processDts] correct module: (@/a) => (./a)[39m
+[38;2;114;201;204m[39m",
+  ],
+  Array [
+    "[90m$1<Date>[39m [[38;2;114;201;204mverbo[39m [90mbarusu-tsconfig-paths[39m]: [38;2;114;201;204m[processDts] correct module: (@/b) => (./b)[39m
+[38;2;114;201;204m[39m",
+  ],
+]
+`;
