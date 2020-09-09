@@ -7,12 +7,12 @@
 
   * Install
     ```shell
-    yarn add --dev @barusu/tool-sort-imports
+    yarn global add @barusu/tool-sort-imports
     ```
 
   * Usage
     ```shell
-    npx barusu-sort-imports 'src/**/*.ts'
+    barusu-sort-imports 'src/**/*.ts'
     ```
 
 # Options

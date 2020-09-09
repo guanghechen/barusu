@@ -1,5 +1,6 @@
 import type { Logger } from '@barusu/chalk-logger'
 import { Mocker } from './types'
+import { desensitize } from './util'
 
 
 export type LoggerMocker = Mocker<string[][]>
@@ -41,9 +42,7 @@ export function createLoggerMocker({
     cliInfos.push(args.map(x => {
       const text = typeof x === 'string' ? x : JSON.stringify(x)
       if (formatter != null) return formatter(text)
-      return text
-        .replace(workspaceRootDir, '<workspaceRootDir>')
-        .replace(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/, '$1<Date>')
+      return desensitize(text, workspaceRootDir)
     }))
   }
 

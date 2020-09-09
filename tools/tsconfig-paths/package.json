@@ -34,7 +34,7 @@
     "start": "rollup -w -c rollup.config.js",
     "prebuild": "yarn test && rimraf lib/",
     "build": "rollup -c rollup.config.js",
-    "test": "echo 'no test yet.'",
+    "test": "TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir .",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
@@ -45,12 +45,14 @@
     "@barusu/util-option": "^0.0.33",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0",
+    "globby": "^11.0.0",
     "tsconfig": "^7.0.0",
     "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.33",
     "@barusu/rollup-config": "^0.0.33",
+    "@barusu/util-jest": "^0.0.33",
     "rollup": "2.16.1"
   }
 }
