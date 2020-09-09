@@ -1,7 +1,7 @@
 import { x } from '@/a'
 import { z } from '@/c'
-import xName from './a.ts.txt'
-import zName from './c.ts'
+import xName from './a'
+import zName from './c'
 
 
 export const y = 2

@@ -3,8 +3,8 @@
 exports[`main simple: [<workspaceRootDir>/__test__/cases/main/simple/src/a.ts] resolved content 1`] = `
 "import { y } from './b'
 import { z } from './c'
-import yName from './b.ts.txt'
-import zName from './c.ts'
+import yName from './b'
+import zName from './c'
 
 
 export const x = 1
@@ -15,8 +15,8 @@ export default 'x'
 exports[`main simple: [<workspaceRootDir>/__test__/cases/main/simple/src/b.ts] resolved content 1`] = `
 "import { x } from './a'
 import { z } from './c'
-import xName from './a.ts.txt'
-import zName from './c.ts'
+import xName from './a'
+import zName from './c'
 
 
 export const y = 2
@@ -27,8 +27,8 @@ export default 'y'
 exports[`main simple: [<workspaceRootDir>/__test__/cases/main/simple/src/c.ts] resolved content 1`] = `
 "import { x } from './a'
 import { y } from './b'
-import xName from './a.ts.txt'
-import yName from './b.ts.txt'
+import xName from './a'
+import yName from './b'
 
 
 export const z = 3
