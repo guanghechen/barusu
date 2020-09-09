@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "tsconfig": [
+        "./node_modules/tsconfig"
+      ],
       "@barusu/chalk-logger": [
         "./packages/chalk-logger/src"
       ],

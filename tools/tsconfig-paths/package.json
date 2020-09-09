@@ -45,6 +45,7 @@
     "@barusu/util-option": "^0.0.33",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0",
+    "globby": "^11.0.0",
     "tsconfig": "^7.0.0",
     "tsconfig-paths": "^3.9.0"
   },

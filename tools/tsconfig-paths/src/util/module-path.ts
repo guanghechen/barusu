@@ -1,5 +1,4 @@
 import { createStaticImportOrExportRegexList } from '@barusu/tool-sort-imports'
-import { CommandConfigurationOptions } from '@barusu/util-cli'
 
 
 const esStaticImportOrExportRegexList: RegExp[] = createStaticImportOrExportRegexList('')
@@ -19,7 +18,7 @@ export function correctModulePath(
   for (let i = 0; i < esStaticImportOrExportRegexList.length; ++i) {
     const regex = esStaticImportOrExportRegexList[i]
     const pattern = esStaticImportOrExportPatternList[i]
-    result = input.replace(pattern, (rawString) => {
+    result = result.replace(pattern, (rawString) => {
       const m = regex.exec(rawString)!
       const { quote, moduleName } = m.groups!
       const p: string = transform(moduleName)
@@ -27,21 +26,4 @@ export function correctModulePath(
     })
   }
   return result
-}
-
-
-/**
- *
- */
-export interface CommandOptions extends CommandConfigurationOptions {
-  /**
-   * log level
-   * @default undefined
-   */
-  logLevel?: 'debug' | 'verbose' | 'info' | 'warn' | 'error' | string
-}
-
-
-export const defaultCommandOptions: CommandOptions = {
-  logLevel: undefined,
 }
