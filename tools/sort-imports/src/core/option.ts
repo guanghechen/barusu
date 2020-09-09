@@ -49,7 +49,6 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
       strategies
     )
 
-
   return {
     ...resolvedDefaultOptions,
   }

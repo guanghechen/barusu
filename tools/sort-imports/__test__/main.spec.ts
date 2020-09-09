@@ -51,5 +51,4 @@ describe('stat', function () {
       fsWriteFileSyncMock.mockRestore()
     })
   }
-
 })

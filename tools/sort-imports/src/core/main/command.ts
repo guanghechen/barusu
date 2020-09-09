@@ -81,13 +81,13 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
 
     command
       .usage('<workspace> [options]')
+      .arguments('<workspace>')
       .option('-P, --pattern <pattern>', 'glob pattern of source file', (val, acc: string[]) => acc.concat(val), [])
       .option('-e, --encoding <encoding>', 'encoding of source file')
       .option('--max-column <maxColumn>', 'maximum column width')
       .option('--indent <indent>', 'indent of source codes')
       .option('--quote <quote>', 'quotation marker surround the module path')
       .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
-      .arguments('<workspace>')
       .action(async function ([_workspaceDir], options: MainCommandOptions) {
         logger.setName('')
 
