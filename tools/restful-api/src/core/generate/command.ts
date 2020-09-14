@@ -70,9 +70,9 @@ interface SubCommandOptions extends GlobalCommandOptions {
 
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
-  apiConfigPath: [],
-  schemaRootPath: '__data-schemas',
-  clean: false,
+  apiConfigPath:    [],
+  schemaRootPath:   '__data-schemas',
+  clean:            false,
   muteMissingModel: false,
   ignoredDataTypes: [],
 }
@@ -169,16 +169,16 @@ export async function createRestfulApiGenerateContextFromOptions(
   options: SubCommandGenerateOptions,
 ): Promise<RestfulApiGenerateContext> {
   const context: RestfulApiGenerateContext = await createRestfulApiGenerateContext({
-    cwd: options.cwd,
-    workspace: options.workspace,
-    tsconfigPath: options.tsconfigPath,
-    schemaRootPath: options.schemaRootPath,
-    apiConfigPath: options.apiConfigPath,
-    encoding: options.encoding,
-    clean: options.clean,
-    muteMissingModel: options.muteMissingModel,
-    ignoredDataTypes: options.ignoredDataTypes,
-    additionalSchemaArgs: options.additionalSchemaArgs,
+    cwd:                       options.cwd,
+    workspace:                 options.workspace,
+    tsconfigPath:              options.tsconfigPath,
+    schemaRootPath:            options.schemaRootPath,
+    apiConfigPath:             options.apiConfigPath,
+    encoding:                  options.encoding,
+    clean:                     options.clean,
+    muteMissingModel:          options.muteMissingModel,
+    ignoredDataTypes:          options.ignoredDataTypes,
+    additionalSchemaArgs:      options.additionalSchemaArgs,
     additionalCompilerOptions: options.additionalCompilerOptions,
   })
   return context

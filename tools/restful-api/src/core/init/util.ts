@@ -25,12 +25,12 @@ export async function renderTemplates(
   } else {
     templateName = (await inquirer.prompt([
       {
-        type: 'list',
-        name: 'templateName',
-        default: availableTemplates[0],
-        message: 'Which mock server template preferred?',
-        choices: availableTemplates,
-        filter: x => toLowerCase(x).trim(),
+        type:        'list',
+        name:        'templateName',
+        default:     availableTemplates[0],
+        message:     'Which mock server template preferred?',
+        choices:     availableTemplates,
+        filter:      x => toLowerCase(x).trim(),
         transformer: (x: string) => toLowerCase(x).trim(),
       },
     ])).templateName

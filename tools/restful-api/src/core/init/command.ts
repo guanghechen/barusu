@@ -81,11 +81,11 @@ export async function createRestfulApiInitContextFromOptions(
   options: SubCommandInitOptions,
 ): Promise<RestfulApiInitContext> {
   const context: RestfulApiInitContext = createRestfulApiInitContext({
-    cwd: options.cwd,
-    workspace: options.workspace,
+    cwd:          options.cwd,
+    workspace:    options.workspace,
     tsconfigPath: options.tsconfigPath,
-    encoding: options.encoding,
-    plopBypass: options.plopBypass,
+    encoding:     options.encoding,
+    plopBypass:   options.plopBypass,
   })
   return context
 }

@@ -58,11 +58,11 @@ export function createRestfulApiInitContext(
   params: Params
 ): RestfulApiInitContext {
   const context: RestfulApiInitContext = {
-    cwd: params.cwd,
-    workspace: params.workspace,
+    cwd:          params.cwd,
+    workspace:    params.workspace,
     tsconfigPath: params.tsconfigPath,
-    encoding: params.encoding,
-    plopBypass: params.plopBypass,
+    encoding:     params.encoding,
+    plopBypass:   params.plopBypass,
   }
   return context
 }
