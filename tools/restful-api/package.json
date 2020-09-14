@@ -72,7 +72,7 @@
     "koa-json": "^2.0.2",
     "koa-send": "^5.0.1",
     "mockjs": "^1.1.0",
-    "typescript": "^3.8.2"
+    "typescript": "~4.0.2"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.34",

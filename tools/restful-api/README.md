@@ -264,8 +264,8 @@
         "@barusu/eslint-config": "^0.0.27",
         "@barusu/rollup-config": "^0.0.27",
         "nodemon": "^1.19.1",
-        "ts-node": "^8.8.2",
-        "typescript": "^3.8.2"
+        "ts-node": "~9.0.0",
+        "typescript": "~4.0.2"
       }
     }
     ```
