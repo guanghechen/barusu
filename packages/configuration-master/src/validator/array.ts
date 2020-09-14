@@ -45,7 +45,7 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
       if (valueSet.size !== value.length) {
         return result.addError({
           constraint: 'unique',
-          reason: `expected a unique array, but got (${ stringify(value) }).`
+          reason:     `expected a unique array, but got (${ stringify(value) }).`
         })
       }
     }

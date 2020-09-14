@@ -61,9 +61,9 @@ export abstract class DirTestCaseMaster extends TestCaseMaster<DirTestCase, DirT
     const self = this
     const scan = async (dir: string): Promise<DirTestCaseGroup> => {
       const caseGroup: DirTestCaseGroup = {
-        title: path.relative(self.caseRootDirectory, dir),
+        title:     path.relative(self.caseRootDirectory, dir),
         subGroups: [],
-        cases: [],
+        cases:     [],
       }
 
       if (this.checkIfTestDir(dir)) {

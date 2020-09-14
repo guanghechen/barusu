@@ -2,6 +2,34 @@ import path from 'path'
 
 
 /**
+ * Calc absolute path of p under the workspace
+ *
+ * @param workspace
+ * @param targetDir
+ */
+export function absoluteOfWorkspace(
+  workspace: string,
+  targetDir?: null,
+): undefined
+export function absoluteOfWorkspace(
+  workspace: string,
+  targetDir: string,
+): string
+export function absoluteOfWorkspace(
+  workspace: string,
+  targetDir?: string | null,
+): string | undefined
+export function absoluteOfWorkspace(
+  workspace: string,
+  targetDir?: string | null,
+): string | undefined {
+  if (targetDir == null) return undefined
+  const absoluteDir: string = path.resolve(workspace, targetDir)
+  return absoluteDir
+}
+
+
+/**
  * Calc relative path to workspace
  *
  * @param workspace
@@ -27,32 +55,4 @@ export function relativeOfWorkspace(
   if (absoluteDir == null) return undefined
   const relativeDir: string = path.relative(workspace, absoluteDir)
   return path.normalize(relativeDir)
-}
-
-
-/**
- * Calc absolute path of p under the workspace
- *
- * @param workspace
- * @param targetDir
- */
-export function absoluteOfWorkspace(
-  workspace: string,
-  targetDir?: null,
-): undefined
-export function absoluteOfWorkspace(
-  workspace: string,
-  targetDir: string,
-): string
-export function absoluteOfWorkspace(
-  workspace: string,
-  targetDir?: string | null,
-): string | undefined
-export function absoluteOfWorkspace(
-  workspace: string,
-  targetDir?: string | null,
-): string | undefined {
-  if (targetDir == null) return undefined
-  const absoluteDir: string = path.resolve(workspace, targetDir)
-  return absoluteDir
 }

@@ -40,7 +40,7 @@ export class RefDataValidator extends BaseDataValidator<T, V, DS> implements Dat
     if (xSchema == null) {
       return result.addError({
         constraint: '$ref',
-        reason: `not found DataSchema with $id(${ $ref })`
+        reason:     `not found DataSchema with $id(${ $ref })`
       })
     }
 

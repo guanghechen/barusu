@@ -57,12 +57,12 @@ interface SubMainCommandOptions extends GlobalCommandOptions {
 
 const __defaultCommandOptions: SubMainCommandOptions = {
   ...__defaultGlobalCommandOptions,
-  pattern: [],
-  encoding: 'utf-8',
-  maxColumn: 80,
-  indent: '  ',
-  quote: '\'',
-  semicolon: false,
+  pattern:     [],
+  encoding:    'utf-8',
+  maxColumn:   80,
+  indent:      '  ',
+  quote:       '\'',
+  semicolon:   false,
   moduleRanks: [],
 }
 
@@ -176,14 +176,14 @@ export async function createSortImportsContextFromOptions(
   options: MainCommandOptions,
 ): Promise<SortImportsContext> {
   const context: SortImportsContext = await createSortImportsContext({
-    cwd: options.cwd,
-    workspace: options.workspace,
-    encoding: options.encoding,
-    pattern: options.pattern,
-    maxColumn: options.maxColumn,
-    indent: options.indent,
-    quote: options.quote,
-    semicolon: options.semicolon,
+    cwd:         options.cwd,
+    workspace:   options.workspace,
+    encoding:    options.encoding,
+    pattern:     options.pattern,
+    maxColumn:   options.maxColumn,
+    indent:      options.indent,
+    quote:       options.quote,
+    semicolon:   options.semicolon,
     moduleRanks: options.moduleRanks,
   })
   return context

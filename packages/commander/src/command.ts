@@ -360,6 +360,7 @@ export class Command extends EventEmitter implements Command {
       const actionResult = fn.apply(this, actionArgs)
 
       // Remember result in case it is async. Assume parseAsync getting called on root.
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       let rootCommand: Command | null = this
       while (rootCommand.parent) {
         rootCommand = rootCommand.parent

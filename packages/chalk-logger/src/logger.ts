@@ -36,8 +36,8 @@ export class Logger {
   public readonly nameChalk = Logger.defaultNameChalk
   public readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
   public readonly flags = {
-    date: false,
-    inline: false,
+    date:     false,
+    inline:   false,
     colorful: true,
   }
 
@@ -209,7 +209,8 @@ export class Logger {
 
     let idx = 0
     let message: string = messageFormat.replace(this.placeholderRegex, m => {
-      const value = items[idx++]
+      const value = items[idx]
+      idx += 1
       if (value !== undefined) return value
       return m
     })

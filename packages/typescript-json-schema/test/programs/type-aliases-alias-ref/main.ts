@@ -1,3 +1,4 @@
+
 interface MyObject {
     prop: number;
 }

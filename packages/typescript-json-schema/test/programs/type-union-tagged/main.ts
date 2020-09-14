@@ -1,3 +1,4 @@
+
 interface Square {
     kind: "square";
     size: number;

@@ -31,7 +31,7 @@ export class NullDataSchemaCompiler
    * compile RawSchema to Schema
    * @param rawSchema
    */
-  public compile (rawSchema: RDS): NullDataSchemaCompileResult {
+  public compile(rawSchema: RDS): NullDataSchemaCompileResult {
     const result: NullDataSchemaCompileResult = super.compile(rawSchema)
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema

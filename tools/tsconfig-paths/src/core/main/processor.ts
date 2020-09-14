@@ -58,8 +58,8 @@ export class TsconfigPathsProcessor {
     }
 
     const files: string[] = await globby(context.pattern, {
-      cwd: context.workspace,
-      onlyFiles: true,
+      cwd:               context.workspace,
+      onlyFiles:         true,
       expandDirectories: false,
     })
 

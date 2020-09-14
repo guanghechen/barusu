@@ -35,7 +35,7 @@ export class ArrayDataSchemaCompiler
    * compile RawSchema to Schema
    * @param rawSchema
    */
-  public compile (rawSchema: RDS): ArrayDataSchemaCompileResult {
+  public compile(rawSchema: RDS): ArrayDataSchemaCompileResult {
     const result: ArrayDataSchemaCompileResult = super.compile(rawSchema)
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
@@ -49,7 +49,7 @@ export class ArrayDataSchemaCompiler
       if (!isArray(rawSchema.default)) {
         result.addError({
           constraint: 'default',
-          reason: `expected an array, but got (${ stringify(rawSchema.default) }).`
+          reason:     `expected an array, but got (${ stringify(rawSchema.default) }).`
         })
       } else {
         defaultValue = rawSchema.default
@@ -70,7 +70,7 @@ export class ArrayDataSchemaCompiler
       ...result.value!,
       default: defaultValue,
       items,
-      unique: Boolean(uniqueResult.value),
+      unique:  Boolean(uniqueResult.value),
     }
 
     return result.setValue(schema)

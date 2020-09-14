@@ -51,10 +51,10 @@ export class ApiItemParser {
     const self = this
     const apiConfig: ApiConfig = loadContextConfig<RawApiConfig, ApiConfig>({
       configurationMaster: self.configurationMaster,
-      schema: self.schema,
-      configPath: apiConfigFilePath,
-      encoding: encoding,
-      preprocess: (json: any) => self.extractRawApiConfig(json),
+      schema:              self.schema,
+      configPath:          apiConfigFilePath,
+      encoding:            encoding,
+      preprocess:          (json: any) => self.extractRawApiConfig(json),
     })
     const apiContext: ApiConfigContext = apiConfig
     for (const rawApiGroup of apiConfig.api) {
@@ -135,7 +135,7 @@ export class ApiItemParser {
 
     // calc request model name
     const requestModelNamePrefix: string = coverString(
-      parent != null ? parent.request.voNamePrefix: '',
+      parent != null ? parent.request.voNamePrefix : '',
       rawRequest.voNamePrefix)
     const requestModelNameSuffix: string = coverString(
       parent != null ? parent.request.voNameSuffix : 'RequestVo',
@@ -143,10 +143,10 @@ export class ApiItemParser {
 
     // calc response model name
     const responseModelNamePrefix: string = coverString(
-      parent != null ? parent.response.voNamePrefix: '',
+      parent != null ? parent.response.voNamePrefix : '',
       rawResponse.voNamePrefix)
     const responseModelNameSuffix: string = coverString(
-      parent != null ? parent.response.voNameSuffix: 'ResponseVo',
+      parent != null ? parent.response.voNameSuffix : 'ResponseVo',
       rawResponse.voNameSuffix)
 
     // calc request headers
@@ -166,22 +166,22 @@ export class ApiItemParser {
       : undefined
 
     const group: ResolvedApiItemGroup = {
-      name: data.name,
+      name:     data.name,
       fullName: toKebabCase(parent != null ? parent.fullName + '/' + data.name : data.name),
-      active: coverBoolean(true, data.active),
-      title: coverString(data.name, data.title, isNotEmptyString),
-      desc: coverString(data.desc || '', data.description, isNotEmptyString),
-      path: (parent != null ? parent.path : '') + data.path,
-      method: coverString(defaultMethod as any, data.method, isNotEmptyString) as HttpVerb,
-      request: {
+      active:   coverBoolean(true, data.active),
+      title:    coverString(data.name, data.title, isNotEmptyString),
+      desc:     coverString(data.desc || '', data.description, isNotEmptyString),
+      path:     (parent != null ? parent.path : '') + data.path,
+      method:   coverString(defaultMethod as any, data.method, isNotEmptyString) as HttpVerb,
+      request:  {
         voNamePrefix: requestModelNamePrefix,
         voNameSuffix: requestModelNameSuffix,
-        headers: requestHeaders,
+        headers:      requestHeaders,
       },
       response: {
         voNamePrefix: responseModelNamePrefix,
         voNameSuffix: responseModelNameSuffix,
-        headers: responseHeaders,
+        headers:      responseHeaders,
       },
       items,
       subGroups,
@@ -300,23 +300,23 @@ export class ApiItemParser {
       : undefined
 
     const ResolvedApiItem: ResolvedApiItem = {
-      name: data.name,
-      active: coverBoolean(true, data.active),
-      title: coverString(data.name, data.title, isNotEmptyString),
-      desc: coverString(data.desc || '', data.description, isNotEmptyString),
-      path: coverString(defaultPath, data.fullPath, isNotEmptyString),
-      method: coverString(defaultMethod || HttpVerb.GET, data.method, isNotEmptyString) as HttpVerb,
+      name:    data.name,
+      active:  coverBoolean(true, data.active),
+      title:   coverString(data.name, data.title, isNotEmptyString),
+      desc:    coverString(data.desc || '', data.description, isNotEmptyString),
+      path:    coverString(defaultPath, data.fullPath, isNotEmptyString),
+      method:  coverString(defaultMethod || HttpVerb.GET, data.method, isNotEmptyString) as HttpVerb,
       request: (isObject(rawRequest) && rawRequest.voName == null && rawRequest.voFullName == null)
         ? { headers: requestHeaders }
         : {
-          voName: requestModelName,
+          voName:     requestModelName,
           schemaPath: requestSchemaPath,
-          headers: requestHeaders,
+          headers:    requestHeaders,
         },
       response: {
-        voName: responseModelName,
+        voName:     responseModelName,
         schemaPath: responseSchemaPath,
-        headers: responseHeaders,
+        headers:    responseHeaders,
       }
     }
 

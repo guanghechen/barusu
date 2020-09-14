@@ -31,7 +31,7 @@ export class BooleanDataSchemaCompiler
    * compile RawSchema to Schema
    * @param rawSchema
    */
-  public compile (rawSchema: RDS): BooleanDataSchemaCompileResult {
+  public compile(rawSchema: RDS): BooleanDataSchemaCompileResult {
     const result: BooleanDataSchemaCompileResult = super.compile(rawSchema)
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema

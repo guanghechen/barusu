@@ -27,22 +27,7 @@ export function collectAllDependencies(
 ): string[] {
   const result: string[] = []
 
-  // collect from package.json
-  if (packageJsonPath != null) {
-    collectDependencies(packageJsonPath)
-  }
-
-  // collect from dependencies
-  if (additionalDependencies != null) {
-    for (const dependency of additionalDependencies) {
-      followDependency(dependency)
-    }
-  }
-
-  return result
-
-
-  function followDependency(dependency: string): void {
+  const followDependency = (dependency: string): void => {
     if (result.includes(dependency)) return
     result.push(dependency)
 
@@ -65,10 +50,11 @@ export function collectAllDependencies(
       return
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     collectDependencies(nextPackageJsonPath)
   }
 
-  function collectDependencies(dependencyPackageJsonPath: string): void {
+  const collectDependencies = (dependencyPackageJsonPath: string): void => {
     if (!fs.existsSync(dependencyPackageJsonPath)) {
       console.warn(chalk.yellow(`no such file or directory: ${ dependencyPackageJsonPath }`))
       return
@@ -84,4 +70,18 @@ export function collectAllDependencies(
       }
     }
   }
+
+  // collect from package.json
+  if (packageJsonPath != null) {
+    collectDependencies(packageJsonPath)
+  }
+
+  // collect from dependencies
+  if (additionalDependencies != null) {
+    for (const dependency of additionalDependencies) {
+      followDependency(dependency)
+    }
+  }
+
+  return result
 }

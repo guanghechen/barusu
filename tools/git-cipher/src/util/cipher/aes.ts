@@ -105,7 +105,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     const { algorithm, key, iv } = this
     if (key == null || iv == null) {
       throw {
-        code: ErrorCode.NULL_POINTER_ERROR,
+        code:    ErrorCode.NULL_POINTER_ERROR,
         message: 'iv / key is null'
       }
     }
@@ -134,7 +134,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     const { algorithm, key, iv } = this
     if (key == null || iv == null) {
       throw {
-        code: ErrorCode.NULL_POINTER_ERROR,
+        code:    ErrorCode.NULL_POINTER_ERROR,
         message: 'iv / key is null'
       }
     }
@@ -166,7 +166,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     const { algorithm, key, iv } = this
     if (key == null || iv == null) {
       throw {
-        code: ErrorCode.NULL_POINTER_ERROR,
+        code:    ErrorCode.NULL_POINTER_ERROR,
         message: 'iv / key is null'
       }
     }
@@ -195,7 +195,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     const { algorithm, key, iv } = this
     if (key == null || iv == null) {
       throw {
-        code: ErrorCode.NULL_POINTER_ERROR,
+        code:    ErrorCode.NULL_POINTER_ERROR,
         message: 'iv / key is null'
       }
     }

@@ -20,7 +20,8 @@ export class Level {
     headerChalk: ColorfulChalk,
     contentChalk: ColorfulChalk
   ) {
-    this.rank = ++Level.currentRank
+    Level.currentRank += 1
+    this.rank = Level.currentRank
     this.desc = desc
     this.headerChalk = headerChalk
     this.contentChalk = contentChalk

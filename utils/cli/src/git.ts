@@ -5,6 +5,21 @@ import { Logger } from './types'
 
 
 /**
+ * Create a git commit with all file changes
+ *
+ * @param execaOptions
+ * @param message
+ */
+export async function createCommitAll(
+  execaOptions: execa.Options,
+  message: string
+): Promise<void> {
+  await execa('git', ['add', '-A'], execaOptions)
+  await execa('git', ['commit', '-m', message], execaOptions)
+}
+
+
+/**
  * Create initial commit
  * @param execaOptions
  * @param plopBypass
@@ -34,8 +49,8 @@ export async function createInitialCommit(
   } else {
     doInitialCommit = (await inquirer.prompt([
       {
-        type: 'confirm',
-        name: 'doInitialCommit',
+        type:    'confirm',
+        name:    'doInitialCommit',
         default: false,
         message: 'Create initial commit?',
       },
@@ -52,19 +67,4 @@ export async function createInitialCommit(
   // create init commit
   await execa('git', ['init'], execaOptions)
   await createCommitAll(execaOptions, ':tada:  initialize.')
-}
-
-
-/**
- * Create a git commit with all file changes
- *
- * @param execaOptions
- * @param message
- */
-export async function createCommitAll(
-  execaOptions: execa.Options,
-  message: string
-): Promise<void> {
-  await execa('git', ['add', '-A'], execaOptions)
-  await execa('git', ['commit', '-m', message], execaOptions)
 }

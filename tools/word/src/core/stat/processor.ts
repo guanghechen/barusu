@@ -25,8 +25,8 @@ export class WordStatProcessor {
       ...new Set(
         context.filePath.concat(
           await globby(context.filePattern, {
-            cwd: context.workspace,
-            onlyFiles: true,
+            cwd:               context.workspace,
+            onlyFiles:         true,
             expandDirectories: false,
           }))
           .map(p => absoluteOfWorkspace(context.workspace, p))

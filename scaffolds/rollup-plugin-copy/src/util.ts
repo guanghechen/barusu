@@ -71,8 +71,8 @@ export async function generateCopyTarget(
   const destFilePath = path.join(destinationFolder, renameTarget(base, rename))
   const result: RollupPluginCopyTargetItem = {
     src,
-    dest: destFilePath,
-    renamed: Boolean(rename),
+    dest:        destFilePath,
+    renamed:     Boolean(rename),
     transformed: false
   }
 

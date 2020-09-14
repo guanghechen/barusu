@@ -1,3 +1,6 @@
+# 0.0.34
+* Based on the commit Id `d8877e227b9f03f1fc25c85037bd0e3a5029e2e5` of the [original repository](https://github.com/YousefED/typescript-json-schema)
+
 # 0.42.4 (2020-01-08)
 * fix: comments of properties of non-native type should override comments on that reffed type
 

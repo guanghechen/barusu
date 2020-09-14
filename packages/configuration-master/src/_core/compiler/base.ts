@@ -44,9 +44,9 @@ export abstract class BaseDataSchemaCompiler<
     const requiredResult = result.compileConstraint<boolean>('required', coverBoolean, false)
 
     const schema: DS = {
-      type: rawSchema.type,
-      required: Boolean(requiredResult.value),
-      default: rawSchema.default,
+      type:        rawSchema.type,
+      required:    Boolean(requiredResult.value),
+      default:     rawSchema.default,
       description: rawSchema.description,
     } as DS
 

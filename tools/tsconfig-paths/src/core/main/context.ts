@@ -119,13 +119,13 @@ export async function createTsconfigPathsContext(
   logger.debug('[createTsconfigPathsContext] tsconfigPathAlias:', tsconfigPathAlias)
 
   const context: TsconfigPathsContext = {
-    cwd: params.cwd,
+    cwd:          params.cwd,
     workspace,
-    encoding: params.encoding,
-    pattern: params.pattern,
+    encoding:     params.encoding,
+    pattern:      params.pattern,
     tsconfigPath: params.tsconfigPath,
-    srcRootDir: params.srcRootDir,
-    dstRootDir: params.dstRootDir,
+    srcRootDir:   params.srcRootDir,
+    dstRootDir:   params.dstRootDir,
     tsconfigData: config,
     tsconfigRootDir,
     tsconfigBaseUrl,

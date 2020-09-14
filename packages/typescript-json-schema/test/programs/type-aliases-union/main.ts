@@ -1,3 +1,4 @@
+
 type BasicArray = (string | number)[];
 
 export interface MyObject {

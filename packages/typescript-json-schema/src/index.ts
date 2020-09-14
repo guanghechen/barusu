@@ -13,17 +13,24 @@ export { JsonSchemaGenerator } from './schema-generator'
 export { Definition, PartialArgs, SymbolRef } from './types'
 
 
-export function getProgramFromFiles(files: string[], jsonCompilerOptions: any = {}, basePath = './'): ts.Program {
+export function getProgramFromFiles(
+  files: string[],
+  jsonCompilerOptions: any = {},
+  basePath = './',
+): ts.Program {
   // use built-in default options
-  const compilerOptions = ts.convertCompilerOptionsFromJson(jsonCompilerOptions, basePath).options
+  const { options: compilerOptions } = ts.convertCompilerOptionsFromJson(
+    jsonCompilerOptions, basePath)
+
   const options: ts.CompilerOptions = {
-    noEmit: true,
-    emitDecoratorMetadata: true,
+    noEmit:                 true,
+    emitDecoratorMetadata:  true,
     experimentalDecorators: true,
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.CommonJS,
-    allowUnusedLabels: true,
+    target:                 ts.ScriptTarget.ES5,
+    module:                 ts.ModuleKind.CommonJS,
+    allowUnusedLabels:      true,
   }
+
   for (const k in compilerOptions) {
     if (compilerOptions.hasOwnProperty(k)) {
       options[k] = compilerOptions[k]
@@ -33,7 +40,11 @@ export function getProgramFromFiles(files: string[], jsonCompilerOptions: any = 
 }
 
 
-export function buildGenerator(program: ts.Program, args: PartialArgs = {}, onlyIncludeFiles?: string[]): JsonSchemaGenerator | null {
+export function buildGenerator(
+  program: ts.Program,
+  args: PartialArgs = {},
+  onlyIncludeFiles?: string[],
+): JsonSchemaGenerator | null {
   const isUserFile = (file: ts.SourceFile): boolean => {
     if (onlyIncludeFiles === undefined) {
       return !file.hasNoDefaultLib
@@ -62,10 +73,11 @@ export function buildGenerator(program: ts.Program, args: PartialArgs = {}, only
       const relativePath = path.relative(workingDir, sourceFile.fileName)
 
       function inspect(node: ts.Node, checker: ts.TypeChecker) {
-        if (node.kind === ts.SyntaxKind.ClassDeclaration
-          || node.kind === ts.SyntaxKind.InterfaceDeclaration
-          || node.kind === ts.SyntaxKind.EnumDeclaration
-          || node.kind === ts.SyntaxKind.TypeAliasDeclaration
+        if (
+          node.kind === ts.SyntaxKind.ClassDeclaration ||
+          node.kind === ts.SyntaxKind.InterfaceDeclaration ||
+          node.kind === ts.SyntaxKind.EnumDeclaration ||
+          node.kind === ts.SyntaxKind.TypeAliasDeclaration
         ) {
           const symbol: ts.Symbol = (node as any).symbol
           const nodeType = checker.getTypeAtLocation(node)
@@ -84,7 +96,8 @@ export function buildGenerator(program: ts.Program, args: PartialArgs = {}, only
 
           const baseTypes = nodeType.getBaseTypes() || []
           for (const baseType of baseTypes) {
-            const baseName = checker.typeToString(baseType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
+            const baseName = checker.typeToString(
+              baseType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
             if (!inheritingTypes[baseName]) {
               inheritingTypes[baseName] = []
             }
@@ -97,19 +110,20 @@ export function buildGenerator(program: ts.Program, args: PartialArgs = {}, only
       inspect(sourceFile, typeChecker)
     })
 
-    return new JsonSchemaGenerator(symbols, allSymbols, userSymbols, inheritingTypes, typeChecker, settings)
-  } else {
-    diagnostics.forEach((diagnostic) => {
-      const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
-      if (diagnostic.file) {
-        const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
-        console.error(`${ diagnostic.file.fileName } (${ line + 1 },${ character + 1 }): ${ message }`)
-      } else {
-        console.error(message)
-      }
-    })
-    return null
+    return new JsonSchemaGenerator(
+      symbols, allSymbols, userSymbols, inheritingTypes, typeChecker, settings)
   }
+
+  diagnostics.forEach((diagnostic) => {
+    const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+    if (diagnostic.file) {
+      const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!)
+      console.error(`${ diagnostic.file.fileName } (${ line + 1 },${ character + 1 }): ${ message }`)
+    } else {
+      console.error(message)
+    }
+  })
+  return null
 }
 
 
@@ -124,7 +138,18 @@ export function generateSchema(
 
   // All types in file(s)
   if (fullTypeName === '*') {
-    return generator.getSchemaForSymbols(generator.getMainFileSymbols(program, onlyIncludeFiles))
+    const symbols = generator.getMainFileSymbols(program, onlyIncludeFiles)
+    return generator.getSchemaForSymbols(symbols)
+  }
+
+  if (args.uniqueNames) {
+    // Find the hashed type name to use as the root object
+    const matchingSymbols = generator.getSymbols(fullTypeName)
+    if (matchingSymbols.length === 1) {
+      return generator.getSchemaForSymbol(matchingSymbols[0].name)
+    } else {
+      throw new Error(`${ matchingSymbols.length } definitions found for requested type "${ fullTypeName }".`)
+    }
   }
 
   // Use specific type as root object
@@ -156,8 +181,8 @@ export function programFromConfig(
   restOptions.noEmit = true
 
   const program = ts.createProgram({
-    rootNames: onlyIncludeFiles || configParseResult.fileNames,
-    options: restOptions,
+    rootNames:         onlyIncludeFiles || configParseResult.fileNames,
+    options:           restOptions,
     projectReferences: configParseResult.projectReferences
   })
   return program

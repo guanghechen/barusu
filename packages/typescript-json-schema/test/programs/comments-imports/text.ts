@@ -1,5 +1,4 @@
-import { Color } from './color'
-
+import { Color } from "./color";
 
 /**
  * Description of Text interface.

@@ -60,7 +60,7 @@ export interface CipherFactory {
  *
  */
 export abstract class BaseCipher implements Cipher {
-  public constructor () {
+  public constructor() {
     eventBus.on(EventTypes.EXITING, () => this.cleanup())
   }
 

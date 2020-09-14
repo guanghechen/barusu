@@ -89,7 +89,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.minLength != null && schema.minLength > value.length) {
       return result.addError({
         constraint: 'minLength',
-        reason: `minLength expected is ${ schema.minLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
+        reason:     `minLength expected is ${ schema.minLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
       })
     }
 
@@ -97,7 +97,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.maxLength != null && schema.maxLength < value.length) {
       return result.addError({
         constraint: 'maxLength',
-        reason: `maxLength expected is ${ schema.maxLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
+        reason:     `maxLength expected is ${ schema.maxLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
       })
     }
 
@@ -105,7 +105,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.pattern != null && !schema.pattern.test(value)) {
       return result.addError({
         constraint: 'pattern',
-        reason: `expected value pattern is (${ stringify(schema.pattern.source) }), but got (${ stringify(value) }).`
+        reason:     `expected value pattern is (${ stringify(schema.pattern.source) }), but got (${ stringify(value) }).`
       })
     }
 
@@ -195,7 +195,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.enum != null && schema.enum.length > 0 && schema.enum.indexOf(value) < 0) {
       return result.addError({
         constraint: 'enum',
-        reason: `expected value should in the ${ stringify(schema.enum) }, but got (${ stringify(value) }).`
+        reason:     `expected value should in the ${ stringify(schema.enum) }, but got (${ stringify(value) }).`
       })
     }
 

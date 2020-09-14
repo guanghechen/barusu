@@ -1,3 +1,4 @@
+
 export interface MyObject {
     number: number;
     string: string;

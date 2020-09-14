@@ -1,5 +1,4 @@
-import './other'
-
+import "./other";
 
 class MyObject {
   is: "MyObject_1";

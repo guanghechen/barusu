@@ -11,14 +11,19 @@ import { getTypeDefinition } from './type-definition'
  *
  * @param context
  * @param clazzType
+ * @param definition
  */
-export function getClassDefinition(context: Readonly<JsonSchemaContext>, clazzType: ts.Type): Definition {
+export function getClassDefinition(
+  context: Readonly<JsonSchemaContext>,
+  clazzType: ts.Type,
+  definition: Definition,
+): void {
   const node = clazzType.getSymbol()!.getDeclarations()![0]
-  const definition: Definition = {}
 
   if (context.args.typeOfKeyword && node.kind === ts.SyntaxKind.FunctionType) {
+    // eslint-disable-next-line no-param-reassign
     definition.typeof = 'function'
-    return definition
+    return
   }
 
   const clazz = node as ts.ClassDeclaration
@@ -43,11 +48,13 @@ export function getClassDefinition(context: Readonly<JsonSchemaContext>, clazzTy
     const oneOf = inheritingTypes.map((typename) => {
       return getTypeDefinition(context, context.allSymbols[typename])
     })
+    // eslint-disable-next-line no-param-reassign
     definition.oneOf = oneOf
-  }
-  else {
+  } else {
     if (clazz.members) {
-      const indexSignatures = clazz.members == null ? [] : clazz.members.filter(x => x.kind === ts.SyntaxKind.IndexSignature)
+      const indexSignatures = clazz.members == null
+        ? []
+        : clazz.members.filter(x => x.kind === ts.SyntaxKind.IndexSignature)
       if (indexSignatures.length === 1) {
         // for case 'array-types'
         const indexSignature = indexSignatures[0] as ts.IndexSignatureDeclaration
@@ -63,12 +70,17 @@ export function getClassDefinition(context: Readonly<JsonSchemaContext>, clazzTy
         const type = context.checker.getTypeAtLocation(indexSignature.type!)
         const def = getTypeDefinition(context, type, undefined, 'anyOf')
         if (isStringIndexed) {
+          // eslint-disable-next-line no-param-reassign
           definition.type = 'object'
+          // eslint-disable-next-line no-param-reassign
           definition.additionalProperties = def
-        }
-        else {
+        } else {
+          // eslint-disable-next-line no-param-reassign
           definition.type = 'array'
-          definition.items = def
+          if (!definition.items) {
+            // eslint-disable-next-line no-param-reassign
+            definition.items = def
+          }
         }
       }
     }
@@ -83,17 +95,25 @@ export function getClassDefinition(context: Readonly<JsonSchemaContext>, clazzTy
     }, {})
 
     if (definition.type === undefined) {
+      // eslint-disable-next-line no-param-reassign
       definition.type = 'object'
     }
+
     if (definition.type === 'object' && Object.keys(propertyDefinitions).length > 0) {
+      // eslint-disable-next-line no-param-reassign
       definition.properties = propertyDefinitions
     }
+
     if (context.args.defaultProps) {
+      // eslint-disable-next-line no-param-reassign
       definition.defaultProperties = []
     }
+
     if (context.args.noExtraProps && definition.additionalProperties === undefined) {
+      // eslint-disable-next-line no-param-reassign
       definition.additionalProperties = false
     }
+
     if (context.args.propOrder) {
       // propertyOrder is non-standard, but useful:
       // https://github.com/json-schema/json-schema/issues/87
@@ -101,26 +121,29 @@ export function getClassDefinition(context: Readonly<JsonSchemaContext>, clazzTy
         order.push(prop.getName())
         return order
       }, [])
+      // eslint-disable-next-line no-param-reassign
       definition.propertyOrder = propertyOrder
     }
+
     if (context.args.required) {
       const requiredProps = props.reduce((required: string[], prop: ts.Symbol) => {
         const def = {}
         parseCommentsIntoDefinition(context, prop, def, {})
-        if (!(prop.flags & ts.SymbolFlags.Optional)
-          && !(prop.flags & ts.SymbolFlags.Method)
-          && !(prop as any).mayBeUndefined
-          // eslint-disable-next-line no-prototype-builtins
-          && !def.hasOwnProperty('ignore')) {
+        if (
+          !(prop.flags & ts.SymbolFlags.Optional) &&
+          !(prop.flags & ts.SymbolFlags.Method) &&
+          !(prop as any).mayBeUndefined &&
+          !def.hasOwnProperty('ignore')
+        ) {
           required.push(prop.getName())
         }
         return required
       }, [])
+
       if (requiredProps.length > 0) {
+        // eslint-disable-next-line no-param-reassign
         definition.required = unique<string>(requiredProps).sort()
       }
     }
   }
-
-  return definition
 }
