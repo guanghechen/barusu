@@ -57,6 +57,7 @@
     "subcommands",
     "tada",
     "tsbuildinfo",
+    "typedefs",
     "typeof",
     "verbo",
     "ymal"

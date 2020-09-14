@@ -81,8 +81,8 @@ export function createAsyncActionReducer<
         return {
           ...state,
           loading: false,
-          data: payload !== undefined ? payload : null,
-          error: null,
+          data:    payload !== undefined ? payload : null,
+          error:   null,
         }
       }
 
@@ -97,8 +97,8 @@ export function createAsyncActionReducer<
         return {
           ...state,
           loading: false,
-          data: null,
-          error: payload !== undefined ? payload : null,
+          data:    null,
+          error:   payload !== undefined ? payload : null,
         }
       }
 

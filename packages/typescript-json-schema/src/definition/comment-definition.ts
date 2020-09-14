@@ -34,7 +34,7 @@ export function parseCommentsIntoDefinition(
 
   // jsdocs are separate from comments
   const jsDocs = symbol.getJsDocTags()
-  const tjsDocRegex= new RegExp(context.REGEX_TJS_JSDOC)
+  const tjsDocRegex = new RegExp(context.REGEX_TJS_JSDOC)
   const groupJsDocRegex = new RegExp(context.REGEX_GROUP_JSDOC)
   for (const doc of jsDocs) {
     let [name, text]: [string, string] = [doc.name, doc.text || '']

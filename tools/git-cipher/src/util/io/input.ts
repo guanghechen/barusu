@@ -20,14 +20,17 @@ export function inputOneLine(
 
     // on fulfilled
     const onResolved = () => {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       stdin.removeListener('data', onData)
       stdin.removeListener('end', onResolved)
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       stdin.removeListener('error', onRejected)
       resolve(chunkAcc!)
     }
 
     // on rejected
     const onRejected = (error: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       stdin.removeListener('data', onData)
       stdin.removeListener('end', onResolved)
       stdin.removeListener('error', onRejected)

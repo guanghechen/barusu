@@ -23,12 +23,12 @@ export function getProgramFromFiles(
     jsonCompilerOptions, basePath)
 
   const options: ts.CompilerOptions = {
-    noEmit: true,
-    emitDecoratorMetadata: true,
+    noEmit:                 true,
+    emitDecoratorMetadata:  true,
     experimentalDecorators: true,
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.CommonJS,
-    allowUnusedLabels: true,
+    target:                 ts.ScriptTarget.ES5,
+    module:                 ts.ModuleKind.CommonJS,
+    allowUnusedLabels:      true,
   }
 
   for (const k in compilerOptions) {
@@ -181,8 +181,8 @@ export function programFromConfig(
   restOptions.noEmit = true
 
   const program = ts.createProgram({
-    rootNames: onlyIncludeFiles || configParseResult.fileNames,
-    options: restOptions,
+    rootNames:         onlyIncludeFiles || configParseResult.fileNames,
+    options:           restOptions,
     projectReferences: configParseResult.projectReferences
   })
   return program

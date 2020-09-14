@@ -73,9 +73,9 @@ export function performCharacterStatistics(
     }
 
     detail = {
-      char: c,
-      count: 1,
-      blank: /\s/u.test(c),
+      char:        c,
+      count:       1,
+      blank:       /\s/u.test(c),
       punctuation: /\p{P}/u.test(c),
     }
     detailMap[c] = detail
@@ -170,12 +170,12 @@ export function formatCharacterStat(stat: CharacterStat): string {
   const length = stat.total.toString().length
   const format = (n: number) => n.toString().padStart(length)
   let output: string = (
-    '======================================================'      + '\n' +
-    '                   total: ' + format(stat.total)             + '\n' +
-    '             blank total: ' + format(stat.blankTotal)        + '\n' +
-    '       punctuation total: ' + format(stat.punctuationTotal)  + '\n' +
-    '            unique total: ' + format(stat.uniqueTotal)       + '\n' +
-    '      unique blank total: ' + format(stat.uniqueBlankTotal)  + '\n' +
+    '======================================================' + '\n' +
+    '                   total: ' + format(stat.total) + '\n' +
+    '             blank total: ' + format(stat.blankTotal) + '\n' +
+    '       punctuation total: ' + format(stat.punctuationTotal) + '\n' +
+    '            unique total: ' + format(stat.uniqueTotal) + '\n' +
+    '      unique blank total: ' + format(stat.uniqueBlankTotal) + '\n' +
     'unique punctuation total: ' + format(stat.uniquePunctuationTotal) + '\n'
   )
 
@@ -185,7 +185,7 @@ export function formatCharacterStat(stat: CharacterStat): string {
       '                 ' + '-'.padStart(13 + length, '-') + '\n'
     )
     for (const detail of stat.details) {
-      output += JSON.stringify(detail.char).padStart(24) + ': ' +  format(detail.count) + '\n'
+      output += JSON.stringify(detail.char).padStart(24) + ': ' + format(detail.count) + '\n'
     }
   }
   return output

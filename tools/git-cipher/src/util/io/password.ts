@@ -57,7 +57,7 @@ export async function inputPassword(
 
   if (password == null) {
     const error: CustomError = {
-      code: ErrorCode.BAD_PASSWORD,
+      code:    ErrorCode.BAD_PASSWORD,
       message: 'too many times failed to get answer of ' +
         `'${ question.replace(/^[\s:]*([\s\S]+?)[\s:]*$/, '$1') }'`,
     }

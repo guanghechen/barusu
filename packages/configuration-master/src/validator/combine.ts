@@ -136,7 +136,7 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements
             .addHandleResult('oneOf', tmpResult)
             .setValue(xValidateResult.value)
         }
-        ++count
+        count += 1
       }
 
       // 检查是否存在错误，若存在错误，需要合并错误信息

@@ -64,7 +64,7 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
     if (schema.required && data === undefined) {
       result.addError({
         constraint: 'required',
-        reason: `required, but got (${ stringify(data) }).`
+        reason:     `required, but got (${ stringify(data) }).`
       })
     }
 

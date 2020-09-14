@@ -43,7 +43,7 @@ export class StringDataSchemaCompiler
    * compile RawSchema to Schema
    * @param rawSchema
    */
-  public compile (rawSchema: RDS): StringDataSchemaCompileResult {
+  public compile(rawSchema: RDS): StringDataSchemaCompileResult {
     const result: StringDataSchemaCompileResult = super.compile(rawSchema)
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
@@ -62,7 +62,7 @@ export class StringDataSchemaCompiler
       if (formatResult.hasError) {
         result.addError({
           constraint: 'format',
-          reason: formatResult.errorSummary,
+          reason:     formatResult.errorSummary,
         })
       } else {
         format = []
@@ -71,7 +71,7 @@ export class StringDataSchemaCompiler
           if (!StringFormatSet.has(f)) {
             result.addWarning({
               constraint: 'format',
-              reason: `unsupported format: ${ f }`
+              reason:     `unsupported format: ${ f }`
             })
             continue
           }
@@ -90,7 +90,7 @@ export class StringDataSchemaCompiler
       if (transformResult.hasError) {
         result.addError({
           constraint: 'transform',
-          reason: transformResult.errorSummary,
+          reason:     transformResult.errorSummary,
         })
       } else {
         transform = []
@@ -99,7 +99,7 @@ export class StringDataSchemaCompiler
           if (!StringTransformTypeSet.has(f)) {
             result.addWarning({
               constraint: 'transform',
-              reason: `unsupported transform: ${ f }`
+              reason:     `unsupported transform: ${ f }`
             })
             continue
           }
@@ -114,7 +114,7 @@ export class StringDataSchemaCompiler
       if (minLengthResult.value < 0) {
         result.addError({
           constraint: 'minLength',
-          reason: 'minLength must be a non-negative integer',
+          reason:     'minLength must be a non-negative integer',
         })
       }
     }
@@ -123,12 +123,12 @@ export class StringDataSchemaCompiler
       if (maxLengthResult.value <= 0) {
         result.addError({
           constraint: 'maxLength',
-          reason: 'maxLength must be a positive integer',
+          reason:     'maxLength must be a positive integer',
         })
       } else if (minLengthResult.value != null && minLengthResult.value > maxLengthResult.value) {
         result.addError({
           constraint: 'minLength',
-          reason: 'minLength must be less than or equal maxLength',
+          reason:     'minLength must be less than or equal maxLength',
         })
       }
     }
@@ -136,13 +136,13 @@ export class StringDataSchemaCompiler
     // StringDataSchema
     const schema: DS = {
       ...result.value!,
-      default: defaultValueResult.value,
+      default:   defaultValueResult.value,
       minLength: minLengthResult.value,
       maxLength: maxLengthResult.value,
-      pattern: patternResult.value,
+      pattern:   patternResult.value,
       format,
       transform,
-      enum: enumValueResult.value,
+      enum:      enumValueResult.value,
     }
 
     return result.setValue(schema)
@@ -157,10 +157,10 @@ export class StringDataSchemaCompiler
       ...super.toJSON(schema),
       minLength: schema.minLength,
       maxLength: schema.maxLength,
-      pattern: schema.pattern == null ? schema.pattern : schema.pattern.source,
-      format: schema.format,
+      pattern:   schema.pattern == null ? schema.pattern : schema.pattern.source,
+      format:    schema.format,
       transform: schema.transform,
-      enum: schema.enum,
+      enum:      schema.enum,
     }
     return json
   }
@@ -174,10 +174,10 @@ export class StringDataSchemaCompiler
       ...super.parseJSON(json),
       minLength: json.minLength,
       maxLength: json.maxLength,
-      pattern: json.pattern == null ? json.pattern : new RegExp(json.pattern),
-      format: json.format,
+      pattern:   json.pattern == null ? json.pattern : new RegExp(json.pattern),
+      format:    json.format,
       transform: json.transform,
-      enum: json.enum,
+      enum:      json.enum,
     }
     return schema
   }

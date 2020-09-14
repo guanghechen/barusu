@@ -114,9 +114,9 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
       }
 
       const caseGroup: SingleFileTestCaseGroup = {
-        title: path.relative(self.caseRootDirectory, dir),
+        title:     path.relative(self.caseRootDirectory, dir),
         subGroups: [],
-        cases: [],
+        cases:     [],
       }
 
       for (const filename of files) {

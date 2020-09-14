@@ -113,7 +113,7 @@ export class JsonSchemaContext {
 
   public getSchemaForSymbols(symbolNames: string[], includeReffedDefinitions = true): Definition {
     const root = {
-      $schema: 'http://json-schema.org/draft-07/schema#',
+      $schema:     'http://json-schema.org/draft-07/schema#',
       definitions: {},
     }
 
@@ -228,7 +228,8 @@ export class JsonSchemaContext {
     const id = (type as any).id as number
     let name = originName
     for (let order = 1; this.typeIdsByName.get(name) != null && this.typeIdsByName.get(name) !== id;) {
-      name = `${ originName }_${ order++ }`
+      name = `${ originName }_${ order }`
+      order += 1
     }
     this.typeNamesById.set(id, name)
     this.typeIdsByName.set(name, id)

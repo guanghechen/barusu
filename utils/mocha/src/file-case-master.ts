@@ -88,9 +88,9 @@ export abstract class FileTestCaseMaster<T, D>
     const self = this
     const scan = async (dir: string): Promise<FileTestCaseGroup> => {
       const caseGroup: FileTestCaseGroup = {
-        title: path.relative(self.caseRootDirectory, dir),
+        title:     path.relative(self.caseRootDirectory, dir),
         subGroups: [],
-        cases: [],
+        cases:     [],
       }
 
       const files: string[] = await fs.readdir(dir)

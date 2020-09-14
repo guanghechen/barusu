@@ -49,11 +49,11 @@ interface SubCommandOptions extends GlobalCommandOptions {
 
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
-  filePath: [],
-  filePattern: [],
-  showDetails: 0,
+  filePath:          [],
+  filePattern:       [],
+  showDetails:       0,
   showDetailsPretty: false,
-  showSummaryOnly: false,
+  showSummaryOnly:   false,
 }
 
 
@@ -154,14 +154,14 @@ export async function createWordStatContextFromOptions(
   options: SubCommandStatOptions,
 ): Promise<WordStatContext> {
   const context: WordStatContext = await createWordStatContext({
-    cwd: options.cwd,
-    workspace: options.workspace,
-    encoding: options.encoding,
-    filePath: options.filePath,
-    filePattern: options.filePattern,
-    showDetails: options.showDetails,
+    cwd:               options.cwd,
+    workspace:         options.workspace,
+    encoding:          options.encoding,
+    filePath:          options.filePath,
+    filePattern:       options.filePattern,
+    showDetails:       options.showDetails,
     showDetailsPretty: options.showDetailsPretty,
-    showSummaryOnly: options.showSummaryOnly,
+    showSummaryOnly:   options.showSummaryOnly,
   })
   return context
 }

@@ -37,7 +37,7 @@ export class CombineDataSchemaCompiler
    * compile RawSchema to Schema
    * @param rawSchema
    */
-  public compile (rawSchema: RDS): CombineDataSchemaCompileResult {
+  public compile(rawSchema: RDS): CombineDataSchemaCompileResult {
     const result: CombineDataSchemaCompileResult = super.compile(rawSchema)
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
@@ -49,7 +49,7 @@ export class CombineDataSchemaCompiler
     if (strategyResult.value == null || !combineStrategies.includes(strategyResult.value)) {
       result.addError({
         constraint: 'strategy',
-        reason: `unknown strategy: ${ stringify(rawSchema.strategy) }`
+        reason:     `unknown strategy: ${ stringify(rawSchema.strategy) }`
       })
       strategyResult.setValue(CombineStrategy.ALL)
     }
@@ -85,14 +85,14 @@ export class CombineDataSchemaCompiler
     if ((allOf == null || allOf.length <= 0) && (anyOf == null || anyOf.length <= 0) && (oneOf == null || oneOf.length <= 0)) {
       return result.addError({
         constraint: 'type',
-        reason: 'CombineDataSchema must be set at least one valid value of properties: `allOf`, `anyOf`, `oneOf`.'
+        reason:     'CombineDataSchema must be set at least one valid value of properties: `allOf`, `anyOf`, `oneOf`.'
       })
     }
 
     // CombineDataSchema
     const schema: DS = {
       ...result.value!,
-      default: defaultValue,
+      default:  defaultValue,
       strategy: strategyResult.value!,
       allOf,
       anyOf,

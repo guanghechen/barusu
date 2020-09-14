@@ -15,7 +15,7 @@ import { logger } from './logger'
  * Calc absolute path of configs
  * @param filePath
  */
-export function calcConfigFilePath (...filePath: string[]): string {
+export function calcConfigFilePath(...filePath: string[]): string {
   return path.resolve(configRootDir, ...filePath)
 }
 
@@ -43,7 +43,7 @@ export function loadConfigSchema(configurationMaster: ConfigurationMaster, schem
  *  - encoding      encoding of config file
  *  - preParse      preprocessor of config file
  */
-export function loadContextConfig<R, T> (params: {
+export function loadContextConfig<R, T>(params: {
   configurationMaster: ConfigurationMaster,
   schema: DSchema,
   configPath: string,

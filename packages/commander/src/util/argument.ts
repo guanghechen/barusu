@@ -61,8 +61,8 @@ export function parseArgument(arg: string): Argument | null {
 
   const argDetail: Argument = {
     name,
-    required: leftTag === '<',
-    variadic: variadic != null,
+    required:     leftTag === '<',
+    variadic:     variadic != null,
     friendlyDesc: leftTag + (variadic || '') + name + rightTag,
   }
   return argDetail

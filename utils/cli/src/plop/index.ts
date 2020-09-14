@@ -9,41 +9,8 @@ import {
 } from './types'
 
 
+// eslint-disable-next-line new-cap
 const progressSpinner = Ora()
-
-
-/**
- * Execute plop
- *
- * @param plop
- * @param logger
- */
-export async function runPlop(
-  plop: NodePlopAPI,
-  logger: ColorfulChalkLogger,
-  bypassArr?: string[],
-  defaultAnswers: Record<string, unknown> = {},
-): Promise<boolean> {
-  const generators = plop.getGeneratorList()
-
-  if (generators.length <= 0) {
-    // no generators?! there's clearly something wrong here
-    logger.error('[PLOP] No generator found in plopfile')
-    return false
-  }
-
-  let generator: PlopGenerator | null = null
-  const generatorNames = generators.map(v => v.name)
-
-  if (generators.length === 1) {
-    generator = plop.getGenerator(generatorNames[0])
-  } else {
-    generator = await choosePlopGenerator(generators, plop.getWelcomeMessage())
-  }
-
-  await doThePlop(generator, bypassArr, defaultAnswers)
-  return true
-}
 
 
 /**
@@ -91,4 +58,38 @@ export async function doThePlop(
   progressSpinner.start()
   await generator.runActions(answers, { onSuccess, onFailure, onComment })
   progressSpinner.stop()
+}
+
+
+/**
+ * Execute plop
+ *
+ * @param plop
+ * @param logger
+ */
+export async function runPlop(
+  plop: NodePlopAPI,
+  logger: ColorfulChalkLogger,
+  bypassArr?: string[],
+  defaultAnswers: Record<string, unknown> = {},
+): Promise<boolean> {
+  const generators = plop.getGeneratorList()
+
+  if (generators.length <= 0) {
+    // no generators?! there's clearly something wrong here
+    logger.error('[PLOP] No generator found in plopfile')
+    return false
+  }
+
+  let generator: PlopGenerator | null = null
+  const generatorNames = generators.map(v => v.name)
+
+  if (generators.length === 1) {
+    generator = plop.getGenerator(generatorNames[0])
+  } else {
+    generator = await choosePlopGenerator(generators, plop.getWelcomeMessage())
+  }
+
+  await doThePlop(generator, bypassArr, defaultAnswers)
+  return true
 }

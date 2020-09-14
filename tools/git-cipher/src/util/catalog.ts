@@ -88,9 +88,9 @@ export class WorkspaceCatalog {
 
   public constructor(params: WorkspaceCatalogParams) {
     this.cipher = params.cipher
-    this.indexFileEncoding= coverString(
+    this.indexFileEncoding = coverString(
       'utf-8', params.indexFileEncoding, isNotEmptyString)
-    this.indexContentEncoding= coverString(
+    this.indexContentEncoding = coverString(
       'base64', params.indexContentEncoding, isNotEmptyString) as BufferEncoding
     this.plaintextRootDir = params.plaintextRootDir
     this.ciphertextRootDir = params.ciphertextRootDir
@@ -107,7 +107,7 @@ export class WorkspaceCatalog {
   public async load(indexFilepath: string): Promise<void> {
     if (!fs.existsSync(indexFilepath)) {
       throw {
-        code: ErrorCode.FILEPATH_NOT_FOUND,
+        code:    ErrorCode.FILEPATH_NOT_FOUND,
         message: `cannot find index file (${ indexFilepath })`
       }
     }

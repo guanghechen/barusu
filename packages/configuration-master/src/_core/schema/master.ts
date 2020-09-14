@@ -30,7 +30,7 @@ export class DefinitionDataSchemaMaster {
   protected readonly pathPrefix: string
 
   public constructor(pathPrefix?: string) {
-    this.pathPrefix =  pathPrefix || '#/definitions/'
+    this.pathPrefix = pathPrefix || '#/definitions/'
     this.rawSchemaIdMap = new Map()
     this.rawSchemaPathMap = new Map()
   }
@@ -129,10 +129,10 @@ export class TopDataSchemaMaster {
 
   public constructor(schema?: TDSchema, pathPrefix?: string) {
     this.schema = schema
-    this.pathPrefix =  pathPrefix || '#/definitions/'
+    this.pathPrefix = pathPrefix || '#/definitions/'
   }
 
-  public setSchema (schema: TDSchema) {
+  public setSchema(schema: TDSchema) {
     this.schema = schema
   }
 

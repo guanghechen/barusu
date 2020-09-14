@@ -82,14 +82,14 @@ export async function createWordStatContext(
   params: Params
 ): Promise<WordStatContext> {
   const context: WordStatContext = {
-    cwd: params.cwd,
-    workspace: params.workspace,
-    encoding: params.encoding,
-    filePath: params.filePath,
-    filePattern: params.filePattern,
-    showDetails: params.showDetails,
+    cwd:               params.cwd,
+    workspace:         params.workspace,
+    encoding:          params.encoding,
+    filePath:          params.filePath,
+    filePattern:       params.filePattern,
+    showDetails:       params.showDetails,
     showDetailsPretty: params.showDetailsPretty,
-    showSummaryOnly: params.showSummaryOnly,
+    showSummaryOnly:   params.showSummaryOnly,
   }
   return context
 }

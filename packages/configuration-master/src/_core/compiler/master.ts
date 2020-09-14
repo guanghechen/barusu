@@ -89,7 +89,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
-        reason: `\`schema.type\` must be a string, but got (${ stringify(rawSchema.type) }).`
+        reason:     `\`schema.type\` must be a string, but got (${ stringify(rawSchema.type) }).`
       })
     }
 
@@ -99,7 +99,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown \`schema.type\`: ${ stringify(rawSchema.type) }.`
+        reason:     `unknown \`schema.type\`: ${ stringify(rawSchema.type) }.`
       })
     }
 
@@ -235,7 +235,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       // compile to combine
       const { definitions } = rawSchema as TDSchema
       return {
-        type: 'combine',
+        type:  'combine',
         definitions,
         anyOf: rawSchema.type.map(t => ({
           ...rawSchema,

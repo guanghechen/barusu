@@ -99,16 +99,16 @@ export async function createSortImportsContext(
   params: Params
 ): Promise<SortImportsContext> {
   const context: SortImportsContext = {
-    cwd: params.cwd,
-    workspace: params.workspace,
-    encoding: params.encoding,
-    pattern: params.pattern,
-    maxColumn: params.maxColumn,
-    indent: params.indent,
-    quote: params.quote,
-    semicolon: params.semicolon,
+    cwd:         params.cwd,
+    workspace:   params.workspace,
+    encoding:    params.encoding,
+    pattern:     params.pattern,
+    maxColumn:   params.maxColumn,
+    indent:      params.indent,
+    quote:       params.quote,
+    semicolon:   params.semicolon,
     moduleRanks: params.moduleRanks,
-    typeRank: params.typeRank != null
+    typeRank:    params.typeRank != null
       ? params.typeRank
       : { 'import': 1, 'export': 2 }
   }

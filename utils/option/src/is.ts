@@ -155,7 +155,7 @@ export function isEmptyObject(v: Record<string, unknown> | unknown): v is Record
  * Test whether v is a non-empty object
  * @param v
  */
-export function isNotEmptyObject (v: Record<string, unknown> | unknown): v is Record<string, unknown> {
+export function isNotEmptyObject(v: Record<string, unknown> | unknown): v is Record<string, unknown> {
   return isObject(v) && Object.getOwnPropertyNames(v).length > 0
 }
 

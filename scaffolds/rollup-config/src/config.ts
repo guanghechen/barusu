@@ -122,47 +122,47 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
   }
 
   const config: rollup.RollupOptions = {
-    input: manifest.source,
+    input:  manifest.source,
     output: [
       manifest.main && {
-        file: manifest.main,
-        format: 'cjs',
-        exports: 'named',
+        file:      manifest.main,
+        format:    'cjs',
+        exports:   'named',
         sourcemap: useSourceMap,
       },
       manifest.module && {
-        file: manifest.module,
-        format: 'es',
-        exports: 'named',
+        file:      manifest.module,
+        format:    'es',
+        exports:   'named',
         sourcemap: useSourceMap,
       }
     ].filter(Boolean) as rollup.OutputOptions[],
     external: externals.sort().filter((x, i, A) => A.indexOf(x) === i),
-    plugins: [
+    plugins:  [
       peerDepsExternal(peerDepsExternalOptions),
       nodeResolve({
-        browser: true,
+        browser:        true,
         preferBuiltins: false,
         ...nodeResolveOptions,
       }),
       eslint({
-        fix: true,
+        fix:          true,
         throwOnError: true,
-        include: ['src/**/*{.ts,.tsx}'],
-        exclude: ['*.css', '*.styl', '*.styl.d.ts'],
+        include:      ['src/**/*{.ts,.tsx}'],
+        exclude:      ['*.css', '*.styl', '*.styl.d.ts'],
         ...eslintOptions,
       }),
       json({
-        indent: '  ',
+        indent:       '  ',
         namedExports: true,
         ...jsonOptions,
       }),
       typescript({
-        clean: true,
-        typescript: require('typescript'),
+        clean:                     true,
+        typescript:                require('typescript'),
         rollupCommonJSResolveHack: true,
-        include: ['src/**/*{.ts,.tsx}'],
-        tsconfigOverride: {
+        include:                   ['src/**/*{.ts,.tsx}'],
+        tsconfigOverride:          {
           compilerOptions: {
             declarationMap: useSourceMap,
           }

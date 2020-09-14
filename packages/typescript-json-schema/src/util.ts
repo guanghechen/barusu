@@ -41,7 +41,7 @@ export function unique<T>(arr: T[]): T[] {
  * 尝试将 value 作为 JSON 字符串解析；若解析失败，返回原字符串
  * @param value
  */
-export function parseJson (value: string): any | string {
+export function parseJson(value: string): any | string {
   try {
     return JSON.parse(value)
   } catch (error) {
@@ -84,7 +84,7 @@ export function convertMapToObject<T>(m: Map<string, T>): { [key: string]: T } {
  * checks whether a type is a tuple type.
  */
 export function resolveTupleType(propertyType: ts.Type): ts.TupleTypeNode | null {
-  if (!propertyType.getSymbol() && (propertyType.getFlags() & ts.TypeFlags.Object && (propertyType as ts.ObjectType ).objectFlags & ts.ObjectFlags.Reference)) {
+  if (!propertyType.getSymbol() && (propertyType.getFlags() & ts.TypeFlags.Object && (propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference)) {
     return (propertyType as ts.TypeReference).target as any
   }
   if (!(propertyType.getFlags() & ts.TypeFlags.Object && (propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Tuple)) {
@@ -95,7 +95,7 @@ export function resolveTupleType(propertyType: ts.Type): ts.TupleTypeNode | null
 
 
 const simpleTypesAllowedProperties = {
-  type: true,
+  type:        true,
   description: true
 }
 

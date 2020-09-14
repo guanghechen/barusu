@@ -42,7 +42,7 @@ export class DataValidatorMaster implements DataValidatorContext {
    * @param type
    * @param dataValidatorFactory
    */
-  public registerValidatorFactory (type: string, dataValidatorFactory: DVFactory): void {
+  public registerValidatorFactory(type: string, dataValidatorFactory: DVFactory): void {
     if (this.validatorFactoryMap.has(type)) return
     this.validatorFactoryMap.set(type, dataValidatorFactory)
   }
@@ -55,7 +55,7 @@ export class DataValidatorMaster implements DataValidatorContext {
    * @param type
    * @param dataValidatorFactory
    */
-  public replaceValidatorFactory (type: string, dataValidatorFactory: DVFactory) {
+  public replaceValidatorFactory(type: string, dataValidatorFactory: DVFactory) {
     this.validatorFactoryMap.set(type, dataValidatorFactory)
   }
 
@@ -70,7 +70,7 @@ export class DataValidatorMaster implements DataValidatorContext {
       const result: DVResult = new DataValidationResult(schema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown schema type: ${ stringify(schema.type) }.`
+        reason:     `unknown schema type: ${ stringify(schema.type) }.`
       })
     }
 

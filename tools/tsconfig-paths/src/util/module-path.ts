@@ -2,7 +2,7 @@ import { createStaticImportOrExportRegexList } from '@barusu/tool-sort-imports'
 
 
 const esStaticImportOrExportRegexList: RegExp[] = createStaticImportOrExportRegexList('')
-const esStaticImportOrExportPatternList: RegExp[]  = createStaticImportOrExportRegexList('g')
+const esStaticImportOrExportPatternList: RegExp[] = createStaticImportOrExportRegexList('g')
 
 
 /**
