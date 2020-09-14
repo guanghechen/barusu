@@ -14,9 +14,23 @@ export interface SymbolRef {
 
 
 export type RedefinedFields =
-  | 'type' | 'items' | 'additionalItems' | 'contains' | 'properties'
-  | 'patternProperties' | 'additionalProperties' | 'dependencies' | 'propertyNames'
-  | 'if' | 'then' | 'else' | 'allOf' | 'anyOf' | 'oneOf' | 'not' | 'definitions'
+  | 'type'
+  | 'items'
+  | 'additionalItems'
+  | 'contains'
+  | 'properties'
+  | 'patternProperties'
+  | 'additionalProperties'
+  | 'dependencies'
+  | 'propertyNames'
+  | 'if'
+  | 'then'
+  | 'else'
+  | 'allOf'
+  | 'anyOf'
+  | 'oneOf'
+  | 'not'
+  | 'definitions'
 
 export type DefinitionOrBoolean = Definition | boolean
 

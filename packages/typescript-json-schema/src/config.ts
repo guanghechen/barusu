@@ -24,13 +24,15 @@ export function getDefaultArgs(): SchemaArgs {
     uniqueNames: false,
     rejectDateType: false,
     id: '',
-    defaultNumberType: 'number'
+    defaultNumberType: 'number',
   }
 }
 
 
 /**
- * default validation keywords for json-schema
+ * Default JSDoc keywords that should be used to annotate the JSON schema.
+ *
+ * Many of these validation keywords are defined here: http://json-schema.org/latest/json-schema-validation.html
  */
 export const defaultValidationKeywords = Object.freeze({
   multipleOf: true,               // 6.1.
@@ -41,12 +43,12 @@ export const defaultValidationKeywords = Object.freeze({
   maxLength: true,                // 6.6.
   minLength: true,                // 6.7.
   pattern: true,                  // 6.8.
-  // items: true,                    // 6.9.
+  items: true,                    // 6.9.
   // additionalItems: true,          // 6.10.
   maxItems: true,                 // 6.11.
   minItems: true,                 // 6.12.
   uniqueItems: true,              // 6.13.
-  // contains: true,                 // 6.14.
+  contains: true,                 // 6.14.
   maxProperties: true,            // 6.15.
   minProperties: true,            // 6.16.
   // required: true,                 // 6.17.  This is not required. It is auto-generated.
@@ -63,6 +65,7 @@ export const defaultValidationKeywords = Object.freeze({
   // oneOf: true,                    // 6.28.
   // not: true,                      // 6.29.
   examples: true,                    // Draft 6 (draft-handrews-json-schema-validation-01)
+
   ignore: true,
   description: true,
   format: true,
@@ -70,3 +73,10 @@ export const defaultValidationKeywords = Object.freeze({
   $ref: true,
   id: true
 })
+
+
+export const subDefinitions = {
+  items: true,
+  additionalProperties: true,
+  contains: true,
+}

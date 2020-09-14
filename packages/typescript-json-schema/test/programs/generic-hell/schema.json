@@ -90,7 +90,7 @@
             ],
             "type": "object"
         },
-        "SomeAlias<\"alias\">": {
+        "SomeGeneric<\"alias\",\"alias\">": {
             "properties": {
                 "a": {
                     "enum": [
@@ -157,7 +157,7 @@
             "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
         },
         "someAlias": {
-            "$ref": "#/definitions/SomeAlias<\"alias\">"
+            "$ref": "#/definitions/SomeGeneric<\"alias\",\"alias\">"
         },
         "someGeneric": {
             "$ref": "#/definitions/SomeGeneric<1,2>"

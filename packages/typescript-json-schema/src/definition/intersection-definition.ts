@@ -5,15 +5,20 @@ import { getTypeDefinition } from './type-definition'
 
 
 /**
- * 获取联合类型的定义信息
- * @param params
+ * Get definition of intersect type (|)
+ *
+ * @param context
+ * @param intersectionType
+ * @param definition
  */
 export function getIntersectionDefinition(
   context: Readonly<JsonSchemaContext>,
-  intersectionType: ts.IntersectionType
-): Definition {
+  intersectionType: ts.IntersectionType,
+  definition: Definition,
+): void {
   const schemas: Definition[] = []
   const simpleTypes: string[] = []
+
   const addSimpleType = (type: string) => {
     if (!simpleTypes.includes(type)) simpleTypes.push(type)
   }
@@ -29,12 +34,10 @@ export function getIntersectionDefinition(
     if (keys.length === 1 && keys[0] === 'type') {
       if (typeof def.type !== 'string') {
         console.error('Expected only a simple type.')
-      }
-      else {
+      } else {
         addSimpleType(def.type)
       }
-    }
-    else {
+    } else {
       schemas.push(def)
     }
   }
@@ -44,16 +47,15 @@ export function getIntersectionDefinition(
     schemas.push({ type })
   }
 
-  const definition: Definition = {}
   if (schemas.length === 1) {
     for (const k in schemas[0]) {
-      // eslint-disable-next-line no-prototype-builtins
       if (schemas[0].hasOwnProperty(k)) {
+        // eslint-disable-next-line no-param-reassign
         definition[k] = schemas[0][k]
       }
     }
   } else {
+    // eslint-disable-next-line no-param-reassign
     definition.allOf = schemas
   }
-  return definition
 }

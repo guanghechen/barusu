@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
     "Builtins",
+    "CASELABEL",
     "Encryptor",
     "Lerna",
     "Subcommand",
@@ -13,6 +14,7 @@
     "browserslistrc",
     "cacheable",
     "ciphertext",
+    "clazz",
     "colorette",
     "cond",
     "deduplication",
@@ -27,6 +29,7 @@
     "globby",
     "iife",
     "ioptions",
+    "jsdocs",
     "kase",
     "kases",
     "linewrap",
@@ -47,6 +50,7 @@
     "recognised",
     "rimraf",
     "rollup",
+    "sandboxvar",
     "sourcemap",
     "styl",
     "subcommands",

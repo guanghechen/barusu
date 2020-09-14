@@ -1,3 +1,4 @@
+
 /**
  * Description of Vector3D, a type alias to a array of integers with length 3
  * If run without useTypeAliasRef, this comment should be ignored but

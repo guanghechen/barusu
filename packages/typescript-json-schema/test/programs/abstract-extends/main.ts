@@ -1,5 +1,4 @@
-import { AbstractBase } from '../abstract-class/main'
-
+import { AbstractBase } from "../abstract-class/main";
 
 class MyObjectFromAbstract extends AbstractBase {
     doNotInclude(): void { }

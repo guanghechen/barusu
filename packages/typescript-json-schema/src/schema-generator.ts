@@ -56,24 +56,42 @@ export class JsonSchemaGenerator {
     return this.context.getMainFileSymbols(program, onlyIncludeFiles)
   }
 
-  public getClassDefinition(clazzType: ts.Type): Definition {
-    return getClassDefinition(this.context, clazzType)
+  public getClassDefinition(
+    clazzType: ts.Type,
+    definition: Definition = {},
+  ): Definition {
+    getClassDefinition(this.context, clazzType, definition)
+    return definition
   }
 
-  public getEnumDefinition(clazzType: ts.Type): Definition {
-    return getEnumDefinition(this.context, clazzType)
+  public getEnumDefinition(
+    clazzType: ts.Type,
+    definition: Definition = {},
+  ): Definition {
+    getEnumDefinition(this.context, clazzType, definition)
+    return definition
   }
 
-  public getIntersectionDefinition(intersectionType: ts.IntersectionType): Definition {
-    return getIntersectionDefinition(this.context, intersectionType)
+  public getIntersectionDefinition(
+    intersectionType: ts.IntersectionType,
+    definition: Definition = {},
+  ): Definition {
+    getIntersectionDefinition(this.context, intersectionType, definition)
+    return definition
   }
 
   public getDefinitionForProperty(prop: ts.Symbol, node: ts.Node): Definition | null {
     return getDefinitionForProperty(this.context, prop, node)
   }
 
-  public getUnionDefinition(unionType: ts.UnionType, prop: ts.Symbol, unionModifier: string): Definition {
-    return getUnionDefinition(this.context, unionType, prop, unionModifier)
+  public getUnionDefinition(
+    unionType: ts.UnionType,
+    prop: ts.Symbol,
+    unionModifier: string,
+    definition: Definition = {},
+  ): Definition {
+    getUnionDefinition(this.context, unionType, prop, unionModifier, definition)
+    return definition
   }
 
   public getTypeDefinition(
@@ -87,8 +105,13 @@ export class JsonSchemaGenerator {
     return getTypeDefinition(this.context, type, asRef, unionModifier, prop, reffedType, pairedSymbol)
   }
 
-  public getDefinitionForRootType(propertyType: ts.Type, reffedType: ts.Symbol): Definition {
-    return getDefinitionForRootType(this.context, propertyType, reffedType)
+  public getDefinitionForRootType(
+    propertyType: ts.Type,
+    reffedType: ts.Symbol,
+    definition: Definition = {},
+  ): Definition {
+    getDefinitionForRootType(this.context, propertyType, reffedType, definition)
+    return definition
   }
 
   public parseCommentsIntoDefinition(

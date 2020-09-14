@@ -6,25 +6,29 @@ import { getTypeDefinition } from './type-definition'
 
 
 /**
- * 获取联合类型的定义信息
+ * Get definition of intersect type (&)
  *
  * @param context
  * @param unionType
  * @param prop
  * @param unionModifier
+ * @param definition
  */
 export function getUnionDefinition(
   context: Readonly<JsonSchemaContext>,
   unionType: ts.UnionType,
   prop: ts.Symbol,
   unionModifier: string,
-): Definition {
+  definition: Definition,
+): void {
   const enumValues: PrimitiveType[] = []
   const simpleTypes: string[] = []
   const schemas: Definition[] = []
+
   const addEnumValue = (value: PrimitiveType) => {
     if (!enumValues.includes(value)) enumValues.push(value)
   }
+
   const addSimpleType = (type: string) => {
     if (!simpleTypes.includes(type)) simpleTypes.push(type)
   }
@@ -47,8 +51,7 @@ export function getUnionDefinition(
     if (keys.length === 1 && keys[0] === 'type') {
       if (typeof def.type !== 'string') {
         console.error('Expected only a simple type.')
-      }
-      else {
+      } else {
         addSimpleType(def.type)
       }
     } else {
@@ -58,23 +61,23 @@ export function getUnionDefinition(
 
   if (enumValues.length > 0) {
     // if the values are true and false, just add 'boolean' as simple type
-    const isOnlyBooleans = enumValues.length === 2
-      && typeof enumValues[0] === 'boolean'
-      && typeof enumValues[1] === 'boolean'
-      && enumValues[0] !== enumValues[1]
+    const isOnlyBooleans =
+      enumValues.length === 2 &&
+      typeof enumValues[0] === 'boolean' &&
+      typeof enumValues[1] === 'boolean' &&
+      enumValues[0] !== enumValues[1]
+
     if (isOnlyBooleans) {
       addSimpleType('boolean')
-    }
-    else {
+    } else {
       const enumSchema: Definition = { enum: enumValues.sort() }
+
       // if all values are of the same primitive type, add a 'type' field to the schema
       if (enumValues.every((x) => typeof x === 'string')) {
         enumSchema.type = 'string'
-      }
-      else if (enumValues.every((x) => typeof x === 'number')) {
+      } else if (enumValues.every((x) => typeof x === 'number')) {
         enumSchema.type = 'number'
-      }
-      else if (enumValues.every((x) => typeof x === 'boolean')) {
+      } else if (enumValues.every((x) => typeof x === 'boolean')) {
         enumSchema.type = 'boolean'
       }
       schemas.push(enumSchema)
@@ -86,17 +89,16 @@ export function getUnionDefinition(
     schemas.push({ type })
   }
 
-  const definition: Definition = {}
   if (schemas.length === 1) {
     for (const k in schemas[0]) {
       // eslint-disable-next-line no-prototype-builtins
       if (schemas[0].hasOwnProperty(k)) {
+        // eslint-disable-next-line no-param-reassign
         definition[k] = schemas[0][k]
       }
     }
-  }
-  else {
+  } else {
+    // eslint-disable-next-line no-param-reassign
     definition[unionModifier] = schemas
   }
-  return definition
 }

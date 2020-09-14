@@ -1,3 +1,4 @@
+
 interface MyObject {
     alias: MyAlias;
     self: MyObject;

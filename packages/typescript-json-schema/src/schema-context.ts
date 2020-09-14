@@ -18,12 +18,22 @@ import {
  * @member userSymbols        all symbols for declarations of classes, interfaces, enums, and type aliases defined in non-default-lib TS files
  * @member typeNamesById      map from type IDs to type names
  * @member typeIdsByName      map from type names to type IDs
- * @member reffedDefinitions  map from symbol name to definitions
- * @member reffedDependencies map from symbol names to its refDependencies symbols' name
+ * @member schemaOverrides
+ * @member reffedDefinitions
+ * @member reffedDependencies
  */
 export class JsonSchemaContext {
+  /**
+   * This map only holds explicit schema overrides. This helps differentiate between
+   * user defined schema overrides and generated definitions.
+   */
+  private readonly schemaOverrides: Map<string, Definition> = new Map()
+
+  /**
+   * This map holds references to all reffed definitions, including schema
+   * overrides and generated definitions.
+   */
   private readonly reffedDefinitions: Map<string, Definition> = new Map()
-  private readonly reffedDefinitionNamesMap: Map<string, string[]> = new Map()
   private readonly typeNamesById: Map<number, string> = new Map()
   private readonly typeIdsByName: Map<string, number> = new Map()
   public readonly inheritingTypes: Readonly<ObjectMap<string[]>>
@@ -35,8 +45,8 @@ export class JsonSchemaContext {
   public readonly validationKeywords: Readonly<ValidationKeywords>
   public readonly userValidationKeywords: Readonly<ValidationKeywords>
   public readonly REGEX_FILE_NAME_OR_SPACE = /(\bimport\(".*?"\)|".*?")\.| /
-  public readonly REGEX_TJS_JSDOC_NAME = /^TJS(?:-([\w]+))?$/
-  public readonly REGEX_TJS_JSDOC_CONTENT = /^\s*(\S|\S[\s\S]*\S)\s*$/
+  public readonly REGEX_TJS_JSDOC = /^-([\w]+)\s+(\S|\S[\s\S]*\S)\s*$/
+  public readonly REGEX_GROUP_JSDOC = /^[.]?([\w]+)\s+(\S|\S[\s\S]*\S)\s*$/
   public readonly REGEX_LINE_BREAK = /\r\n/
   public readonly NUMERIC_INDEX_PATTERN = '^[0-9]+$'
 
@@ -68,8 +78,13 @@ export class JsonSchemaContext {
     this.reffedDefinitions.set(name, definition)
   }
 
+  public getSchemaOverride(name: string): Definition | undefined {
+    return this.schemaOverrides.get(name)
+  }
+
   public setSchemaOverride(symbolName: string, schema: Definition): void {
     this.setReffedDefinition(symbolName, schema)
+    this.schemaOverrides.set(symbolName, schema)
   }
 
   public getSchemaForSymbol(symbolName: string, includeReffedDefinitions = true): Definition {
@@ -86,12 +101,10 @@ export class JsonSchemaContext {
       this.userSymbols[symbolName] || undefined
     )
     if (this.args.ref && includeReffedDefinitions && this.reffedDefinitions.size > 0) {
-      const reffedDefinitionNames: string[] = this.collectReffedDefinitionNames(symbolName, def)
-      def.definitions = reffedDefinitionNames.reverse().reduce((acc, k) => {
-        // eslint-disable-next-line no-param-reassign
-        acc[k] = this.getReffedDefinition(k)
-        return acc
-      }, {})
+      def.definitions = {}
+      for (const [key, val] of this.reffedDefinitions) {
+        def.definitions[key] = val
+      }
     }
     def['$schema'] = 'http://json-schema.org/draft-07/schema#'
     if (this.args.id) def['$id'] = this.args.id
@@ -160,18 +173,23 @@ export class JsonSchemaContext {
    * @param program
    * @param onlyIncludeFiles
    */
-  public getMainFileSymbols(program: ts.Program, onlyIncludeFiles?: string[]): string[] {
+  public getMainFileSymbols(
+    program: ts.Program,
+    onlyIncludeFiles?: string[],
+  ): string[] {
     function includeFile(file: ts.SourceFile): boolean {
       if (onlyIncludeFiles == null) return !file.isDeclarationFile
       return onlyIncludeFiles.includes(file.fileName)
     }
+
     const files = program.getSourceFiles().filter(includeFile)
     if (files.length) {
-      return this.getUserSymbols().filter(key => {
+      return Object.keys(this.userSymbols).filter(key => {
         const symbol = this.userSymbols[key]
         if (!symbol || !symbol.declarations || !symbol.declarations.length) return false
+
         let node: ts.Node = symbol.declarations[0]
-        while (node && node.parent) node = node.parent
+        while (node?.parent) node = node.parent
         return files.includes(node.getSourceFile())
       })
     }
@@ -215,45 +233,5 @@ export class JsonSchemaContext {
     this.typeNamesById.set(id, name)
     this.typeIdsByName.set(name, id)
     return name
-  }
-
-  /**
-   * Find all referenced definitions for the given definition
-   * @param definition
-   */
-  public collectReffedDefinitionNames(defName: string, definition: Definition): string[] {
-    const self = this
-
-    // avoid duplicated computed
-    const reffedDefinitionNames: string[] = this.reffedDefinitionNamesMap.get(defName) || []
-    if (reffedDefinitionNames.length > 0) return reffedDefinitionNames
-
-    // if the definition is in reffedDefinitions, then append itself to the reffedDefinitionNames
-    if (self.getReffedDefinition(defName) != null) {
-      reffedDefinitionNames.push(defName)
-      // eslint-disable-next-line no-param-reassign
-      definition = self.getReffedDefinition(defName)!
-      this.reffedDefinitionNamesMap.set(defName, reffedDefinitionNames)
-    }
-
-    // Traverse the properties in the Definition to find all the reference definitions
-    const regex = /#\/definitions\/([^/\s]+)$/
-    JSON.stringify(definition, (key: string, val: any) => {
-      if (key === '$ref' && typeof val === 'string') {
-        const match = regex.exec(val)
-        if (match == null) return
-        const [, refName] = match
-        if (reffedDefinitionNames.indexOf(refName) < 0) {
-          const names = self.collectReffedDefinitionNames(refName, definition)
-          reffedDefinitionNames.push(refName)
-          for (const name of names) {
-            if (reffedDefinitionNames.indexOf(name) >= 0) continue
-            reffedDefinitionNames.push(name)
-          }
-        }
-      }
-      return val
-    })
-    return reffedDefinitionNames
   }
 }

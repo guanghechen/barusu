@@ -3,6 +3,30 @@ import ts from 'typescript'
 import { Definition, PrimitiveType } from './types'
 
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function extend(target: any, ...args: any[]): any {
+  if (target == null) {
+    // TypeError if undefined or null
+    throw new TypeError('Cannot convert undefined or null to object')
+  }
+
+  const to = Object(target)
+
+  for (const nextSource of args) {
+    if (nextSource != null) {
+      // Skip over if undefined or null
+      for (const nextKey in nextSource) {
+        // Avoid bugs when hasOwnProperty is shadowed
+        if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+          to[nextKey] = nextSource[nextKey]
+        }
+      }
+    }
+  }
+  return to
+}
+
+
 /**
  * 去重
  * @param arr
@@ -144,4 +168,41 @@ export function normalizeFileName(filename: string): string {
     filename = filename.substr(2)
   }
   return filename
+}
+
+
+/**
+ * Given a Symbol, returns a canonical Definition. That can be either:
+ * 1) The Symbol's valueDeclaration parameter if defined, or
+ * 2) The sole entry in the Symbol's declarations array, provided that array has a length of 1.
+ *
+ * valueDeclaration is listed as a required parameter in the definition of a Symbol, but I've
+ * experienced crashes when it's undefined at runtime, which is the reason for this function's
+ * existence. Not sure if that's a compiler API bug or what.
+ */
+export function getCanonicalDeclaration(sym: ts.Symbol): ts.Declaration {
+  if (sym.valueDeclaration !== undefined) {
+    return sym.valueDeclaration
+  } else if (sym.declarations.length === 1) {
+    return sym.declarations[0]
+  }
+
+  throw new Error(`Symbol "${ sym.name }" has no valueDeclaration and ${ sym.declarations.length } declarations.`)
+}
+
+/**
+ * Given a Symbol, finds the place it was declared and chases parent pointers until we find a
+ * node where SyntaxKind === SourceFile.
+ */
+export function getSourceFile(sym: ts.Symbol): ts.SourceFile {
+  let currentDecl: ts.Node = getCanonicalDeclaration(sym)
+
+  while (currentDecl.kind !== ts.SyntaxKind.SourceFile) {
+    if (currentDecl.parent === undefined) {
+      throw new Error(`Unable to locate source file for declaration "${ sym.name }".`)
+    }
+    currentDecl = currentDecl.parent
+  }
+
+  return currentDecl as ts.SourceFile
 }
