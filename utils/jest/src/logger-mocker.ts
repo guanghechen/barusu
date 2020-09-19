@@ -1,9 +1,13 @@
-import type { Logger } from '@barusu/chalk-logger'
 import { Mocker } from './types'
 import { desensitize } from './util'
 
 
 export type LoggerMocker = Mocker<string[][]>
+
+
+interface Logger {
+  write: (text: string) => void
+}
 
 
 interface CreateLoggerMockParams {
