@@ -151,13 +151,13 @@ export async function createRestfulApiGenerateContext(
   }
 
   const context: RestfulApiGenerateContext = {
-    cwd:              params.cwd,
-    workspace:        params.workspace,
-    tsconfigPath:     params.workspace,
-    schemaRootPath:   params.schemaRootPath,
-    encoding:         coverString('utf-8', params.encoding, isNotEmptyString),
+    cwd: params.cwd,
+    workspace: params.workspace,
+    tsconfigPath: params.workspace,
+    schemaRootPath: params.schemaRootPath,
+    encoding: coverString('utf-8', params.encoding, isNotEmptyString),
     muteMissingModel: coverBoolean(false, params.muteMissingModel),
-    clean:            coverBoolean(false, params.clean),
+    clean: coverBoolean(false, params.clean),
     ignoredDataTypes: cover<string[]>([], params.ignoredDataTypes, isNotEmptyArray),
     apiItems,
     program,

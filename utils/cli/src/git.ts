@@ -49,8 +49,8 @@ export async function createInitialCommit(
   } else {
     doInitialCommit = (await inquirer.prompt([
       {
-        type:    'confirm',
-        name:    'doInitialCommit',
+        type: 'confirm',
+        name: 'doInitialCommit',
         default: false,
         message: 'Create initial commit?',
       },

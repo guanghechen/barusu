@@ -15,12 +15,12 @@ export class GitCipherDecryptProcessor {
   public constructor(context: GitCipherDecryptContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
-      cipherFactory:         { create: () => new AESCipher() },
-      secretFileEncoding:    context.secretFileEncoding,
+      cipherFactory: { create: () => new AESCipher() },
+      secretFileEncoding: context.secretFileEncoding,
       secretContentEncoding: 'hex',
-      showAsterisk:          context.showAsterisk,
-      minPasswordLength:     context.minPasswordLength,
-      maxPasswordLength:     context.maxPasswordLength,
+      showAsterisk: context.showAsterisk,
+      minPasswordLength: context.minPasswordLength,
+      maxPasswordLength: context.maxPasswordLength,
     })
   }
 
@@ -36,10 +36,10 @@ export class GitCipherDecryptProcessor {
     const cipher: Cipher = secretMaster.getCipher()
     const catalog = new WorkspaceCatalog({
       cipher,
-      indexFileEncoding:    context.indexFileEncoding,
+      indexFileEncoding: context.indexFileEncoding,
       indexContentEncoding: 'base64',
-      plaintextRootDir:     context.plaintextRootDir,
-      ciphertextRootDir:    context.ciphertextRootDir,
+      plaintextRootDir: context.plaintextRootDir,
+      ciphertextRootDir: context.ciphertextRootDir,
     })
     await catalog.load(context.indexFilepath)
 

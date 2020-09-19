@@ -37,7 +37,7 @@ export interface AsyncActionCreator<
  * # Examples
  *
  *    const creators = createAsyncActionCreators<
- *      '@user/fetch_user', { id: number }, { name: string }>('@user/fetch_user')
+ *     '@user/fetch_user', { id: number }, { name: string }>('@user/fetch_user')
  *    // => { request(...), success(...), failure(...) }
  *
  *    // request

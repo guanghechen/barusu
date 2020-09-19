@@ -16,27 +16,27 @@ export interface ModuleRankItem {
 export const defaultModuleRankItems: ModuleRankItem[] = [
   { // npm package
     regex: /^[a-zA-Z\d][\w\-.]*/,
-    rank:  1.1,
+    rank: 1.1,
   },
   { // npm scoped package
     regex: /^@[a-zA-Z\d][\w\-.]*\/[a-zA-Z\d][\w\-.]*/,
-    rank:  1.2,
+    rank: 1.2,
   },
   { // paths alias
     regex: /^@\//,
-    rank:  2.1,
+    rank: 2.1,
   },
   { // absolute path
     regex: /^(?:\/|[a-zA-Z]:)/,
-    rank:  3.1,
+    rank: 3.1,
   },
   { // relative path (parent)
     regex: /^[.]{2}[\/\\][^\n]*/,
-    rank:  3.2,
+    rank: 3.2,
   },
   { // relative path
     regex: /^[.][\/\\][^\n]*/,
-    rank:  3.3,
+    rank: 3.3,
   }
 ]
 

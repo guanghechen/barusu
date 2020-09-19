@@ -10,7 +10,7 @@ export * from './util/resize'
 
 
 // Matches only the last occurrence of sourceMappingURL
-const sourceMappingURL = '\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourceMappingURL)'
+const sourceMappingURL = /\s*[@#]\s*sourceMappingURL\s*=\s*([^\s]*)(?![\S\s]*sourceMappingURL)/.source
 
 // Matches /* ... */ comments
 const blockCommentRegex = new RegExp('/\\*' + sourceMappingURL + '\\s*\\*/')

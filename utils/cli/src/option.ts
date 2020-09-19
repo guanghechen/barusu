@@ -163,7 +163,8 @@ export function resolveCommandConfigurationOptions<
 ): D & CommandConfigurationFlatOpts {
   const cwd: string = path.resolve()
   const workspace: string = path.resolve(cwd, workspaceDir)
-  const configPath: string[] = options.configPath!.map((p: string) => absoluteOfWorkspace(workspace, p))
+  const configPath: string[] = options.configPath!
+    .map((p: string) => absoluteOfWorkspace(workspace, p))
   const parasticConfigPath: string | null | undefined = cover<string | null>(
     (): string | null => findPackageJsonPath(workspace),
     options.parasticConfigPath)

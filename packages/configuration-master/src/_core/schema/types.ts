@@ -71,7 +71,8 @@ export interface DataSchema<T extends string, V> {
 export interface RawDefinitionDataSchema<T extends string, V> extends RawDataSchema<T, V> {
   /**
    * The unique identifier of the DataSchema;
-   * If this value is specified, it can be directly referenced by a RefDataSchema through this value
+   * If this value is specified, it can be directly referenced by a
+   * RefDataSchema through this value
    *
    * DataSchema 的唯一标识；
    * 若指定此值，则可以被 RefDataSchema 直接通过此值引用
@@ -92,7 +93,8 @@ export interface RawDefinitionDataSchema<T extends string, V> extends RawDataSch
 export interface DefinitionDataSchema<T extends string, V> extends DataSchema<T, V> {
   /**
    * The unique identifier of the DataSchema;
-   * If this value is specified, it can be directly referenced by a RefDataSchema through this value
+   * If this value is specified, it can be directly referenced
+   * by a RefDataSchema through this value
    *
    * DataSchema 的唯一标识；
    * 若指定此值，则可以被 RefDataSchema 直接通过此值引用
@@ -112,8 +114,10 @@ export interface DefinitionDataSchema<T extends string, V> extends DataSchema<T,
  */
 export interface RawTopDataSchema<T extends string, V> extends RawDataSchema<T, V> {
   /**
-   * Define a DataSchema that can be reused, that is, a DataSchema referenced by `$ref` in RefDataSchema
-   *  * If DefinitionDataSchema specifies `$id`, it can be referenced directly through `{ $ref: <$id>}`
+   * Define a DataSchema that can be reused, that is, a DataSchema
+   * referenced by `$ref` in RefDataSchema
+   *  * If DefinitionDataSchema specifies `$id`, it can be referenced directly
+   *    through `{ $ref: <$id>}`
    *  * Can also be referenced via `#/definitions/<name>`
    *
    * 定义可被重复使用的 DataSchema，即可被 RefDataSchema 中的 `$ref` 所引用的 DataSchema
@@ -136,8 +140,10 @@ export interface RawTopDataSchema<T extends string, V> extends RawDataSchema<T, 
  */
 export interface TopDataSchema<T extends string, V> extends DataSchema<T, V> {
   /**
-   * Define a DataSchema that can be reused, that is, a DataSchema referenced by `$ref` in RefDataSchema
-   *  * If DefinitionDataSchema specifies `$id`, it can be referenced directly through `{ $ref: <$id>}`
+   * Define a DataSchema that can be reused, that is, a DataSchema referenced
+   * by `$ref` in RefDataSchema
+   *  * If DefinitionDataSchema specifies `$id`, it can be referenced directly
+   *    through `{ $ref: <$id>}`
    *  * Can also be referenced via `#/definitions/<name>`
    *
    * 定义可被重复使用的 DataSchema，即可被 RefDataSchema 中的 `$ref` 所引用的 DataSchema

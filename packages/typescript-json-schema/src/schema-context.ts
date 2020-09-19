@@ -13,9 +13,13 @@ import {
  *
  * @member checker
  * @member args
- * @member symbols            holds all symbols within a custom SymbolRef object, containing useful information
- * @member allSymbols         all types for declarations of classes, interfaces, enums, and type aliases defined in all TS files
- * @member userSymbols        all symbols for declarations of classes, interfaces, enums, and type aliases defined in non-default-lib TS files
+ * @member symbols            holds all symbols within a custom SymbolRef
+ *                            object, containing useful information
+ * @member allSymbols         all types for declarations of classes, interfaces,
+ *                            enums, and type aliases defined in all TS files
+ * @member userSymbols        all symbols for declarations of classes,
+ *                            interfaces, enums, and type aliases defined in
+ *                            non-default-lib TS files
  * @member typeNamesById      map from type IDs to type names
  * @member typeIdsByName      map from type names to type IDs
  * @member schemaOverrides
@@ -24,8 +28,8 @@ import {
  */
 export class JsonSchemaContext {
   /**
-   * This map only holds explicit schema overrides. This helps differentiate between
-   * user defined schema overrides and generated definitions.
+   * This map only holds explicit schema overrides. This helps differentiate
+   * between user defined schema overrides and generated definitions.
    */
   private readonly schemaOverrides: Map<string, Definition> = new Map()
 
@@ -59,7 +63,8 @@ export class JsonSchemaContext {
     checker: Readonly<ts.TypeChecker>,
     args: Readonly<SchemaArgs>,
   ) {
-    const userValidationKeywords = args.validationKeywords.reduce((acc, word) => ({ ...acc, [word]: true, }), {})
+    const userValidationKeywords = args.validationKeywords
+      .reduce((acc, word) => ({ ...acc, [word]: true, }), {})
     this.userValidationKeywords = Object.freeze({ ...userValidationKeywords })
     this.validationKeywords = Object.freeze({ ...validationKeywords })
     this.args = Object.freeze({ ...args })
@@ -113,7 +118,7 @@ export class JsonSchemaContext {
 
   public getSchemaForSymbols(symbolNames: string[], includeReffedDefinitions = true): Definition {
     const root = {
-      $schema:     'http://json-schema.org/draft-07/schema#',
+      $schema: 'http://json-schema.org/draft-07/schema#',
       definitions: {},
     }
 
@@ -227,7 +232,10 @@ export class JsonSchemaContext {
   public makeTypeNameUnique(type: ts.Type, originName: string): string {
     const id = (type as any).id as number
     let name = originName
-    for (let order = 1; this.typeIdsByName.get(name) != null && this.typeIdsByName.get(name) !== id;) {
+    for (
+      let order = 1;
+      this.typeIdsByName.get(name) != null && this.typeIdsByName.get(name) !== id;
+    ) {
       name = `${ originName }_${ order }`
       order += 1
     }

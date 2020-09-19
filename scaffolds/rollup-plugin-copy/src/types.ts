@@ -37,12 +37,20 @@ import { WriteFileOptions } from 'fs-extra'
  *
  *  * Multiple destinations
  *    ```typescript
- *    copy({ targets: [{ src: 'src/index.html', dest: ['dist/public', 'build/public'] }] })
+ *    copy({
+ *      targets: [
+ *        { src: 'src/index.html', dest: ['dist/public', 'build/public'] }
+ *      ]
+ *    })
  *    ```
  *
  *  * Rename with a string
  *    ```typescript
- *    copy({ targets: [{ src: 'src/app.html', dest: 'dist/public', rename: 'index.html' }] })
+ *    copy({
+ *      targets: [
+ *        { src: 'src/app.html', dest: 'dist/public', rename: 'index.html' }
+ *      ]
+ *    })
  *    ```
  *
  *  * Rename with a function
@@ -62,7 +70,8 @@ import { WriteFileOptions } from 'fs-extra'
  *      targets: [{
  *        src: 'src/index.html',
  *        dest: 'dist/public',
- *        transform: (contents) => contents.toString().replace('__SCRIPT__', 'app.js')
+ *        transform: (contents) =>
+ *          contents.toString().replace('__SCRIPT__', 'app.js')
  *      }]
  *    })
  *    ```

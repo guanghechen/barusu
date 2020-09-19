@@ -44,7 +44,8 @@ export function isDirectorySync(dirpath: string | null): boolean {
 
 
 /**
- * Check whether if the dirPath is a non-existent path or empty folder. (synchronizing)
+ * Check whether if the dirPath is a non-existent path or empty folder.
+ * (synchronizing)
  *
  * @param dirpath   directory path
  */
@@ -140,7 +141,10 @@ export function ensureCriticalFilepathExistsSync(
  * @param filepath
  * @param logger
  */
-export async function loadJsonOrYaml(filepath: string, encoding = 'utf-8'): Promise<unknown | never> {
+export async function loadJsonOrYaml(
+  filepath: string,
+  encoding = 'utf-8'
+): Promise<unknown | never> {
   const extname = path.extname(filepath)
 
   let __content: string | null = null

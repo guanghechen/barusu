@@ -39,12 +39,14 @@ export interface DataSchemaCompilerContext {
    */
   compileDataSchema(rawSchema: RDSchema): DSCResult
   /**
-   * Compile DefinitionDataSchema, DefinitionDataSchema defines the type declaration (reusable data schema),
-   * and can be referenced by other DataSchemas in the top-level DataSchema;
-   * it can also define recursive reference data schema
+   * Compile DefinitionDataSchema, DefinitionDataSchema defines the type
+   * declaration (reusable data schema), and can be referenced by other
+   * DataSchemas in the top-level DataSchema; it can also define recursive
+   * reference data schema
    *
-   * 编译 DefinitionDataSchema，DefinitionDataSchema 定义了类型的声明（可重用的数据模式），可被顶层 DataSchema
-   * 中的其它 DataSchema 引用；也可以定义递归引用的数据模式
+   * 编译 DefinitionDataSchema，DefinitionDataSchema 定义了类型的声明
+   * （可重用的数据模式），可被顶层 DataSchema 中的其它 DataSchema 引用；
+   * 也可以定义递归引用的数据模式
    * @param name
    * @param rawSchema
    */
@@ -73,7 +75,8 @@ export interface DataSchemaCompilerContext {
   getRawDefinition(idOrPath: string): RDDSchema | undefined
   /**
    * Format rawDataSchema:
-   *  - When rawDataSchema is a string, the schema defined as the type of this string
+   *  - If the rawDataSchema is a string, the schema defined as the type
+        of this string
    *
    * 格式化 rawDataSchema：
    *  - 当 rawDataSchema 为字符串时，表示定义为此字符串的类型的 Schema
@@ -81,8 +84,8 @@ export interface DataSchemaCompilerContext {
    */
   normalizeRawSchema(rawSchema: RDSchema): RDSchema
   /**
-   * Set the default value of an optional attribute to the value
-   * of the corresponding attribute in the parent data schema Record<string, unknown>
+   * Set the default value of an optional attribute to the value of the
+   * corresponding attribute in the parent data schema Record<string, unknown>
    *
    * 将可选属性的默认值置为父数据模式对象中对应属性的值
    * @param parentRawSchema 父数据模式对象

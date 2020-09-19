@@ -47,7 +47,7 @@ export function convertToNumber(v: number | string | unknown): number | undefine
 
 /**
  * Convert to string
- *  - If v is null / undefined or v.toString is null / undefined, return undefined
+ *  - If v is null/undefined or v.toString is null / undefined, return undefined
  *  - If v is a string / number / boolean, return v.toString()
  *  - Otherwise, return undefined
  *

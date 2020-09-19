@@ -39,7 +39,7 @@
     "build": "rollup -c rollup.config.js",
     "test": "TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir .",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "lint:fix": "eslint src/**/*.ts --fix",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
     "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.schema.ts",
     "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts"
   },

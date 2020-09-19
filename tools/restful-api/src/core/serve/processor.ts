@@ -28,8 +28,8 @@ export class RestfulApiServeProcessor {
     this.server = null
     this.running = false
     jsf.option({
-      requiredOnly:         context.mockRequiredOnly,
-      alwaysFakeOptionals:  context.mockOptionalsAlways,
+      requiredOnly: context.mockRequiredOnly,
+      alwaysFakeOptionals: context.mockOptionalsAlways,
       optionalsProbability: context.mockOptionalsProbability,
     })
   }
@@ -63,8 +63,8 @@ export class RestfulApiServeProcessor {
     // as a resource file data source
     if (context.mockResourceRootDir != null) {
       app.use(serveResourceFile({
-        workspaceDir:        context.workspace,
-        prefixUrl:           context.mockDataPrefixUrl,
+        workspaceDir: context.workspace,
+        prefixUrl: context.mockDataPrefixUrl,
         mockResourceRootDir: context.mockResourceRootDir,
       }))
     }
@@ -77,8 +77,8 @@ export class RestfulApiServeProcessor {
     // json data source and be prior than mock data generated from schemas
     if (context.mockDataRootDir != null) {
       app.use(serveDataFile({
-        workspaceDir:    context.workspace,
-        prefixUrl:       context.mockResourcePrefixUrl,
+        workspaceDir: context.workspace,
+        prefixUrl: context.mockResourcePrefixUrl,
         mockDataRootDir: context.mockDataRootDir,
       }))
     }

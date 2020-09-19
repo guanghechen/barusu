@@ -123,6 +123,7 @@ export class PackageManager {
         continue
       }
 
+      // eslint-disable-next-line max-len
       // Inconsistent version number of the same dependency in other packages found.
       logger.error(
         `[${ json.name }] ${ dependency } has a different version(${ version }) in other packages:`,

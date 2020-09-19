@@ -84,10 +84,21 @@ export function convertMapToObject<T>(m: Map<string, T>): { [key: string]: T } {
  * checks whether a type is a tuple type.
  */
 export function resolveTupleType(propertyType: ts.Type): ts.TupleTypeNode | null {
-  if (!propertyType.getSymbol() && (propertyType.getFlags() & ts.TypeFlags.Object && (propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference)) {
+  if (
+    !propertyType.getSymbol() &&
+    (
+      (propertyType.getFlags() & ts.TypeFlags.Object) &&
+      ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference)
+    )
+  ) {
     return (propertyType as ts.TypeReference).target as any
   }
-  if (!(propertyType.getFlags() & ts.TypeFlags.Object && (propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Tuple)) {
+  if (
+    !(
+      (propertyType.getFlags() & ts.TypeFlags.Object) &&
+      ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Tuple)
+    )
+  ) {
     return null
   }
   return propertyType as any
@@ -95,7 +106,7 @@ export function resolveTupleType(propertyType: ts.Type): ts.TupleTypeNode | null
 
 
 const simpleTypesAllowedProperties = {
-  type:        true,
+  type: true,
   description: true
 }
 
@@ -174,11 +185,13 @@ export function normalizeFileName(filename: string): string {
 /**
  * Given a Symbol, returns a canonical Definition. That can be either:
  * 1) The Symbol's valueDeclaration parameter if defined, or
- * 2) The sole entry in the Symbol's declarations array, provided that array has a length of 1.
+ * 2) The sole entry in the Symbol's declarations array, provided that array
+ *    has a length of 1.
  *
- * valueDeclaration is listed as a required parameter in the definition of a Symbol, but I've
- * experienced crashes when it's undefined at runtime, which is the reason for this function's
- * existence. Not sure if that's a compiler API bug or what.
+ * valueDeclaration is listed as a required parameter in the definition
+ * of a Symbol, but I've experienced crashes when it's undefined at runtime,
+ * which is the reason for this function's existence. Not sure if that's
+ * a compiler API bug or what.
  */
 export function getCanonicalDeclaration(sym: ts.Symbol): ts.Declaration {
   if (sym.valueDeclaration !== undefined) {
@@ -191,8 +204,8 @@ export function getCanonicalDeclaration(sym: ts.Symbol): ts.Declaration {
 }
 
 /**
- * Given a Symbol, finds the place it was declared and chases parent pointers until we find a
- * node where SyntaxKind === SourceFile.
+ * Given a Symbol, finds the place it was declared and chases parent pointers
+ * until we find a node where SyntaxKind === SourceFile.
  */
 export function getSourceFile(sym: ts.Symbol): ts.SourceFile {
   let currentDecl: ts.Node = getCanonicalDeclaration(sym)

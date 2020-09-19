@@ -28,7 +28,8 @@ export class JsonSchemaGenerator {
     args: SchemaArgs = getDefaultArgs(),
   ) {
     const validationKeywords = { ...defaultValidationKeywords }
-    const context = new JsonSchemaContext(validationKeywords, symbols, allSymbols, userSymbols, inheritingTypes, checker, args)
+    const context = new JsonSchemaContext(
+      validationKeywords, symbols, allSymbols, userSymbols, inheritingTypes, checker, args)
     this.context = context
   }
 
@@ -102,7 +103,8 @@ export class JsonSchemaGenerator {
     reffedType?: ts.Symbol,
     pairedSymbol?: ts.Symbol,
   ): Definition {
-    return getTypeDefinition(this.context, type, asRef, unionModifier, prop, reffedType, pairedSymbol)
+    return getTypeDefinition(
+      this.context, type, asRef, unionModifier, prop, reffedType, pairedSymbol)
   }
 
   public getDefinitionForRootType(

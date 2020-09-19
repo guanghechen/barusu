@@ -54,7 +54,8 @@ export interface EventSubscriber<
   E extends Event<T, P> = Event<T, P>,
   > {
   /**
-   * An one-off subscriber which would be unregistered from EventBus after first called
+   * An one-off subscriber which would be unregistered from EventBus
+   * after first called
    */
   once: boolean
   /**
@@ -73,7 +74,8 @@ export interface EventListener<
   E extends Event<T, P> = Event<T, P>,
   > {
   /**
-   * An one-off subscriber which would be unregistered from EventBus after first called
+   * An one-off subscriber which would be unregistered from EventBus
+   * after first called
    */
   once: boolean
   /**

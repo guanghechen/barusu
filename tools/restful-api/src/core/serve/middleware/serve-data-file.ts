@@ -54,7 +54,8 @@ export function serveDataFile(
         return null
       })()
 
-      // Hit, parse the content of the data file into json, and return the json data
+      // Hit, parse the content of the data file into json,
+      // and return the json data
       if (resolvedFilepath != null) {
         try {
           const absoluteFilepath = path.resolve(mockDataRootDir, resolvedFilepath)

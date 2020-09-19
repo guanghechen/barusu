@@ -4,11 +4,11 @@ import nodePlop, { PlopGenerator, PlopGeneratorConfig } from 'node-plop'
 
 const typeDisplay = {
   'function': chalk.yellow('->'),
-  'add':      chalk.green('++'),
-  'addMany':  chalk.green('+!'),
-  'modify':   `${ chalk.green('+') }${ chalk.red('-') }`,
-  'append':   chalk.green('_+'),
-  'skip':     chalk.green('--'),
+  'add': chalk.green('++'),
+  'addMany': chalk.green('+!'),
+  'modify': `${ chalk.green('+') }${ chalk.red('-') }`,
+  'append': chalk.green('_+'),
+  'skip': chalk.green('--'),
 }
 
 
@@ -36,14 +36,14 @@ export function choosePlopGenerator(
   const plop = nodePlop('')
   const generator = plop.setGenerator('choose', {
     description: 'Choose plop generator',
-    actions:     [],
-    prompts:     [{
-      type:    'list',
-      name:    'generator',
+    actions: [],
+    prompts: [{
+      type: 'list',
+      name: 'generator',
       message: message || chalk.blue('[PLOP]') + ' Please choose a generator.',
       choices: plopList.map(function (p) {
         return {
-          name:  p.name + chalk.gray(!!p.description ? ' - ' + p.description : ''),
+          name: p.name + chalk.gray(!!p.description ? ' - ' + p.description : ''),
           value: p.name
         }
       })

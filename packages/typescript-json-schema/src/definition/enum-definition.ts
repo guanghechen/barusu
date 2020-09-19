@@ -16,7 +16,8 @@ export function getEnumDefinition(
   definition: Definition,
 ): void {
   const node = clazzType.getSymbol()!.getDeclarations()![0]
-  const fullName = context.checker.typeToString(clazzType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
+  const fullName = context.checker.typeToString(
+    clazzType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
   const members: ts.NodeArray<ts.EnumMember> =
     node.kind === ts.SyntaxKind.EnumDeclaration
       ? (node as ts.EnumDeclaration).members
@@ -44,8 +45,8 @@ export function getEnumDefinition(
     if ((initial as any).expression != null) {
       const { expression: exp } = initial as any
       const { text } = exp
-      // if it is an expression with a text literal, chances are it is the enum conversion:
-      // CASELABEL = 'literal' as any
+      // if it is an expression with a text literal, chances are it is the
+      // enum conversion: CASELABEL = 'literal' as any
       if (text) {
         addEnum('string', text)
       } else if (

@@ -38,15 +38,16 @@ export abstract class BaseDataSchemaCompiler<
   public compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS> {
     // eslint-disable-next-line no-param-reassign
     rawSchema = this.normalizeRawSchema(rawSchema)
-    const result: DataSchemaCompileResult<T, V, RDS, DS> = (new DataSchemaCompileResult(rawSchema)) as any
+    const result: DataSchemaCompileResult<T, V, RDS, DS> =
+      (new DataSchemaCompileResult(rawSchema)) as any
 
     // required 的默认值为 false
     const requiredResult = result.compileConstraint<boolean>('required', coverBoolean, false)
 
     const schema: DS = {
-      type:        rawSchema.type,
-      required:    Boolean(requiredResult.value),
-      default:     rawSchema.default,
+      type: rawSchema.type,
+      required: Boolean(requiredResult.value),
+      default: rawSchema.default,
       description: rawSchema.description,
     } as DS
 

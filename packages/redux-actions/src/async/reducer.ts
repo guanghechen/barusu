@@ -81,8 +81,8 @@ export function createAsyncActionReducer<
         return {
           ...state,
           loading: false,
-          data:    payload !== undefined ? payload : null,
-          error:   null,
+          data: payload !== undefined ? payload : null,
+          error: null,
         }
       }
 
@@ -97,8 +97,8 @@ export function createAsyncActionReducer<
         return {
           ...state,
           loading: false,
-          data:    null,
-          error:   payload !== undefined ? payload : null,
+          data: null,
+          error: payload !== undefined ? payload : null,
         }
       }
 
@@ -132,7 +132,8 @@ export function createAsyncActionReducer<
 export function assembleActionReducers<
   S extends AsyncStateItem<unknown> = AsyncStateItem<any>,
   T extends string | symbol = any,
-  R extends AsyncActionReducer<S, T, AsyncActions<T>> = AsyncActionReducer<S, T, AsyncActions<any, any, any>>
+  R extends AsyncActionReducer<S, T, AsyncActions<T>>
+    = AsyncActionReducer<S, T, AsyncActions<any, any, any>>
 >(
   initialState: S,
   actionReducers: R[],

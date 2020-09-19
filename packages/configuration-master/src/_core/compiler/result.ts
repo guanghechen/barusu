@@ -50,7 +50,7 @@ export class DataSchemaCompileResult<
     if (result.hasError) {
       this.addError({
         constraint: constraintName as string,
-        reason:     result.errorSummary,
+        reason: result.errorSummary,
       })
     }
     return result

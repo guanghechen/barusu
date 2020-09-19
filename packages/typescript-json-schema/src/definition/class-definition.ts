@@ -41,7 +41,8 @@ export function getClassDefinition(
     }).length <= 0
   })
 
-  const fullName = context.checker.typeToString(clazzType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
+  const fullName = context.checker.typeToString(
+    clazzType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
   const modifierFlags = ts.getCombinedModifierFlags(node)
   const inheritingTypes = context.inheritingTypes[fullName]
   if (Boolean(modifierFlags & ts.ModifierFlags.Abstract) && inheritingTypes != null) {
@@ -65,7 +66,9 @@ export function getClassDefinition(
         const indexType = context.checker.getTypeOfSymbolAtLocation(indexSymbol, node)
         const isStringIndexed = (indexType.flags === ts.TypeFlags.String)
         if (indexType.flags !== ts.TypeFlags.Number && !isStringIndexed) {
-          throw new Error('Not supported: IndexSignatureDeclaration with index symbol other than a number or a string')
+          throw new Error(
+            'Not supported: IndexSignatureDeclaration with index symbol' +
+            ' other than a number or a string')
         }
         const type = context.checker.getTypeAtLocation(indexSignature.type!)
         const def = getTypeDefinition(context, type, undefined, 'anyOf')

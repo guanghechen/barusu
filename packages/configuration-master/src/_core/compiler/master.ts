@@ -22,10 +22,11 @@ import {
 
 /**
  * Objects managed by the data pattern compiler
- *  - Registration operation: enable a user-defined Schema type to be correctly resolved
+ *  - Registration operation: enable a user-defined Schema type
+      to be correctly resolved
  *  - Replace operation: replace the compiler of a schema of the original type
- *  - Parsing operation: for the specified RawSchema object, find a suitable compiler
- *    to compile its value to get the Schema
+ *  - Parsing operation: for the specified RawSchema object,
+      find a suitable compiler to compile its value to get the Schema
  *
  * 数据模式编译器的管理对象
  *  - 注册操作：使得一个用户自定义的 Schema 类型能被正确编译
@@ -40,7 +41,8 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    */
   protected readonly compilerMap: Map<string, DSCompiler>
   /**
-   * DefinitionDataSchema management object instance for resolving reference nodes
+   * DefinitionDataSchema management object instance for
+   * resolving reference nodes
    *
    * 数据模式管理对象实例，用于编译引用节点
    */
@@ -52,7 +54,8 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
   }
 
   /**
-   * Add DataSchemaCompiler, if the compiler of the specified type already exists, ignore this addition
+   * Add DataSchemaCompiler, if the compiler of the specified type already
+   * exists, ignore this addition
    *
    * 添加 DataSchemaCompiler，若指定的 type 的编译器已存在，则忽略此次添加
    * @param type
@@ -65,7 +68,8 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
 
   /**
    * Overwrite the existing DataSchemaCompiler.
-   * If there is no corresponding DataSchemaCompiler before the specified type, add it.
+   * If there is no corresponding DataSchemaCompiler
+   * before the specified type, then add it.
    *
    * 覆盖已有的 DataSchemaCompiler；
    * 若指定的 type 之前没有对应的 DataSchemaCompiler，也做添加操作
@@ -89,7 +93,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
-        reason:     `\`schema.type\` must be a string, but got (${ stringify(rawSchema.type) }).`
+        reason: `\`schema.type\` must be a string, but got (${ stringify(rawSchema.type) }).`
       })
     }
 
@@ -99,7 +103,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
-        reason:     `unknown \`schema.type\`: ${ stringify(rawSchema.type) }.`
+        reason: `unknown \`schema.type\`: ${ stringify(rawSchema.type) }.`
       })
     }
 
@@ -110,7 +114,10 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#compileDefinitionDataSchema
    */
-  public * compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): Generator<string, DDSCResult> {
+  public * compileDefinitionDataSchema(
+    name: string,
+    rawSchema: RDDSchema
+  ): Generator<string, DDSCResult> {
     // eslint-disable-next-line no-param-reassign
     rawSchema = this.normalizeRawSchema(rawSchema)
     const result: DDSCResult = new DataSchemaCompileResult(rawSchema)
@@ -122,6 +129,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     const $path = this.definitionSchemaMaster.nameToPath(name)
     this.definitionSchemaMaster.addRawSchema($path, rawSchema, $idResult.value)
 
+    // eslint-disable-next-line max-len
     // Wait for Schemas to be registered to prevent problems with order dependencies
     yield $path
 
@@ -193,6 +201,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
         result.setValue(schema)
       }
     } finally {
+      // eslint-disable-next-line max-len
       // Need to clean up the definitionSchemaMaster even if an exception is thrown
       this.definitionSchemaMaster.clear()
     }
@@ -235,7 +244,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       // compile to combine
       const { definitions } = rawSchema as TDSchema
       return {
-        type:  'combine',
+        type: 'combine',
         definitions,
         anyOf: rawSchema.type.map(t => ({
           ...rawSchema,
@@ -267,7 +276,8 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     if (schema.definitions != null) {
       json.definitions = {}
       for (const propertyName of Object.getOwnPropertyNames(schema.definitions)) {
-        json.definitions[propertyName] = this.definitionSchemaToJSON(schema.definitions[propertyName])
+        json.definitions[propertyName] =
+          this.definitionSchemaToJSON(schema.definitions[propertyName])
       }
     }
     return json
@@ -282,7 +292,8 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     if (json.definitions != null) {
       ; (schema as any).definitions = {}
       for (const propertyName of Object.getOwnPropertyNames(json.definitions)) {
-        schema.definitions![propertyName] = this.parseDefinitionSchemaJSON(json.definitions[propertyName])
+        schema.definitions![propertyName] =
+          this.parseDefinitionSchemaJSON(json.definitions[propertyName])
       }
     }
     return schema

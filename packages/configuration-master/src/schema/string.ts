@@ -32,7 +32,9 @@ export enum StringFormat {
    */
   DATE = 'date',
   /**
-   * 时间格式 (full-time)，形如 `HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm`
+   * 时间格式 (full-time)，形如
+   *  `HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm`
+   *
    * @see https://tools.ietf.org/html/rfc3339#section-5.6
    * @see https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.7.3.1
    */
@@ -115,12 +117,14 @@ export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING
   pattern?: string
   /**
    * 预置的模式，和其它属性按照“与”逻辑进行校验
-   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址
+   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可
+   * 为 ipv4 地址也可为 ipv6 地址
    */
   format?: StringFormat | StringFormat[]
   /**
    * 数据转换方式
-   * 若指定了多个，则表示“或”的关系，如 { transform: ['lowercase', 'trim' ] } 表示执行 `s.toLowercase().trim()`
+   * 若指定了多个，则表示“或”的关系，如 { transform: ['lowercase', 'trim' ] }
+   * 表示执行 `s.toLowercase().trim()`
    */
   transform?: StringTransformType | StringTransformType[]
   /**
@@ -148,12 +152,14 @@ export interface StringDataSchema extends DataSchema<STRING_T_TYPE, STRING_V_TYP
   pattern?: RegExp
   /**
    * 预置的模式，和其它属性按照“与”逻辑进行校验
-   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址
+   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] }
+   * 表示既可为 ipv4 地址也可为 ipv6 地址
    */
   format?: StringFormat[]
   /**
    * 数据转换方式
-   * 若指定了多个，则表示“或”的关系，如 { transform: ['lowercase', 'trim' ] } 表示执行 `s.toLowercase().trim()`
+   * 若指定了多个，则表示“或”的关系，如 { transform: ['lowercase', 'trim' ] }
+   * 表示执行 `s.toLowercase().trim()`
    */
   transform?: StringTransformType | StringTransformType[]
   /**

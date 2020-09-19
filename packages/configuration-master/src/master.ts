@@ -60,7 +60,8 @@ export class ConfigurationMaster {
   }
 
   /**
-   * Add DataSchemaCompiler, if the compiler of the specified type already exists, ignore this addition
+   * Add DataSchemaCompiler, if the compiler of the specified type
+   * already exists, ignore this addition
    *
    * 添加 DataSchemaCompiler，若指定的 type 的编译器已存在，则忽略此次添加
    * @param type
@@ -73,8 +74,8 @@ export class ConfigurationMaster {
   }
 
   /**
-   * Overwrite the existing DataSchemaCompiler.
-   * If there is no corresponding DataSchemaCompiler before the specified type, add it.
+   * Overwrite the existing DataSchemaCompiler. If there is no corresponding
+   * DataSchemaCompiler before the specified type, then add it.
    *
    * 覆盖已有的 DataSchemaCompiler；
    * 若指定的 type 之前没有对应的 DataSchemaCompiler，也做添加操作
@@ -88,27 +89,34 @@ export class ConfigurationMaster {
   }
 
   /**
-   * Add DataValidatorFactory, if the specified type already exists, ignore this addition
+   * Add DataValidatorFactory, if the specified type already exists,
+   * ignore this addition
    *
    * 添加 DataValidatorFactory，若指定的 type 已存在，则忽略此次添
    * @param type
    * @param DataValidatorFactoryConstructor
    */
-  public registerValidatorFactory(type: string, DataValidatorFactoryConstructor: DVFactoryConstructor): this {
+  public registerValidatorFactory(
+    type: string,
+    DataValidatorFactoryConstructor: DVFactoryConstructor
+  ): this {
     const dataValidatorFactory = new DataValidatorFactoryConstructor(this.dataValidatorMaster)
     this.dataValidatorMaster.registerValidatorFactory(type, dataValidatorFactory)
     return this
   }
 
   /**
-   * Overwrite the existing DataValidatorFactory.
-   * If there is no corresponding DataValidatorFactory before the specified type, add it
+   * Overwrite the existing DataValidatorFactory. If there is no
+   * corresponding DataValidatorFactory before the specified type, then add it
    *
    * 覆盖已有的 DataValidatorFactory，若指定的 type 之前没有对应的 DataValidatorFactory，也做添加操作
    * @param type
    * @param DataValidatorFactoryConstructor
    */
-  public replaceValidatorFactory(type: string, DataValidatorFactoryConstructor: DVFactoryConstructor): this {
+  public replaceValidatorFactory(
+    type: string,
+    DataValidatorFactoryConstructor: DVFactoryConstructor,
+  ): this {
     const dataValidatorFactory = new DataValidatorFactoryConstructor(this.dataValidatorMaster)
     this.dataValidatorMaster.replaceValidatorFactory(type, dataValidatorFactory)
     return this
@@ -148,7 +156,8 @@ export class ConfigurationMaster {
   }
 
   /**
-   * Register the preset DataSchema, its compiler, and validator into the current ConfigurationMaster instance
+   * Register the preset DataSchema, its compiler, and validator into the
+   * current ConfigurationMaster instance
    *
    * 将预置的 DataSchema 及其编译器、校验器注册进当前 ConfigurationMaster 实例中
    */

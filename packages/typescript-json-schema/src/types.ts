@@ -48,6 +48,7 @@ export interface Definition extends Omit<JSONSchema7, RedefinedFields> {
   defaultProperties?: string[]
   typeof?: 'function'
 
+  // eslint-disable-next-line max-len
   // Fields that must be redefined because they make use of this definition itself
   items?: DefinitionOrBoolean | DefinitionOrBoolean[]
   additionalItems?: DefinitionOrBoolean

@@ -29,7 +29,7 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
  * Default value of global options
  */
 export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
-  encoding:     'utf-8',
+  encoding: 'utf-8',
   tsconfigPath: 'tsconfig.json',
 }
 

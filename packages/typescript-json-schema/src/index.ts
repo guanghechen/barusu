@@ -23,12 +23,12 @@ export function getProgramFromFiles(
     jsonCompilerOptions, basePath)
 
   const options: ts.CompilerOptions = {
-    noEmit:                 true,
-    emitDecoratorMetadata:  true,
+    noEmit: true,
+    emitDecoratorMetadata: true,
     experimentalDecorators: true,
-    target:                 ts.ScriptTarget.ES5,
-    module:                 ts.ModuleKind.CommonJS,
-    allowUnusedLabels:      true,
+    target: ts.ScriptTarget.ES5,
+    module: ts.ModuleKind.CommonJS,
+    allowUnusedLabels: true,
   }
 
   for (const k in compilerOptions) {
@@ -176,13 +176,16 @@ export function programFromConfig(
     configObject, ts.sys, path.dirname(configFileName),
     additionalCompilerOptions, path.basename(configFileName))
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { out, outDir, outFile, declaration, declarationDir, declarationMap, ...restOptions } = configParseResult.options
+  const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    out, outDir, outFile, declaration, declarationDir, declarationMap,
+    ...restOptions
+  } = configParseResult.options
   restOptions.noEmit = true
 
   const program = ts.createProgram({
-    rootNames:         onlyIncludeFiles || configParseResult.fileNames,
-    options:           restOptions,
+    rootNames: onlyIncludeFiles || configParseResult.fileNames,
+    options: restOptions,
     projectReferences: configParseResult.projectReferences
   })
   return program

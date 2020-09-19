@@ -164,12 +164,12 @@ export function extractStaticModuleStatementItem(
     ? groups.exportN.split(/\s*,\s*/g)
     : []
   const item: Omit<StaticModuleStatementItem, 'fullStatement'> = {
-    type:          groups.type as 'import' | 'export',
-    moduleName:    groups.moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
-    exportN:       exportN.filter(x => /\S/.test(x)).sort(),
-    remainOfLine:  groups.remainOfLine as string,
-    keywordType:   groups.keywordType as 'type' | undefined,
-    keywordFrom:   groups.keywordFrom as 'from' | undefined,
+    type: groups.type as 'import' | 'export',
+    moduleName: groups.moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
+    exportN: exportN.filter(x => /\S/.test(x)).sort(),
+    remainOfLine: groups.remainOfLine as string,
+    keywordType: groups.keywordType as 'type' | undefined,
+    keywordFrom: groups.keywordFrom as 'from' | undefined,
     defaultExport: groups.defaultExport,
   }
   return item

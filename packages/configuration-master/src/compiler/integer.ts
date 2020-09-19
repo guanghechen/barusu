@@ -40,12 +40,18 @@ export class IntegerDataSchemaCompiler
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileConstraint<V>('default', coverInteger)
-    const minimumResult = result.compileConstraint<number>('minimum', coverInteger)
-    const maximumResult = result.compileConstraint<number>('maximum', coverInteger)
-    const exclusiveMinimumResult = result.compileConstraint<number>('exclusiveMinimum', coverInteger)
-    const exclusiveMaximumResult = result.compileConstraint<number>('exclusiveMaximum', coverInteger)
-    const enumValueResult = result.compileConstraint<number[]>('enum', coverArray<number>(coverInteger))
+    const defaultValueResult = result.compileConstraint<V>(
+      'default', coverInteger)
+    const minimumResult = result.compileConstraint<number>(
+      'minimum', coverInteger)
+    const maximumResult = result.compileConstraint<number>(
+      'maximum', coverInteger)
+    const exclusiveMinimumResult = result.compileConstraint<number>(
+      'exclusiveMinimum', coverInteger)
+    const exclusiveMaximumResult = result.compileConstraint<number>(
+      'exclusiveMaximum', coverInteger)
+    const enumValueResult = result.compileConstraint<number[]>(
+      'enum', coverArray<number>(coverInteger))
 
     const ceil = (x?: number) => x == null ? x : Math.ceil(x)
     const floor = (x?: number) => x == null ? x : Math.floor(x)
@@ -53,12 +59,12 @@ export class IntegerDataSchemaCompiler
     // IntegerDataSchema
     const schema: DS = {
       ...result.value!,
-      default:          defaultValueResult.value,
-      minimum:          ceil(minimumResult.value),
-      maximum:          floor(maximumResult.value),
+      default: defaultValueResult.value,
+      minimum: ceil(minimumResult.value),
+      maximum: floor(maximumResult.value),
       exclusiveMinimum: floor(exclusiveMinimumResult.value),
       exclusiveMaximum: ceil(exclusiveMaximumResult.value),
-      enum:             enumValueResult.value,
+      enum: enumValueResult.value,
     }
 
     return result.setValue(schema)
@@ -71,11 +77,11 @@ export class IntegerDataSchemaCompiler
   public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
-      minimum:          schema.minimum,
-      maximum:          schema.maximum,
+      minimum: schema.minimum,
+      maximum: schema.maximum,
       exclusiveMaximum: schema.exclusiveMaximum,
       exclusiveMinimum: schema.exclusiveMinimum,
-      enum:             schema.enum,
+      enum: schema.enum,
     }
     return json
   }
@@ -87,11 +93,11 @@ export class IntegerDataSchemaCompiler
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),
-      minimum:          json.minimum,
-      maximum:          json.maximum,
+      minimum: json.minimum,
+      maximum: json.maximum,
       exclusiveMaximum: json.exclusiveMaximum,
       exclusiveMinimum: json.exclusiveMinimum,
-      enum:             json.enum,
+      enum: json.enum,
     }
     return schema
   }

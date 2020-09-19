@@ -146,7 +146,9 @@ export function isNotEmptyArray(v: unknown[] | unknown): v is unknown[] {
  * Test whether v is an empty object
  * @param v
  */
-export function isEmptyObject(v: Record<string, unknown> | unknown): v is Record<string, unknown> {
+export function isEmptyObject(
+  v: Record<string, unknown> | unknown
+): v is Record<string, unknown> {
   return isObject(v) && Object.getOwnPropertyNames(v).length <= 0
 }
 
@@ -155,7 +157,9 @@ export function isEmptyObject(v: Record<string, unknown> | unknown): v is Record
  * Test whether v is a non-empty object
  * @param v
  */
-export function isNotEmptyObject(v: Record<string, unknown> | unknown): v is Record<string, unknown> {
+export function isNotEmptyObject(
+  v: Record<string, unknown> | unknown
+): v is Record<string, unknown> {
   return isObject(v) && Object.getOwnPropertyNames(v).length > 0
 }
 
@@ -164,7 +168,9 @@ export function isNotEmptyObject(v: Record<string, unknown> | unknown): v is Rec
  * Test whether v is a number or a string which content is a valid number
  * @param v
  */
-export function isNumberLike(v: number | string | unknown): v is (number | string) {
+export function isNumberLike(
+  v: number | string | unknown
+): v is (number | string) {
   if (isNumber(v)) return true
   return isNotEmptyString(v) && !Number.isNaN(Number(v))
 }

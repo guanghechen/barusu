@@ -53,11 +53,11 @@ interface SubMainCommandOptions extends GlobalCommandOptions {
 
 const __defaultCommandOptions: SubMainCommandOptions = {
   ...__defaultGlobalCommandOptions,
-  encoding:     'utf-8',
-  pattern:      [],
+  encoding: 'utf-8',
+  pattern: [],
   tsconfigPath: 'tsconfig.json',
-  dstRootDir:   'lib/types',
-  srcRootDir:   'src',
+  dstRootDir: 'lib/types',
+  srcRootDir: 'src',
 }
 
 
@@ -144,13 +144,13 @@ export async function createTsconfigPathsContextFromOptions(
   options: MainCommandOptions,
 ): Promise<TsconfigPathsContext> {
   const context: TsconfigPathsContext = await createTsconfigPathsContext({
-    cwd:          options.cwd,
-    workspace:    options.workspace,
-    encoding:     options.encoding,
-    pattern:      options.pattern,
+    cwd: options.cwd,
+    workspace: options.workspace,
+    encoding: options.encoding,
+    pattern: options.pattern,
     tsconfigPath: options.tsconfigPath,
-    srcRootDir:   options.srcRootDir,
-    dstRootDir:   options.dstRootDir,
+    srcRootDir: options.srcRootDir,
+    dstRootDir: options.dstRootDir,
   })
   return context
 }

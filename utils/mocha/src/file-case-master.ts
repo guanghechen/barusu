@@ -88,9 +88,9 @@ export abstract class FileTestCaseMaster<T, D>
     const self = this
     const scan = async (dir: string): Promise<FileTestCaseGroup> => {
       const caseGroup: FileTestCaseGroup = {
-        title:     path.relative(self.caseRootDirectory, dir),
+        title: path.relative(self.caseRootDirectory, dir),
         subGroups: [],
-        cases:     [],
+        cases: [],
       }
 
       const files: string[] = await fs.readdir(dir)
@@ -103,7 +103,8 @@ export abstract class FileTestCaseMaster<T, D>
             const subGroup: FileTestCaseGroup = await scan(absoluteFilePath)
 
             /**
-             * append sub-case groups directly to caseGroup if there are only sub-case groups and no sub-cases
+             * append sub-case groups directly to caseGroup
+             * if there are only sub-case groups and no sub-cases
              *
              * 如果只有子案例组而没有子案例，则直接将子案例组追加到 caseGroup 中
              */
@@ -118,7 +119,9 @@ export abstract class FileTestCaseMaster<T, D>
         if (stat.isFile()) {
           if (!filename.endsWith(self.inputFileNameSuffix)) continue
           const title = filename.slice(0, -self.inputFileNameSuffix.length)
-          const answerFilePath = absoluteFilePath.slice(0, -self.inputFileNameSuffix.length) + self.answerFileNameSuffix
+          const answerFilePath = absoluteFilePath
+            .slice(0, -self.inputFileNameSuffix.length)
+            .concat(self.answerFileNameSuffix)
           const kase: FileTestCase = {
             title,
             dir,
@@ -134,7 +137,8 @@ export abstract class FileTestCaseMaster<T, D>
     }
 
     /**
-     * append sub-case groups directly to caseGroup if there are only sub-case groups and no sub-cases
+     * append sub-case groups directly to caseGroup
+     * if there are only sub-case groups and no sub-cases
      *
      * 如果只有子案例组而没有子案例，则直接将子案例组追加到 caseGroup 中
      */

@@ -72,7 +72,8 @@ export function getUnionDefinition(
     } else {
       const enumSchema: Definition = { enum: enumValues.sort() }
 
-      // if all values are of the same primitive type, add a 'type' field to the schema
+      // if all values are of the same primitive type, add a 'type' field
+      // to the schema
       if (enumValues.every((x) => typeof x === 'string')) {
         enumSchema.type = 'string'
       } else if (enumValues.every((x) => typeof x === 'number')) {
