@@ -44,14 +44,15 @@ export class ObjectDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // silentIgnore 的默认值为 false
-    const silentIgnoreResult = result.compileConstraint<boolean>('silentIgnore', coverBoolean, false)
+    const silentIgnoreResult = result.compileConstraint<boolean>(
+      'silentIgnore', coverBoolean, false)
 
     // 校验属性是否为对象
     const ensureObject = (constraintName: keyof RDS) => {
       if (!isObject(rawSchema[constraintName])) {
         result.addError({
           constraint: constraintName as string,
-          reason:     `${ constraintName } must be an object, but got (${ stringify(rawSchema[constraintName]) }).`
+          reason: `${ constraintName } must be an object, but got (${ stringify(rawSchema[constraintName]) }).`
         })
         return false
       }
@@ -157,8 +158,8 @@ export class ObjectDataSchemaCompiler
           } catch (e) {
             result.addError({
               constraint: 'patternProperties',
-              property:   propertyPattern,
-              reason:     `propertyName (${ propertyPattern }) is not a valid regex. ${ e.stack || e.message }`,
+              property: propertyPattern,
+              reason: `propertyName (${ propertyPattern }) is not a valid regex. ${ e.stack || e.message }`,
             })
           } finally {
             if (pattern != null) {
@@ -181,7 +182,7 @@ export class ObjectDataSchemaCompiler
       if (rawSchema.propertyNames.type !== STRING_T_TYPE) {
         result.addError({
           constraint: 'propertyNames',
-          reason:     `propertyNames must be a StringDataSchema, but got (${ stringify(rawSchema.propertyNames) }).`
+          reason: `propertyNames must be a StringDataSchema, but got (${ stringify(rawSchema.propertyNames) }).`
         })
       } else {
         const propertyNamesCompileResult = this.context.compileDataSchema(rawSchema.propertyNames)
@@ -204,7 +205,7 @@ export class ObjectDataSchemaCompiler
           if (xResult.hasError) {
             result.addError({
               constraint: 'dependencies',
-              reason:     xResult.errorSummary,
+              reason: xResult.errorSummary,
             })
             continue
           }
@@ -221,9 +222,9 @@ export class ObjectDataSchemaCompiler
     // ObjectDataSchema
     const schema: DS = {
       ...result.value!,
-      default:                   defaultValue,
+      default: defaultValue,
       allowAdditionalProperties: Boolean(allowAdditionalPropertiesResult.value),
-      silentIgnore:              Boolean(silentIgnoreResult.value),
+      silentIgnore: Boolean(silentIgnoreResult.value),
       properties,
       patternProperties,
       propertyNames,
@@ -260,10 +261,10 @@ export class ObjectDataSchemaCompiler
   public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
-      requiredProperties:        schema.requiredProperties,
+      requiredProperties: schema.requiredProperties,
       allowAdditionalProperties: schema.allowAdditionalProperties,
-      dependencies:              schema.dependencies,
-      silentIgnore:              schema.silentIgnore,
+      dependencies: schema.dependencies,
+      silentIgnore: schema.silentIgnore,
     }
 
     // json-ify properties
@@ -298,10 +299,10 @@ export class ObjectDataSchemaCompiler
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),
-      requiredProperties:        json.requiredProperties,
+      requiredProperties: json.requiredProperties,
       allowAdditionalProperties: json.allowAdditionalProperties,
-      dependencies:              json.dependencies,
-      silentIgnore:              json.silentIgnore
+      dependencies: json.dependencies,
+      silentIgnore: json.silentIgnore
     }
 
     // parse properties

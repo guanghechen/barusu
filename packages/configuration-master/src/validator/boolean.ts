@@ -22,6 +22,7 @@ export type BooleanDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 布尔值类型的校验器
  */
+// eslint-disable-next-line max-len
 export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 

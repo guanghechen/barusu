@@ -22,7 +22,8 @@ export interface WorkspaceCatalogItem {
    */
   plaintextFilepath: string
   /**
-   * Filepath of ciphertext data (relative path of the ciphertext files root directory)
+   * Filepath of ciphertext data (relative path
+   * of the ciphertext files root directory)
    */
   ciphertextFilepath: string
 }
@@ -107,7 +108,7 @@ export class WorkspaceCatalog {
   public async load(indexFilepath: string): Promise<void> {
     if (!fs.existsSync(indexFilepath)) {
       throw {
-        code:    ErrorCode.FILEPATH_NOT_FOUND,
+        code: ErrorCode.FILEPATH_NOT_FOUND,
         message: `cannot find index file (${ indexFilepath })`
       }
     }
@@ -289,12 +290,14 @@ export class WorkspaceCatalog {
   public checkIntegrity(): void | never {
     const allCiphertextFiles = collectAllFilesSync(this.ciphertextRootDir, null)
     if (allCiphertextFiles.length !== this.items.length) {
-      throw new Error(`[INTEGRITY DAMAGE] there are ${ this.items.length } files in index file, but actually there are ${ allCiphertextFiles.length } files in the cipher directory`)
+      throw new Error(`[INTEGRITY DAMAGE] there are ${ this.items.length } files in index file,` +
+        ` but actually there are ${ allCiphertextFiles.length } files in the cipher directory`)
     }
 
     let damaged = false
     for (const item of this.items) {
-      const absoluteCiphertextFilepath = this.resolveAbsoluteCiphertextFilepath(item.ciphertextFilepath)
+      const absoluteCiphertextFilepath =
+        this.resolveAbsoluteCiphertextFilepath(item.ciphertextFilepath)
       if (!fs.existsSync(absoluteCiphertextFilepath)) {
         console.error(`[INTEGRITY DAMAGE] cannot found ${ absoluteCiphertextFilepath }`)
         damaged = true

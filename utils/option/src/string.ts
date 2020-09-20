@@ -57,7 +57,8 @@ export function toPascalCase(s: string): string {
 
 
 /**
- * Transform into a string with the separator denoted by the next word capitalized.
+ * Transform into a string with the separator
+ * denoted by the next word capitalized.
  *
  *   'test string' => 'testString'
  *
@@ -122,7 +123,8 @@ export function toPathCase(s: string): string {
 
 
 /**
- * Transform into a lower case with spaces between words, then capitalize the string.
+ * Transform into a lower case with spaces between words,
+ * then capitalize the string.
  *
  *    'testString' => 'Test string'
  *

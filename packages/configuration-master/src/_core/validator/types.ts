@@ -35,8 +35,8 @@ export interface DataValidatorContext {
    */
   validateDataSchema(schema: DSchema, data: any): DVResult
   /**
-   * Validate the top-level DataSchema, which has unique attributes such as definitions
-   * and is a unit of the configuration file
+   * Validate the top-level DataSchema, which has unique attributes
+   * such as definitions and is a unit of the configuration file
    *
    * 校验顶层 DataSchema，顶层 DataSchema 中拥有 definitions 等独有属性，是配置文件的单元
    * @param schema  预期的数据模式
@@ -67,8 +67,8 @@ export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>>
    */
   readonly type: T
   /**
-   * Validate the data & compile the data (calculate the final result of the data
-   * by the value of attributes such as default)
+   * Validate the data & compile the data (calculate the final result of
+   * the data by the value of attributes such as default)
    *
    * 校验数据 & 编译数据（通过 default 等属性的值以计算数据的最终结果）
    * @param data

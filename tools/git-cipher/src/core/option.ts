@@ -75,16 +75,16 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
  * Default value of global options
  */
 export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
-  encoding:           'utf-8',
-  secretFilepath:     '.barusu-secret',
+  encoding: 'utf-8',
+  secretFilepath: '.barusu-secret',
   secretFileEncoding: 'utf-8',
-  indexFilepath:      '.barusu-index',
-  indexFileEncoding:  'utf-8',
-  ciphertextRootDir:  'barusu-ciphertext',
-  plaintextRootDir:   'barusu-plaintext',
-  showAsterisk:       true,
-  minPasswordLength:  6,
-  maxPasswordLength:  100,
+  indexFilepath: '.barusu-index',
+  indexFileEncoding: 'utf-8',
+  ciphertextRootDir: 'barusu-ciphertext',
+  plaintextRootDir: 'barusu-plaintext',
+  showAsterisk: true,
+  minPasswordLength: 6,
+  maxPasswordLength: 100,
 }
 
 

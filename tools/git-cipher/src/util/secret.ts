@@ -59,7 +59,7 @@ export interface SecretMasterParams {
  * @member secretFileEncoding     encoding of secret file
  * @member secretContentEncoding  encoding of secret content
  * @member showAsterisk           whether to print password asterisks
- * @member maxRetryTimes          maximum times of failed password attempts allowed
+ * @member maxRetryTimes      maximum times of failed password attempts allowed
  * @member minPasswordLength      minimum length of password
  * @member maxPasswordLength      maximum length of password
  * @member encryptedSecret        encrypted secret
@@ -100,7 +100,7 @@ export class SecretMaster {
   public async load(secretFilepath: string): Promise<void> {
     if (!fs.existsSync(secretFilepath)) {
       throw {
-        code:    ErrorCode.FILEPATH_NOT_FOUND,
+        code: ErrorCode.FILEPATH_NOT_FOUND,
         message: `cannot find secret file (${ secretFilepath })`
       }
     }
@@ -128,7 +128,7 @@ export class SecretMaster {
       password = await this.askPassword()
       if (password == null) {
         throw {
-          code:    ErrorCode.WRONG_PASSWORD,
+          code: ErrorCode.WRONG_PASSWORD,
           message: 'Password incorrect'
         }
       }
@@ -158,7 +158,7 @@ export class SecretMaster {
 
     if (encryptedSecret == null || encryptedSecretMac == null) {
       throw {
-        code:    ErrorCode.NULL_POINTER_ERROR,
+        code: ErrorCode.NULL_POINTER_ERROR,
         message: '[save] encryptedSecret / encryptedSecretMac are not specified',
       }
     }
@@ -202,7 +202,7 @@ export class SecretMaster {
 
       if (!isSame) {
         throw {
-          code:    ErrorCode.ENTERED_PASSWORD_DIFFER,
+          code: ErrorCode.ENTERED_PASSWORD_DIFFER,
           message: 'Entered passwords differ!',
         }
       }

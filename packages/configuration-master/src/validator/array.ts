@@ -23,6 +23,7 @@ export type ArrayDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 数组类型的校验器
  */
+// eslint-disable-next-line max-len
 export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
@@ -45,7 +46,7 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
       if (valueSet.size !== value.length) {
         return result.addError({
           constraint: 'unique',
-          reason:     `expected a unique array, but got (${ stringify(value) }).`
+          reason: `expected a unique array, but got (${ stringify(value) }).`
         })
       }
     }

@@ -66,13 +66,15 @@ export function getTypeDefinition(
   }
 
   const symbol = type.getSymbol()
-  // FIXME: We can't just compare the name of the symbol - it ignores the namespace
+  // eslint-disable-next-line max-len
+  // FIXME: We can't just compare the name of the symbol- it ignores the namespace
   const isRawType = (
     !symbol ||
     context.checker.getFullyQualifiedName(symbol) === 'Date' ||
     symbol.name === 'integer' ||
     context.checker.getIndexInfoOfType(type, ts.IndexKind.Number) !== undefined)
 
+  // eslint-disable-next-line max-len
   // special case: an union where all child are string literals -> make an enum instead
   let isStringEnum = false
   if (type.flags & ts.TypeFlags.Union) {
@@ -88,7 +90,11 @@ export function getTypeDefinition(
     // unless we are handling a type alias
     if (
       isRawType ||
-      ((type.getFlags() & ts.TypeFlags.Object) && (type as ts.ObjectType).objectFlags & ts.ObjectFlags.Anonymous)) {
+      (
+        (type.getFlags() & ts.TypeFlags.Object) &&
+        ((type as ts.ObjectType).objectFlags & ts.ObjectFlags.Anonymous)
+      )
+    ) {
       // eslint-disable-next-line no-param-reassign
       asRef = false
     }
@@ -127,7 +133,8 @@ export function getTypeDefinition(
 
   // returned definition, may be a $ref
   const returnedDefinition = asRef
-    // we don't return the full definition, but we put it into reffedDefinitions below.
+    // we don't return the full definition, but we put it
+    // into reffedDefinitions below.
     ? { $ref: `${ context.args.id }#/definitions/${ fullTypeName }` }
     : definition
 
@@ -168,7 +175,8 @@ export function getTypeDefinition(
         getUnionDefinition(context, type as ts.UnionType, prop!, unionModifier, definition)
       } else if (type.flags & ts.TypeFlags.Intersection) {
         if (context.args.noExtraProps) {
-          // extend object instead of using allOf because allOf does not work well with additional properties. See #107
+          // extend object instead of using allOf because allOf does not work
+          // well with additional properties. See #107
           if (context.args.noExtraProps) {
             definition.additionalProperties = false
           }
@@ -186,7 +194,9 @@ export function getTypeDefinition(
               definition.default = extend(definition.default || {}, other.default)
             }
             if (other.required) {
-              definition.required = unique((definition.required || []).concat(other.required)).sort()
+              definition.required = unique((definition.required || [])
+                .concat(other.required))
+                .sort()
             }
           }
         } else {
@@ -209,7 +219,8 @@ export function getTypeDefinition(
         symbol.members!.size === 0 &&
         !(node && (node.kind === ts.SyntaxKind.MappedType))
       ) {
-        // {} is TypeLiteral with no members. Need special case because it doesn't have declarations.
+        // {} is TypeLiteral with no members.
+        // Need special case because it doesn't have declarations.
         definition.type = 'object'
         definition.properties = {}
       } else {

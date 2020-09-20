@@ -36,8 +36,8 @@ export class Logger {
   public readonly nameChalk = Logger.defaultNameChalk
   public readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
   public readonly flags = {
-    date:     false,
-    inline:   false,
+    date: false,
+    inline: false,
     colorful: true,
   }
 

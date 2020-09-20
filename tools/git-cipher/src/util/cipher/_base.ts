@@ -28,14 +28,16 @@ export interface Cipher {
    */
   decrypt(cipherData: Readonly<Buffer>): Buffer
   /**
-   * Encrypt contents from plainFilepath, and save the result into cipherFilepath
+   * Encrypt contents from plainFilepath,
+   * and save the result into cipherFilepath
    */
   encryptFile(
     plainFilepath: string,
     cipherFilepath: string,
   ): Promise<void>
   /**
-   * Decrypt contents from cipherFilepath, and save the result into plainFilepath
+   * Decrypt contents from cipherFilepath,
+   * and save the result into plainFilepath
    */
   decryptFile(
     cipherFilepath: string,

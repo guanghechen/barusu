@@ -73,9 +73,9 @@ export function performCharacterStatistics(
     }
 
     detail = {
-      char:        c,
-      count:       1,
-      blank:       /\s/u.test(c),
+      char: c,
+      count: 1,
+      blank: /\s/u.test(c),
       punctuation: /\p{P}/u.test(c),
     }
     detailMap[c] = detail

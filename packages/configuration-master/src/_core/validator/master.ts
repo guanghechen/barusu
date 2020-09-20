@@ -6,7 +6,8 @@ import { DVFactory, DVResult, DataValidatorContext, TDVResult } from './types'
 
 /**
  * Data validator management object
- *  - Registration operation: make the data corresponding to a user-defined Schema type be verified correctly
+ *  - Registration operation: make the data corresponding to a user-defined
+      Schema type be verified correctly
  *  - Replace operation: replace a data validator of the original type
  *  - Parsing operation: for the specified Schema object and data object,
  *    verify that the data conforms to the definition of this Schema
@@ -36,7 +37,8 @@ export class DataValidatorMaster implements DataValidatorContext {
   }
 
   /**
-   * Add DataValidatorFactory, if the specified type already exists, ignore this addition
+   * Add DataValidatorFactory, if the specified type already exists,
+   * ignore this addition
    *
    * 添加 DataValidatorFactory，若指定的 type 已存在，则忽略此次添加
    * @param type
@@ -49,7 +51,8 @@ export class DataValidatorMaster implements DataValidatorContext {
 
   /**
    * Overwrite the existing DataValidatorFactory.
-   * If there is no corresponding DataValidatorFactory before the specified type, add it
+   * If there is no corresponding DataValidatorFactory
+   * before the specified type, then add it
    *
    * 覆盖已有的 DataValidatorFactory，若指定的 type 之前没有对应的 DataValidatorFactory，也做添加操作
    * @param type
@@ -70,7 +73,7 @@ export class DataValidatorMaster implements DataValidatorContext {
       const result: DVResult = new DataValidationResult(schema)
       return result.addError({
         constraint: 'type',
-        reason:     `unknown schema type: ${ stringify(schema.type) }.`
+        reason: `unknown schema type: ${ stringify(schema.type) }.`
       })
     }
 

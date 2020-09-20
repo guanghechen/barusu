@@ -51,10 +51,10 @@ export class ApiItemParser {
     const self = this
     const apiConfig: ApiConfig = loadContextConfig<RawApiConfig, ApiConfig>({
       configurationMaster: self.configurationMaster,
-      schema:              self.schema,
-      configPath:          apiConfigFilePath,
-      encoding:            encoding,
-      preprocess:          (json: any) => self.extractRawApiConfig(json),
+      schema: self.schema,
+      configPath: apiConfigFilePath,
+      encoding: encoding,
+      preprocess: (json: any) => self.extractRawApiConfig(json),
     })
     const apiContext: ApiConfigContext = apiConfig
     for (const rawApiGroup of apiConfig.api) {
@@ -65,7 +65,8 @@ export class ApiItemParser {
   }
 
   /**
-   * returns the list of ResolvedApiItemGroup parsed by the previous scan operation, and clears this list
+   * returns the list of ResolvedApiItemGroup parsed by the
+   * previous scan operation, and clears this list
    *
    * 返回之前 scan 操作解析得到的 ResolvedApiItemGroup 列表，并清除此列表
    */
@@ -108,8 +109,12 @@ export class ApiItemParser {
   public extractRawApiConfig(data: RawApiConfig): ApiConfig {
     const self = this
     const rawApiGroups: RawApiItemGroup[] = self.normalizeGroups(data.api)
-    const schemaDir = data.schemaDir == null ? self.schemaRootDir : path.join(self.schemaRootDir, data.schemaDir)
-    logger.debug(`[ApiParser extractRawApiConfig] data.schemaDir(${ data.schemaDir }), this.schemaRootDir(${ self.schemaRootDir }), schemaDir(${ schemaDir })`)
+    const schemaDir = data.schemaDir == null
+      ? self.schemaRootDir
+      : path.join(self.schemaRootDir, data.schemaDir)
+    logger.debug(
+      `[ApiParser extractRawApiConfig] data.schemaDir(${ data.schemaDir }),` +
+      ` this.schemaRootDir(${ self.schemaRootDir }), schemaDir(${ schemaDir })`)
     return {
       schemaDir,
       api: rawApiGroups,
@@ -129,7 +134,8 @@ export class ApiItemParser {
   ): ResolvedApiItemGroup {
     const items: ResolvedApiItem[] = []
     const subGroups: ResolvedApiItemGroup[] = []
-    const defaultMethod: HttpVerb | undefined = (parent != null && parent.method != null) ? parent.method : undefined
+    const defaultMethod: HttpVerb | undefined =
+      (parent != null && parent.method != null) ? parent.method : undefined
     const rawRequest = data.request || {}
     const rawResponse = data.response || {}
 
@@ -166,22 +172,22 @@ export class ApiItemParser {
       : undefined
 
     const group: ResolvedApiItemGroup = {
-      name:     data.name,
+      name: data.name,
       fullName: toKebabCase(parent != null ? parent.fullName + '/' + data.name : data.name),
-      active:   coverBoolean(true, data.active),
-      title:    coverString(data.name, data.title, isNotEmptyString),
-      desc:     coverString(data.desc || '', data.description, isNotEmptyString),
-      path:     (parent != null ? parent.path : '') + data.path,
-      method:   coverString(defaultMethod as any, data.method, isNotEmptyString) as HttpVerb,
-      request:  {
+      active: coverBoolean(true, data.active),
+      title: coverString(data.name, data.title, isNotEmptyString),
+      desc: coverString(data.desc || '', data.description, isNotEmptyString),
+      path: (parent != null ? parent.path : '') + data.path,
+      method: coverString(defaultMethod as any, data.method, isNotEmptyString) as HttpVerb,
+      request: {
         voNamePrefix: requestModelNamePrefix,
         voNameSuffix: requestModelNameSuffix,
-        headers:      requestHeaders,
+        headers: requestHeaders,
       },
       response: {
         voNamePrefix: responseModelNamePrefix,
         voNameSuffix: responseModelNameSuffix,
-        headers:      responseHeaders,
+        headers: responseHeaders,
       },
       items,
       subGroups,
@@ -214,7 +220,11 @@ export class ApiItemParser {
    * @param context
    * @param group
    */
-  public extractRawApiItem(data: RawApiItem, context: ApiConfigContext, group?: ResolvedApiItemGroup): ResolvedApiItem {
+  public extractRawApiItem(
+    data: RawApiItem,
+    context: ApiConfigContext,
+    group?: ResolvedApiItemGroup,
+  ): ResolvedApiItem {
     // preprocess
     const rawRequest: {
       voName?: string,
@@ -251,9 +261,15 @@ export class ApiItemParser {
     }
 
     const { schemaDir } = context
-    const fullGroupName = group != null ? toPascalCase(group.fullName.replace(/\//g, '-')) : ''
-    const defaultPath: string = group != null ? group.path + (data.path || '') : (data.path || '')
-    const defaultMethod: HttpVerb = (group != null && group.method != null) ? group.method : HttpVerb.GET
+    const fullGroupName = group != null
+      ? toPascalCase(group.fullName.replace(/\//g, '-'))
+      : ''
+    const defaultPath: string = group != null
+      ? group.path + (data.path || '')
+      : (data.path || '')
+    const defaultMethod: HttpVerb = (group != null && group.method != null)
+      ? group.method
+      : HttpVerb.GET
 
     // calc schema path
     const resolveSchemaPath = (modelName: string) => {
@@ -300,23 +316,23 @@ export class ApiItemParser {
       : undefined
 
     const ResolvedApiItem: ResolvedApiItem = {
-      name:    data.name,
-      active:  coverBoolean(true, data.active),
-      title:   coverString(data.name, data.title, isNotEmptyString),
-      desc:    coverString(data.desc || '', data.description, isNotEmptyString),
-      path:    coverString(defaultPath, data.fullPath, isNotEmptyString),
-      method:  coverString(defaultMethod || HttpVerb.GET, data.method, isNotEmptyString) as HttpVerb,
+      name: data.name,
+      active: coverBoolean(true, data.active),
+      title: coverString(data.name, data.title, isNotEmptyString),
+      desc: coverString(data.desc || '', data.description, isNotEmptyString),
+      path: coverString(defaultPath, data.fullPath, isNotEmptyString),
+      method: coverString(defaultMethod || HttpVerb.GET, data.method, isNotEmptyString) as HttpVerb,
       request: (isObject(rawRequest) && rawRequest.voName == null && rawRequest.voFullName == null)
         ? { headers: requestHeaders }
         : {
-          voName:     requestModelName,
+          voName: requestModelName,
           schemaPath: requestSchemaPath,
-          headers:    requestHeaders,
+          headers: requestHeaders,
         },
       response: {
-        voName:     responseModelName,
+        voName: responseModelName,
         schemaPath: responseSchemaPath,
-        headers:    responseHeaders,
+        headers: responseHeaders,
       }
     }
 

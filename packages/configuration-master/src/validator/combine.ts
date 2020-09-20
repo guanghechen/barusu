@@ -25,6 +25,7 @@ export type CombineDataValidationResult = DataValidationResult<T, V, DS>
  *
  * anyOf 取第一个校验通过的 Schema 的 value
  */
+// eslint-disable-next-line max-len
 export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
@@ -148,8 +149,9 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements
         const reason = `expected matched only one of the DataSchemas defined in \`oneOf\`, but matched ${ count } DataSchemas`
 
         // 有可能 oneOf 中所有项都匹配，以至 traceResult 中既无错误项已无警告项
-        if (traceResult.hasError) oneOfResult.addHandleResult('oneOf', traceResult, undefined, reason)
-        else {
+        if (traceResult.hasError) {
+          oneOfResult.addHandleResult('oneOf', traceResult, undefined, reason)
+        } else {
           oneOfResult.addHandleResult('oneOf', traceResult, undefined)
           oneOfResult.addError({ constraint: 'oneOf', reason })
         }

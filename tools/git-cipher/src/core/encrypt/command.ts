@@ -28,7 +28,7 @@ interface SubCommandOptions extends GlobalCommandOptions {
 
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
-  full:                false,
+  full: false,
   updateBeforeEncrypt: false,
 }
 
@@ -91,19 +91,19 @@ export async function createGitCipherEncryptContextFromOptions(
   options: SubCommandEncryptOptions,
 ): Promise<GitCipherEncryptContext> {
   const context: GitCipherEncryptContext = await createGitCipherEncryptContext({
-    cwd:                 options.cwd,
-    workspace:           options.workspace,
-    encoding:            options.encoding,
-    secretFilepath:      options.secretFilepath,
-    secretFileEncoding:  options.secretFileEncoding,
-    indexFilepath:       options.indexFilepath,
-    indexFileEncoding:   options.indexFileEncoding,
-    ciphertextRootDir:   options.ciphertextRootDir,
-    plaintextRootDir:    options.plaintextRootDir,
-    showAsterisk:        options.showAsterisk,
-    minPasswordLength:   options.minPasswordLength,
-    maxPasswordLength:   options.maxPasswordLength,
-    full:                options.full,
+    cwd: options.cwd,
+    workspace: options.workspace,
+    encoding: options.encoding,
+    secretFilepath: options.secretFilepath,
+    secretFileEncoding: options.secretFileEncoding,
+    indexFilepath: options.indexFilepath,
+    indexFileEncoding: options.indexFileEncoding,
+    ciphertextRootDir: options.ciphertextRootDir,
+    plaintextRootDir: options.plaintextRootDir,
+    showAsterisk: options.showAsterisk,
+    minPasswordLength: options.minPasswordLength,
+    maxPasswordLength: options.maxPasswordLength,
+    full: options.full,
     updateBeforeEncrypt: options.updateBeforeEncrypt,
   })
   return context

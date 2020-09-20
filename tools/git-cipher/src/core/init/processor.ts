@@ -27,12 +27,12 @@ export class GitCipherInitProcessor {
   public constructor(context: GitCipherInitContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
-      cipherFactory:         { create: () => new AESCipher() },
-      secretFileEncoding:    context.secretFileEncoding,
+      cipherFactory: { create: () => new AESCipher() },
+      secretFileEncoding: context.secretFileEncoding,
       secretContentEncoding: 'hex',
-      showAsterisk:          context.showAsterisk,
-      minPasswordLength:     context.minPasswordLength,
-      maxPasswordLength:     context.maxPasswordLength,
+      showAsterisk: context.showAsterisk,
+      minPasswordLength: context.minPasswordLength,
+      maxPasswordLength: context.maxPasswordLength,
     })
   }
 
@@ -55,13 +55,13 @@ export class GitCipherInitProcessor {
     // install dependencies
     await installDependencies({
       stdio: 'inherit',
-      cwd:   context.workspace,
+      cwd: context.workspace,
     }, [], logger)
 
     // create initial commit
     await createInitialCommit({
       stdio: 'inherit',
-      cwd:   context.workspace,
+      cwd: context.workspace,
     }, [], logger)
   }
 
@@ -74,10 +74,10 @@ export class GitCipherInitProcessor {
     // request repository url
     let { plaintextRepositoryUrl } = await inquirer.prompt([
       {
-        type:        'input',
-        name:        'plaintextRepositoryUrl',
-        message:     'Resource git repository url?',
-        filter:      x => toLowerCase(x).trim(),
+        type: 'input',
+        name: 'plaintextRepositoryUrl',
+        message: 'Resource git repository url?',
+        filter: x => toLowerCase(x).trim(),
         transformer: (x: string) => toLowerCase(x).trim(),
       },
     ])
@@ -98,19 +98,19 @@ export class GitCipherInitProcessor {
     const templateConfig = resolveTemplateFilepath('plop.js')
     const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
     await runPlop(plop, logger, undefined, {
-      workspace:          context.workspace,
-      templateVersion:    packageVersion,
-      encoding:           context.encoding,
-      secretFilepath:     relativeOfWorkspace(context.workspace, context.secretFilepath),
+      workspace: context.workspace,
+      templateVersion: packageVersion,
+      encoding: context.encoding,
+      secretFilepath: relativeOfWorkspace(context.workspace, context.secretFilepath),
       secretFileEncoding: context.secretFileEncoding,
-      indexFilepath:      relativeOfWorkspace(context.workspace, context.indexFilepath),
-      indexFileEncoding:  context.indexFileEncoding,
-      ciphertextRootDir:  relativeOfWorkspace(context.workspace, context.ciphertextRootDir),
-      plaintextRootDir:   relativeOfWorkspace(context.workspace, context.plaintextRootDir),
+      indexFilepath: relativeOfWorkspace(context.workspace, context.indexFilepath),
+      indexFileEncoding: context.indexFileEncoding,
+      ciphertextRootDir: relativeOfWorkspace(context.workspace, context.ciphertextRootDir),
+      plaintextRootDir: relativeOfWorkspace(context.workspace, context.plaintextRootDir),
       plaintextRepositoryUrl,
-      showAsterisk:       context.showAsterisk,
-      minPasswordLength:  context.minPasswordLength,
-      maxPasswordLength:  context.maxPasswordLength,
+      showAsterisk: context.showAsterisk,
+      minPasswordLength: context.minPasswordLength,
+      maxPasswordLength: context.maxPasswordLength,
     })
   }
 
@@ -133,10 +133,10 @@ export class GitCipherInitProcessor {
     const cipher: Cipher = secretMaster.getCipher()
     const catalog = new WorkspaceCatalog({
       cipher,
-      indexFileEncoding:    context.indexFileEncoding,
+      indexFileEncoding: context.indexFileEncoding,
       indexContentEncoding: 'base64',
-      plaintextRootDir:     context.plaintextRootDir,
-      ciphertextRootDir:    context.ciphertextRootDir,
+      plaintextRootDir: context.plaintextRootDir,
+      ciphertextRootDir: context.ciphertextRootDir,
     })
     await catalog.save(context.indexFilepath)
   }
@@ -151,7 +151,7 @@ export class GitCipherInitProcessor {
     mkdirsIfNotExists(context.plaintextRootDir, true, logger)
     await execa('git', ['clone', plaintextRepositoryUrl, context.plaintextRootDir], {
       stdio: 'inherit',
-      cwd:   context.plaintextRootDir,
+      cwd: context.plaintextRootDir,
     })
   }
 }

@@ -39,22 +39,28 @@ export class NumberDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // required 的默认值为 false
-    const defaultValueResult = result.compileConstraint<V>('default', coverNumber)
-    const minimumResult = result.compileConstraint<number>('minimum', coverNumber)
-    const maximumResult = result.compileConstraint<number>('maximum', coverNumber)
-    const exclusiveMinimumResult = result.compileConstraint<number>('exclusiveMinimum', coverNumber)
-    const exclusiveMaximumResult = result.compileConstraint<number>('exclusiveMaximum', coverNumber)
-    const enumValueResult = result.compileConstraint<number[]>('enum', coverArray<number>(coverNumber))
+    const defaultValueResult = result.compileConstraint<V>(
+      'default', coverNumber)
+    const minimumResult = result.compileConstraint<number>(
+      'minimum', coverNumber)
+    const maximumResult = result.compileConstraint<number>(
+      'maximum', coverNumber)
+    const exclusiveMinimumResult = result.compileConstraint<number>(
+      'exclusiveMinimum', coverNumber)
+    const exclusiveMaximumResult = result.compileConstraint<number>(
+      'exclusiveMaximum', coverNumber)
+    const enumValueResult = result.compileConstraint<number[]>(
+      'enum', coverArray<number>(coverNumber))
 
     // NumberDataSchema
     const schema: DS = {
       ...result.value!,
-      default:          defaultValueResult.value,
-      minimum:          minimumResult.value,
-      maximum:          maximumResult.value,
+      default: defaultValueResult.value,
+      minimum: minimumResult.value,
+      maximum: maximumResult.value,
       exclusiveMinimum: exclusiveMinimumResult.value,
       exclusiveMaximum: exclusiveMaximumResult.value,
-      enum:             enumValueResult.value,
+      enum: enumValueResult.value,
     }
 
     return result.setValue(schema)
@@ -67,11 +73,11 @@ export class NumberDataSchemaCompiler
   public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
-      minimum:          schema.minimum,
-      maximum:          schema.maximum,
+      minimum: schema.minimum,
+      maximum: schema.maximum,
       exclusiveMaximum: schema.exclusiveMaximum,
       exclusiveMinimum: schema.exclusiveMinimum,
-      enum:             schema.enum,
+      enum: schema.enum,
     }
     return json
   }
@@ -83,11 +89,11 @@ export class NumberDataSchemaCompiler
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),
-      minimum:          json.minimum,
-      maximum:          json.maximum,
+      minimum: json.minimum,
+      maximum: json.maximum,
       exclusiveMaximum: json.exclusiveMaximum,
       exclusiveMinimum: json.exclusiveMinimum,
-      enum:             json.enum,
+      enum: json.enum,
     }
     return schema
   }

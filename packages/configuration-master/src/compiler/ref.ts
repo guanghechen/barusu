@@ -42,7 +42,7 @@ export class RefDataSchemaCompiler
     if ($refResult.hasError || $refResult.value == null) {
       return result.addError({
         constraint: '$ref',
-        reason:     `bad \`$ref\`, expected a string, but got (${ stringify(rawSchema.$ref)}).`
+        reason: `bad \`$ref\`, expected a string, but got (${ stringify(rawSchema.$ref)}).`
       })
     }
 
@@ -51,7 +51,7 @@ export class RefDataSchemaCompiler
     if (!this.context.hasDefinition($ref)) {
       return result.addError({
         constraint: '$ref',
-        reason:     `bad \`$ref\`, cannot find DataSchema with $id(${ $ref })`
+        reason: `bad \`$ref\`, cannot find DataSchema with $id(${ $ref })`
       })
     }
 

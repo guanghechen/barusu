@@ -38,6 +38,7 @@ export class Command extends commander.Command {
     const self = this
 
     const listener = (args: string[]): void => {
+      // eslint-disable-next-line max-len
       // The .action callback takes an extra parameter which is the command or options.
       const expectedArgsCount = self._args.length
 
@@ -55,7 +56,8 @@ export class Command extends commander.Command {
 
       const actionResult = fn.apply(self, actionArgs)
 
-      // Remember result in case it is async. Assume parseAsync getting called on root.
+      // Remember result in case it is async.
+      // Assume parseAsync getting called on root.
       let rootCommand: Command = self
       while (rootCommand.parent != null) {
         rootCommand = rootCommand.parent

@@ -38,3 +38,26 @@ runCaseTree(
     expect(result).toEqual(kase.answer)
   }
 )
+
+
+test('rank compared within numeric order', function () {
+  expect(
+    compareModulePath('./a', './b', [
+      { regex: /a$/, rank: 1.2 },
+      { regex: /b$/, rank: 1.3 },
+    ]
+  )).toBe(-1)
+
+  expect(
+    compareModulePath('./a', './b', [
+      { regex: /a$/, rank: 10.1 },
+      { regex: /b$/, rank: 3.3 },
+    ]
+  )).toBe(1)
+
+  expect(
+    compareModulePath('./a', './a', [
+      { regex: /a$/, rank: 1.10 },
+    ]
+  )).toBe(0)
+})

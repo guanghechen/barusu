@@ -44,8 +44,8 @@ export class DefinitionDataSchemaMaster {
   }
 
   /**
-   * Mapping DefinitionDataSchema attribute names in TopDataSchema to reference paths;
-   * As in `{ "definitions" : { "tree" : xxx } }`:
+   * Mapping DefinitionDataSchema attribute names in TopDataSchema to
+   * reference paths, as in `{ "definitions" : { "tree" : xxx } }`:
    *  - name is `tree`
    *  - path is `#/definitions/tree`
    *
@@ -113,7 +113,8 @@ export class DefinitionDataSchemaMaster {
 
 
 /**
- * A wrapper class for TopDataSchema, making it capable of querying DefinitionDataSchema
+ * A wrapper class for TopDataSchema, making it capable of
+ * querying DefinitionDataSchema
  *
  * TopDataSchema 的封装类，使之具备查询 DefinitionDataSchema 的能力
  */

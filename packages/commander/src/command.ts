@@ -23,7 +23,7 @@ export class Command extends EventEmitter implements Command {
   protected _actionResults: unknown[] = []
   protected _defaultCommandName: string | null = null
   protected _hasExecutableHandler = false
-  protected _executableFile: string | null = null     // custom name for executable
+  protected _executableFile: string | null = null // custom name for executable
   protected _helpShortFlag = '-h'
   protected _helpLongFlag = '--help'
   protected _helpFlags = '-h, --help'
@@ -169,8 +169,9 @@ export class Command extends EventEmitter implements Command {
 
     const self = this
 
-    // To keep things simple, block automatic name generation for deeply nested executables.
-    // Fail fast and detect when adding rather than later when parsing.
+    // To keep things simple, block automatic name generation for deeply
+    // nested executables. Fail fast and detect when adding rather than
+    // later when parsing.
     function checkExplicitNames(commands: Command[]): void | never {
       for (const cmd of commands) {
         if (cmd._hasExecutableHandler && !cmd._executableFile) {
@@ -261,7 +262,8 @@ export class Command extends EventEmitter implements Command {
       if (isPotentialOption(arg)) {
         const option = self._findOption(arg)
 
-        // recognised option, call listener to assign value with possible custom processing
+        // recognised option, call listener to assign value with possible
+        // custom processing
         if (option != null) {
           if (option.required) {
             const value = args.shift()
@@ -269,7 +271,8 @@ export class Command extends EventEmitter implements Command {
             self.emit(`option:${ option.name }`, value)
           } else if (option.optional) {
             let value = null
-            // historical behavior is optional value is following arg unless an option
+            // historical behavior is optional value is following arg unless
+            // an option
             if (args.length > 0 && !isPotentialOption(args[0])) {
               value = args.shift()
             }
@@ -289,7 +292,8 @@ export class Command extends EventEmitter implements Command {
             // option with value following in same argument
             this.emit(`option:${ option.name }`, arg.slice(2))
           } else {
-            // boolean option, emit and put back remainder of arg for further processing
+            // boolean option, emit and put back remainder of arg for further
+            // processing
             this.emit(`option:${ option.name }`)
             args.unshift(`-${ arg.slice(2) }`)
           }
@@ -342,7 +346,8 @@ export class Command extends EventEmitter implements Command {
   public action(fn: CommandActionCallback): this {
     const self = this
     const listener = (args: string[]): void => {
-      // The .action callback takes an extra parameter which is the command or options.
+      // The .action callback takes an extra parameter which is the command or
+      // options.
       const expectedArgsCount = this.args.length
 
       // const actionArgs: (string | Record<string, unknown> | string[])[] = [
@@ -359,7 +364,8 @@ export class Command extends EventEmitter implements Command {
 
       const actionResult = fn.apply(this, actionArgs)
 
-      // Remember result in case it is async. Assume parseAsync getting called on root.
+      // Remember result in case it is async. Assume parseAsync getting called
+      // on root.
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       let rootCommand: Command | null = this
       while (rootCommand.parent) {
@@ -378,7 +384,7 @@ export class Command extends EventEmitter implements Command {
       self._exit(1, 'command.parse', 'first parameter to parse must be array')
     }
 
-    // make it a little easier for callers by supporting various argv conventions
+    // make it a little easier for caller by supporting various argv conventions
     let userArgs: string[]
     let scriptPath: string | null = null
     switch (parseOptions.from) {
@@ -481,12 +487,15 @@ export class Command extends EventEmitter implements Command {
       fn = processOptionValue
     }
 
-    // preassign default value for --no-*, [optional], <required>, or plain flag if boolean value
+    // preassign default value for --no-*, [optional], <required>,
+    // or plain flag if boolean value
     if (option.negate || option.optional || option.required || typeof defaultValue === 'boolean') {
-      // when --no-foo we make sure default is true, unless a --foo option is already defined
+      // when --no-foo we make sure default is true,
+      // unless a --foo option is already defined
       if (option.negate) {
         // eslint-disable-next-line no-param-reassign
-        defaultValue = (option.defaultValue === undefined ? true : option.defaultValue) as unknown as T
+        defaultValue = (
+          option.defaultValue === undefined ? true : option.defaultValue) as unknown as T
       }
 
       // preassign only if we have a default
@@ -763,7 +772,8 @@ export interface Command extends EventEmitter {
   /**
    * Define a command.
    *
-   * There are two styles of command: pay attention to where to put the description.
+   * There are two styles of command: pay attention to where to put the
+   * description.
    *
    * Examples:
    *
@@ -780,7 +790,8 @@ export interface Command extends EventEmitter {
    *      // second parameter to `.command`)
    *      program
    *        .command('start <service>', 'start named service')
-   *        .command('stop [service]', 'stop named service, or all if no name supplied');
+   *        .command('stop [service]',
+   *                  'stop named service, or all if no name supplied');
    *
    * @param nameAndArgs
    * @param execOptsOrExecDesc
@@ -918,15 +929,18 @@ export interface Command extends EventEmitter {
   /**
    * Parse `argv`, setting options and invoking commands when defined.
    *
-   * The default expectation is that the arguments are from node and have the application as argv[0]
-   * and the script being run in argv[1], with user parameters after that.
+   * The default expectation is that the arguments are from node and have the
+   * application as argv[0] and the script being run in argv[1], with user
+   * parameters after that.
    *
    * Unlike commander.js, you need to specify args explicitly
    *
    * Examples:
    *
    *      program.parse(process.argv);
-   *      program.parse(my-args, { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
+   *
+   *      // just user supplied arguments, nothing special about argv[0]
+   *      program.parse(my-args, { from: 'user' });
    *
    * @param argv
    * @param parseOptions

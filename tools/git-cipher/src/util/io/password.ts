@@ -6,11 +6,11 @@ import { input } from './input'
 
 /**
  *
- * @param question            Question to ask for input password
- * @param showAsterisk        Whether to print asterisks when entering a password
- * @param maxInputRetryTimes  Max retry times due to the bad input
- * @param minimumSize         Minimum length of password
- * @param maximumSize         Maximum length of password
+ * @param question           Question to ask for input password
+ * @param showAsterisk       Whether to print asterisks when entering a password
+ * @param maxInputRetryTimes Max retry times due to the bad input
+ * @param minimumSize        Minimum length of password
+ * @param maximumSize        Maximum length of password
  */
 export async function inputPassword(
   question: string,
@@ -57,7 +57,7 @@ export async function inputPassword(
 
   if (password == null) {
     const error: CustomError = {
-      code:    ErrorCode.BAD_PASSWORD,
+      code: ErrorCode.BAD_PASSWORD,
       message: 'too many times failed to get answer of ' +
         `'${ question.replace(/^[\s:]*([\s\S]+?)[\s:]*$/, '$1') }'`,
     }
@@ -75,11 +75,11 @@ export async function inputPassword(
 
 /**
  * Ask for repeat password from terminal
- * @param password            The password entered earlier
- * @param question            Question to ask for input password
- * @param showAsterisk        Whether to print asterisks when entering a password
- * @param minimumSize         Minimum length of password
- * @param maximumSize         Maximum length of password
+ * @param password       The password entered earlier
+ * @param question       Question to ask for input password
+ * @param showAsterisk   Whether to print asterisks when entering a password
+ * @param minimumSize    Minimum length of password
+ * @param maximumSize    Maximum length of password
  */
 export async function confirmPassword(
   password: Buffer,

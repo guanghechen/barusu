@@ -27,7 +27,7 @@ export interface AsyncStateItem<D> {
 export function createInitAsyncStateItem<D>(data?: D | null): AsyncStateItem<D> {
   return {
     loading: false,
-    data:    data === undefined ? null : data,
-    error:   null
+    data: data === undefined ? null : data,
+    error: null
   }
 }

@@ -32,12 +32,12 @@ export async function installDependencies(
   } else {
     npmScript = (await inquirer.prompt([
       {
-        type:        'list',
-        name:        'npmScript',
-        default:     hasYarnInstalled ? 'yarn' : 'npm',
-        message:     'npm or yarn?',
-        choices:     ['npm', 'yarn', 'skip'],
-        filter:      x => toLowerCase(x).trim(),
+        type: 'list',
+        name: 'npmScript',
+        default: hasYarnInstalled ? 'yarn' : 'npm',
+        message: 'npm or yarn?',
+        choices: ['npm', 'yarn', 'skip'],
+        filter: x => toLowerCase(x).trim(),
         transformer: (x: string) => toLowerCase(x).trim(),
       },
     ])).npmScript

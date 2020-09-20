@@ -41,8 +41,22 @@ module.exports = {
     'class-methods-use-this': 0,
     'func-call-spacing': ['error', 'never'],
     'func-names': 0,
-    'key-spacing': ['error', { 'align': 'value' }],
+    'key-spacing': ['error'],
     'lines-between-class-members': 0,
+    'max-len': [
+      'error',
+      {
+        'code': 100,
+        'comments': 80,
+        'tabWidth': 2,
+        'ignorePattern': /^(?:\s*\.option\()|(?:\s*\*\s*@\w+)/.source,
+        'ignoreTrailingComments': true,
+        'ignoreUrls': true,
+        'ignoreStrings': true,
+        'ignoreTemplateLiterals': true,
+        'ignoreRegExpLiterals': true,
+      }
+    ],
     'new-cap': ['error', { 'newIsCap': true, 'capIsNew': true }],
     'no-await-in-loop': 0,
     'no-bitwise': 0,

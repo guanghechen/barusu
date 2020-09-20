@@ -40,8 +40,8 @@ export function processSourceMap(
     const sourceContent = rawSourceMap.sourcesContent[i]
     if (!sourceContent) {
       sourcesWithoutContent.push({
-        index:   i,
-        source:  rawSourceMap.sources[i],
+        index: i,
+        source: rawSourceMap.sources[i],
         content: sourceContent,
       })
       continue
@@ -82,8 +82,8 @@ export function processSourceMap(
             return onFulfilled(null)
           }
           onFulfilled({
-            index:   item.index,
-            source:  result,
+            index: item.index,
+            source: result,
             content: content
           })
         })

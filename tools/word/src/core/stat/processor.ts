@@ -25,8 +25,8 @@ export class WordStatProcessor {
       ...new Set(
         context.filePath.concat(
           await globby(context.filePattern, {
-            cwd:               context.workspace,
-            onlyFiles:         true,
+            cwd: context.workspace,
+            onlyFiles: true,
             expandDirectories: false,
           }))
           .map(p => absoluteOfWorkspace(context.workspace, p))
@@ -39,7 +39,8 @@ export class WordStatProcessor {
     for (const filePath of filePaths) {
       const content = await fs.readFile(filePath, context.encoding)
       const detailMap = performCharacterStatistics(content)
-      const stat = calcCharacterStat(detailMap, context.showDetails, context.showDetailsPretty)
+      const stat = calcCharacterStat(
+        detailMap, context.showDetails, context.showDetailsPretty)
 
       // display statistics for each file
       if (!context.showSummaryOnly) {
@@ -50,9 +51,11 @@ export class WordStatProcessor {
       mergeCharacterStat(detailMap, result)
     }
 
-    // Print Summary only when multiple files are counted or showSummaryOnly is specified
+    // Print Summary only when multiple files are counted
+    // or showSummaryOnly is specified
     if (context.showSummaryOnly || filePaths.length > 1) {
-      const stat = calcCharacterStat(result, context.showDetails, context.showDetailsPretty)
+      const stat = calcCharacterStat(
+        result, context.showDetails, context.showDetailsPretty)
       console.log('Summary')
       console.log(formatCharacterStat(stat))
     }

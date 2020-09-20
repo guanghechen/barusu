@@ -68,7 +68,7 @@ export function copy(options: RollupPluginCopyOptions = {}) {
 
         const matchedPaths = await globby(src, {
           expandDirectories: false,
-          onlyFiles:         false,
+          onlyFiles: false,
           ...globalGlobbyOptions,
           ...restTargetOptions
         })

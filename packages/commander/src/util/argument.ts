@@ -38,8 +38,10 @@ export const argumentRegex = /^\s*([\[\<])\s*([.]{3})?([\w\-]+)\s*([\]\>])\s*$/
  *
  * Example:
  *
- *    parseArgument('[...pepper]') => { name: 'pepper', required: false, variadic: true }
- *    parseArgument('<pepper>') => { name: 'pepper', required: true, variadic: false }
+ *    parseArgument('[...pepper]') => {
+ *        name: 'pepper', required: false, variadic: true }
+ *    parseArgument('<pepper>') => {
+ *        name: 'pepper', required: true, variadic: false }
  *    parseArgument('<pepper]') => null
  *    parseArgument('[]') => null
  *    parseArgument('<>') => null
@@ -61,8 +63,8 @@ export function parseArgument(arg: string): Argument | null {
 
   const argDetail: Argument = {
     name,
-    required:     leftTag === '<',
-    variadic:     variadic != null,
+    required: leftTag === '<',
+    variadic: variadic != null,
     friendlyDesc: leftTag + (variadic || '') + name + rightTag,
   }
   return argDetail

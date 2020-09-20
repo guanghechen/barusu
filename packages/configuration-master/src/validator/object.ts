@@ -22,6 +22,7 @@ export type ObjectDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 对象类型的校验器
  */
+// eslint-disable-next-line max-len
 export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
@@ -89,8 +90,8 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
         if (!schema.silentIgnore) {
           result.addWarning({
             constraint: 'properties',
-            property:   propertyName,
-            reason:     `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
+            property: propertyName,
+            reason: `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
           })
         }
         continue
@@ -105,9 +106,9 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
           if (!schema.silentIgnore) {
             result.addWarning({
               constraint: 'propertyNames',
-              property:   propertyName,
-              reason:     `property(${ propertyName }) is not matched propertyNamesSchema, skipped.`,
-              traces:     [...xValidateResult.errors, ...xValidateResult.warnings],
+              property: propertyName,
+              reason: `property(${ propertyName }) is not matched propertyNamesSchema, skipped.`,
+              traces: [...xValidateResult.errors, ...xValidateResult.warnings],
             })
           }
         } else {
@@ -151,8 +152,8 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
             if (!value.hasOwnProperty(dependencyName)) {
               result.addError({
                 constraint: 'dependencies',
-                property:   propertyName,
-                reason:     `${ propertyName } depend on ${ stringify(dependencies) }, but "${ dependencyName }" is absent.`
+                property: propertyName,
+                reason: `${ propertyName } depend on ${ stringify(dependencies) }, but "${ dependencyName }" is absent.`
               })
             }
           }
@@ -172,7 +173,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
       if (missedProperties.length > 0) {
         result.addError({
           constraint: 'requiredProperties',
-          reason:     `missing required properties: ${ stringify(missedProperties) }`
+          reason: `missing required properties: ${ stringify(missedProperties) }`
         })
       }
     }

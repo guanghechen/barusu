@@ -64,18 +64,18 @@ export async function createGitCipherInitContextFromOptions(
   options: SubCommandInitOptions,
 ): Promise<GitCipherInitContext> {
   const context: GitCipherInitContext = await createGitCipherInitContext({
-    cwd:                options.cwd,
-    workspace:          options.workspace,
-    encoding:           options.encoding,
-    secretFilepath:     options.secretFilepath,
+    cwd: options.cwd,
+    workspace: options.workspace,
+    encoding: options.encoding,
+    secretFilepath: options.secretFilepath,
     secretFileEncoding: options.secretFileEncoding,
-    indexFilepath:      options.indexFilepath,
-    indexFileEncoding:  options.indexFileEncoding,
-    ciphertextRootDir:  options.ciphertextRootDir,
-    plaintextRootDir:   options.plaintextRootDir,
-    showAsterisk:       options.showAsterisk,
-    minPasswordLength:  options.minPasswordLength,
-    maxPasswordLength:  options.maxPasswordLength,
+    indexFilepath: options.indexFilepath,
+    indexFileEncoding: options.indexFileEncoding,
+    ciphertextRootDir: options.ciphertextRootDir,
+    plaintextRootDir: options.plaintextRootDir,
+    showAsterisk: options.showAsterisk,
+    minPasswordLength: options.minPasswordLength,
+    maxPasswordLength: options.maxPasswordLength,
   })
   return context
 }

@@ -61,9 +61,9 @@ export abstract class DirTestCaseMaster extends TestCaseMaster<DirTestCase, DirT
     const self = this
     const scan = async (dir: string): Promise<DirTestCaseGroup> => {
       const caseGroup: DirTestCaseGroup = {
-        title:     path.relative(self.caseRootDirectory, dir),
+        title: path.relative(self.caseRootDirectory, dir),
         subGroups: [],
-        cases:     [],
+        cases: [],
       }
 
       if (this.checkIfTestDir(dir)) {
@@ -92,7 +92,8 @@ export abstract class DirTestCaseMaster extends TestCaseMaster<DirTestCase, DirT
         if (recursive) {
           const subGroup: DirTestCaseGroup = await scan(absoluteFilePath)
           /**
-           * append sub-case groups directly to caseGroup if there are only sub-case groups and no sub-cases
+           * append sub-case groups directly to caseGroup if there are only
+           * sub-case groups and no sub-cases
            *
            * 如果只有子案例组而没有子案例，则直接将子案例组追加到 caseGroup 中
            */
@@ -108,7 +109,8 @@ export abstract class DirTestCaseMaster extends TestCaseMaster<DirTestCase, DirT
     }
 
     /**
-     * append sub-case groups directly to caseGroup if there are only sub-case groups and no sub-cases
+     * append sub-case groups directly to caseGroup
+     * if there are only sub-case groups and no sub-cases
      *
      * 如果只有子案例组而没有子案例，则直接将子案例组追加到 caseGroup 中
      */

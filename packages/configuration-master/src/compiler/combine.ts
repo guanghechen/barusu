@@ -45,11 +45,12 @@ export class CombineDataSchemaCompiler
     const defaultValue = rawSchema.default
 
     // strategy 的默认值为 all
-    const strategyResult = result.compileConstraint<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
+    const strategyResult = result.compileConstraint<CombineStrategy>(
+      'strategy', coverString as any, CombineStrategy.ALL)
     if (strategyResult.value == null || !combineStrategies.includes(strategyResult.value)) {
       result.addError({
         constraint: 'strategy',
-        reason:     `unknown strategy: ${ stringify(rawSchema.strategy) }`
+        reason: `unknown strategy: ${ stringify(rawSchema.strategy) }`
       })
       strategyResult.setValue(CombineStrategy.ALL)
     }
@@ -60,7 +61,10 @@ export class CombineDataSchemaCompiler
      * @param constraint
      * @param rawSchemas
      */
-    const compileSchemas = (constraint: 'allOf' | 'anyOf' | 'oneOf', rawSchemas?: RDSchema[]): DSchema[] | undefined => {
+    const compileSchemas = (
+      constraint: 'allOf' | 'anyOf' | 'oneOf',
+      rawSchemas?: RDSchema[]
+    ): DSchema[] | undefined => {
       if (rawSchemas == null || rawSchemas.length <= 0) return undefined
       const schemas: DSchema[] = []
       for (let i = 0; i < rawSchemas.length; ++i) {
@@ -82,17 +86,22 @@ export class CombineDataSchemaCompiler
     const oneOf: DSchema[] | undefined = compileSchemas('oneOf', rawSchema.oneOf)
 
     // allOf, anyOf, oneOf 至少要设置一项有效值
-    if ((allOf == null || allOf.length <= 0) && (anyOf == null || anyOf.length <= 0) && (oneOf == null || oneOf.length <= 0)) {
+    if (
+      (allOf == null || allOf.length <= 0) &&
+      (anyOf == null || anyOf.length <= 0) &&
+      (oneOf == null || oneOf.length <= 0)
+    ) {
       return result.addError({
         constraint: 'type',
-        reason:     'CombineDataSchema must be set at least one valid value of properties: `allOf`, `anyOf`, `oneOf`.'
+        reason: 'CombineDataSchema must be set at least one valid value' +
+          ' of properties: `allOf`, `anyOf`, `oneOf`.'
       })
     }
 
     // CombineDataSchema
     const schema: DS = {
       ...result.value!,
-      default:  defaultValue,
+      default: defaultValue,
       strategy: strategyResult.value!,
       allOf,
       anyOf,
@@ -114,7 +123,8 @@ export class CombineDataSchemaCompiler
 
     for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
       if (schema[propertyName] == null || schema[propertyName].length <= 0) continue
-      json[propertyName] = (schema[propertyName] as DSchema[]).map(item => this.context.toJSON(item))
+      json[propertyName] = (schema[propertyName] as DSchema[])
+        .map(item => this.context.toJSON(item))
     }
     return json
   }

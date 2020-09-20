@@ -48,11 +48,16 @@ export class StringDataSchemaCompiler
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileConstraint<V>('default', coverString)
-    const patternResult = result.compileConstraint<RegExp>('pattern', coverRegex)
-    const enumValueResult = result.compileConstraint<string[]>('enum', coverArray<string>(coverString))
-    const minLengthResult = result.compileConstraint<number>('minLength', coverInteger)
-    const maxLengthResult = result.compileConstraint<number>('maxLength', coverInteger)
+    const defaultValueResult = result.compileConstraint<V>(
+      'default', coverString)
+    const patternResult = result.compileConstraint<RegExp>(
+      'pattern', coverRegex)
+    const enumValueResult = result.compileConstraint<string[]>(
+      'enum', coverArray<string>(coverString))
+    const minLengthResult = result.compileConstraint<number>(
+      'minLength', coverInteger)
+    const maxLengthResult = result.compileConstraint<number>(
+      'maxLength', coverInteger)
 
     let format: StringFormat[] | undefined
     if (rawSchema.format != null) {
@@ -62,7 +67,7 @@ export class StringDataSchemaCompiler
       if (formatResult.hasError) {
         result.addError({
           constraint: 'format',
-          reason:     formatResult.errorSummary,
+          reason: formatResult.errorSummary,
         })
       } else {
         format = []
@@ -71,7 +76,7 @@ export class StringDataSchemaCompiler
           if (!StringFormatSet.has(f)) {
             result.addWarning({
               constraint: 'format',
-              reason:     `unsupported format: ${ f }`
+              reason: `unsupported format: ${ f }`
             })
             continue
           }
@@ -85,12 +90,14 @@ export class StringDataSchemaCompiler
     let transform: StringTransformType[] | undefined
     if (rawSchema.transform != null) {
       // 先检查是否为字符串数组
-      const transforms: string[] = isString(rawSchema.transform) ? [rawSchema.transform] : rawSchema.transform
+      const transforms: string[] = isString(rawSchema.transform)
+        ? [rawSchema.transform]
+        : rawSchema.transform
       const transformResult = coverArray<string>(coverString)(transforms)
       if (transformResult.hasError) {
         result.addError({
           constraint: 'transform',
-          reason:     transformResult.errorSummary,
+          reason: transformResult.errorSummary,
         })
       } else {
         transform = []
@@ -99,7 +106,7 @@ export class StringDataSchemaCompiler
           if (!StringTransformTypeSet.has(f)) {
             result.addWarning({
               constraint: 'transform',
-              reason:     `unsupported transform: ${ f }`
+              reason: `unsupported transform: ${ f }`
             })
             continue
           }
@@ -114,7 +121,7 @@ export class StringDataSchemaCompiler
       if (minLengthResult.value < 0) {
         result.addError({
           constraint: 'minLength',
-          reason:     'minLength must be a non-negative integer',
+          reason: 'minLength must be a non-negative integer',
         })
       }
     }
@@ -123,12 +130,12 @@ export class StringDataSchemaCompiler
       if (maxLengthResult.value <= 0) {
         result.addError({
           constraint: 'maxLength',
-          reason:     'maxLength must be a positive integer',
+          reason: 'maxLength must be a positive integer',
         })
       } else if (minLengthResult.value != null && minLengthResult.value > maxLengthResult.value) {
         result.addError({
           constraint: 'minLength',
-          reason:     'minLength must be less than or equal maxLength',
+          reason: 'minLength must be less than or equal maxLength',
         })
       }
     }
@@ -136,13 +143,13 @@ export class StringDataSchemaCompiler
     // StringDataSchema
     const schema: DS = {
       ...result.value!,
-      default:   defaultValueResult.value,
+      default: defaultValueResult.value,
       minLength: minLengthResult.value,
       maxLength: maxLengthResult.value,
-      pattern:   patternResult.value,
+      pattern: patternResult.value,
       format,
       transform,
-      enum:      enumValueResult.value,
+      enum: enumValueResult.value,
     }
 
     return result.setValue(schema)
@@ -157,10 +164,10 @@ export class StringDataSchemaCompiler
       ...super.toJSON(schema),
       minLength: schema.minLength,
       maxLength: schema.maxLength,
-      pattern:   schema.pattern == null ? schema.pattern : schema.pattern.source,
-      format:    schema.format,
+      pattern: schema.pattern == null ? schema.pattern : schema.pattern.source,
+      format: schema.format,
       transform: schema.transform,
-      enum:      schema.enum,
+      enum: schema.enum,
     }
     return json
   }
@@ -174,10 +181,10 @@ export class StringDataSchemaCompiler
       ...super.parseJSON(json),
       minLength: json.minLength,
       maxLength: json.maxLength,
-      pattern:   json.pattern == null ? json.pattern : new RegExp(json.pattern),
-      format:    json.format,
+      pattern: json.pattern == null ? json.pattern : new RegExp(json.pattern),
+      format: json.format,
       transform: json.transform,
-      enum:      json.enum,
+      enum: json.enum,
     }
     return schema
   }
