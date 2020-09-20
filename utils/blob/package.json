@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-blob",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -36,8 +36,8 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.35",
-    "@barusu/rollup-config": "^0.0.35",
+    "@barusu/eslint-config": "^0.0.36",
+    "@barusu/rollup-config": "^0.0.36",
     "rollup": "2.16.1"
   }
 }

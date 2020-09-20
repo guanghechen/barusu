@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-find-inconsistent",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "find inconsistent package versions in monorepo",
   "author": {
     "name": "lemon-clown",
@@ -39,15 +39,15 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.35",
-    "@barusu/util-cli": "^0.0.35",
-    "@barusu/util-option": "^0.0.35",
+    "@barusu/chalk-logger": "^0.0.36",
+    "@barusu/util-cli": "^0.0.36",
+    "@barusu/util-option": "^0.0.36",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.35",
-    "@barusu/rollup-config": "^0.0.35",
+    "@barusu/eslint-config": "^0.0.36",
+    "@barusu/rollup-config": "^0.0.36",
     "rollup": "2.16.1"
   }
 }
