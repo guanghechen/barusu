@@ -59,6 +59,6 @@
     "@barusu/eslint-config": "^0.0.36",
     "@barusu/rollup-config": "^0.0.36",
     "@barusu/rollup-plugin-copy": "^0.0.36",
-    "rollup": "2.16.1"
+    "rollup": "2.28.1"
   }
 }
