@@ -4,6 +4,7 @@ import { RawStringDataSchema, StringDataSchema } from './string'
 
 // ObjectDataSchema.type 的类型
 export const OBJECT_T_TYPE = 'object'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type OBJECT_T_TYPE = typeof OBJECT_T_TYPE
 
 // ObjectDataSchema.value 的类型

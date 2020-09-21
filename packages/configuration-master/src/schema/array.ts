@@ -3,6 +3,7 @@ import { DSchema, DataSchema, RDSchema, RawDataSchema } from '../_core/schema'
 
 // ArrayDataSchema.type 的类型
 export const ARRAY_T_TYPE = 'array'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ARRAY_T_TYPE = typeof ARRAY_T_TYPE
 
 // ArrayDataSchema.value 的类型

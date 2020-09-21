@@ -7,6 +7,7 @@ import { stringify } from './string-util'
  * CoverOperationResult 实现类
  */
 export type CoverOperationResult<T> = StringExceptionHandleResult<T>
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CoverOperationResult = StringExceptionHandleResult
 
 

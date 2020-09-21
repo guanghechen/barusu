@@ -370,7 +370,7 @@ export class ApiItemParser {
     rawItems: T[] | { [name: string]: Omit<T, 'name'> }
   ): T[] {
     const items: T[] = []
-    if (rawItems == undefined) return items
+    if (rawItems == null) return items
     if (isObject(rawItems)) {
       for (const name of Object.getOwnPropertyNames(rawItems)) {
         items.push({ name, ...rawItems[name] } as T)

@@ -30,7 +30,7 @@ export interface Argument {
  *  '[...pepper]'
  *  '<...pepper>'
  */
-export const argumentRegex = /^\s*([\[\<])\s*([.]{3})?([\w\-]+)\s*([\]\>])\s*$/
+export const argumentRegex = /^\s*([[<])\s*([.]{3})?([\w-]+)\s*([\]>])\s*$/
 
 
 /**

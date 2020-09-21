@@ -3,6 +3,7 @@ import { DataSchema, RawDataSchema } from '../_core/schema'
 
 // NullDataSchema.type 的类型
 export const NULL_T_TYPE = 'null'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type NULL_T_TYPE = typeof NULL_T_TYPE
 
 // NullDataSchema.value 的类型

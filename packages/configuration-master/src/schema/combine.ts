@@ -3,6 +3,7 @@ import { DSchema, DataSchema, RDSchema, RawDataSchema } from '../_core/schema'
 
 // CombineDataSchema.type 的类型
 export const COMBINE_T_TYPE = 'combine'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type COMBINE_T_TYPE = typeof COMBINE_T_TYPE
 
 // CombineDataSchema.value 的类型

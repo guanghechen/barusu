@@ -3,6 +3,7 @@ import { DataSchema, RawDataSchema } from '../_core/schema'
 
 // RefDataSchema.type 的类型
 export const REF_T_TYPE = 'ref'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type REF_T_TYPE = typeof REF_T_TYPE
 
 // RefDataSchema.value 的类型

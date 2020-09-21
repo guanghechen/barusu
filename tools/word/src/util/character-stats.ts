@@ -170,7 +170,7 @@ export function formatCharacterStat(stat: CharacterStat): string {
   const length = stat.total.toString().length
   const format = (n: number) => n.toString().padStart(length)
   let output: string = (
-    '======================================================' + '\n' +
+    '======================================================\n' +
     '                   total: ' + format(stat.total) + '\n' +
     '             blank total: ' + format(stat.blankTotal) + '\n' +
     '       punctuation total: ' + format(stat.punctuationTotal) + '\n' +

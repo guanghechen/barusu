@@ -3,6 +3,7 @@ import { DataSchema, RawDataSchema } from '../_core/schema'
 
 // IntegerDataSchema.type 的类型
 export const STRING_T_TYPE = 'string'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type STRING_T_TYPE = typeof STRING_T_TYPE
 
 // IntegerDataSchema.value 的类型

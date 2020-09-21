@@ -165,7 +165,7 @@ export function extractStaticModuleStatementItem(
     : []
   const item: Omit<StaticModuleStatementItem, 'fullStatement'> = {
     type: groups.type as 'import' | 'export',
-    moduleName: groups.moduleName.replace(/([\/\\])\.[\/\\]/g, '$1').replace(/([\/\\])+/g, '$1'),
+    moduleName: groups.moduleName.replace(/([/\\])\.[/\\]/g, '$1').replace(/([/\\])+/g, '$1'),
     exportN: exportN.filter(x => /\S/.test(x)).sort(),
     remainOfLine: groups.remainOfLine as string,
     keywordType: groups.keywordType as 'type' | undefined,

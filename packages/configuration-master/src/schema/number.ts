@@ -3,6 +3,7 @@ import { DataSchema, RawDataSchema } from '../_core/schema'
 
 // NumberDataSchema.type 的类型
 export const NUMBER_T_TYPE = 'number'
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type NUMBER_T_TYPE = typeof NUMBER_T_TYPE
 
 // NumberDataSchema.value 的类型
