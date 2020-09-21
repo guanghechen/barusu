@@ -1,6 +1,6 @@
 {
   "name": "@barusu/event-bus",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "simple event bus",
   "author": {
     "name": "lemon-clown",
@@ -40,8 +40,8 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.36",
-    "@barusu/rollup-config": "^0.0.36",
+    "@barusu/eslint-config": "^0.0.37",
+    "@barusu/rollup-config": "^0.0.37",
     "rollup": "2.28.1"
   }
 }

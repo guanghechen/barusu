@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-jest",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "author": {
     "name": "lemon-clown",
     "url": "https://github.com/lemon-clown/"
@@ -41,8 +41,8 @@
     "jest": "^26.4.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.36",
-    "@barusu/rollup-config": "^0.0.36",
+    "@barusu/eslint-config": "^0.0.37",
+    "@barusu/rollup-config": "^0.0.37",
     "rollup": "2.28.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-tsconfig-paths",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "find inconsistent package versions in monorepo",
   "author": {
     "name": "lemon-clown",
@@ -39,10 +39,10 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.36",
-    "@barusu/tool-sort-imports": "^0.0.36",
-    "@barusu/util-cli": "^0.0.36",
-    "@barusu/util-option": "^0.0.36",
+    "@barusu/chalk-logger": "^0.0.37",
+    "@barusu/tool-sort-imports": "^0.0.37",
+    "@barusu/util-cli": "^0.0.37",
+    "@barusu/util-option": "^0.0.37",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",
@@ -50,9 +50,9 @@
     "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.36",
-    "@barusu/rollup-config": "^0.0.36",
-    "@barusu/util-jest": "^0.0.36",
+    "@barusu/eslint-config": "^0.0.37",
+    "@barusu/rollup-config": "^0.0.37",
+    "@barusu/util-jest": "^0.0.37",
     "rollup": "2.28.1"
   }
 }
