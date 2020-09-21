@@ -16,8 +16,7 @@
     "node": ">= 12.16.0"
   },
   "scripts": {
-    "pre:publish": "yarn find-inconsistent && yarn sort-imports",
-    ":publish": "lerna publish --no-private",
+    ":publish": "yarn format && lerna publish --no-private",
     "test": "lerna exec --concurrency 1 -- 'echo && pwd && yarn test'",
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
     "clean": "lerna clean --yes && yarn install",
@@ -55,8 +54,8 @@
   },
   "@barusu/tool-sort-imports": {
     "pattern": [
-      "{packages,scaffolds,templates,tools,utils}/*/{src,test,__test__}/**/*.{ts,tsx}",
-      "!**/{test,__test__}/cases"
+      "{packages,scaffolds,templates,tools,utils}/*/{src}/**/*.{ts,tsx}",
+      "{packages,scaffolds,templates,tools,utils}/*/{test,__test__}/*.{ts,tsx}"
     ],
     "moduleRanks": [
       {
