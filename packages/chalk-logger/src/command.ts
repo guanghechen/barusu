@@ -106,7 +106,7 @@ export function calcLoggerOptionsFromCommanderOptions(
   if (commanderOptions.logFlag != null) {
     for (let flag of commanderOptions.logFlag) {
       let negative = false
-      if (/^no\-/.test(flag)) {
+      if (/^no-/.test(flag)) {
         negative = true
         flag = flag.slice(3)
       }
@@ -145,7 +145,7 @@ export function calcLoggerOptionsFromCommanderOptions(
  */
 export function calcLoggerOptionsFromArgs(args: string[]): LoggerOptions {
   const options: CommanderOptions = { logFlag: [] }
-  const regex = /^--log-([\w]+)(?:=([\-\w]+))?/
+  const regex = /^--log-([\w]+)(?:=([-\w]+))?/
   for (let i = 0; i < args.length; ++i) {
     const arg = args[i]
     const match = regex.exec(arg)

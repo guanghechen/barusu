@@ -31,7 +31,7 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "prebuild": "yarn lint:fix && yarn test && rimraf *.tsbuildinfo lib/",
+    "prebuild": "yarn test && rimraf *.tsbuildinfo lib/",
     "build": "tsc -p tsconfig.src.json --sourceMap --declarationMap",
     "postbuild": "rimraf lib/**/*.tsbuildinfo",
     "test": "echo 'no test yet.'",
@@ -39,16 +39,14 @@
     "lint:fix": "eslint 'src/**/*.ts' --fix"
   },
   "dependencies": {
-    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^8.0.1",
-    "@types/eslint": "^6.1.8",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@types/rollup-plugin-peer-deps-external": "^2.2.0",
     "builtin-modules": "^3.1.0",
-    "rollup": "2.16.1",
-    "rollup-plugin-eslint": "^7.0.0",
-    "rollup-plugin-peer-deps-external": "^2.2.2",
-    "rollup-plugin-typescript2": "^0.27.0"
+    "rollup": "2.28.1",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
+    "rollup-plugin-typescript2": "^0.27.2"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.36"

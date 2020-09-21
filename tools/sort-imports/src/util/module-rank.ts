@@ -31,11 +31,11 @@ export const defaultModuleRankItems: ModuleRankItem[] = [
     rank: 3.1,
   },
   { // relative path (parent)
-    regex: /^[.]{2}[\/\\][^\n]*/,
+    regex: /^[.]{2}[/\\][^\n]*/,
     rank: 3.2,
   },
   { // relative path
-    regex: /^[.][\/\\][^\n]*/,
+    regex: /^[.][/\\][^\n]*/,
     rank: 3.3,
   }
 ]

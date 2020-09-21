@@ -1,5 +1,4 @@
 import rollup from 'rollup'
-import { eslint } from 'rollup-plugin-eslint'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import typescript from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
@@ -7,7 +6,6 @@ import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import {
   CommonJSOptions,
-  EslintOptions,
   JsonOptions,
   NodeResolveOptions,
   PeerDepsExternalOptions,
@@ -54,10 +52,6 @@ export interface ProdConfigParams extends rollup.InputOptions {
    */
   pluginOptions?: {
     /**
-     * options for rollup-plugin-eslint
-     */
-    eslintOptions?: EslintOptions,
-    /**
      * options for @rollup/plugin-json
      */
     jsonOptions?: JsonOptions,
@@ -97,7 +91,6 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
   } = props
   const {
     jsonOptions = {},
-    eslintOptions = {},
     nodeResolveOptions = {},
     typescriptOptions = {},
     commonjsOptions = {},
@@ -145,13 +138,6 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         preferBuiltins: false,
         ...nodeResolveOptions,
       }),
-      eslint({
-        fix: true,
-        throwOnError: true,
-        include: ['src/**/*{.ts,.tsx}'],
-        exclude: ['*.css', '*.styl', '*.styl.d.ts'],
-        ...eslintOptions,
-      }),
       json({
         indent: '  ',
         namedExports: true,
@@ -160,8 +146,16 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
       typescript({
         clean: true,
         typescript: require('typescript'),
-        rollupCommonJSResolveHack: true,
+        useTsconfigDeclarationDir: true,
         include: ['src/**/*{.ts,.tsx}'],
+        tsconfigDefaults: {
+          compilerOptions: {
+            declaration: true,
+            declarationMap: true,
+            declarationDir: 'lib/types',
+            outDir: 'lib',
+          }
+        },
         tsconfigOverride: {
           compilerOptions: {
             declarationMap: useSourceMap,
@@ -170,6 +164,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         ...typescriptOptions,
       }),
       commonjs({
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
         ...commonjsOptions,
       }),
     ] as rollup.Plugin[],

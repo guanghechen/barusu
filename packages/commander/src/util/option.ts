@@ -7,11 +7,11 @@ import { CommandError } from './error'
  */
 export const optionFlagsRegex = new RegExp(
   /^\s*/.source +
-  /(\-[a-zA-Z])?/.source +                                          // short
+  /(-[a-zA-Z])?/.source +                                           // short
   /([, |]\s*)?/.source +
-  /(\-\-[a-zA-Z](?:[a-zA-Z\-\d]+[a-zA-Z\d])?[a-zA-Z\d]*)?/.source + // long
+  /(--[a-zA-Z](?:[a-zA-Z\-\d]+[a-zA-Z\d])?[a-zA-Z\d]*)?/.source +   // long
   /\s*/.source +
-  /(\[[^\]]*\]|\<[^\>]*\>)?/.source +                               // option arg
+  /(\[[^\]]*\]|<[^>]*>)?/.source +                                  // option arg
   /\s*$/.source
 )
 
@@ -68,8 +68,8 @@ export class Option<T = unknown> implements Option<T> {
     this.description = description || ''
     this.defaultValue = defaultValue
     this.name = long != null ? long.replace(/^--/, '') : short.replace(/^-/, '')
-    this.argName = transformOptionArgToCamelCase(this.name.replace(/^(no-([^\-]))?/, '$1'))
-    this.negate = long == null || /^--(?:no-([^\-]))?/.test(long)
+    this.argName = transformOptionArgToCamelCase(this.name.replace(/^(no-([^-]))?/, '$1'))
+    this.negate = long == null || /^--(?:no-([^-]))?/.test(long)
     this.required = optionArg != null && optionArg[0] === '<'
     this.optional = optionArg != null && optionArg[0] === '['
     this.short = short

@@ -124,7 +124,7 @@ export class StringExceptionHandleResult<T> extends HandleResult<T, string> {
    */
   protected getSummary(exceptions: string[]): string {
     if (exceptions.length <= 0) return ''
-    if (exceptions.length == 1) return exceptions[0]
+    if (exceptions.length === 1) return exceptions[0]
     return '[' + exceptions.join(',\n') + ']'
   }
 }

@@ -125,7 +125,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
             if (day > 29) return false
 
             // check leap year for date YYYY-02-29
-            return (year & 3) ? false : (year % 100 == 0 ? year % 400 === 0 : true)
+            return (year & 3) ? false : (year % 100 === 0 ? year % 400 === 0 : true)
           }
 
           switch (format) {
@@ -146,7 +146,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
             }
             case StringFormat.DATE: {
               // YYYY-MM-DD
-              const regex = /^(\d{4})\-(0[1-9]|1[0-2])\-([0-2][1-9]|3[0-1])$/
+              const regex = /^(\d{4})-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1])$/
               const match = regex.exec(value!)
               if (match == null) return false
               const year = Number.parseInt(match[1])
@@ -157,13 +157,13 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
             case StringFormat.TIME: {
               // HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm
               // 需要考虑 闰秒 的存在
-              const regex = /^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9]|60)(?:\.\d+)?(?:[zZ]|[+\-]([0-1][0-9]|[2][0-3]):([0-5][0-9])|)$/
+              const regex = /^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9]|60)(?:\.\d+)?(?:[zZ]|[+-]([0-1][0-9]|[2][0-3]):([0-5][0-9])|)$/
               const match = regex.exec(value!)
               if (match == null) return false
               return true
             }
             case StringFormat.DATE_TIME: {
-              const regex = /^(\d{4})\-(0[1-9]|1[0-2])\-([0-2][1-9]|3[0-1])[tT]([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9]|60)(?:\.\d+)?(?:[zZ]|[+\-]([0-1][0-9]|[2][0-3]):([0-5][0-9])|)$/
+              const regex = /^(\d{4})-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1])[tT]([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9]|60)(?:\.\d+)?(?:[zZ]|[+-]([0-1][0-9]|[2][0-3]):([0-5][0-9])|)$/
               const match = regex.exec(value!)
               if (match == null) return false
               const year = Number.parseInt(match[1])

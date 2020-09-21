@@ -30,7 +30,6 @@
       },
       typescriptOptions: {
         tsconfig: paths.tsconfig,
-        useTsconfigDeclarationDir: true,
       },
       commonjsOptions: {
         include: ['./node_modules/**'],

@@ -5,23 +5,18 @@ import manifest from './package.json'
 
 const resolvePath = p => path.resolve(__dirname, p)
 const paths = {
-  eslintrc: resolvePath('.eslintrc.js'),
   tsconfig: resolvePath('tsconfig.src.json'),
+  nodeModules: resolvePath('../../node_modules/**'),
 }
-
 
 const config = createRollupConfig({
   manifest,
   pluginOptions: {
-    eslintOptions: {
-      configFile: paths.eslintrc,
-    },
     typescriptOptions: {
       tsconfig: paths.tsconfig,
-      useTsconfigDeclarationDir: true,
     },
     commonjsOptions: {
-      include: ['../../node_modules/**'],
+      include: [paths.nodeModules],
     },
   }
 })

@@ -55,7 +55,7 @@ export function parseCommentsIntoDefinition(
         text = match[2]
       } else {
         // Treat empty text as boolean true
-        name = (text as string).replace(/^[\s\-]+/, '')
+        name = (text as string).replace(/^[\s-]+/, '')
         text = 'true'
       }
     }

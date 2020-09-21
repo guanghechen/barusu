@@ -51,7 +51,7 @@ program
       process.exit(-1)
     }
 
-    const manager = new PackageManager
+    const manager = new PackageManager()
     manager.resolve(rootPackageJsonPath)
   })
   .parse(process.argv)
