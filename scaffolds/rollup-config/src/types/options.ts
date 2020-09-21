@@ -1,4 +1,3 @@
-export { EslintOptions } from 'rollup-plugin-eslint'
 export {
   PluginPeerDepsExternalOptions as PeerDepsExternalOptions,
 } from 'rollup-plugin-peer-deps-external'

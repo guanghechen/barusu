@@ -50,6 +50,7 @@ module.exports = {
     '**/*.styl.d.ts',
     '*.tsbuildinfo',
     '.eslintrc.js',
+    'rollup.config.js',
   ],
   rules: {
     ...reactAppRules.jsRules,
