@@ -21,6 +21,7 @@
   },
   "files": [
     "index.js",
+    "rule-*.js",
     "package.json",
     "CHANGELOG.md",
     "LICENSE",
@@ -34,10 +35,12 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
+    "confusing-browser-globals": "2.0.0-next.281+025f2739",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.1.1"
+    "prettier": "2.1.1"
   }
 }

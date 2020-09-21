@@ -18,16 +18,15 @@
   "scripts": {
     "pre:publish": "yarn find-inconsistent && yarn sort-imports",
     ":publish": "lerna publish --no-private",
-    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
-    "bootstrap": "lerna bootstrap",
     "test": "lerna exec --concurrency 1 -- 'echo && pwd && yarn test'",
     "build": "lerna exec --concurrency 1 -- 'echo && pwd && yarn build'",
-    "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "clean": "lerna clean --yes && yarn install",
     "rebuild": "yarn clean && yarn build",
-    "exec:ts": "node -r ts-node/register -r tsconfig-path/register",
+    "format": "yarn find-inconsistent && yarn sort-imports && yarn lint:fix",
+    "lint:fix": "lerna exec --concurrency 1 -- 'echo && pwd && yarn lint:fix'",
     "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js . --log-level=verbose",
-    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose"
+    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose",
+    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js"
   },
   "workspaces": [
     "packages/*",
@@ -56,8 +55,8 @@
   },
   "@barusu/tool-sort-imports": {
     "pattern": [
-      "{packages,scaffolds,templates,tools,utils}/*/src/**/*.{ts,tsx}",
-      "{packages,scaffolds,templates,tools,utils}/*/{test,__test__}/*.{ts,tsx}"
+      "{packages,scaffolds,templates,tools,utils}/*/{src,test,__test__}/**/*.{ts,tsx}",
+      "!**/{test,__test__}/cases"
     ],
     "moduleRanks": [
       {
