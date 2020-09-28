@@ -5,10 +5,9 @@
     "target": "es2015"
   },
   "include": [
-    "demo",
-    "example",
     "src",
+    "__test__",
     "script",
-    "test"
+    "example"
   ]
 }

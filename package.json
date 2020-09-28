@@ -54,8 +54,8 @@
   },
   "@barusu/tool-sort-imports": {
     "pattern": [
-      "{packages,scaffolds,templates,tools,utils}/*/{src}/**/*.{ts,tsx}",
-      "{packages,scaffolds,templates,tools,utils}/*/{test,__test__}/*.{ts,tsx}"
+      "{packages,scaffolds,templates,tools,utils}/*/{src,test,__test__}/*.{ts,tsx}",
+      "{packages,scaffolds,templates,tools,utils}/*/src/**/*.{ts,tsx}"
     ],
     "moduleRanks": [
       {

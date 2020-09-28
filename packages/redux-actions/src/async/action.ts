@@ -1,5 +1,23 @@
-import { Action } from '../plain'
-import { AsyncActionStatus } from './constant'
+import { Action } from '../plain/action'
+
+
+/**
+ * Status of async action
+ */
+export enum AsyncActionStatus {
+  /**
+   * Requested
+   */
+  REQUESTED = 'REQUESTED',
+  /**
+   * Request succeed
+   */
+  SUCCEED = 'SUCCEED',
+  /**
+   * Request failed
+   */
+  FAILED = 'FAILED',
+}
 
 
 /**
@@ -79,7 +97,8 @@ export type AsyncActions<
   RP extends unknown = unknown,
   SP extends unknown = unknown,
   FP extends AsyncFailureResponse = AsyncFailureResponse>
-  =
-  | AsyncRequestedAction<T, RP>   // Requested action
-  | AsyncSucceedAction<T, SP>     // Succeed action
-  | AsyncFailedAction<T, FP>      // Failed action
+  = {
+    request: AsyncRequestedAction<T, RP>   // Requested action
+    success: AsyncSucceedAction<T, SP>     // Succeed action
+    failure: AsyncFailedAction<T, FP>      // Failed action
+  }
