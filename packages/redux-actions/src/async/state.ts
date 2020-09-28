@@ -24,10 +24,10 @@ export interface AsyncStateItem<D> {
  * Create initial state item
  * @param data
  */
-export function createInitAsyncStateItem<D>(data?: D | null): AsyncStateItem<D> {
+export function createAsyncStateItem<D>(data?: D | null): AsyncStateItem<D> {
   return {
     loading: false,
-    data: data === undefined ? null : data,
+    data: data == null ? null : data,
     error: null
   }
 }

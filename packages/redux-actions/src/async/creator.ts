@@ -1,10 +1,10 @@
 import {
+  AsyncActionStatus,
   AsyncFailedAction,
   AsyncFailureResponse,
   AsyncRequestedAction,
   AsyncSucceedAction,
 } from './action'
-import { AsyncActionStatus } from './constant'
 
 
 /**

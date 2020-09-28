@@ -1,5 +1,23 @@
-import { Action } from '../plain'
-import { AsyncActionStatus } from './constant'
+import { Action } from '../plain/action'
+
+
+/**
+ * Status of async action
+ */
+export enum AsyncActionStatus {
+  /**
+   * Requested
+   */
+  REQUESTED = 'REQUESTED',
+  /**
+   * Request succeed
+   */
+  SUCCEED = 'SUCCEED',
+  /**
+   * Request failed
+   */
+  FAILED = 'FAILED',
+}
 
 
 /**

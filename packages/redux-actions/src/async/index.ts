@@ -13,7 +13,6 @@ import {
 } from './reducer'
 import { AsyncStateItem } from './state'
 export * from './action'
-export * from './constant'
 export * from './creator'
 export * from './reducer'
 export * from './state'

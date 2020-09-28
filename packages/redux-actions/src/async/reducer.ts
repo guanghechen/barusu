@@ -1,11 +1,11 @@
 import {
+  AsyncActionStatus,
   AsyncActions,
   AsyncFailedAction,
   AsyncFailureResponse,
   AsyncRequestedAction,
   AsyncSucceedAction,
 } from './action'
-import { AsyncActionStatus } from './constant'
 import { AsyncStateItem } from './state'
 
 
@@ -18,7 +18,7 @@ export type AsyncActionHandler<
 type Reducer<
   S extends AsyncStateItem<unknown>,
   A extends AsyncActions<symbol | string>,
-  > = AsyncActionHandler<S, A>
+  > = (state: S | undefined, action: A) => S
 
 
 export interface AsyncActionReducer<
@@ -81,7 +81,7 @@ export function createAsyncActionReducer<
         return {
           ...state,
           loading: false,
-          data: payload !== undefined ? payload : null,
+          data: payload == null ? null : payload,
           error: null,
         }
       }
@@ -97,8 +97,7 @@ export function createAsyncActionReducer<
         return {
           ...state,
           loading: false,
-          data: null,
-          error: payload !== undefined ? payload : null,
+          error: payload == null ? null : payload,
         }
       }
 

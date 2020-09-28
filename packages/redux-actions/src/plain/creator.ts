@@ -12,14 +12,28 @@ export function createActionCreator<
 >(type: T, payloadRequired: false)
   : (payload?: P) => Action<T, P>
 export function createActionCreator<
+  A extends Action<symbol | string, unknown>
+>(
+  type: A['type'], payloadRequired: false)
+  : (payload?: A['payload']) => A
+
+
+export function createActionCreator<
   T extends symbol | string,
   P extends unknown
 >(type: T, payloadRequired: true)
   : (payload: P) => Required<Action<T, P>>
 export function createActionCreator<
+  A extends Action<symbol | string, unknown>
+>(
+  type: A['type'], payloadRequired: true)
+  : (payload: A['payload']) => A
+
+
+export function createActionCreator<
   T extends symbol | string,
   P extends unknown
->(type: T, payloadRequired = false)
+>(type: T, payloadRequired: boolean)
   : ((payload?: P) => Action<T, P>)
   | ((payload: P) => Required<Action<T, P>>) {
   if (payloadRequired) {
