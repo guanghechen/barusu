@@ -1,8 +1,9 @@
 import {
+  AsyncActions,
   AsyncStateItem,
   assembleActionReducers,
   createAsyncAction,
-  createInitAsyncStateItem,
+  createAsyncStateItem,
 } from '../../src'
 
 
@@ -22,7 +23,7 @@ export type UserState = AsyncStateItem<UserStateData>
 
 
 export const initialUserState: UserState
-  = createInitAsyncStateItem<UserStateData>({
+  = createAsyncStateItem<UserStateData>({
     name: 'alice',
     gender: 'female',
   })
@@ -34,7 +35,8 @@ export const {
 } = createAsyncAction<
   UserState,
   UserActionTypes.FETCH_USER,
-  { x: number }>(UserActionTypes.FETCH_USER)
+  AsyncActions<UserActionTypes.FETCH_USER, { x: number }>
+>(UserActionTypes.FETCH_USER)
 
 
 export const userActionCreators = {
@@ -42,9 +44,10 @@ export const userActionCreators = {
 }
 
 
-export const userReducer = assembleActionReducers<UserState, UserActionTypes>([
-  fetchUserActionReducer,
-])
+export const userReducer = assembleActionReducers<UserState, UserActionTypes>(
+  initialUserState,
+  [fetchUserActionReducer]
+)
 
 
 const action1 = userActionCreators.fetchUser.request({ x: 2 })

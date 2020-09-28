@@ -28,6 +28,7 @@
     "filepath",
     "flexbugs",
     "flowtype",
+    "funcs",
     "globby",
     "iife",
     "ioptions",
