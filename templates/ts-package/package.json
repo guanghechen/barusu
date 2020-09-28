@@ -1,6 +1,6 @@
 {
   "name": "@barusu/template-ts-package",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "description": "templates to create a ts package",
   "author": {
     "name": "lemon-clown",
