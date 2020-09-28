@@ -1,11 +1,5 @@
-import {
-  AsyncActions,
-  AsyncFailedAction,
-  AsyncFailureResponse,
-  AsyncRequestedAction,
-  AsyncSucceedAction,
-} from './action'
-import { AsyncActionCreator, createAsyncActionCreator } from './creator'
+import { AsyncActions } from './action'
+import { AsyncActionCreators, createAsyncActionCreator } from './creator'
 import {
   AsyncActionHandler,
   AsyncActionReducer,
@@ -26,21 +20,19 @@ export * from './state'
 export function createAsyncAction<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  RP extends unknown = unknown,
-  SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse
+  As extends AsyncActions<T>,
 >(
   actionType: T,
   handlers?: {
-    onRequestedAction?: AsyncActionHandler<S, AsyncRequestedAction<T, RP>>,
-    onSucceedAction?: AsyncActionHandler<S, AsyncSucceedAction<T, SP>>,
-    onFailedAction?: AsyncActionHandler<S, AsyncFailedAction<T, FP>>,
+    onRequestedAction?: AsyncActionHandler<S, T, As['request']>,
+    onSucceedAction?: AsyncActionHandler<S, T, As['success']>,
+    onFailedAction?: AsyncActionHandler<S, T, As['failure']>,
   },
 ): {
-  creator: AsyncActionCreator<T, RP, SP, FP>,
-  reducer: AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>>
+  creator: AsyncActionCreators<T, As>,
+  reducer: AsyncActionReducer<S, T, As>
 } {
-  const creator = createAsyncActionCreator<T, RP, SP, FP>(actionType)
-  const reducer = createAsyncActionReducer<S, T, RP, SP, FP>(actionType, handlers)
+  const creator = createAsyncActionCreator<T, As>(actionType)
+  const reducer = createAsyncActionReducer<S, T, As>(actionType, handlers)
   return { creator, reducer }
 }

@@ -1,79 +1,59 @@
-import {
-  AsyncActionStatus,
-  AsyncFailedAction,
-  AsyncFailureResponse,
-  AsyncRequestedAction,
-  AsyncSucceedAction,
-} from './action'
+import { AsyncActionStatus, AsyncActions } from './action'
 
 
 /**
  * Creators of async actions
  */
-export interface AsyncActionCreator<
+export interface AsyncActionCreators<
   T extends string | symbol,
-  RP extends unknown,
-  SP extends unknown,
-  FP extends AsyncFailureResponse,
+  As extends AsyncActions<T>
   > {
   /**
    * Requested action creator
    */
-  request: (payload?: RP) => AsyncRequestedAction<T, RP>
+  request: (payload?: As['request']['payload']) => As['request']
   /**
    * Succeed action creator
    */
-  success: (payload: SP) => AsyncSucceedAction<T, SP>
+  success: (payload: As['success']['payload']) => As['success']
   /**
    * Failed action creator
    */
-  failure: (payload: FP) => AsyncFailedAction<T, FP>
+  failure: (payload: As['failure']['payload']) => As['failure']
 }
 
 
 /**
  * Create async action types and async action creators
  *
- * # Examples
- *
- *    const creators = createAsyncActionCreators<
- *     '@user/fetch_user', { id: number }, { name: string }>('@user/fetch_user')
- *    // => { request(...), success(...), failure(...) }
- *
- *    // request
- *    creators.request({ id: 2 })
- *
- *    // request succeed
- *    creators.succeed({ name: 'lemon-clown' })
- *
- * @param actionTypes
+ * @param actionType
  */
 export function createAsyncActionCreator<
   T extends string | symbol,
-  RP extends unknown = unknown,
-  SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse
->(
-  actionType: T
-): AsyncActionCreator<T, RP, SP, FP> {
+  As extends AsyncActions<T>
+  >(actionType: T): AsyncActionCreators<T, As> {
+  type RA = As['request']
+  type SA = As['success']
+  type FA = As['failure']
+
   /**
    * Requested action creator
    */
-  const createRequestAction = (payload?: RP): AsyncRequestedAction<T, RP> => {
+  const createRequestAction = (payload?: RA['payload']): RA => {
     return { type: actionType, status: AsyncActionStatus.REQUESTED, payload }
   }
 
   /**
    * Succeed action creator
    */
-  const createSuccessAction = (payload: SP): AsyncSucceedAction<T, SP> => {
+  const createSuccessAction = (payload: SA['payload']): SA => {
     return { type: actionType, status: AsyncActionStatus.SUCCEED, payload }
   }
 
   /**
    * Failure action creator
    */
-  const createFailureAction = (payload: FP): AsyncFailedAction<T, FP> => {
+  const createFailureAction = (payload: FA['payload']): FA => {
     return { type: actionType, status: AsyncActionStatus.FAILED, payload }
   }
 

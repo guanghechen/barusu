@@ -1,11 +1,11 @@
 import {
-  assembleActionReducers,
-  AsyncActionCreator,
+  AsyncActionCreators,
   AsyncActionReducer,
-  AsyncActions,
   AsyncActionStatus,
+  AsyncActions,
   AsyncFailureResponse,
   AsyncStateItem,
+  assembleActionReducers,
   createAsyncAction,
   createAsyncActionCreator,
   createAsyncActionReducer,
@@ -35,13 +35,15 @@ describe('state', function () {
 
 describe('creator', function () {
   test('createAsyncActionCreator', function () {
+    type T = 'fetch-user'
     type RP = { username: string }
     type SP = { username: string, age: number }
     type FP = AsyncFailureResponse
+    type As = AsyncActions<T, RP, SP, FP>
 
-    const creatorsList: AsyncActionCreator<'fetch-user', RP, SP, FP>[] = [
+    const creatorsList: AsyncActionCreators<T, As>[] = [
       createAsyncActionCreator('fetch-user'),
-      createAsyncAction<any, 'fetch-user', RP, SP, FP>('fetch-user').creator,
+      createAsyncAction<any, T, As>('fetch-user').creator,
     ]
 
     for (const fetchUserActionCreators of creatorsList) {
@@ -92,11 +94,12 @@ describe('reducer', function () {
     type RP = string
     type SP = string
     type FP = AsyncFailureResponse
+    type As = AsyncActions<T, RP, SP, FP>
 
-    const creators = createAsyncActionCreator<T, RP, SP, FP>(actionType)
-    const reducers: AsyncActionReducer<S, T, AsyncActions<T, RP, SP, FP>>[] = [
-      createAsyncActionReducer<S, T>(actionType),
-      createAsyncAction<S, T, RP, SP, FP>(actionType).reducer,
+    const creators = createAsyncActionCreator<T, As>(actionType)
+    const reducers: AsyncActionReducer<S, T, As>[] = [
+      createAsyncActionReducer<S, T, As>(actionType),
+      createAsyncAction<S, T, As>(actionType).reducer,
     ]
 
     for (const reducer of reducers) {
@@ -146,9 +149,11 @@ describe('reducer', function () {
     const actionType: unique symbol = Symbol('waw')
     const creators = createAsyncActionCreator(actionType)
     const initialState = createAsyncStateItem<string>('hello')
-    const actionReducer = createAsyncActionReducer<
-      typeof initialState, typeof actionType>(actionType)
-    const reducer = assembleActionReducers(initialState, [actionReducer])
+
+    type T = typeof actionType
+    type S = typeof initialState
+    const actionReducer = createAsyncActionReducer<S, T, AsyncActions<T>>(actionType)
+    const reducer = assembleActionReducers<S, T>(initialState, [actionReducer])
 
     for (const state of [undefined, initialState]) {
       expect(
