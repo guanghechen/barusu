@@ -138,7 +138,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
       }
     ].filter(Boolean) as rollup.OutputOptions[],
     external: function (id: string): boolean {
-      const m = /^([^/\\]+)/.exec(id)
+      const m = /^([.][\s\S]*|@[^/\s]+[/][^/\s]+|[^/\s]+)/.exec(id)
       if (m == null) return false
       return externalSet.has(m[1])
     },
