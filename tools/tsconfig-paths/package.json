@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.38",
+    "@barusu/event-bus": "^0.0.38",
     "@barusu/tool-sort-imports": "^0.0.38",
     "@barusu/util-cli": "^0.0.38",
     "@barusu/util-option": "^0.0.38",
