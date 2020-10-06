@@ -6,7 +6,6 @@ import manifest from './package.json'
 const resolvePath = p => path.resolve(__dirname, p)
 const paths = {
   tsconfig: resolvePath('tsconfig.src.json'),
-  nodeModules: resolvePath('../../node_modules/**'),
 }
 
 const baseConfig = createRollupConfig({
@@ -15,16 +14,13 @@ const baseConfig = createRollupConfig({
     typescriptOptions: {
       tsconfig: paths.tsconfig,
     },
-    commonjsOptions: {
-      include: [paths.nodeModules],
-    },
   }
 })
 
 
-const { external, plugins } = baseConfig[0]
+const { external, plugins } = baseConfig
 const config = [
-  ...baseConfig,
+  baseConfig,
   {
     input: resolvePath('src/cli.ts'),
     output: [
@@ -36,13 +32,11 @@ const config = [
         banner: '#! /usr/bin/env node',
       },
     ],
-    external: [
-      ...external,
-      './index'
-    ],
-    plugins: [
-      ...plugins
-    ],
+    external: (id) => {
+      if (external(id)) return true
+      return id === './index'
+    },
+    plugins,
   }
 ]
 
