@@ -75,7 +75,14 @@ export interface ProdConfigParams extends rollup.InputOptions {
 }
 
 
-export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOptions[] => {
+const builtinExternals: string[] = [
+  'glob',
+  'sync',
+  ...require('builtin-modules'),
+]
+
+
+export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOptions => {
   const DEFAULT_USE_SOURCE_MAP = coverBoolean(
     true, convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP))
   const DEFAULT_EXTERNAL_ALL_DEPENDENCIES = coverBoolean(
@@ -97,12 +104,10 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     peerDepsExternalOptions = {},
   } = pluginOptions
 
-  const externals: string[] = [
-    'glob',
-    'sync',
-    ...require('builtin-modules'),
+  const externalSet: Set<string> = new Set([
+    ...builtinExternals,
     ...Object.keys(manifest.dependencies || {}),
-  ]
+  ])
 
   if (externalAllDependencies) {
     const dependencies = collectAllDependencies(
@@ -111,7 +116,9 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
       undefined,
       /[\s\S]*/,
     )
-    externals.push(...dependencies)
+    for (const dependency of dependencies) {
+      externalSet.add(dependency)
+    }
   }
 
   const config: rollup.RollupOptions = {
@@ -130,7 +137,11 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         sourcemap: useSourceMap,
       }
     ].filter(Boolean) as rollup.OutputOptions[],
-    external: externals.sort().filter((x, i, A) => A.indexOf(x) === i),
+    external: function (id: string): boolean {
+      const m = /^([.][\s\S]*|@[^/\s]+[/][^/\s]+|[^/\s]+)/.exec(id)
+      if (m == null) return false
+      return externalSet.has(m[1])
+    },
     plugins: [
       peerDepsExternal(peerDepsExternalOptions),
       nodeResolve({
@@ -171,7 +182,5 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
     ...resetInputOptions,
   }
 
-  return [
-    config,
-  ].filter(Boolean) as rollup.RollupOptions[]
+  return config
 }
