@@ -21,6 +21,7 @@
    `name`             | string                  | `false`   | -                 | name of logger
    `level`            | Level                   | `false`   | `Level.INFO`      | verbosity level of the logging output
    `date`             | boolean                 | `false`   | `false`           | whether to print the date
+   `title`            | boolean                 | `false`   | `true`            | whether to print the title
    `inline`           | boolean                 | `false`   | `false`           | whether to print each log on one line
    `colorful`         | boolean                 | `false`   | `true`            | whether to print log surrounded with color
    `encoding`         | string                  | `false`   | `utf-8`           | [see below](#option-details)
@@ -48,8 +49,9 @@
   * `--log-level <debug|verbose|info|warn|error|fatal>`: specify global logger level.
   * `--log-name <new logger name>`: specify global logger name.
   * `--log-mode <'normal' | 'loose'>`: specify global logger mode.
-  * `--log-flag <[no-](date|inline|colorful)>`: the prefix `no-` represent negation.
+  * `--log-flag <[no-](date|title|inline|colorful)>`: the prefix `no-` represent negation.
     - `date`: whether to print date. default value is false
+    - `title`: whether to print title. default value is true
     - `inline`: each log record output in one line. default value is false.
     - `colorful`: whether to print with colors. default value is true.
   * `--log-output <filepath>`: specify the output path (default behavior is output directory to stdout).

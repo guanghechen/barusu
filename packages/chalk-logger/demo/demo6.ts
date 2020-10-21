@@ -2,7 +2,7 @@ import { ChalkLogger, DEBUG } from '../src'
 
 
 const logger = new ChalkLogger({
-  name: 'demo',
+  name: 'demo6',
   level: DEBUG,
   date: true,
   colorful: true,
@@ -15,7 +15,7 @@ logger.error('bad argument ({}). error({})', { username: 123 }, new Error('usern
 
 
 const logger2 = new ChalkLogger({
-  name: 'demo',
+  name: 'demo6',
   level: DEBUG,
   date: true,
   colorful: true,
