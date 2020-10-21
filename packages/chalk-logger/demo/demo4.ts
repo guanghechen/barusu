@@ -3,7 +3,8 @@ import chalk from 'chalk'
 import { ChalkLogger, DEBUG } from '../src'
 
 
-const logger = new ChalkLogger('demo', {
+const logger = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,       // the default value is DEBUG
   date: true,         // the default value is false.
   inline: true,

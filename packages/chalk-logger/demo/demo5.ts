@@ -3,7 +3,8 @@ import commander from 'commander'
 import { ChalkLogger, ERROR } from '../src'
 
 
-const logger = new ChalkLogger('demo', {
+const logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.

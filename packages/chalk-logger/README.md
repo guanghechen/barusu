@@ -63,7 +63,8 @@
 import { ChalkLogger, ERROR } from 'chalk-logger'
 
 
-const logger = new ChalkLogger('demo', {
+const logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
@@ -86,7 +87,8 @@ import chalk from 'chalk'
 import { ChalkLogger, ERROR, Level } from 'chalk-logger'
 
 
-let logger = new ChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
@@ -125,7 +127,8 @@ import chalk from 'chalk'
 import { ChalkLogger, ERROR } from 'chalk-logger'
 
 
-let logger = new ChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
@@ -151,7 +154,8 @@ import chalk from 'chalk'
 import { ChalkLogger, DEBUG } from 'chalk-logger'
 
 
-let logger = new ChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,       // the default value is DEBUG
   date: true,         // the default value is false.
   inline: true,
@@ -181,7 +185,8 @@ import commander from 'Commander'
 import { ChalkLogger, ERROR } from '../src'
 
 
-let logger = new ChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
@@ -219,7 +224,8 @@ logger.fatal('1', '2', '3')
 import { ChalkLogger, DEBUG } from '../src'
 
 
-let logger = new ChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,
   date: true,
   colorful: true,
@@ -231,7 +237,8 @@ logger.verbose('user({})', { username: 'lemon-clown', avatar: 'https://avatars0.
 logger.error('bad argument ({}). error({})', { username: 123 }, new Error('username is invalid'))
 
 
-let logger2 = new ChalkLogger('demo', {
+let logger2 = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,
   date: true,
   colorful: true,
