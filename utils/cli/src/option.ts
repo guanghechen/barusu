@@ -1,5 +1,5 @@
 import path from 'path'
-import { ColorfulChalkLogger, Level } from '@barusu/chalk-logger'
+import { ChalkLogger, Level } from '@barusu/chalk-logger'
 import {
   MergeStrategy,
   cover,
@@ -153,7 +153,7 @@ export function resolveCommandConfigurationOptions<
   C extends Partial<CommandConfigurationOptions>,
   D extends CommandConfigurationOptions,
   >(
-    logger: ColorfulChalkLogger,
+    logger: ChalkLogger,
     commandName: string,
     subCommandName: string | false,
     defaultOptions: D,

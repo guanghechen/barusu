@@ -1,6 +1,6 @@
 import { PlopGenerator } from 'node-plop'
 import Ora from 'ora'
-import { ColorfulChalkLogger } from '@barusu/chalk-logger'
+import type { ChalkLogger } from '@barusu/chalk-logger'
 import { choosePlopGenerator, typeMap } from './out'
 import {
   NodePlopAPI,
@@ -69,7 +69,7 @@ export async function doThePlop(
  */
 export async function runPlop(
   plop: NodePlopAPI,
-  logger: ColorfulChalkLogger,
+  logger: ChalkLogger,
   bypassArr?: string[],
   defaultAnswers: Record<string, unknown> = {},
 ): Promise<boolean> {
