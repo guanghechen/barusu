@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 import commander from 'commander'
-import { ColorfulChalkLogger, ERROR } from '../src'
+import { ChalkLogger, ERROR } from '../src'
 
 
-const logger = new ColorfulChalkLogger('demo', {
+const logger = new ChalkLogger('demo', {
   level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
@@ -18,7 +18,7 @@ commander
 
 // register logger option to commander
 logger.registerToCommander(commander)
-// or ColorfulChalkLogger.registerToCommander(commander)
+// or ChalkLogger.registerToCommander(commander)
 
 commander
   .option('-e, --encoding <encoding>', 'specified <filepath>\'s encoding')

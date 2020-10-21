@@ -7,7 +7,7 @@ export * from './level'
 export * from './logger'
 
 
-export class ColorfulChalkLogger extends Logger {
+export class ChalkLogger extends Logger {
   /**
    * prefix of logger.name
    */
@@ -66,3 +66,6 @@ export class ColorfulChalkLogger extends Logger {
     self.mode = mode
   }
 }
+
+
+export default ChalkLogger

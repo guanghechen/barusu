@@ -1,7 +1,7 @@
-import { ColorfulChalkLogger, DEBUG } from '../src'
+import { ChalkLogger, DEBUG } from '../src'
 
 
-const logger = new ColorfulChalkLogger('demo', {
+const logger = new ChalkLogger('demo', {
   level: DEBUG,
   date: true,
   colorful: true,
@@ -13,7 +13,7 @@ logger.verbose('user({})', { username: 'lemon-clown', avatar: 'https://avatars0.
 logger.error('bad argument ({}). error({})', { username: 123 }, new Error('username is invalid'))
 
 
-const logger2 = new ColorfulChalkLogger('demo', {
+const logger2 = new ChalkLogger('demo', {
   level: DEBUG,
   date: true,
   colorful: true,
