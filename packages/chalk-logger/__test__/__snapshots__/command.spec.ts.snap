@@ -16,7 +16,7 @@ Array [
   ],
   Array [
     "--log-flag <option>",
-    "specify logger' option. [[no-]<date|colorful|inline>]",
+    "specify logger' option. [[no-]<date|title|colorful|inline>]",
     [Function],
     Array [],
   ],
