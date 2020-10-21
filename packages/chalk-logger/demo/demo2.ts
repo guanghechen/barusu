@@ -1,8 +1,9 @@
 import chalk from 'chalk'
-import { ColorfulChalkLogger, ERROR, Level } from '../src'
+import { ChalkLogger, ERROR, Level } from '../src'
 
 
-const logger = new ColorfulChalkLogger('demo', {
+const logger = new ChalkLogger({
+  name: 'demo2',
   level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.

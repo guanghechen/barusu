@@ -21,6 +21,7 @@
    `name`             | string                  | `false`   | -                 | name of logger
    `level`            | Level                   | `false`   | `Level.INFO`      | verbosity level of the logging output
    `date`             | boolean                 | `false`   | `false`           | whether to print the date
+   `title`            | boolean                 | `false`   | `true`            | whether to print the title
    `inline`           | boolean                 | `false`   | `false`           | whether to print each log on one line
    `colorful`         | boolean                 | `false`   | `true`            | whether to print log surrounded with color
    `encoding`         | string                  | `false`   | `utf-8`           | [see below](#option-details)
@@ -48,8 +49,9 @@
   * `--log-level <debug|verbose|info|warn|error|fatal>`: specify global logger level.
   * `--log-name <new logger name>`: specify global logger name.
   * `--log-mode <'normal' | 'loose'>`: specify global logger mode.
-  * `--log-flag <[no-](date|inline|colorful)>`: the prefix `no-` represent negation.
+  * `--log-flag <[no-](date|title|inline|colorful)>`: the prefix `no-` represent negation.
     - `date`: whether to print date. default value is false
+    - `title`: whether to print title. default value is true
     - `inline`: each log record output in one line. default value is false.
     - `colorful`: whether to print with colors. default value is true.
   * `--log-output <filepath>`: specify the output path (default behavior is output directory to stdout).
@@ -60,10 +62,11 @@
 ## Example
 ```typescript
 // demo/demo1.ts
-import { ColorfulChalkLogger, ERROR } from 'chalk-logger'
+import { ChalkLogger, ERROR } from 'chalk-logger'
 
 
-const logger = new ColorfulChalkLogger('demo', {
+const logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
@@ -83,10 +86,11 @@ logger.fatal('1', '2', '3')
 ```typescript
 // demo/demo2.ts
 import chalk from 'chalk'
-import { ColorfulChalkLogger, ERROR, Level } from 'chalk-logger'
+import { ChalkLogger, ERROR, Level } from 'chalk-logger'
 
 
-let logger = new ColorfulChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
@@ -122,10 +126,11 @@ logger.fatal('1', '2', '3')
 ```typescript
 // demo/demo3.ts
 import chalk from 'chalk'
-import { ColorfulChalkLogger, ERROR } from 'chalk-logger'
+import { ChalkLogger, ERROR } from 'chalk-logger'
 
 
-let logger = new ColorfulChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
@@ -148,10 +153,11 @@ logger.fatal('1', '2', '3')
 // demo/demo4.ts
 import path from 'path'
 import chalk from 'chalk'
-import { ColorfulChalkLogger, DEBUG } from 'chalk-logger'
+import { ChalkLogger, DEBUG } from 'chalk-logger'
 
 
-let logger = new ColorfulChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,       // the default value is DEBUG
   date: true,         // the default value is false.
   inline: true,
@@ -178,10 +184,11 @@ logger.fatal('1', '2', '3')
 // demo/demo5.ts
 import chalk from 'chalk'
 import commander from 'Commander'
-import { ColorfulChalkLogger, ERROR } from '../src'
+import { ChalkLogger, ERROR } from '../src'
 
 
-let logger = new ColorfulChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
@@ -196,7 +203,7 @@ commander
 
 // register logger option to commander
 logger.registerToCommander(commander)
-// or ColorfulChalkLogger.registerToCommander(commander)
+// or ChalkLogger.registerToCommander(commander)
 
 commander
   .option('-e, --encoding <encoding>', 'specified <filepath>\'s encoding')
@@ -216,10 +223,11 @@ logger.fatal('1', '2', '3')
 ## string format
 ```typescript
 // demo/demo6.ts
-import { ColorfulChalkLogger, DEBUG } from '../src'
+import { ChalkLogger, DEBUG } from '../src'
 
 
-let logger = new ColorfulChalkLogger('demo', {
+let logger = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,
   date: true,
   colorful: true,
@@ -231,7 +239,8 @@ logger.verbose('user({})', { username: 'lemon-clown', avatar: 'https://avatars0.
 logger.error('bad argument ({}). error({})', { username: 123 }, new Error('username is invalid'))
 
 
-let logger2 = new ColorfulChalkLogger('demo', {
+let logger2 = new ChalkLogger({
+  name: 'demo',
   level: DEBUG,
   date: true,
   colorful: true,

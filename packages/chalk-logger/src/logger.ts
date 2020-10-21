@@ -13,6 +13,7 @@ export interface LoggerOptions {
   name?: string
   level?: Level
   date?: boolean
+  title?: boolean
   inline?: boolean
   colorful?: boolean
   encoding?: string
@@ -37,12 +38,13 @@ export class Logger {
   public readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
   public readonly flags = {
     date: false,
+    title: true,
     inline: false,
     colorful: true,
   }
 
-  public constructor(name: string, options?: LoggerOptions) {
-    this.name = name
+  public constructor(options?: LoggerOptions) {
+    this.name = ''
     this.init(options)
   }
 
@@ -58,6 +60,7 @@ export class Logger {
       mode,
       level,
       date,
+      title,
       inline,
       colorful,
       write,
@@ -76,6 +79,7 @@ export class Logger {
 
     // set flags
     if (date != null) self.flags.date = date
+    if (title != null) self.flags.title = title
     if (inline != null) self.flags.inline = inline
     if (colorful != null) self.flags.colorful = colorful
 
@@ -117,25 +121,39 @@ export class Logger {
         message = level.contentChalk.bg(message)
       }
     }
-    return `${ header }: ${ message }`
+
+    return header.length > 0 ? header + ' ' + message : message
   }
 
   // format a log record's header.
   public formatHeader(level: Level, date: Date): string {
-    let { desc } = level
-    const { name, dateChalk, nameChalk } = this
-    let chalkedName = name
-    if (this.flags.colorful) {
-      desc = level.headerChalk.fg(desc)
-      if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
-      chalkedName = nameChalk(name as any)
+    let dateInfo = ''
+    if (this.flags.date) {
+      const { dateChalk } = this
+      dateInfo = moment(date).format('YYYY-MM-DD HH:mm:ss')
+      if (this.flags.colorful) dateInfo = dateChalk(dateInfo)
     }
-    const header = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
-    if (!this.flags.date) return `[${ header }]`
 
-    let dateString = moment(date).format('YYYY-MM-DD HH:mm:ss')
-    if (this.flags.colorful) dateString = dateChalk(dateString as any)
-    return `${ dateString } [${ header }]`
+    let title = ''
+    if (this.flags.title) {
+      let { desc } = level
+      const { name, nameChalk } = this
+      let chalkedName = name
+      if (this.flags.colorful) {
+        desc = level.headerChalk.fg(desc)
+        if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
+        chalkedName = nameChalk(name as any)
+      }
+      title = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
+      title = `[${ title }]:`
+    }
+
+    if (dateInfo.length > 0) {
+      if (title.length > 0) return dateInfo + ' ' + title
+      return dateInfo
+    }
+
+    return title
   }
 
   // format a log record part message according its type.

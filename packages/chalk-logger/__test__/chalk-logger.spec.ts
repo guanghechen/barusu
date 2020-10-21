@@ -1,5 +1,5 @@
 import {
-  ColorfulChalkLogger,
+  ChalkLogger,
   DEBUG,
   ERROR,
   FATAL,
@@ -9,9 +9,9 @@ import {
 } from '../src'
 
 
-describe('ColorfulChalkLogger', function () {
+describe('ChalkLogger', function () {
   test('setName and setBaseName', function () {
-    const logger = new ColorfulChalkLogger('basename')
+    const logger = new ChalkLogger({ name: 'basename' })
     expect(logger.name).toBe('basename')
 
     logger.setName('name')
@@ -31,7 +31,7 @@ describe('ColorfulChalkLogger', function () {
   })
 
   test('setMode', function () {
-    const logger = new ColorfulChalkLogger('')
+    const logger = new ChalkLogger()
     expect(logger.mode).toBe('normal')
 
     logger.setMode('normal')
@@ -42,7 +42,7 @@ describe('ColorfulChalkLogger', function () {
   })
 
   test('setLevel', function () {
-    const logger = new ColorfulChalkLogger('')
+    const logger = new ChalkLogger()
     expect(logger.level).toBe(INFO)
 
     for (const level of [DEBUG, VERBOSE, INFO, WARN, ERROR, FATAL]) {

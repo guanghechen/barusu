@@ -13,39 +13,44 @@ describe('Logger', function () {
   describe('base', function () {
     for (const mode of ['normal', 'loose']) {
       for (const level of levels) {
-        for (const inline of [false, true]) {
-          for (const colorful of [false, true]) {
-            for (const date of [false, true]) {
-              const options: LoggerOptions = {
-                mode: mode as 'normal' | 'loose',
-                level: Level.valueOf(level),
-                inline,
-                colorful,
-                date,
-              }
-
-              let title = mode + ' ' + level
-              if (inline) title += ' +inline'
-              if (colorful) title += ' +colorful'
-              if (date) title += ' +date'
-
-              test(title, function () {
-                const logger = new Logger(level, { ...options })
-                const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
-                loggerMock.mock()
-
-                for (const method of methods) {
-                  const log = logger[method].bind(logger)
-                  log('{}, {}, {}, {}, {}, {}, {}', 1, 'ooo', null, true, false, undefined, 'a\nb')
-                  log('This is a literal string', ['a', 'b'])
-                  log('Output object: {}', { x: 1, y: { z: 'o' } })
-                  log('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
-                  log('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+        for (const shouldInline of [false, true]) {
+          for (const shouldColorful of [false, true]) {
+            for (const shouldDate of [false, true]) {
+              for (const shouldTitle of [false, true]) {
+                const options: LoggerOptions = {
+                  mode: mode as 'normal' | 'loose',
+                  level: Level.valueOf(level),
+                  inline: shouldInline,
+                  colorful: shouldColorful,
+                  date: shouldDate,
+                  title: shouldTitle,
                 }
 
-                expect(loggerMock.data()).toMatchSnapshot()
-                loggerMock.restore()
-              })
+                let title = mode + ' ' + level
+                if (shouldInline) title += ' +inline'
+                if (shouldColorful) title += ' +colorful'
+                if (shouldDate) title += ' +date'
+                if (shouldTitle) title += ' +title'
+
+                // eslint-disable-next-line no-loop-func
+                test(title, function (): void {
+                  const logger = new Logger({ ...options, name: level, })
+                  const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
+                  loggerMock.mock()
+
+                  for (const method of methods) {
+                    const log = logger[method].bind(logger)
+                    log('{}, {}, {}, {}, {}, {}, {}', 1, 'ooo', null, true, false, undefined, 'a\nb')
+                    log('This is a literal string', ['a', 'b'])
+                    log('Output object: {}', { x: 1, y: { z: 'o' } })
+                    log('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
+                    log('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+                  }
+
+                  expect(loggerMock.data()).toMatchSnapshot()
+                  loggerMock.restore()
+                })
+              }
             }
           }
         }
@@ -53,8 +58,9 @@ describe('Logger', function () {
     }
   })
 
-  test('custom' + ' +placeholderRegex', function () {
-    const logger = new Logger('complex', {
+  test('custom +placeholderRegex', function () {
+    const logger = new Logger({
+      name: 'complex',
       mode: 'normal',
       level: DEBUG,
       inline: false,
@@ -77,8 +83,9 @@ describe('Logger', function () {
     loggerMock.restore()
   })
 
-  test('custom ' + ' +dateChalk' + ' +nameChalk', function () {
-    const logger = new Logger('complex', {
+  test('custom +dateChalk +nameChalk', function () {
+    const logger = new Logger({
+      name: 'complex',
       mode: 'normal',
       level: DEBUG,
       inline: false,
@@ -104,7 +111,8 @@ describe('Logger', function () {
   test('init', function () {
     const dateChalk = colorToChalk([25, 104, 179], false)
     const nameChalk = colorToChalk([25, 104, 179], true)
-    const logger = new Logger('complex', {
+    const logger = new Logger({
+      name: 'complex',
       mode: 'normal',
       level: DEBUG,
       inline: false,

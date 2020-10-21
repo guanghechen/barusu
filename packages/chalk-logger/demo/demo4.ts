@@ -1,9 +1,10 @@
 import path from 'path'
 import chalk from 'chalk'
-import { ColorfulChalkLogger, DEBUG } from '../src'
+import { ChalkLogger, DEBUG } from '../src'
 
 
-const logger = new ColorfulChalkLogger('demo', {
+const logger = new ChalkLogger({
+  name: 'demo4',
   level: DEBUG,       // the default value is DEBUG
   date: true,         // the default value is false.
   inline: true,
