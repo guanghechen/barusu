@@ -17,11 +17,12 @@ export class ChalkLogger extends Logger {
    */
   protected divisionName: string | null = null
 
-  constructor(basename: string, options?: LoggerOptions, args?: string[]) {
-    super(basename, {
+  constructor(options?: LoggerOptions, args?: string[]) {
+    super({
       ...options,
       ...calcLoggerOptionsFromArgs(args || []),
     })
+    const basename = (options != null && options.name != null) ? options.name : ''
     this.setBaseName(basename)
   }
 

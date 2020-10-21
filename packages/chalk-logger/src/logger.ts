@@ -43,8 +43,8 @@ export class Logger {
     colorful: true,
   }
 
-  public constructor(name: string, options?: LoggerOptions) {
-    this.name = name
+  public constructor(options?: LoggerOptions) {
+    this.name = ''
     this.init(options)
   }
 
@@ -122,7 +122,7 @@ export class Logger {
       }
     }
 
-    return header.length > 0 ? `${ header }: ${ message }` : message
+    return header.length > 0 ? header + ' ' + message : message
   }
 
   // format a log record's header.
@@ -145,7 +145,7 @@ export class Logger {
         chalkedName = nameChalk(name as any)
       }
       title = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
-      title = `[${ title }]`
+      title = `[${ title }]:`
     }
 
     if (dateInfo.length > 0) {

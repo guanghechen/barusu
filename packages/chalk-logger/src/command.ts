@@ -66,7 +66,7 @@ export function registerCommanderOptions(program: Command): void {
     .option('--log-mode <\'normal\' | \'loose\'>', 'specify logger\'s name.')
     .option(
       '--log-flag <option>',
-      'specify logger\' option. [[no-]<date|colorful|inline>]',
+      'specify logger\' option. [[no-]<date|title|colorful|inline>]',
       (val: string, acc: string[]) => acc.concat(val), [])
     .option('--log-filepath <filepath>', 'specify logger\' output path.')
     .option('--log-encoding <encoding>', 'specify output file encoding.')
@@ -117,6 +117,9 @@ export function calcLoggerOptionsFromCommanderOptions(
           break
         case 'date':
           options.date = !negative
+          break
+        case 'title':
+          options.title = !negative
           break
         case 'colorful':
           options.colorful = !negative
