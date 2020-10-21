@@ -1,12 +1,4 @@
-import {
-  ChalkLogger,
-  DEBUG,
-  ERROR,
-  FATAL,
-  INFO,
-  VERBOSE,
-  WARN,
-} from '../src'
+import { ChalkLogger, DEBUG, ERROR, FATAL, INFO, VERBOSE, WARN } from '../src'
 
 
 describe('ChalkLogger', function () {
