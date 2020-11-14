@@ -129,12 +129,12 @@
 [TopDataSchema]: ../src/_core/schema/types.ts#TopDataSchema
 
 <!-- preset schemas -->
-[ArrayDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/array.md
-[BooleanDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/boolean.md
-[CombineDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/combine.md
-[NullDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/null.md
-[NumberDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/number.md
-[IntegerDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/integer.md
-[ObjectDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/object.md
-[RefDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/ref.md
-[StringDataSchema]: https://github.com/lemon-clown/barusu/blob/master/packages/configuration-master/doc/schemas/string.md
+[ArrayDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/array.md
+[BooleanDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/boolean.md
+[CombineDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/combine.md
+[NullDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/null.md
+[NumberDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/number.md
+[IntegerDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/integer.md
+[ObjectDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/object.md
+[RefDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/ref.md
+[StringDataSchema]: https://github.com/guanghechen/barusu/blob/master/packages/configuration-master/doc/schemas/string.md

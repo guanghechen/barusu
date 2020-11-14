@@ -2,14 +2,14 @@
   "name": "@barusu/configuration-master",
   "version": "0.0.40",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/configuration-master#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/configuration-master#readme",
   "keywords": [
     "json-schema",
     "config util"
@@ -34,12 +34,12 @@
   "scripts": {
     "clean": "rimraf test/**/*.output.json test/**/*.outputs.json",
     "start": "rollup -w -c rollup.config.js",
-    "prebuild": "yarn test && rimraf lib/",
-    "build": "rollup -c rollup.config.js",
+    "prebuild": "rimraf lib/",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix",
     "answer": "cross-env node -r ts-node/register test/answer.ts",
-    "test": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts",
+    "test": "cross-env TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts",
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
   },
   "dependencies": {

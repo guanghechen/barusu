@@ -343,12 +343,12 @@
 <!-- 参考链接 -->
 [json-schema]: https://json-schema.org/
 [json-schema-faker]: https://github.com/json-schema-faker/json-schema-faker
-[@barusu/typescript-json-schema]: https://github.com/lemon-clown/barusu/blob/master/packages/typescript-json-schema
-[generate-command]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/core/generate/command.ts#L74
-[serve-command]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/core/serve/command.ts#L93
-[api-config]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/types/api-config.ts
-[api-config-rawapiconfig]: https://github.com/lemon-clown/barusu/blob/master/tools/restful-api/src/types/api-config.ts#L7
-[example]: https://github.com/lemon-clown/barusu/tree/master/tools/restful-api/example
+[@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/blob/master/packages/typescript-json-schema
+[generate-command]: https://github.com/guanghechen/barusu/blob/master/tools/restful-api/src/core/generate/command.ts#L74
+[serve-command]: https://github.com/guanghechen/barusu/blob/master/tools/restful-api/src/core/serve/command.ts#L93
+[api-config]: https://github.com/guanghechen/barusu/blob/master/tools/restful-api/src/types/api-config.ts
+[api-config-rawapiconfig]: https://github.com/guanghechen/barusu/blob/master/tools/restful-api/src/types/api-config.ts#L7
+[example]: https://github.com/guanghechen/barusu/tree/master/tools/restful-api/example
 
 [usage-cli]: #Cli-Usage
 [usage-programming]: #Programming-Usage

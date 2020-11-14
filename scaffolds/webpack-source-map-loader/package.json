@@ -2,14 +2,14 @@
   "name": "@barusu/webpack-source-map-loader",
   "version": "0.0.40",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/scaffolds/webpack-source-map-loader#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
@@ -28,11 +28,11 @@
   ],
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
-    "prebuild": "yarn test && rimraf lib/",
-    "build": "rollup -c rollup.config.js",
-    "test": "echo 'no test yet.'",
+    "prebuild": "rimraf lib/",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
+    "test": "echo 'no test yet.'",
+    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.40",

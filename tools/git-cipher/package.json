@@ -3,14 +3,14 @@
   "version": "0.0.40",
   "description": "cipher git repository",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/git-cipher#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/tools/git-cipher#readme",
   "keywords": [
     "cipher tool"
   ],
@@ -35,11 +35,11 @@
   },
   "scripts": {
     "start": "rollup -w -c rollup.config.js",
-    "prebuild": "yarn test && rimraf lib/",
-    "build": "rollup -c rollup.config.js",
-    "test": "echo 'no test yet.'",
+    "prebuild": "rimraf lib/",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix"
+    "test": "echo 'no test yet.'",
+    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.40",

@@ -41,7 +41,7 @@
 
 
 ## Details
-  * `--log-*`: see [cli-options | @barusu-logger](https://github.com/lemon-clown/barusu/tree/master/packages/chalk-logger#cli-options)
+  * `--log-*`: see [cli-options | @barusu-logger](https://github.com/guanghechen/barusu/tree/master/packages/chalk-logger#cli-options)
 
   * `-e, --encoding <encoding>`: Specify the encoding of the source files. Default value is `utf-8`
 

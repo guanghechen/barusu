@@ -2,14 +2,14 @@
   "name": "@barusu/template-simple-html",
   "version": "0.0.40",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/templates/simple-html#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme",
   "main": "lib/index.js",
   "license": "MIT",
   "files": [
