@@ -34,8 +34,8 @@
     "prebuild": "yarn test && rimraf *.tsbuildinfo lib/",
     "build": "tsc -p tsconfig.src.json --sourceMap --declarationMap",
     "postbuild": "rimraf lib/**/*.tsbuildinfo",
-    "test": "echo 'no test yet.'",
     "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json",
+    "test": "echo 'no test yet.'",
     "lint:fix": "eslint 'src/**/*.ts' --fix"
   },
   "dependencies": {

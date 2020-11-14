@@ -32,11 +32,11 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "prebuild": "yarn test && rimraf lib/",
-    "build": "rollup -c rollup.config.js",
+    "prebuild": "rimraf lib/",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
     "test": "echo 'no test yet.'",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build"
+    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@types/fs-extra": "^8.1.0",
