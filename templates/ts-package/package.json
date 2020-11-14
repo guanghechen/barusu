@@ -3,14 +3,14 @@
   "version": "0.0.40",
   "description": "templates to create a ts package",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/templates/ts-package#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/templates/ts-package#readme",
   "main": "index.js",
   "license": "MIT",
   "files": [

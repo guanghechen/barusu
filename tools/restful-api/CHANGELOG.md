@@ -4,13 +4,13 @@
 * Updated configuration file options & documents
 
 # v0.0.7 (2019-01-08)
-* Upgrade @lemon-clown/typescript-json-schema to `^0.42.4`
+* Upgrade @guanghechen/typescript-json-schema to `^0.42.4`
   - fix: comments of properties of non-native type should override comments on that reffed type
 
 # v0.0.6 (2019-01-07)
 * Upgrade option-master to `^0.0.16`
 * Upgrade typescript to `^3.6.4`
-* Upgrade @lemon-clown/typescript-json-schema to `^0.42.3`
+* Upgrade @guanghechen/typescript-json-schema to `^0.42.3`
 
 # v0.0.5 (2019-12-30)
 * Support sub-command `init`.

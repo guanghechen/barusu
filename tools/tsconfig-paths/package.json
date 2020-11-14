@@ -3,14 +3,14 @@
   "version": "0.0.40",
   "description": "find inconsistent package versions in monorepo",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/tools/tsconfig-paths#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/tools/tsconfig-paths#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

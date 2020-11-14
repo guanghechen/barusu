@@ -3,14 +3,14 @@
   "version": "0.0.40",
   "description": "typescript-json-schema generates JSON Schema files from you Typescript sources",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/typescript-json-schema#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/typescript-json-schema#readme",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",

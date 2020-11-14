@@ -3,14 +3,14 @@
   "version": "0.0.40",
   "description": "simple event bus",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/tree/master/packages/event-bus#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/event-bus#readme",
   "keywords": [
     "event bus"
   ],

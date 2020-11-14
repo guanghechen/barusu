@@ -2,14 +2,14 @@
   "name": "@barusu/root",
   "version": "0.0.0",
   "author": {
-    "name": "lemon-clown",
-    "url": "https://github.com/lemon-clown/"
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git"
   },
-  "homepage": "https://github.com/lemon-clown/barusu/#readme",
+  "homepage": "https://github.com/guanghechen/barusu/#readme",
   "license": "MIT",
   "private": true,
   "engines": {
