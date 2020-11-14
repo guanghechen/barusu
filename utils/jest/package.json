@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-jest",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -41,8 +41,8 @@
     "jest": "^26.4.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.40",
-    "@barusu/rollup-config": "^0.0.40",
+    "@barusu/eslint-config": "^0.0.41",
+    "@barusu/rollup-config": "^0.0.41",
     "rollup": "2.28.1"
   }
 }
