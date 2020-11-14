@@ -15,8 +15,8 @@ describe('main', function () {
     const projectDir = path.resolve(caseRootDirectory, kase)
     const tsconfigFilepath = path.resolve(projectDir, 'tsconfig.json.txt')
 
+    const workspaceRootDir: string = path.resolve(__dirname, '..')
     test(title, async function () {
-      const workspaceRootDir: string = path.resolve(__dirname, '..')
       const desensitizeContent = (text: string) => desensitize(text, workspaceRootDir)
 
       const loggerMock = createLoggerMocker({

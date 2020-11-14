@@ -66,7 +66,7 @@ describe('Logger', function () {
       inline: false,
       colorful: false,
       date: true,
-      placeholderRegex: /(?<!\\)\<\>/g, // change placeholder of string format
+      placeholderRegex: /(?<!\\)<>/g, // change placeholder of string format
     })
     const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
     loggerMock.mock()

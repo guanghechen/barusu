@@ -30,7 +30,7 @@ runCaseTree(
   (kase: CustomCaseItem) => {
     const result = compareModulePath(kase.input.p1, kase.input.p2, [
       {
-        regex: /^(react|vue|angular)(?:\-[\w\-.]*)?$/,
+        regex: /^(react|vue|angular)(?:-[\w\-.]*)?$/,
         rank: 0.1,
       },
       ...defaultModuleRankItems,
