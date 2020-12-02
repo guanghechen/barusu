@@ -52,7 +52,13 @@ export interface OptionalResponseResult<T = unknown> {
 /**
  * Paginated response data
  */
-export interface PaginationResponseResult<T = unknown> extends ResponseResult<T> {
+export interface PaginationResponseResult<T> extends ResponseResult<T[]> {
+  /**
+   * response data
+   * @minItems 5
+   * @maxItems 20
+   */
+  result: T[]
   /**
    * pagination info
    */
@@ -61,6 +67,7 @@ export interface PaginationResponseResult<T = unknown> extends ResponseResult<T>
      * current page
      * @TJS-type integer
      * @minimum 1
+     * @maximum 10
      */
     current: number
     /**
@@ -74,6 +81,7 @@ export interface PaginationResponseResult<T = unknown> extends ResponseResult<T>
      * total records
      * @TJS-type integer
      * @minimum 1
+     * @maximum 100
      */
     total: number
   }

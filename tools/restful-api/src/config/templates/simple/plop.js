@@ -62,8 +62,18 @@ module.exports = function (plop) {
         },
         {
           type: 'add',
+          path: resolveTargetPath('src/model/model/book.ts'),
+          templateFile: resolveSourcePath('src/model/model/book.ts.hbs'),
+        },
+        {
+          type: 'add',
           path: resolveTargetPath('src/model/vo/user.ts'),
           templateFile: resolveSourcePath('src/model/vo/user.ts.hbs'),
+        },
+        {
+          type: 'add',
+          path: resolveTargetPath('src/model/vo/book.ts'),
+          templateFile: resolveSourcePath('src/model/vo/book.ts.hbs'),
         },
         {
           type: 'add',

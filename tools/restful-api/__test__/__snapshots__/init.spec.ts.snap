@@ -4,13 +4,22 @@ exports[`init simple: api.yml 1`] = `
 "api:
   user:
     path: /api/user
-    description: basic api
+    description: user info api
     items:
       query:
         path: /me
         method: GET
         title: get current user information
         response: QueryCurrentUserResponseVo
+  book:
+    path: /api/book
+    description: book api
+    items:
+      query:
+        path: /list
+        method: GET
+        title: get book list
+        response: QueryBookResponseVo
 "
 `;
 
@@ -79,7 +88,9 @@ Array [
   "package.json",
   "script/serve.ts",
   "src/model/core/response.ts",
+  "src/model/model/book.ts",
   "src/model/model/user.ts",
+  "src/model/vo/book.ts",
   "src/model/vo/user.ts",
   "tsconfig.json",
 ]
@@ -275,7 +286,13 @@ export interface OptionalResponseResult<T = unknown> {
 /**
  * Paginated response data
  */
-export interface PaginationResponseResult<T = unknown> extends ResponseResult<T> {
+export interface PaginationResponseResult<T> extends ResponseResult<T[]> {
+  /**
+   * response data
+   * @minItems 5
+   * @maxItems 20
+   */
+  result: T[]
   /**
    * pagination info
    */
@@ -284,6 +301,7 @@ export interface PaginationResponseResult<T = unknown> extends ResponseResult<T>
      * current page
      * @TJS-type integer
      * @minimum 1
+     * @maximum 10
      */
     current: number
     /**
@@ -297,9 +315,27 @@ export interface PaginationResponseResult<T = unknown> extends ResponseResult<T>
      * total records
      * @TJS-type integer
      * @minimum 1
+     * @maximum 100
      */
     total: number
   }
+}
+"
+`;
+
+exports[`init simple: src/model/model/book.ts 1`] = `
+"/**
+ * Book info
+ */
+export interface Book {
+  /**
+   * Book title
+   */
+  title: string
+  /**
+   * Book author
+   */
+  author: string
 }
 "
 `;
@@ -310,19 +346,19 @@ exports[`init simple: src/model/model/user.ts 1`] = `
  */
 export interface User {
   /**
-   * user name
+   * User name
    */
   name: string
   /**
-   * nickname
+   * Nickname
    */
   nickname: string
   /**
-   * phone number
+   * Phone number
    */
   phone: string
   /**
-   * email
+   * Email
    * @format email
    */
   email: string
@@ -330,13 +366,25 @@ export interface User {
 "
 `;
 
-exports[`init simple: src/model/vo/user.ts 1`] = `
-"import { User } from '../model/user'
-import { ResponseResult } from '../core/response'
+exports[`init simple: src/model/vo/book.ts 1`] = `
+"import { PaginationResponseResult } from '../core/response'
+import { Book } from '../model/book'
 
 
 /**
- * get current user information
+ * Get book list
+ */
+export type QueryBookResponseVo = PaginationResponseResult<Book>
+"
+`;
+
+exports[`init simple: src/model/vo/user.ts 1`] = `
+"import { ResponseResult } from '../core/response'
+import { User } from '../model/user'
+
+
+/**
+ * Get current user information
  */
 export type QueryCurrentUserResponseVo = ResponseResult<User>
 "
