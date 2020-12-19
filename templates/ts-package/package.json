@@ -1,6 +1,6 @@
 {
   "name": "@barusu/template-ts-package",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "templates to create a ts package",
   "author": {
     "name": "guanghechen",

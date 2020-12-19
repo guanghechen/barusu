@@ -1,6 +1,6 @@
 {
   "name": "@barusu/template-simple-html",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -32,7 +32,7 @@
     "lint:fix": "echo 'no lint action needed'"
   },
   "dependencies": {
-    "@barusu/rollup-plugin-copy": "^0.0.42",
+    "@barusu/rollup-plugin-copy": "^0.0.43",
     "fs-extra": "^8.1.0",
     "plop": "^2.7.0",
     "semver-regex": "^3.1.1",

@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-sort-imports",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "sort import/export statement",
   "author": {
     "name": "guanghechen",
@@ -39,18 +39,18 @@
     "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.42",
-    "@barusu/event-bus": "^0.0.42",
-    "@barusu/util-cli": "^0.0.42",
-    "@barusu/util-option": "^0.0.42",
+    "@barusu/chalk-logger": "^0.0.43",
+    "@barusu/event-bus": "^0.0.43",
+    "@barusu/util-cli": "^0.0.43",
+    "@barusu/util-option": "^0.0.43",
     "@types/fs-extra": "^8.1.0",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.42",
-    "@barusu/rollup-config": "^0.0.42",
-    "@barusu/util-jest": "^0.0.42",
+    "@barusu/eslint-config": "^0.0.43",
+    "@barusu/rollup-config": "^0.0.43",
+    "@barusu/util-jest": "^0.0.43",
     "rollup": "2.28.1"
   }
 }

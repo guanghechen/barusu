@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-mocha",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -42,8 +42,8 @@
     "mocha": "^8.1.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.42",
-    "@barusu/rollup-config": "^0.0.42",
+    "@barusu/eslint-config": "^0.0.43",
+    "@barusu/rollup-config": "^0.0.43",
     "rollup": "2.28.1"
   }
 }
