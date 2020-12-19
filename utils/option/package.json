@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-option",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -42,8 +42,8 @@
     "upper-case": "^2.0.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.41",
-    "@barusu/rollup-config": "^0.0.41",
+    "@barusu/eslint-config": "^0.0.42",
+    "@barusu/rollup-config": "^0.0.42",
     "rollup": "2.28.1"
   }
 }
