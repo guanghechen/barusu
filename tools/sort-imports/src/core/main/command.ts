@@ -49,6 +49,10 @@ interface SubMainCommandOptions extends GlobalCommandOptions {
    */
   readonly semicolon: boolean
   /**
+   * Whether the the type import/export statements rank ahead
+   */
+  readonly typeFirst: boolean
+  /**
    * Rank patterns of module names
    */
   readonly moduleRanks: ModuleRankItem[]
@@ -63,6 +67,7 @@ const __defaultCommandOptions: SubMainCommandOptions = {
   indent: '  ',
   quote: '\'',
   semicolon: false,
+  typeFirst: true,
   moduleRanks: [],
 }
 
@@ -88,6 +93,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
       .option('--indent <indent>', 'indent of source codes')
       .option('--quote <quote>', 'quotation marker surround the module path')
       .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
+      .option('--type-first', 'whether the the type import/export statements rank ahead')
       .action(async function ([_workspaceDir], options: MainCommandOptions) {
         logger.setName('')
 
@@ -113,6 +119,11 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
         const semicolon: boolean = coverBoolean(
           defaultOptions.semicolon, options.semicolon)
         logger.debug('semicolon:', semicolon)
+
+        // resolve typeFirst
+        const typeFirst: boolean = coverBoolean(
+          defaultOptions.typeFirst, options.typeFirst)
+        logger.debug('typeFirst:', typeFirst)
 
         // resolve indent
         const indent: string = cover<string>(
@@ -153,6 +164,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
           pattern,
           quote,
           semicolon,
+          typeFirst,
           indent,
           encoding,
           maxColumn,
@@ -184,6 +196,7 @@ export async function createSortImportsContextFromOptions(
     indent: options.indent,
     quote: options.quote,
     semicolon: options.semicolon,
+    typeFirst: options.typeFirst,
     moduleRanks: options.moduleRanks,
   })
   return context

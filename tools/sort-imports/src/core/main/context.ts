@@ -36,6 +36,10 @@ export interface SortImportsContext {
    */
   readonly semicolon: boolean
   /**
+   * Whether the the type import/export statements rank ahead
+   */
+  readonly typeFirst: boolean
+  /**
    * Rank patterns of module names
    */
   readonly moduleRanks: ModuleRankItem[]
@@ -80,6 +84,10 @@ interface Params {
    */
   readonly semicolon: boolean
   /**
+   * Whether the the type import/export statements rank ahead
+   */
+  readonly typeFirst: boolean
+  /**
    * Rank patterns of module names
    */
   readonly moduleRanks: ModuleRankItem[]
@@ -107,10 +115,9 @@ export async function createSortImportsContext(
     indent: params.indent,
     quote: params.quote,
     semicolon: params.semicolon,
+    typeFirst: params.typeFirst,
     moduleRanks: params.moduleRanks,
-    typeRank: params.typeRank != null
-      ? params.typeRank
-      : { 'import': 1, 'export': 2 }
+    typeRank: params.typeRank != null ? params.typeRank : { 'import': 1, 'export': 2 },
   }
   return context
 }

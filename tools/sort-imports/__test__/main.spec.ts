@@ -10,14 +10,14 @@ describe('stat', function () {
 
   const kases = fs.readdirSync(caseRootDirectory)
 
+  const workspaceRootDir: string = path.resolve(__dirname, '..')
   for (const kase of kases) {
     const { name: title } = path.parse(kase)
     const projectDir = caseRootDirectory
     const filepath = kase
     const absoluteFilepath = path.resolve(caseRootDirectory, filepath)
 
-    test(title, async function () {
-      const workspaceRootDir: string = path.resolve(__dirname, '..')
+    test(title, async function (): Promise<void> {
       const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
       loggerMock.mock()
 

@@ -17,6 +17,7 @@ import { SortImportsContext } from './context'
 export class SortImportsProcessor {
   protected readonly context: SortImportsContext
   protected readonly staticImportOrExportRegexList: RegExp[]
+
   /**
    * Regular expression to match the comment at the top of the module
    */
@@ -100,9 +101,16 @@ export class SortImportsProcessor {
     if (x.type !== y.type) {
       return this.context.typeRank[x.type] - this.context.typeRank[y.type]
     }
+
+    // Check if the the type import/export statements should rank ahead
+    if (this.context.typeFirst && x.keywordType !== y.keywordType) {
+      return x.keywordType ? -1 : 1
+    }
+
     if (x.moduleName !== y.moduleName) {
       return compareModulePath(x.moduleName, y.moduleName, this.context.moduleRanks)
     }
+
     if (x.fullStatement === y.fullStatement) return 0
     return x.fullStatement < y.fullStatement ? -1 : 1
   }
