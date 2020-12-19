@@ -1,10 +1,19 @@
 api:
   user:
     path: /api/user
-    description: basic api
+    description: user info api
     items:
       query:
         path: /me
         method: GET
         title: get current user information
         response: QueryCurrentUserResponseVo
+  book:
+    path: /api/book
+    description: book api
+    items:
+      query:
+        path: /list
+        method: GET
+        title: get book list
+        response: QueryBookResponseVo
