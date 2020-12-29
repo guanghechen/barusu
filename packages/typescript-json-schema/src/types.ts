@@ -104,7 +104,7 @@ export type PartialArgs = Partial<SchemaArgs>
 
 
 /**
- * 可以使用的
+ *
  */
 export interface ValidationKeywords {
   [prop: string]: boolean

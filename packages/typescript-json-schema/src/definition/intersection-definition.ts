@@ -20,7 +20,9 @@ export function getIntersectionDefinition(
   const simpleTypes: string[] = []
 
   const addSimpleType = (type: string) => {
-    if (!simpleTypes.includes(type)) simpleTypes.push(type)
+    if (!simpleTypes.includes(type)) {
+      simpleTypes.push(type)
+    }
   }
 
   for (const intersectionMember of intersectionType.types) {

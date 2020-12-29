@@ -51,8 +51,8 @@ export const defaultValidationKeywords = Object.freeze({
   contains: true,                 // 6.14.
   maxProperties: true,            // 6.15.
   minProperties: true,            // 6.16.
-  // required: true,                 // 6.17.  This is not required.
-  // properties: true,               // 6.18.  This is not required.
+  // required: true,                 // 6.17.  This is not required. It is auto-generated.
+  // properties: true,               // 6.18.  This is not required. It is auto-generated.
   // patternProperties: true,        // 6.19.
   additionalProperties: true,     // 6.20.
   // dependencies: true,             // 6.21.
@@ -73,6 +73,21 @@ export const defaultValidationKeywords = Object.freeze({
   $ref: true,
   id: true
 })
+
+
+/**
+ * Subset of descriptive, non-type keywords that are permitted alongside a $ref.
+ * Prior to JSON Schema draft 2019-09, $ref is a special keyword that doesn't
+ * permit keywords alongside it, and so AJV may raise warnings if it encounters
+ * any type-related keywords; see https://github.com/ajv-validator/ajv/issues/1121
+ */
+export const annotationKeywords: { [k in keyof typeof defaultValidationKeywords]?: true } = {
+  description: true,
+  default: true,
+  examples: true,
+  // A JSDoc $ref annotation can appear as a $ref.
+  $ref: true
+}
 
 
 export const subDefinitions = {

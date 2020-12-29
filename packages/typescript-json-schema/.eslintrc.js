@@ -10,7 +10,6 @@ module.exports = {
   rules: {
   },
   ignorePatterns: [
-    "test/**/*",
-    "example/**/*"
+    "test/programs/"
   ]
 }

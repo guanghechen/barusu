@@ -20,6 +20,13 @@ export function getClassDefinition(
 ): void {
   const node = clazzType.getSymbol()!.getDeclarations()![0]
 
+  // Example: typeof globalThis may not have any declaration
+  if (!node) {
+    // eslint-disable-next-line no-param-reassign
+    definition.type = 'object'
+    return
+  }
+
   if (context.args.typeOfKeyword && node.kind === ts.SyntaxKind.FunctionType) {
     // eslint-disable-next-line no-param-reassign
     definition.typeof = 'function'
@@ -34,8 +41,7 @@ export function getClassDefinition(
     if (!context.args.excludePrivate) return true
 
     const decls = prop.declarations
-    if (decls == null) return true
-    return decls.filter(decl => {
+    return decls?.filter(decl => {
       const mods = decl.modifiers
       return mods && mods.filter(mod => mod.kind === ts.SyntaxKind.PrivateKeyword).length > 0
     }).length <= 0

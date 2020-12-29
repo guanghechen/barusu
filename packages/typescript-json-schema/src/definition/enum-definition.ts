@@ -21,13 +21,15 @@ export function getEnumDefinition(
   const members: ts.NodeArray<ts.EnumMember> =
     node.kind === ts.SyntaxKind.EnumDeclaration
       ? (node as ts.EnumDeclaration).members
-      : ts.createNodeArray([node as ts.EnumMember])
+      : ts.factory.createNodeArray([node as ts.EnumMember])
 
   const enumTypes: string[] = []
   const enumValues: PrimitiveType[] = []
   const addEnum = (type: string, value: PrimitiveType) => {
     enumValues.push(value)
-    if (!enumTypes.includes(type)) enumTypes.push(type)
+    if (!enumTypes.includes(type)) {
+      enumTypes.push(type)
+    }
   }
 
   for (const member of members) {
@@ -42,7 +44,7 @@ export function getEnumDefinition(
     if (initial == null) continue
 
     // try to extract the enums value it will probably by a cast expression
-    if ((initial as any).expression != null) {
+    if ((initial as any).expression) {
       const { expression: exp } = initial as any
       const { text } = exp
       // if it is an expression with a text literal, chances are it is the

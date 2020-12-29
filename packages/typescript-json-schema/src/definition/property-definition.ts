@@ -32,7 +32,7 @@ export function getDefinitionForProperty(
   const valDecl = prop.valueDeclaration as ts.VariableDeclaration
   if (valDecl?.initializer) {
     let initial = valDecl.initializer
-    while (ts.isTypeAssertion(initial)) {
+    while (ts.isTypeAssertionExpression(initial)) {
       initial = initial.expression
     }
 

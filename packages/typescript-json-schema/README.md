@@ -6,6 +6,8 @@ Generate json-schemas from your Typescript sources.
 
 I sincerely suggest you use [the original repository](https://github.com/YousefED/typescript-json-schema), as this repository/package is forked for demanding of myself (study and customization).
 
+Peer Commit Id: https://github.com/YousefED/typescript-json-schema/commit/ddeabea7958975ab50de5a54cb8184399ec17031
+
 ## Features
 
 * Compiles your Typescript program to get complete type information.

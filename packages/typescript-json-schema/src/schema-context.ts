@@ -7,6 +7,7 @@ import {
   SymbolRef,
   ValidationKeywords,
 } from './types'
+import { convertMapToObject } from './util'
 
 
 /**
@@ -38,6 +39,12 @@ export class JsonSchemaContext {
    * overrides and generated definitions.
    */
   private readonly reffedDefinitions: Map<string, Definition> = new Map()
+
+  /**
+   * This map holds recursive type ref
+   */
+  private readonly recursiveTypeRef: Map<string, Definition> = new Map()
+
   private readonly typeNamesById: Map<number, string> = new Map()
   private readonly typeIdsByName: Map<string, number> = new Map()
   public readonly inheritingTypes: Readonly<ObjectMap<string[]>>
@@ -75,12 +82,36 @@ export class JsonSchemaContext {
     this.checker = checker
   }
 
+  public hasReffedDefinition(name: string): boolean {
+    return this.reffedDefinitions.has(name)
+  }
+
   public getReffedDefinition(name: string): Definition | undefined {
     return this.reffedDefinitions.get(name)
   }
 
   public setReffedDefinition(name: string, definition: Definition): void {
     this.reffedDefinitions.set(name, definition)
+  }
+
+  public hasRecursiveTypeRef(name: string): boolean {
+    return this.recursiveTypeRef.has(name)
+  }
+
+  public getRecursiveTypeRef(name: string): Definition | undefined {
+    return this.recursiveTypeRef.get(name)
+  }
+
+  public setRecursiveTypeRef(name: string, definition: Definition): void {
+    this.recursiveTypeRef.set(name, definition)
+  }
+
+  public delRecursiveTypeRef(name: string): boolean {
+    return this.recursiveTypeRef.delete(name)
+  }
+
+  public hasSchemaOverride(name: string): boolean {
+    return this.schemaOverrides.has(name)
   }
 
   public getSchemaOverride(name: string): Definition | undefined {
@@ -127,7 +158,7 @@ export class JsonSchemaContext {
     }
 
     for (const symbolName of symbolNames) {
-      root.definitions[symbolName] = getTypeDefinition(
+      const definition = getTypeDefinition(
         this,
         this.allSymbols[symbolName],
         this.args.topRef,
@@ -136,10 +167,11 @@ export class JsonSchemaContext {
         undefined,
         this.userSymbols[symbolName]
       )
+      root.definitions[symbolName] = definition
     }
 
     if (this.args.ref && includeReffedDefinitions && this.reffedDefinitions.size > 0) {
-      root.definitions = { ...root.definitions, ...this.reffedDefinitions }
+      root.definitions = { ...root.definitions, ...convertMapToObject(this.reffedDefinitions) }
     }
     return root
   }
@@ -160,7 +192,7 @@ export class JsonSchemaContext {
    */
   public getReferencedTypeSymbol(prop: ts.Symbol): ts.Symbol | undefined {
     const decl = prop.getDeclarations()
-    if (decl && decl.length) {
+    if (decl?.length) {
       const type = (decl[0] as any).type as ts.TypeReferenceNode
       if (type && (type.kind & ts.SyntaxKind.TypeReference) && type.typeName) {
         const symbol = this.checker.getSymbolAtLocation(type.typeName)
