@@ -1,7 +1,7 @@
+import type { Logger } from './types'
 import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
-import { Logger } from './types'
 
 
 /**

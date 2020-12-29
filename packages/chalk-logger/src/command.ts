@@ -1,5 +1,5 @@
+import type { LoggerOptions } from './logger'
 import { Level } from './level'
-import { LoggerOptions } from './logger'
 
 
 /**

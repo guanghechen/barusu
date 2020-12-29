@@ -1,8 +1,8 @@
+import type { Logger } from './types'
 import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
 import { toLowerCase } from '@barusu/util-option'
-import { Logger } from './types'
 
 
 /**

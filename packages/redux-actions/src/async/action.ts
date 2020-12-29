@@ -1,4 +1,4 @@
-import { Action } from '../plain/action'
+import type { Action } from '../plain/action'
 
 
 /**

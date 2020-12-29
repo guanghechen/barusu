@@ -1,6 +1,6 @@
+import type { Logger } from './types'
 import fs from 'fs-extra'
 import path from 'path'
-import { Logger } from './types'
 
 
 /**

@@ -156,7 +156,7 @@ export abstract class FileTestCaseMaster<T, D>
    * Compile test case data and get output data
    * @param kase
    */
-  public abstract async consume(kase: FileTestCase): Promise<T>
+  public abstract consume(kase: FileTestCase): Promise<T>
 
   /**
    * Convert to JSON data

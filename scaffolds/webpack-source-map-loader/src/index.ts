@@ -1,7 +1,7 @@
+import type { RawSourceMap } from 'source-map'
 import fs from 'fs'
 import * as loaderUtils from 'loader-utils'
 import path from 'path'
-import { RawSourceMap } from 'source-map'
 import webpack from 'webpack'
 import { processSourceMap } from './util/process'
 export * from './util/option'

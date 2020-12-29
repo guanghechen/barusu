@@ -11,15 +11,15 @@ import {
 
 describe('stat', function () {
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'files')
-  const kases = fs.readdirSync(caseRootDirectory)
+  const workspaceRootDir: string = path.resolve(__dirname, '..')
 
+  const kases = fs.readdirSync(caseRootDirectory)
   for (const kase of kases) {
     const { name: title } = path.parse(kase)
     const projectDir = caseRootDirectory
     const filepath = kase
 
     test(title, async function () {
-      const workspaceRootDir: string = path.resolve(__dirname, '..')
       const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
       loggerMock.mock()
 
@@ -40,5 +40,4 @@ describe('stat', function () {
       loggerMock.restore()
     })
   }
-
 })

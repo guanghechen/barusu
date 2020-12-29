@@ -46,12 +46,12 @@
     "@barusu/event-bus": "^0.0.43",
     "@barusu/util-cli": "^0.0.43",
     "@barusu/util-option": "^0.0.43",
-    "@types/fs-extra": "^8.1.0",
+    "@types/fs-extra": "^9.0.6",
     "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",
     "execa": "^4.0.3",
-    "fs-extra": "^8.1.0",
-    "globby": "^11.0.0",
+    "fs-extra": "^9.0.1",
+    "globby": "^11.0.1",
     "inquirer": "^7.3.0",
     "node-plop": "~0.26.0"
   },
@@ -59,6 +59,6 @@
     "@barusu/eslint-config": "^0.0.43",
     "@barusu/rollup-config": "^0.0.43",
     "@barusu/rollup-plugin-copy": "^0.0.43",
-    "rollup": "2.28.1"
+    "rollup": "2.35.1"
   }
 }

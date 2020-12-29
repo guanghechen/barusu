@@ -1,4 +1,4 @@
-import { WriteFileOptions } from 'fs-extra'
+import type { WriteFileOptions } from 'fs-extra'
 
 
 /**

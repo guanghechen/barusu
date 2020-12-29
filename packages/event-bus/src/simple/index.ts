@@ -1,4 +1,4 @@
-import {
+import type {
   SimpleEvent,
   SimpleEventHandler,
   SimpleEventListener,
@@ -16,8 +16,8 @@ export * from './types'
  *  - 当某个订阅者的处理函数抛出一个 Error 时，将中断总线的消息传递；
  */
 export class SimpleEventBus<T extends SimpleEventType> {
-  protected readonly listeners: Record<T, SimpleEventListener<T>[]>
-  protected readonly subscribers: SimpleEventSubscriber<T>[]
+  protected listeners: Record<T, SimpleEventListener<T>[]>
+  protected subscribers: SimpleEventSubscriber<T>[]
 
   public constructor() {
     this.listeners = {} as Record<T, SimpleEventListener<T>[]>
@@ -84,10 +84,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
   ): this {
     const listeners = this.listeners[type]
     if (listeners != null) {
-      const index = listeners.findIndex(x => x.handle === handle)
-      if (index >= 0) {
-        listeners.splice(index, 1)
-      }
+      this.listeners[type] = listeners.filter(x => x.handle !== handle)
     }
     return this
   }
@@ -117,10 +114,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * @param handle
    */
   public unsubscribe(handle: SimpleEventHandler<T>): this {
-    const index = this.subscribers.findIndex(x => x.handle === handle)
-    if (index >= 0) {
-      this.subscribers.splice(index, 1)
-    }
+    this.subscribers = this.subscribers.filter(x => x.handle !== handle)
     return this
   }
 
@@ -154,9 +148,8 @@ export class SimpleEventBus<T extends SimpleEventType> {
   }
 
   public clear(): this {
-    const self = this as this & any
-    self.listeners = []
-    self.subscribers = {}
+    this.listeners = {} as Record<T, SimpleEventListener<T>[]>
+    this.subscribers = []
     return this
   }
 }

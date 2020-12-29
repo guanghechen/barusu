@@ -173,11 +173,14 @@ export function programFromConfig(
   const configObject = result.config
 
   const configParseResult = ts.parseJsonConfigFileContent(
-    configObject, ts.sys, path.dirname(configFileName),
-    additionalCompilerOptions, path.basename(configFileName))
+    configObject,
+    ts.sys,
+    path.dirname(configFileName),
+    additionalCompilerOptions,
+    path.basename(configFileName)
+  )
 
   const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     out, outDir, outFile, declaration, declarationDir, declarationMap,
     ...restOptions
   } = configParseResult.options

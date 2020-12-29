@@ -1,6 +1,6 @@
+import type { CommandConfigurationOptions } from './option'
 import commander from 'commander'
 import { registerCommanderOptions } from '@barusu/chalk-logger'
-import { CommandConfigurationOptions } from './option'
 
 
 /**

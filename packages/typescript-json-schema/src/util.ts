@@ -86,21 +86,17 @@ export function convertMapToObject<T>(m: Map<string, T>): { [key: string]: T } {
 export function resolveTupleType(propertyType: ts.Type): ts.TupleTypeNode | null {
   if (
     !propertyType.getSymbol() &&
-    (
-      (propertyType.getFlags() & ts.TypeFlags.Object) &&
-      ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference)
-    )
-  ) {
-    return (propertyType as ts.TypeReference).target as any
-  }
+    (propertyType.getFlags() & ts.TypeFlags.Object) &&
+    ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference)
+  ) return (propertyType as ts.TypeReference).target as any
+
   if (
     !(
       (propertyType.getFlags() & ts.TypeFlags.Object) &&
       ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Tuple)
     )
-  ) {
-    return null
-  }
+  ) return null
+
   return propertyType as any
 }
 
@@ -118,15 +114,16 @@ function addSimpleType(def: Definition, type: string) {
   if (!def.type) {
     // eslint-disable-next-line no-param-reassign
     def.type = type
-  }
-  else if (typeof def.type !== 'string') {
+  } else if (typeof def.type !== 'string') {
     if (!def.type.every(val => typeof val === 'string')) return false
     if (!def.type.includes('null')) {
       def.type.push('null')
     }
-  }
-  else {
-    if (typeof def.type !== 'string') return false
+  } else {
+    if (typeof def.type !== 'string') {
+      return false
+    }
+
     if (def.type !== 'null') {
       // eslint-disable-next-line no-param-reassign
       def.type = [def.type, 'null']

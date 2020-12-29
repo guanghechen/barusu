@@ -1,4 +1,4 @@
-import { Mocker } from './types'
+import type { Mocker } from './types'
 import { desensitize } from './util'
 
 

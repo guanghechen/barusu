@@ -1,7 +1,7 @@
+import type { Writeable } from './types'
 import { calcLoggerOptionsFromArgs } from './command'
 import { Level } from './level'
 import { Logger, LoggerOptions } from './logger'
-import { Writeable } from './types'
 export * from './command'
 export * from './level'
 export * from './logger'
