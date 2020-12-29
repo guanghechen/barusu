@@ -8,6 +8,6 @@
     "demo",
     "src",
     "script",
-    "test"
+    "__test__"
   ]
 }
