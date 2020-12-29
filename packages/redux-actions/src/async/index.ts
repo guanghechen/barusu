@@ -1,3 +1,4 @@
+import type { AsyncStateItem } from './state'
 import { AsyncActions } from './action'
 import { AsyncActionCreators, createAsyncActionCreator } from './creator'
 import {
@@ -5,7 +6,6 @@ import {
   AsyncActionReducer,
   createAsyncActionReducer,
 } from './reducer'
-import { AsyncStateItem } from './state'
 export * from './action'
 export * from './creator'
 export * from './reducer'

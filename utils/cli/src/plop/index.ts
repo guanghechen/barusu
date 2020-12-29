@@ -1,12 +1,12 @@
-import { PlopGenerator } from 'node-plop'
-import Ora from 'ora'
 import type { ChalkLogger } from '@barusu/chalk-logger'
-import { choosePlopGenerator, typeMap } from './out'
-import {
+import type {
   NodePlopAPI,
   PlopActionHooksChanges,
   PlopActionHooksFailures,
 } from './types'
+import { PlopGenerator } from 'node-plop'
+import Ora from 'ora'
+import { choosePlopGenerator, typeMap } from './out'
 
 
 // eslint-disable-next-line new-cap

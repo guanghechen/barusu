@@ -1,10 +1,10 @@
+import type { Writeable } from './types'
 import chalk, { Chalk } from 'chalk'
 import fs from 'fs-extra'
 import moment from 'moment'
 import { inspect } from 'util'
 import { Color, colorToChalk } from './color'
 import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
-import { Writeable } from './types'
 
 
 export interface LoggerOptions {

@@ -1,4 +1,4 @@
-import { AsyncFailureResponse } from './action'
+import type { AsyncFailureResponse } from './action'
 
 
 /**

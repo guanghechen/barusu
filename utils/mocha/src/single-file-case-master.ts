@@ -176,7 +176,7 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
    * consume input and produce answer
    * @param inputItem
    */
-  public abstract async consume(inputItem: SingleTestCaseItem): Promise<Output>
+  public abstract consume(inputItem: SingleTestCaseItem): Promise<Output>
 
   /**
    * Convert to JSON data

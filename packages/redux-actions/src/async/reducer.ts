@@ -1,3 +1,4 @@
+import type { AsyncStateItem } from './state'
 import {
   AsyncActionStatus,
   AsyncActions,
@@ -5,7 +6,6 @@ import {
   AsyncRequestedAction,
   AsyncSucceedAction,
 } from './action'
-import { AsyncStateItem } from './state'
 
 
 type Reducer<

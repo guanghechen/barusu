@@ -77,10 +77,7 @@ export abstract class TestCaseMaster<I extends TestCase, G extends TestCaseGroup
    * @param dir       测试用例目录（绝对路径）
    * @param recursive 是否递归扫描
    */
-  public abstract async scan(
-    caseDirectory: string,
-    recursive: boolean
-  ): Promise<this>
+  public abstract scan(caseDirectory: string, recursive: boolean): Promise<this>
 
   /**
    * get the list of TestCaseGroup

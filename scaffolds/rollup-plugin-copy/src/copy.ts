@@ -1,9 +1,12 @@
+import type {
+  RollupPluginCopyOptions,
+  RollupPluginCopyTargetItem,
+} from './types'
 import chalk from 'chalk'
 import fs, { CopyOptions } from 'fs-extra'
 import globby from 'globby'
 import isObject from 'is-plain-object'
 import path from 'path'
-import { RollupPluginCopyOptions, RollupPluginCopyTargetItem } from './types'
 import { generateCopyTarget, stringify } from './util'
 
 
