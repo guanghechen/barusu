@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@barusu/rollup-plugin-copy": "^0.0.43",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.1",
     "plop": "^2.7.0",
     "semver-regex": "^3.1.1",
     "title-case": "^3.0.2"

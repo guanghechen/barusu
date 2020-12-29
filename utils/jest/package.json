@@ -35,9 +35,9 @@
     "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@types/fs-extra": "^8.1.0",
+    "@types/fs-extra": "^9.0.6",
     "@types/jest": "^26.0.10",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.1",
     "jest": "^26.4.1"
   },
   "devDependencies": {
