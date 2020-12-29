@@ -5,7 +5,7 @@ import type {
 import chalk from 'chalk'
 import fs, { CopyOptions } from 'fs-extra'
 import globby from 'globby'
-import isObject from 'is-plain-object'
+import { isPlainObject } from 'is-plain-object'
 import path from 'path'
 import { generateCopyTarget, stringify } from './util'
 
@@ -55,7 +55,7 @@ export function copy(options: RollupPluginCopyOptions = {}) {
     copyTargets = []
     if (Array.isArray(targets) && targets.length) {
       for (const target of targets) {
-        if (!isObject(target)) {
+        if (!isPlainObject(target)) {
           throw new Error(`${ stringify(target) } target must be an object`)
         }
 
