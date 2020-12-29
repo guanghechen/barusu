@@ -13,7 +13,7 @@ Array [
 exports[`generate simple: xx-schemas/user/user-login-response-vo.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "description": "响应数据",
+  "description": "登录响应对象",
   "properties": Object {
     "code": Object {
       "default": 200,
@@ -58,7 +58,7 @@ Object {
 exports[`generate simple: xx-schemas/user/user-logout-response-vo.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "description": "响应数据",
+  "description": "退出登录响应对象",
   "properties": Object {
     "code": Object {
       "default": 200,
@@ -103,7 +103,7 @@ Object {
 exports[`generate simple: xx-schemas/user-info/current-user-info-response-model.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "description": "响应数据",
+  "description": "获取当前用户信息的响应对象",
   "properties": Object {
     "code": Object {
       "default": 200,
@@ -155,7 +155,7 @@ Object {
 exports[`generate simple: xx-schemas/user-info/xx-user-info-oo-response-vo.json 1`] = `
 Object {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "description": "响应数据",
+  "description": "获取当前用户信息的响应对象",
   "properties": Object {
     "code": Object {
       "default": 200,

@@ -111,7 +111,7 @@ export class RestfulApiServeProcessor {
     const server = this.server
     if (server != null) {
       logger.info('server closing...')
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         server.close(err => {
           if (err) reject(err)
           else resolve()
