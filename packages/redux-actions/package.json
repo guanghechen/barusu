@@ -1,6 +1,6 @@
 {
   "name": "@barusu/redux-actions",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -36,8 +36,8 @@
     "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.43",
-    "@barusu/rollup-config": "^0.0.43",
+    "@barusu/eslint-config": "^0.0.44",
+    "@barusu/rollup-config": "^0.0.44",
     "rollup": "2.35.1"
   }
 }
