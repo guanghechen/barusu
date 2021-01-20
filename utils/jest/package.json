@@ -43,6 +43,6 @@
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.44",
     "@barusu/rollup-config": "^0.0.44",
-    "rollup": "2.35.1"
+    "rollup": "2.37.0"
   }
 }

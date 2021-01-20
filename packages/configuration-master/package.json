@@ -51,6 +51,6 @@
     "@barusu/util-mocha": "^0.0.44",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1",
-    "rollup": "2.35.1"
+    "rollup": "2.37.0"
   }
 }
