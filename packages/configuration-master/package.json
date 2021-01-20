@@ -1,6 +1,6 @@
 {
   "name": "@barusu/configuration-master",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -43,12 +43,12 @@
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
   },
   "dependencies": {
-    "@barusu/util-option": "^0.0.44"
+    "@barusu/util-option": "^0.0.45"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.44",
-    "@barusu/rollup-config": "^0.0.44",
-    "@barusu/util-mocha": "^0.0.44",
+    "@barusu/eslint-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.45",
+    "@barusu/util-mocha": "^0.0.45",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1",
     "rollup": "2.37.0"

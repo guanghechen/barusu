@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-word",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "Count the frequency of characters in the file(s)",
   "author": {
     "name": "guanghechen",
@@ -39,17 +39,17 @@
     "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.44",
-    "@barusu/event-bus": "^0.0.44",
-    "@barusu/util-cli": "^0.0.44",
-    "@barusu/util-option": "^0.0.44",
+    "@barusu/chalk-logger": "^0.0.45",
+    "@barusu/event-bus": "^0.0.45",
+    "@barusu/util-cli": "^0.0.45",
+    "@barusu/util-option": "^0.0.45",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.44",
-    "@barusu/rollup-config": "^0.0.44",
+    "@barusu/eslint-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.45",
     "rollup": "2.37.0"
   }
 }
