@@ -145,7 +145,7 @@ export class Logger {
         chalkedName = nameChalk(name as any)
       }
       title = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
-      title = `[${ title }]:`
+      title = `[${ title }]`
     }
 
     if (dateInfo.length > 0) {
