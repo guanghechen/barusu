@@ -1,7 +1,7 @@
 {
   "name": "@barusu/tool-restful-api",
   "version": "0.0.44",
-  "description": "quickly create restful style mock server.",
+  "description": "Quickly create restful style mock server.",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -78,6 +78,6 @@
     "@barusu/eslint-config": "^0.0.44",
     "@barusu/rollup-config": "^0.0.44",
     "@barusu/rollup-plugin-copy": "^0.0.44",
-    "rollup": "2.35.1"
+    "rollup": "2.37.0"
   }
 }

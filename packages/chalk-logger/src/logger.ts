@@ -1,7 +1,7 @@
 import type { Writeable } from './types'
 import chalk, { Chalk } from 'chalk'
 import fs from 'fs-extra'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { inspect } from 'util'
 import { Color, colorToChalk } from './color'
 import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
@@ -130,7 +130,7 @@ export class Logger {
     let dateInfo = ''
     if (this.flags.date) {
       const { dateChalk } = this
-      dateInfo = moment(date).format('YYYY-MM-DD HH:mm:ss')
+      dateInfo = dayjs(date).format('YYYY-MM-DD HH:mm:ss')
       if (this.flags.colorful) dateInfo = dateChalk(dateInfo)
     }
 
@@ -145,7 +145,7 @@ export class Logger {
         chalkedName = nameChalk(name as any)
       }
       title = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
-      title = `[${ title }]:`
+      title = `[${ title }]`
     }
 
     if (dateInfo.length > 0) {

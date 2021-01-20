@@ -10,7 +10,7 @@
     yarn global add @barusu/tool-tsconfig-paths
     ```
 
-  * Correct path alias in `*.d.ts`
+  * Expand path alias to full path in `*.d.ts`
     ```shell
     barusu-tsconfig-paths . --tsconfigPath tsconfig.json --pattern lib/types/**/*.d.ts --src-root-dir=src --dst-root-dir=lib/types
     ```

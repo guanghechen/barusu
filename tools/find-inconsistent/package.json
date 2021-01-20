@@ -1,7 +1,7 @@
 {
   "name": "@barusu/tool-find-inconsistent",
   "version": "0.0.44",
-  "description": "find inconsistent package versions in monorepo",
+  "description": "A cli tool to find inconsistent package versions in monorepo",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -48,6 +48,6 @@
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.44",
     "@barusu/rollup-config": "^0.0.44",
-    "rollup": "2.35.1"
+    "rollup": "2.37.0"
   }
 }

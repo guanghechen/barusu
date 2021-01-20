@@ -1,7 +1,7 @@
 {
   "name": "@barusu/rollup-config",
   "version": "0.0.44",
-  "description": "rollup configs for ts project",
+  "description": "Rollup configs for bundle typescript project",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -44,7 +44,7 @@
     "@rollup/plugin-node-resolve": "11.0.1",
     "@types/rollup-plugin-peer-deps-external": "2.2.0",
     "builtin-modules": "3.2.0",
-    "rollup": "2.35.1",
+    "rollup": "2.37.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "rollup-plugin-typescript2": "0.28.0"
   },

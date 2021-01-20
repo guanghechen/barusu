@@ -1,7 +1,7 @@
 {
   "name": "@barusu/template-ts-package",
   "version": "0.0.44",
-  "description": "templates to create a ts package",
+  "description": "Boilerplates to create a simple typescript project.",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"

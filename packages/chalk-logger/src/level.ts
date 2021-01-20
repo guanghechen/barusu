@@ -47,13 +47,13 @@ export const VERBOSE = new Level(
 )
 export const INFO = new Level(
   ['info', 'information'],
-  'info ',
+  'info',
   new ColorfulChalk('#00FF00'),
   new ColorfulChalk('#00FF00'),
 )
 export const WARN = new Level(
   ['warn', 'warning'],
-  'warn ',
+  'warn',
   new ColorfulChalk('#FFA195'),
   new ColorfulChalk('#FFA195'),
 )

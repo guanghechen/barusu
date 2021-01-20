@@ -1,6 +1,7 @@
 {
   "name": "@barusu/chalk-logger",
   "version": "0.0.44",
+  "description": "A simple colorful logger",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -38,13 +39,13 @@
   "dependencies": {
     "@types/fs-extra": "^9.0.6",
     "chalk": "^4.1.0",
-    "fs-extra": "^9.0.1",
-    "moment": "^2.24.0"
+    "dayjs": "^1.10.3",
+    "fs-extra": "^9.0.1"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.44",
     "@barusu/rollup-config": "^0.0.44",
     "@barusu/util-jest": "^0.0.44",
-    "rollup": "2.35.1"
+    "rollup": "2.37.0"
   }
 }
