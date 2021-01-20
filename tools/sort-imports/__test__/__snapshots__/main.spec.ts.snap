@@ -24,59 +24,59 @@ import { handleError } from './_util'
 exports[`stat a: log info 1`] = `
 Array [
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mcwd: <workspaceRootDir>[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mconfigPath: [[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mconfigPath: [[39m
 [38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/config.json\\"[39m
 [38;2;188;162;31m][39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-sort-imports[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mparasticConfigEntry: @barusu/tool-sort-imports[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mencoding: utf-8[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mencoding: utf-8[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mpattern: [[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mpattern: [[39m
 [38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/files/a.txt\\"[39m
 [38;2;188;162;31m][39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mquote: '[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mquote: '[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31msemicolon: false[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31msemicolon: false[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mtypeFirst: true[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mtypeFirst: true[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mindent: __[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mindent: __[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmaxColumn: 80[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mmaxColumn: 80[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmoduleRanks: [[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mmoduleRanks: [[39m
 [38;2;188;162;31m  {[39m
 [38;2;188;162;31m    \\"regex\\": \\"^(react|vue|angular)(?:[/\\\\\\\\-][\\\\\\\\w\\\\\\\\-./]*)?$\\",[39m
 [38;2;188;162;31m    \\"rank\\": 1.1[39m
@@ -113,11 +113,11 @@ Array [
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mabsolutePath: <workspaceRootDir>/__test__/cases/files/a.txt[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mabsolutePath: <workspaceRootDir>/__test__/cases/files/a.txt[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;0;255;0minfo [39m [90mbarusu-sort-imports[39m]: [38;2;0;255;0mprocessing: <workspaceRootDir>/__test__/cases/files/a.txt[39m
+    "[90m$1<Date>[39m [[38;2;0;255;0minfo[39m [90mbarusu-sort-imports[39m] [38;2;0;255;0mprocessing: <workspaceRootDir>/__test__/cases/files/a.txt[39m
 [38;2;0;255;0m[39m",
   ],
 ]
@@ -158,59 +158,59 @@ export * from './util/module-statement'
 exports[`stat b: log info 1`] = `
 Array [
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mcwd: <workspaceRootDir>[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mcwd: <workspaceRootDir>[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mworkspace: <workspaceRootDir>/__test__/cases/files[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mconfigPath: [[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mconfigPath: [[39m
 [38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/config.json\\"[39m
 [38;2;188;162;31m][39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mparasticConfigPath: <workspaceRootDir>/package.json[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mparasticConfigEntry: @barusu/tool-sort-imports[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mparasticConfigEntry: @barusu/tool-sort-imports[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mencoding: utf-8[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mencoding: utf-8[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mpattern: [[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mpattern: [[39m
 [38;2;188;162;31m  \\"<workspaceRootDir>/__test__/cases/files/b.txt\\"[39m
 [38;2;188;162;31m][39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mquote: '[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mquote: '[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31msemicolon: false[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31msemicolon: false[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mtypeFirst: true[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mtypeFirst: true[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mindent: __[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mindent: __[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmaxColumn: 80[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mmaxColumn: 80[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mmoduleRanks: [[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mmoduleRanks: [[39m
 [38;2;188;162;31m  {[39m
 [38;2;188;162;31m    \\"regex\\": \\"^(react|vue|angular)(?:[/\\\\\\\\-][\\\\\\\\w\\\\\\\\-./]*)?$\\",[39m
 [38;2;188;162;31m    \\"rank\\": 1.1[39m
@@ -247,11 +247,11 @@ Array [
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m]: [38;2;188;162;31mabsolutePath: <workspaceRootDir>/__test__/cases/files/b.txt[39m
+    "[90m$1<Date>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-sort-imports[39m] [38;2;188;162;31mabsolutePath: <workspaceRootDir>/__test__/cases/files/b.txt[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m$1<Date>[39m [[38;2;0;255;0minfo [39m [90mbarusu-sort-imports[39m]: [38;2;0;255;0mprocessing: <workspaceRootDir>/__test__/cases/files/b.txt[39m
+    "[90m$1<Date>[39m [[38;2;0;255;0minfo[39m [90mbarusu-sort-imports[39m] [38;2;0;255;0mprocessing: <workspaceRootDir>/__test__/cases/files/b.txt[39m
 [38;2;0;255;0m[39m",
   ],
 ]
