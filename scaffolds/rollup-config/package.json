@@ -1,7 +1,7 @@
 {
   "name": "@barusu/rollup-config",
   "version": "0.0.44",
-  "description": "rollup configs for ts project",
+  "description": "Rollup configs for bundle typescript project",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"

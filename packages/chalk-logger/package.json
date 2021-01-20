@@ -1,6 +1,7 @@
 {
   "name": "@barusu/chalk-logger",
   "version": "0.0.44",
+  "description": "A simple colorful logger",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"

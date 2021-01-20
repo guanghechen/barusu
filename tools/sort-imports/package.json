@@ -1,7 +1,7 @@
 {
   "name": "@barusu/tool-sort-imports",
   "version": "0.0.44",
-  "description": "sort import/export statement",
+  "description": "Sort import/export statement",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"

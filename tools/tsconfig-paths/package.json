@@ -1,7 +1,7 @@
 {
   "name": "@barusu/tool-tsconfig-paths",
   "version": "0.0.44",
-  "description": "find inconsistent package versions in monorepo",
+  "description": "Expand path alias to full path of declaration files which bundled by tsc",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"

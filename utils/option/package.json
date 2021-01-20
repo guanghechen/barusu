@@ -1,6 +1,7 @@
 {
   "name": "@barusu/util-option",
   "version": "0.0.44",
+  "description": "Utility functions for handling options",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
