@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-option",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "Utility functions for handling options",
   "author": {
     "name": "guanghechen",
@@ -42,7 +42,7 @@
     "upper-case": "^2.0.1"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.46",
     "rollup": "2.37.0"
   }
 }

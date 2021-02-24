@@ -1,12 +1,17 @@
 {
-  "version": "0.0.45",
+  "version": "0.0.46",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "command": {
     "publish": {
       "graphType": "all",
       "verifyAccess": false,
-      "ignoreChanges": ["*.md", "*.txt", "test/**", "**/test**/"],
+      "ignoreChanges": [
+        "*.md",
+        "*.txt",
+        "test/**",
+        "**/test**/"
+      ],
       "message": ":bookmark:  chore(release): publish %s",
       "push": false,
       "private": false,

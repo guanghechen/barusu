@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-tsconfig-paths",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "Expand path alias to full path of declaration files which bundled by tsc",
   "author": {
     "name": "guanghechen",
@@ -38,11 +38,11 @@
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir ."
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.45",
-    "@barusu/event-bus": "^0.0.45",
-    "@barusu/tool-sort-imports": "^0.0.45",
-    "@barusu/util-cli": "^0.0.45",
-    "@barusu/util-option": "^0.0.45",
+    "@barusu/chalk-logger": "^0.0.46",
+    "@barusu/event-bus": "^0.0.46",
+    "@barusu/tool-sort-imports": "^0.0.46",
+    "@barusu/util-cli": "^0.0.46",
+    "@barusu/util-option": "^0.0.46",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
@@ -50,8 +50,8 @@
     "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.45",
-    "@barusu/util-jest": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.46",
+    "@barusu/util-jest": "^0.0.46",
     "rollup": "2.37.0"
   }
 }

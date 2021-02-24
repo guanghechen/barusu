@@ -1,6 +1,6 @@
 {
   "name": "@barusu/webpack-source-map-loader",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "Webpack plugin for loading source map",
   "author": {
     "name": "guanghechen",
@@ -39,7 +39,7 @@
     "loader-utils": "^2.0.0"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.46",
     "@types/webpack": "^4.41.6",
     "rollup": "2.37.0"
   }

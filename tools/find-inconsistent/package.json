@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-find-inconsistent",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "A cli tool to find inconsistent package versions in monorepo",
   "author": {
     "name": "guanghechen",
@@ -38,14 +38,14 @@
     "test": "echo 'no test yet.'"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.45",
-    "@barusu/util-cli": "^0.0.45",
-    "@barusu/util-option": "^0.0.45",
+    "@barusu/chalk-logger": "^0.0.46",
+    "@barusu/util-cli": "^0.0.46",
+    "@barusu/util-option": "^0.0.46",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.46",
     "rollup": "2.37.0"
   }
 }

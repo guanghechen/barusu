@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-cli",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "utils for creating node.js command line program",
   "author": {
     "name": "guanghechen",
@@ -36,8 +36,8 @@
     "test": "echo 'no test yet.'"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.45",
-    "@barusu/util-option": "^0.0.45",
+    "@barusu/chalk-logger": "^0.0.46",
+    "@barusu/util-option": "^0.0.46",
     "@types/command-exists": "^1.2.0",
     "@types/fs-extra": "^9.0.6",
     "@types/js-yaml": "^3.12.5",
@@ -52,7 +52,7 @@
     "ora": "^4.0.4"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.46",
     "rollup": "2.37.0"
   }
 }

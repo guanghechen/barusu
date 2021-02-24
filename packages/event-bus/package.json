@@ -1,6 +1,6 @@
 {
   "name": "@barusu/event-bus",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "simple event bus",
   "author": {
     "name": "guanghechen",
@@ -39,7 +39,7 @@
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir ."
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.45",
+    "@barusu/rollup-config": "^0.0.46",
     "rollup": "2.37.0"
   }
 }
