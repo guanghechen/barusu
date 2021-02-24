@@ -21,10 +21,7 @@ import {
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import {
-  RestfulApiServeContext,
-  createRestfulApiServeContext,
-} from './context'
+import { RestfulApiServeContext, createRestfulApiServeContext } from './context'
 
 
 interface SubCommandOptions extends GlobalCommandOptions {

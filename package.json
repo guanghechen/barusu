@@ -95,6 +95,6 @@
     "quote": "'",
     "semicolon": false,
     "maxColumn": 80,
-    "blankLinesAfterStatement": 3
+    "blankLinesAfterStatement": 2
   }
 }

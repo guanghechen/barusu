@@ -3,9 +3,7 @@ import { defaultValidationKeywords, getDefaultArgs } from './config'
 import { getClassDefinition } from './definition/class-definition'
 import { parseCommentsIntoDefinition } from './definition/comment-definition'
 import { getEnumDefinition } from './definition/enum-definition'
-import {
-  getIntersectionDefinition,
-} from './definition/intersection-definition'
+import { getIntersectionDefinition } from './definition/intersection-definition'
 import { getDefinitionForProperty } from './definition/property-definition'
 import {
   getDefinitionForRootType,
