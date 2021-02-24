@@ -42,7 +42,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
    * 包装 StringDataSchema 的实例，使其具备校验给定数据是否为合法字符串的能力
    * @param data
    */
-  public validate(data: any): StringDataValidationResult {
+  public validate(data: unknown): StringDataValidationResult {
     const { schema } = this
     const result: StringDataValidationResult = super.validate(data)
     let value = result.value
@@ -208,7 +208,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isString(data)
   }
 }
@@ -218,9 +218,9 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
  * 字符串类型的校验器的工厂对象实例
  */
 export class StringDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
-  public readonly type: T = T
+  public readonly type: T = T;
 
-  public create(schema: DS) {
-    return new StringDataValidator(schema, this.context)
+  public create(schema: DS): StringDataValidator {
+    return new StringDataValidator(schema, this.context);
   }
 }

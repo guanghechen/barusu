@@ -58,7 +58,7 @@ before(async function () {
   const caseRootDir = path.resolve('test/cases')
   const test = async function (title: string, caseDir: string, func: (x: any) => any) {
     const cases: CaseItem[] = await scanDir(caseRootDir, caseDir)
-    describe(title, function() {
+    describe(title, function () {
       for (const kase of cases) {
         it(kase.title, async function () {
           const inputs: any[] = await fs.readJSONSync(kase.inputDataFilePath)

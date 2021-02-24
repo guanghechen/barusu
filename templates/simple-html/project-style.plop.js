@@ -50,13 +50,16 @@ module.exports = function (plop) {
         default: (answers) => {
           // detect lerna
           if (fs.existsSync(path.resolve(cwd, 'lerna.json'))) {
+            // eslint-disable-next-line no-param-reassign
             answers.isLernaProject = true
+            // eslint-disable-next-line no-param-reassign
             answers.projectName = answers.packageName.startsWith('@')
-              ? /^@([^\/]+)/.exec(answers.packageName)[1]
-              : /^([^\-]+)/.exec(answers.packageName)[1]
-            return 'packages/' + answers.packageName.replace(/^[^\/]+[\/]/, '')
+              ? /^@([^\\/]+)/.exec(answers.packageName)[1]
+              : /^([^\\-]+)/.exec(answers.packageName)[1]
+            return 'packages/' + answers.packageName.replace(/^[^\\/]+[\\/]/, '')
           }
-          answers.projectName = answers.packageName.replace(/^@/, '').replace('\/', '-')
+          // eslint-disable-next-line no-param-reassign
+          answers.projectName = answers.packageName.replace(/^@/, '').replace('\\/', '-')
           return answers.packageName.replace(/^@/, '')
         },
         transform: (text) => text.trim(),
@@ -68,7 +71,9 @@ module.exports = function (plop) {
       }
     ],
     actions: function (answers) {
+      // eslint-disable-next-line no-param-reassign
       answers.templateVersion = manifest.version
+      // eslint-disable-next-line no-param-reassign
       answers.defaultPage = { name: 'Home', path: 'home' }
       const resolveTargetPath = (p) => path.normalize(path.resolve(answers.packageLocation, p))
 

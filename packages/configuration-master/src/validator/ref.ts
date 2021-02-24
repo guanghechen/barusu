@@ -28,7 +28,7 @@ export class RefDataValidator extends BaseDataValidator<T, V, DS> implements Dat
    * 包装 RefDataSchema 的实例，使其具备校验给定数据是否为合法布尔值的能力
    * @param data
    */
-  public validate(data: any): RefDataValidationResult {
+  public validate(data: unknown): RefDataValidationResult {
     const result: RefDataValidationResult = super.validate(data)
     const value = result.value
     result.setValue(undefined)
@@ -70,7 +70,7 @@ export class RefDataValidator extends BaseDataValidator<T, V, DS> implements Dat
 export class RefDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
-  public create(schema: DS) {
+  public create(schema: DS): RefDataValidator {
     return new RefDataValidator(schema, this.context)
   }
 }

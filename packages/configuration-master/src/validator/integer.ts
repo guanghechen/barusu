@@ -30,7 +30,7 @@ export class IntegerDataValidator extends BaseDataValidator<T, V, DS> implements
    * 包装 IntegerDataSchema 的实例，使其具备校验给定数据是否为合法整数的能力
    * @param data
    */
-  public validate(data: any): IntegerDataValidationResult {
+  public validate(data: unknown): IntegerDataValidationResult {
     const { schema } = this
     const result: IntegerDataValidationResult = super.validate(data)
     const value = result.value
@@ -87,7 +87,7 @@ export class IntegerDataValidator extends BaseDataValidator<T, V, DS> implements
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isInteger(data)
   }
 }
@@ -99,7 +99,7 @@ export class IntegerDataValidator extends BaseDataValidator<T, V, DS> implements
 export class IntegerDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
-  public create(schema: DS) {
+  public create(schema: DS): IntegerDataValidator {
     return new IntegerDataValidator(schema, this.context)
   }
 }

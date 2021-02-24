@@ -21,11 +21,12 @@
     "test": "lerna exec --concurrency 1 'echo && pwd && yarn test'",
     "clean": "lerna clean --yes && yarn install",
     "rebuild": "yarn clean && yarn build",
-    "format": "yarn find-inconsistent && yarn sort-imports && yarn lint:fix",
-    "lint:fix": "lerna run --parallel lint:fix",
-    "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js . --log-level=verbose",
-    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose",
+    "sort-imports": "",
     "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
+    "format": "run-s format:find-inconsistent format:sort-imports format:lint:fix",
+    "format:find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js .",
+    "format:lint:fix": "eslint . --fix",
+    "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
     "postinstall": "run-p postinstall:**",
     "postinstall:main": "yarn update:lock",
     "update:changelog": "gitmoji-changelog update",
@@ -60,6 +61,7 @@
     "yarn-deduplicate": "^3.1.0"
   },
   "@barusu/tool-sort-imports": {
+    "logLevel": "verbose",
     "pattern": [
       "{packages,scaffolds,templates,tools,utils}/*/{src,test,__test__}/*.{ts,tsx}",
       "{packages,scaffolds,templates,tools,utils}/*/src/**/*.{ts,tsx}"

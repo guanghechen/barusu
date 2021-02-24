@@ -29,7 +29,7 @@ export class DataValidationResult<
    * @param data          待校验的数据
    * @param extraMessage  附加信息
    */
-  public typeConstraintException(data: any, extraMessage?: string): DataHandleResultException {
+  public typeConstraintException(data: unknown, extraMessage?: string): DataHandleResultException {
     const schema = this._schema
     const a = /^[aeiou]/.test(schema.type) ? 'an' : 'a'
     const reason = `expected ${ a } ${ schema.type }, but got (${ stringify(data) })`

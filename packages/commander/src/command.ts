@@ -143,7 +143,7 @@ export class Command extends EventEmitter implements Command {
     const subCommand = new Command(self)
     subCommand.name(args.shift())
     subCommand._consumeCommandArguments(args)
-    subCommand._visible = !Boolean(opts.hidden)
+    subCommand._visible = !opts.hidden
     subCommand._executableFile = opts.executableFile || null
 
     if (opts.isDefault) {

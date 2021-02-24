@@ -15,22 +15,22 @@ module.exports = function (plop) {
       {
         type: 'add',
         path: resolveTargetPath(`src/${ pagePath }/index.pug`),
-        templateFile: resolveSourcePath(`src/page/index.pug.hbs`)
+        templateFile: resolveSourcePath('src/page/index.pug.hbs')
       },
       {
         type: 'add',
         path: resolveTargetPath(`src/${ pagePath }/style/main.styl`),
-        templateFile: resolveSourcePath(`src/page/style/main.styl.hbs`)
+        templateFile: resolveSourcePath('src/page/style/main.styl.hbs')
       },
       {
         type: 'add',
         path: resolveTargetPath(`src/${ pagePath }/script/main.js`),
-        templateFile: resolveSourcePath(`src/page/script/main.js.hbs`)
+        templateFile: resolveSourcePath('src/page/script/main.js.hbs')
       },
       {
         type: 'add',
         path: resolveTargetPath(`src/${ pagePath }/script/util.js`),
-        templateFile: resolveSourcePath(`src/page/script/util.js.hbs`)
+        templateFile: resolveSourcePath('src/page/script/util.js.hbs')
       },
     ]
   }
@@ -77,13 +77,16 @@ module.exports = function (plop) {
         default: (answers) => {
           // detect lerna
           if (fs.existsSync(path.resolve(cwd, 'lerna.json'))) {
+            // eslint-disable-next-line no-param-reassign
             answers.isLernaProject = true
+            // eslint-disable-next-line no-param-reassign
             answers.projectName = answers.packageName.startsWith('@')
-              ? /^@([^\/]+)/.exec(answers.packageName)[1]
-              : /^([^\-]+)/.exec(answers.packageName)[1]
-            return 'packages/' + answers.packageName.replace(/^[^\/]+[\/]/, '')
+              ? /^@([^\\/]+)/.exec(answers.packageName)[1]
+              : /^([^-]+)/.exec(answers.packageName)[1]
+            return 'packages/' + answers.packageName.replace(/^[^\\/]+[\\/]/, '')
           }
-          answers.projectName = answers.packageName.replace(/^@/, '').replace('\/', '-')
+          // eslint-disable-next-line no-param-reassign
+          answers.projectName = answers.packageName.replace(/^@/, '').replace('[\\/]+', '-')
           return answers.packageName.replace(/^@/, '')
         },
         transform: (text) => text.trim(),
@@ -95,7 +98,9 @@ module.exports = function (plop) {
       }
     ],
     actions: function (answers) {
+      // eslint-disable-next-line no-param-reassign
       answers.templateVersion = manifest.version
+      // eslint-disable-next-line no-param-reassign
       answers.defaultPage = { name: 'Home', path: 'home' }
       const resolveTargetPath = (p) => path.normalize(path.resolve(answers.packageLocation, p))
 
@@ -203,6 +208,7 @@ module.exports = function (plop) {
         content = content.replace(/\n([^\S\n]+)const\s+pages\s*=\s*(\[\n+\s+[^\]]+\])/, (m, p1, p2) => {
           let pages = null
           try {
+            // eslint-disable-next-line no-eval
             pages = eval(p2)
           } catch (error) {
             return m

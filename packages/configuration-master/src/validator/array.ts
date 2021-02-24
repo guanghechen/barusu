@@ -31,7 +31,7 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
    * 包装 ArrayDataSchema 的实例，使其具备校验给定数据是否为合法数组的能力
    * @param data
    */
-  public validate(data: any): ArrayDataValidationResult {
+  public validate(data: unknown): ArrayDataValidationResult {
     const { schema } = this
     const result: ArrayDataValidationResult = super.validate(data)
     const value = result.value
@@ -76,7 +76,7 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isArray(data)
   }
 }
@@ -86,9 +86,9 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
  * 数组类型的校验器的工厂对象
  */
 export class ArrayDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
-  public readonly type: T = T
+  public readonly type: T = T;
 
-  public create(schema: DS) {
-    return new ArrayDataValidator(schema, this.context)
+  public create(schema: DS): ArrayDataValidator {
+    return new ArrayDataValidator(schema, this.context);
   }
 }

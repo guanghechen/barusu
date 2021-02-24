@@ -30,6 +30,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
    * 包装 ObjectDataSchema 的实例，使其具备校验给定数据是否为合法对象的能力
    * @param data
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public validate(data: any): ObjectDataValidationResult {
     const { schema } = this
     const result: ObjectDataValidationResult = super.validate(data)
@@ -187,7 +188,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isObject(data)
   }
 }
@@ -197,9 +198,9 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
  * 对象类型的校验器的工厂对象
  */
 export class ObjectDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
-  public readonly type: T = T
+  public readonly type: T = T;
 
-  public create(schema: DS) {
-    return new ObjectDataValidator(schema, this.context)
+  public create(schema: DS): ObjectDataValidator {
+    return new ObjectDataValidator(schema, this.context);
   }
 }

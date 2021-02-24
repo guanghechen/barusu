@@ -75,8 +75,8 @@ export interface DataSchemaCompilerContext {
   getRawDefinition(idOrPath: string): RDDSchema | undefined
   /**
    * Format rawDataSchema:
-   *  - If the rawDataSchema is a string, the schema defined as the type
-        of this string
+   *  - If the rawDataSchema is a string, the schema defined as the type
+   *    of this string
    *
    * 格式化 rawDataSchema：
    *  - 当 rawDataSchema 为字符串时，表示定义为此字符串的类型的 Schema
@@ -135,7 +135,7 @@ export interface DataSchemaCompiler<
   DS extends DataSchema<T, V>> {
   /**
    * Corresponds to the type in RawDataSchema, used as a unique identifier,
-   * indicates what type of RawDataSchema the compiler receives
+   * indicates what type of RawDataSchema the compiler receives
    *
    * 对应 RawDataSchema 中的 type，用作唯一标识
    * 表示该编译器接收何种类型的 RawDataSchema

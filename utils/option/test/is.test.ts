@@ -1,3 +1,6 @@
+/* eslint-disable no-new-func */
+/* eslint-disable no-new-object */
+/* eslint-disable no-new-wrappers */
 import { expect } from 'chai'
 import {
   isArray,

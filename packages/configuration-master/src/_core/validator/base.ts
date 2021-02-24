@@ -41,7 +41,7 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
    * override method
    * @see DataValidator#validate
    */
-  public validate(data: any): DataValidationResult<T, V, DS> {
+  public validate(data: unknown): DataValidationResult<T, V, DS> {
     const { schema } = this
     const result: DataValidationResult<T, V, DS> = new DataValidationResult(schema)
 
@@ -86,7 +86,7 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
    * @see DataValidator#checkType
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public checkType(data: any, result: DVResult): data is V {
+  public checkType(data: unknown, result: DVResult): data is V {
     return true
   }
 
@@ -95,8 +95,8 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
    * @see DataValidator#preprocessData
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public preprocessData(data: any, result: DVResult): V | undefined {
-    return data
+  public preprocessData(data: unknown, result: DVResult): V | undefined {
+    return data as V
   }
 }
 

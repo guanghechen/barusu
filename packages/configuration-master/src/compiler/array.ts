@@ -91,6 +91,7 @@ export class ArrayDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#parseJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),

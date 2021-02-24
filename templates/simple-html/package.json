@@ -27,11 +27,7 @@
   "bin": {
     "barusu-template-simple-html": "./cli.js"
   },
-  "scripts": {
-    "build": "echo 'no build action needed'",
-    "test": "echo 'no test yet.'",
-    "lint:fix": "echo 'no lint action needed'"
-  },
+  "scripts": {},
   "dependencies": {
     "@barusu/rollup-plugin-copy": "^0.0.45",
     "fs-extra": "^9.0.1",

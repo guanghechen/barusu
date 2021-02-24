@@ -30,7 +30,7 @@ export class NumberDataValidator extends BaseDataValidator<T, V, DS> implements 
    * 包装 NumberDataSchema 的实例，使其具备校验给定数据是否为合法数字的能力
    * @param data
    */
-  public validate(data: any): NumberDataValidationResult {
+  public validate(data: unknown): NumberDataValidationResult {
     const { schema } = this
     const result: NumberDataValidationResult = super.validate(data)
     const value = result.value
@@ -87,7 +87,7 @@ export class NumberDataValidator extends BaseDataValidator<T, V, DS> implements 
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isNumber(data)
   }
 }
@@ -100,7 +100,7 @@ export class NumberDataValidator extends BaseDataValidator<T, V, DS> implements 
 export class NumberDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
-  public create(schema: DS) {
+  public create(schema: DS): NumberDataValidator {
     return new NumberDataValidator(schema, this.context)
   }
 }

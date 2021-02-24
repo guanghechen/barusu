@@ -153,7 +153,7 @@ export class JsonSchemaContext {
       definitions: {},
     }
 
-    if (Boolean(this.args.id)) {
+    if (this.args.id) {
       root['$id'] = this.args.id
     }
 

@@ -50,7 +50,7 @@ const config = [
     ],
     external: (id) => {
       if (external(id)) return true
-      return id === './index' || id  === '../index'
+      return id === './index' || id === '../index'
     },
     plugins,
   }

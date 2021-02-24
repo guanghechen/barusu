@@ -33,7 +33,7 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements
    * 包装 CombineDataSchema 的实例，使其具备校验给定数据是否为合法组合的能力
    * @param data
    */
-  public validate(data: any): CombineDataValidationResult {
+  public validate(data: unknown): CombineDataValidationResult {
     const { schema } = this
     const { strategy, allOf, anyOf, oneOf } = schema
     const result: CombineDataValidationResult = super.validate(data)
@@ -219,7 +219,7 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements
 export class CombineDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
-  public create(schema: DS) {
+  public create(schema: DS): CombineDataValidator {
     return new CombineDataValidator(schema, this.context)
   }
 }

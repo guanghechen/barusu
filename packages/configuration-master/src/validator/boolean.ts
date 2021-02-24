@@ -30,7 +30,7 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements
    * 包装 BooleanDataSchema 的实例，使其具备校验给定数据是否为合法布尔值的能力
    * @param data
    */
-  public validate(data: any): BooleanDataValidationResult {
+  public validate(data: unknown): BooleanDataValidationResult {
     const result: BooleanDataValidationResult = super.validate(data)
     const value = result.value
     result.setValue(undefined)
@@ -47,7 +47,7 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isBoolean(data)
   }
 
@@ -55,9 +55,9 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements
    * override method
    * @see DataValidator#preprocessData
    */
-  public preprocessData(data: any): V | undefined {
+  public preprocessData(data: unknown): V | undefined {
     const xResult = coverBoolean(undefined, data)
-    return xResult.value === undefined ? data : xResult.value
+    return xResult.value === undefined ? (data as V) : xResult.value;
   }
 }
 
@@ -68,7 +68,7 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements
 export class BooleanDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
-  public create(schema: DS) {
+  public create(schema: DS): BooleanDataValidator {
     return new BooleanDataValidator(schema, this.context)
   }
 }

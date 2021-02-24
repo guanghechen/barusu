@@ -22,11 +22,11 @@ import {
 
 /**
  * Objects managed by the data pattern compiler
- *  - Registration operation: enable a user-defined Schema type
-      to be correctly resolved
- *  - Replace operation: replace the compiler of a schema of the original type
- *  - Parsing operation: for the specified RawSchema object,
-      find a suitable compiler to compile its value to get the Schema
+ *  - Registration operation: enable a user-defined Schema type
+ *    to be correctly resolved
+ *  - Replace operation: replace the compiler of a schema of the original type
+ *  - Parsing operation: for the specified RawSchema object,
+ *    find a suitable compiler to compile its value to get the Schema
  *
  * 数据模式编译器的管理对象
  *  - 注册操作：使得一个用户自定义的 Schema 类型能被正确编译
@@ -76,7 +76,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * @param type
    * @param schemaCompiler
    */
-  public replaceCompiler(type: string, schemaCompiler: DSCompiler) {
+  public replaceCompiler(type: string, schemaCompiler: DSCompiler): void {
     this.compilerMap.set(type, schemaCompiler)
   }
 
@@ -287,6 +287,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#parseTopSchemaJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseTopSchemaJSON(json: any): TDSchema {
     const schema: TDSchema = this.parseJSON(json)
     if (json.definitions != null) {
@@ -315,6 +316,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#parseDefinitionSchemaJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseDefinitionSchemaJSON(json: any): DDSchema {
     const schema = {
       ...this.parseJSON(json),
@@ -339,6 +341,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#parseJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseJSON(json: any): DSchema {
     const compiler = this.compilerMap.get(json.type)
     if (compiler == null) {

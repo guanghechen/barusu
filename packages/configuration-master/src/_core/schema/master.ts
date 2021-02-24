@@ -3,8 +3,8 @@ import { DDSchema, RDDSchema, TDSchema } from './types'
 
 /**
  * Maintain the DefinitionDataSchema mapping relationship;
- * Used to compile RefDataSchema to determine whether the reference is valid,
- * and set the default value of the optional attribute to the corresponding
+ * Used to compile RefDataSchema to determine whether the reference is valid,
+ * and set the default value of the optional attribute to the corresponding
  * attribute value of the referenced DataSchema.
  *
  * 维护 DefinitionDataSchema 映射关系；
@@ -46,8 +46,8 @@ export class DefinitionDataSchemaMaster {
   /**
    * Mapping DefinitionDataSchema attribute names in TopDataSchema to
    * reference paths, as in `{ "definitions" : { "tree" : xxx } }`:
-   *  - name is `tree`
-   *  - path is `#/definitions/tree`
+   *  - name is `tree`
+   *  - path is `#/definitions/tree`
    *
    * 将 DefinitionDataSchema 在 TopDataSchema 中的属性名称映射为引用路径；
    * 如 `{ "definitions" : { "tree": xxx  } }` 中：
@@ -55,7 +55,7 @@ export class DefinitionDataSchemaMaster {
    *  - path 为 `#/definitions/tree`
    * @param name
    */
-  public nameToPath(name: string) {
+  public nameToPath(name: string): string {
     return this.pathPrefix + name
   }
 
@@ -65,7 +65,7 @@ export class DefinitionDataSchemaMaster {
    * @param rawSchema   RawDefinitionDataSchema
    * @param $id         the $id of RawDefinitionDataSchema
    */
-  public addRawSchema($path: string, rawSchema: RDDSchema, $id?: string) {
+  public addRawSchema($path: string, rawSchema: RDDSchema, $id?: string): void {
     // check if $id is duplicate
     if ($id != null && this.rawSchemaIdMap.has($id)) {
       throw new Error(`[DefinitionDataSchemaMaster.addRawSchema] $id(${ $id }) has existed`)
@@ -133,7 +133,7 @@ export class TopDataSchemaMaster {
     this.pathPrefix = pathPrefix || '#/definitions/'
   }
 
-  public setSchema(schema: TDSchema) {
+  public setSchema(schema: TDSchema): void {
     this.schema = schema
   }
 

@@ -67,6 +67,7 @@ export class SortImportsProcessor {
     const firstNonCommentIndex = m == null ? 0 : m[0].length
 
     let startIndex = firstNonCommentIndex
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const execResult = execWithMultipleRegex(
         this.staticImportOrExportRegexList, content, startIndex)

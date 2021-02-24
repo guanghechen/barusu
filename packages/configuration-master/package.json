@@ -37,7 +37,6 @@
     "prebuild": "rimraf lib/",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix",
     "answer": "cross-env node -r ts-node/register test/answer.ts",
     "test": "cross-env TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts",
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
@@ -46,7 +45,6 @@
     "@barusu/util-option": "^0.0.45"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.45",
     "@barusu/rollup-config": "^0.0.45",
     "@barusu/util-mocha": "^0.0.45",
     "@types/fs-extra": "^9.0.6",

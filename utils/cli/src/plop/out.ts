@@ -43,7 +43,7 @@ export function choosePlopGenerator(
       message: message || chalk.blue('[PLOP]') + ' Please choose a generator.',
       choices: plopList.map(function (p) {
         return {
-          name: p.name + chalk.gray(!!p.description ? ' - ' + p.description : ''),
+          name: p.name + chalk.gray(p.description ? ' - ' + p.description : ''),
           value: p.name
         }
       })

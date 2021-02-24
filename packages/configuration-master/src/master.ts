@@ -135,6 +135,7 @@ export class ConfigurationMaster {
    * @param schema  预期的数据模式
    * @param data    待校验的数据a
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public validate(schema: DSchema, data: any): DVResult {
     return this.dataValidatorMaster.validateTopDataSchema(schema, data)
   }

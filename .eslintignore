@@ -1,0 +1,17 @@
+**/__tmp__/**
+**/build/**
+**/coverage/**
+**/demo/**
+**/dist/**
+**/doc/**
+**/example/**
+**/lib/**
+**/node_modules/**
+**/target/**
+**/release/**
+**/vendor/**
+**/*.styl.d.ts
+*.tsbuildinfo
+
+**/__test__/cases/**
+**/typescript-json-schema/test/programs/**
