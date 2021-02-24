@@ -236,8 +236,9 @@ export function formatStaticModuleStatementItem(
   }
 
   let result = assembleStatement(false)
-  if (result.length > maxColumn && item.exportN) {
-    // 将花括号中的 export 拆成多行
+
+  // Split into multiple lines if there exists more than one exportN items.
+  if (result.length > maxColumn && item.exportN.length > 1) {
     result = assembleStatement(true)
   }
   return result
