@@ -16,19 +16,20 @@
     "node": ">= 12.16.0"
   },
   "scripts": {
-    ":publish": "yarn format && yarn test && lerna publish --no-private",
+    ":publish": "yarn format && yarn test && lerna publish",
     "build": "lerna run --concurrency 1 build",
-    "test": "lerna exec --concurrency 1 'echo && pwd && yarn test'",
     "clean": "lerna clean --yes && yarn install",
-    "rebuild": "yarn clean && yarn build",
-    "sort-imports": "",
-    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "format": "run-s format:find-inconsistent format:sort-imports format:lint:fix",
     "format:find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js .",
     "format:lint:fix": "eslint . --fix",
     "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
+    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
+    "prepublishOnly": "pinst --disable",
     "postinstall": "run-p postinstall:**",
     "postinstall:main": "yarn update:lock",
+    "postinstall:dev": "is-ci || husky install",
+    "rebuild": "yarn clean && yarn build",
+    "test": "lerna exec --concurrency 1 'echo && pwd && yarn test'",
     "update:changelog": "gitmoji-changelog update",
     "update:lock": "yarn-deduplicate"
   },
@@ -48,10 +49,14 @@
     "chai-exclude": "^2.0.2",
     "cross-env": "^7.0.3",
     "gitmoji-changelog": "^2.2.0",
+    "husky": "^5.0.9",
+    "is-ci": "^3.0.0",
     "lerna": "^3.22.1",
+    "lint-staged": "^10.5.4",
     "jest": "^26.6.3",
     "mocha": "^8.1.1",
     "npm-run-all": "^4.1.5",
+    "pinst": "^2.1.6",
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^26.4.4",
@@ -105,5 +110,14 @@
     "semicolon": false,
     "maxColumn": 80,
     "blankLinesAfterStatement": 2
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{md,mdx}": [
+      "prettier --write"
+    ]
   }
 }
