@@ -56,6 +56,11 @@ interface SubMainCommandOptions extends GlobalCommandOptions {
    * Rank patterns of module names
    */
   readonly moduleRanks: ModuleRankItem[]
+  /**
+   * Blank lines after statement.
+   * @default 2
+   */
+  readonly blankLinesAfterStatement: number
 }
 
 
@@ -69,6 +74,7 @@ const __defaultCommandOptions: SubMainCommandOptions = {
   semicolon: false,
   typeFirst: true,
   moduleRanks: [],
+  blankLinesAfterStatement: 2,
 }
 
 
@@ -94,6 +100,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
       .option('--quote <quote>', 'quotation marker surround the module path')
       .option('--semicolon', 'whether to add a semicolon at the end of import/export statement')
       .option('--type-first', 'whether the the type import/export statements rank ahead')
+      .option('--blank-line-after-statement', 'blank lines after import/export statement')
       .action(async function ([_workspaceDir], options: MainCommandOptions) {
         logger.setName('')
 
@@ -140,6 +147,16 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
           defaultOptions.moduleRanks, options.moduleRanks, isNotEmptyArray)
         logger.debug('moduleRanks:', moduleRanks)
 
+        // resolve blankLinesAfterStatement
+        const blankLinesAfterStatement: number = Math.max(
+          0,
+          coverNumber(
+            defaultOptions.blankLinesAfterStatement,
+            options.blankLinesAfterStatement,
+            isNotEmptyString
+          )
+        )
+
         // parse regex in moduleRanks
         if (moduleRanks != null) {
           if (!Array.isArray(moduleRanks)) {
@@ -169,6 +186,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> =
           encoding,
           maxColumn,
           moduleRanks,
+          blankLinesAfterStatement,
         }
 
         if (handle != null) {
@@ -198,6 +216,7 @@ export async function createSortImportsContextFromOptions(
     semicolon: options.semicolon,
     typeFirst: options.typeFirst,
     moduleRanks: options.moduleRanks,
+    blankLinesAfterStatement: options.blankLinesAfterStatement,
   })
   return context
 }

@@ -36,5 +36,6 @@
   "indent": "  ",
   "quote": "'",
   "semicolon": false,
-  "maxColumn": 80
+  "maxColumn": 80,
+  "blankLinesAfterStatement": 3
 }

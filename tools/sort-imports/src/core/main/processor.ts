@@ -86,9 +86,14 @@ export class SortImportsProcessor {
       .sort(self.compare.bind(self))
       .map(item => item.fullStatement).join('\n')
     return (
-      content.slice(0, firstNonCommentIndex)
-      + (newStatements + '\n\n\n' + content.slice(startIndex).trimLeft()).trimRight()
-      + '\n'
+      content.slice(0, firstNonCommentIndex) +
+      (
+        newStatements +
+        '\n' +
+        ''.padStart(self.context.blankLinesAfterStatement, '\n') +
+        content.slice(startIndex).trimLeft()
+      ).trimRight() +
+      '\n'
     )
   }
 

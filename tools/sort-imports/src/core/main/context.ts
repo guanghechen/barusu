@@ -47,6 +47,10 @@ export interface SortImportsContext {
    * Rank of 'import' and 'export'
    */
   readonly typeRank: Record<StaticModuleStatementItem['type'], number>
+  /**
+   * Blank lines after statement.
+   */
+  readonly blankLinesAfterStatement: number
 }
 
 
@@ -92,6 +96,10 @@ interface Params {
    */
   readonly moduleRanks: ModuleRankItem[]
   /**
+   * Blank lines after statement.
+   */
+  readonly blankLinesAfterStatement: number
+  /**
    * Rank of 'import' and 'export'
    */
   readonly typeRank?: Record<StaticModuleStatementItem['type'], number>
@@ -117,6 +125,7 @@ export async function createSortImportsContext(
     semicolon: params.semicolon,
     typeFirst: params.typeFirst,
     moduleRanks: params.moduleRanks,
+    blankLinesAfterStatement: params.blankLinesAfterStatement,
     typeRank: params.typeRank != null ? params.typeRank : { 'import': 1, 'export': 2 },
   }
   return context

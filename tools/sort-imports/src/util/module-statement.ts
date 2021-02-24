@@ -212,7 +212,7 @@ export function formatStaticModuleStatementItem(
   }
 
   let result = assembleStatement(false)
-  if (result.length >= maxColumn && item.exportN) {
+  if (result.length > maxColumn && item.exportN) {
     // 将花括号中的 export 拆成多行
     result = assembleStatement(true)
   }
