@@ -125,7 +125,7 @@ exports[`init simple: package.json 1`] = `
     \\"@barusu/tool-sort-imports\\": \\"^latest\\",
     \\"nodemon\\": \\"^1.19.1\\",
     \\"ts-node\\": \\"~9.0.0\\",
-    \\"typescript\\": \\"~4.0.2\\"
+    \\"typescript\\": \\"~4.1.5\\"
   },
   \\"@barusu/tool-sort-imports\\": {
     \\"pattern\\": [

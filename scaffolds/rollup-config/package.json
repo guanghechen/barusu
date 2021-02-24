@@ -31,7 +31,7 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "prebuild": "yarn test && rimraf *.tsbuildinfo lib/",
+    "prebuild": "rimraf *.tsbuildinfo lib/",
     "build": "tsc -p tsconfig.src.json --sourceMap --declarationMap",
     "postbuild": "rimraf lib/**/*.tsbuildinfo",
     "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json"
