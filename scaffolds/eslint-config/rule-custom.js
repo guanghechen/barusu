@@ -11,6 +11,7 @@ const jsRules = {
       code: 100,
       comments: 80,
       tabWidth: 2,
+      // prettier-ignore
       ignorePattern: (
         [
           /^\s*\.option\(/,    // ignore '.option(...)'
@@ -26,7 +27,7 @@ const jsRules = {
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
       ignoreRegExpLiterals: true,
-    }
+    },
   ],
   'new-cap': ['error', { newIsCap: true, capIsNew: true }],
   'no-await-in-loop': 0,
@@ -45,15 +46,15 @@ const jsRules = {
   'no-throw-literal': 0,
   'no-underscore-dangle': 0,
   'prefer-destructuring': 0,
-  'quotes': ['error', 'single'],
-  'semi': ['error', 'never'],
+  quotes: ['error', 'single'],
+  semi: ['error', 'never'],
   'space-before-blocks': [
     'error',
     {
       functions: 'always',
       keywords: 'always',
       classes: 'always',
-    }
+    },
   ],
   'space-before-function-paren': 0,
   'spaced-comment': ['error', 'always'],
@@ -61,7 +62,6 @@ const jsRules = {
   'space-infix-ops': ['error', { int32Hint: false }],
   'space-unary-ops': ['error', { words: true, nonwords: false }],
 }
-
 
 // rules for *.ts, *.tsx
 const tsRules = {
@@ -74,14 +74,14 @@ const tsRules = {
     'warn',
     {
       ignoreDeclarationMerge: true,
-    }
+    },
   ],
   '@typescript-eslint/no-this-alias': [
     'error',
     {
       allowDestructuring: true, // Allow `const { props, state } = this`; false by default
-      allowedNames: ['self']    // Allow `const self = this`; `[]` by default
-    }
+      allowedNames: ['self'], // Allow `const self = this`; `[]` by default
+    },
   ],
   '@typescript-eslint/space-before-function-paren': [
     'error',
@@ -89,9 +89,8 @@ const tsRules = {
       named: 'never',
       anonymous: 'always',
       asyncArrow: 'always',
-    }
+    },
   ],
 }
-
 
 module.exports = { jsRules, tsRules }

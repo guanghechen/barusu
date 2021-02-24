@@ -10,22 +10,35 @@ import {
 } from '../schema'
 import { DataSchemaCompileResult } from './result'
 
-
 // short format of DataSchemaCompileResult (value?: DataSchema)
 export type DSCResult = DataSchemaCompileResult<string, any, RDSchema, DSchema>
 
 // short format of DataSchemaCompileResult (value?: DefinitionDataSchema)
-export type DDSCResult = DataSchemaCompileResult<string, any, RDDSchema, DDSchema>
+export type DDSCResult = DataSchemaCompileResult<
+  string,
+  any,
+  RDDSchema,
+  DDSchema
+>
 
 // short format of DataSchemaCompileResult (value?: TopDataSchema)
-export type TDSCResult = DataSchemaCompileResult<string, any, RTDSchema, TDSchema>
+export type TDSCResult = DataSchemaCompileResult<
+  string,
+  any,
+  RTDSchema,
+  TDSchema
+>
 
 // short format of DataSchemaCompiler
 export type DSCompiler = DataSchemaCompiler<string, any, RDSchema, DSchema>
 
 // short format of DataSchemaCompilerConstructor
-export type DSCompilerConstructor = DataSchemaCompilerConstructor<string, any, RDSchema, DSchema>
-
+export type DSCompilerConstructor = DataSchemaCompilerConstructor<
+  string,
+  any,
+  RDSchema,
+  DSchema
+>
 
 /**
  * the context of DataSchemaCompiler
@@ -50,7 +63,10 @@ export interface DataSchemaCompilerContext {
    * @param name
    * @param rawSchema
    */
-  compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): Generator<string, DDSCResult>
+  compileDefinitionDataSchema(
+    name: string,
+    rawSchema: RDDSchema,
+  ): Generator<string, DDSCResult>
   /**
    * Parsing the top-level DataSchema, which has unique attributes
    * such as definitions and is a unit of the configuration file
@@ -75,8 +91,8 @@ export interface DataSchemaCompilerContext {
   getRawDefinition(idOrPath: string): RDDSchema | undefined
   /**
    * Format rawDataSchema:
-   *  - If the rawDataSchema is a string, the schema defined as the type
-        of this string
+   *  - If the rawDataSchema is a string, the schema defined as the type
+   *    of this string
    *
    * 格式化 rawDataSchema：
    *  - 当 rawDataSchema 为字符串时，表示定义为此字符串的类型的 Schema
@@ -91,7 +107,10 @@ export interface DataSchemaCompilerContext {
    * @param parentRawSchema 父数据模式对象
    * @param rawSchema       数据模式对象
    */
-  inheritRawSchema<T extends RDSchema>(parentRawSchema: RDSchema, rawSchema: T): T
+  inheritRawSchema<T extends RDSchema>(
+    parentRawSchema: RDSchema,
+    rawSchema: T,
+  ): T
   /**
    * 转换成可被 JSON.stringify 的 JSON 对象
    * @param schema
@@ -124,7 +143,6 @@ export interface DataSchemaCompilerContext {
   parseJSON(json: Record<string, any>): DSchema
 }
 
-
 /**
  * 数据模式的编译器
  */
@@ -132,10 +150,11 @@ export interface DataSchemaCompiler<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
-  DS extends DataSchema<T, V>> {
+  DS extends DataSchema<T, V>
+> {
   /**
    * Corresponds to the type in RawDataSchema, used as a unique identifier,
-   * indicates what type of RawDataSchema the compiler receives
+   * indicates what type of RawDataSchema the compiler receives
    *
    * 对应 RawDataSchema 中的 type，用作唯一标识
    * 表示该编译器接收何种类型的 RawDataSchema
@@ -145,7 +164,9 @@ export interface DataSchemaCompiler<
    * 编译数据模式的原始数据
    * @param rawSchema
    */
-  compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS>
+  compile(
+    rawSchema: RawDataSchema<T, V>,
+  ): DataSchemaCompileResult<T, V, RDS, DS>
   /**
    * 将原始数据做格式化
    * @param rawSchema
@@ -163,7 +184,6 @@ export interface DataSchemaCompiler<
   parseJSON(json: Record<string, unknown>): DataSchema<T, V>
 }
 
-
 /**
  * DataSchema compiler's constructor interface
  *
@@ -173,11 +193,12 @@ export interface DataSchemaCompilerConstructor<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
-  DS extends DataSchema<T, V>> {
+  DS extends DataSchema<T, V>
+> {
   /**
    * constructor of DataSchemaCompiler<T, V, RDS, DS>
    *
    * @param context   the context of DataSchemaCompiler
    */
-  new(context: DataSchemaCompilerContext): DataSchemaCompiler<T, V, RDS, DS>
+  new (context: DataSchemaCompilerContext): DataSchemaCompiler<T, V, RDS, DS>
 }

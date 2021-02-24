@@ -7,7 +7,6 @@ import type {
 } from './types'
 export * from './types'
 
-
 /**
  * 仅提供简单的 发布/订阅 机制，事件总线不在意订阅者是否正确处理事件，
  * 它只关心有没有将事件传递给它的订阅者；需要注意的是：
@@ -30,10 +29,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * @param handle
    * @see this#addEventListener
    */
-  public on(
-    type: T,
-    handle: SimpleEventHandler<T>,
-  ): this {
+  public on(type: T, handle: SimpleEventHandler<T>): this {
     return this.addEventListener(type, handle, false)
   }
 
@@ -43,10 +39,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * @param handle
    * @see this#addEventListener
    */
-  public once(
-    type: T,
-    handle: SimpleEventHandler<T>,
-  ): this {
+  public once(type: T, handle: SimpleEventHandler<T>): this {
     return this.addEventListener(type, handle, true)
   }
 
@@ -78,10 +71,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * @param type
    * @param handle
    */
-  public removeEventListener(
-    type: T,
-    handle: SimpleEventHandler<T>,
-  ): this {
+  public removeEventListener(type: T, handle: SimpleEventHandler<T>): this {
     const listeners = this.listeners[type]
     if (listeners != null) {
       this.listeners[type] = listeners.filter(x => x.handle !== handle)
@@ -93,10 +83,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
    * Subscribe to the SimpleEvent
    * @param handle
    */
-  public subscribe(
-    handle: SimpleEventHandler<T>,
-    once: boolean,
-  ): this {
+  public subscribe(handle: SimpleEventHandler<T>, once: boolean): this {
     const subscribers = this.subscribers
 
     // A subscriber can only be registered once

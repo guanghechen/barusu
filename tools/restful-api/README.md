@@ -265,7 +265,7 @@
         "@barusu/rollup-config": "^0.0.27",
         "nodemon": "^1.19.1",
         "ts-node": "~9.0.0",
-        "typescript": "~4.0.2"
+        "typescript": "~4.1.5"
       }
     }
     ```

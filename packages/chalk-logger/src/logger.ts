@@ -6,7 +6,6 @@ import { inspect } from 'util'
 import { Color, colorToChalk } from './color'
 import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
 
-
 export interface LoggerOptions {
   mode?: 'normal' | 'loose'
   placeholderRegex?: RegExp
@@ -23,16 +22,23 @@ export interface LoggerOptions {
   nameChalk?: Chalk | Color
 }
 
-
 export class Logger {
-  private static get defaultLevel() { return INFO }
-  private static get defaultDateChalk() { return chalk.gray.bind(chalk) }
-  private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
+  private static get defaultLevel() {
+    return INFO
+  }
+  private static get defaultDateChalk() {
+    return chalk.gray.bind(chalk)
+  }
+  private static get defaultNameChalk() {
+    return chalk.gray.bind(chalk)
+  }
 
   public readonly name: string
   public readonly mode: 'normal' | 'loose' = 'normal'
   public readonly level = Logger.defaultLevel
-  public readonly write = (text: string): void => { process.stdout.write(text) }
+  public readonly write = (text: string): void => {
+    process.stdout.write(text)
+  }
   public readonly dateChalk = Logger.defaultDateChalk
   public readonly nameChalk = Logger.defaultNameChalk
   public readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
@@ -68,7 +74,7 @@ export class Logger {
       encoding = 'utf-8',
       dateChalk,
       nameChalk,
-      placeholderRegex
+      placeholderRegex,
     } = options
 
     // set log mode
@@ -87,27 +93,30 @@ export class Logger {
     if (placeholderRegex != null) {
       let flags: string = this.placeholderRegex.flags
       if (!flags.includes('g')) flags += 'g'
-      self.placeholderRegex = new RegExp(placeholderRegex.source, `${ flags }`)
+      self.placeholderRegex = new RegExp(placeholderRegex.source, `${flags}`)
     }
 
     // set log write function
     if (write != null) self.write = write
     else if (filepath != null) {
-      self.write = (text: string) => fs.appendFileSync(filepath!, text, encoding)
+      self.write = (text: string) =>
+        fs.appendFileSync(filepath!, text, encoding)
     }
 
     // set dateChalk
     if (dateChalk != null) {
-      self.dateChalk = (typeof dateChalk === 'function')
-        ? dateChalk
-        : colorToChalk(dateChalk, true)
+      self.dateChalk =
+        typeof dateChalk === 'function'
+          ? dateChalk
+          : colorToChalk(dateChalk, true)
     }
 
     // set nameChalk
     if (nameChalk != null) {
-      self.nameChalk = (typeof nameChalk === 'function')
-        ? nameChalk
-        : colorToChalk(nameChalk, true)
+      self.nameChalk =
+        typeof nameChalk === 'function'
+          ? nameChalk
+          : colorToChalk(nameChalk, true)
     }
   }
 
@@ -144,8 +153,8 @@ export class Logger {
         if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
         chalkedName = nameChalk(name as any)
       }
-      title = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
-      title = `[${ title }]`
+      title = name.length > 0 ? `${desc} ${chalkedName}` : desc
+      title = `[${title}]`
     }
 
     if (dateInfo.length > 0) {
@@ -211,19 +220,18 @@ export class Logger {
     if (!level || level.rank < this.level.rank) return
     const header = this.formatHeader(level, new Date())
     let newline = false
-    const items: string[] = messages
-      .map(msg => {
-        if (msg == null) {
-          // eslint-disable-next-line no-param-reassign
-          msg = '' + msg
-        }
-        let text = this.formatSingleMessage(msg)
-        if (text.endsWith('\n')) {
-          text = '\n' + text
-          newline = true
-        }
-        return text
-      })
+    const items: string[] = messages.map(msg => {
+      if (msg == null) {
+        // eslint-disable-next-line no-param-reassign
+        msg = '' + msg
+      }
+      let text = this.formatSingleMessage(msg)
+      if (text.endsWith('\n')) {
+        text = '\n' + text
+        newline = true
+      }
+      return text
+    })
 
     let idx = 0
     let message: string = messageFormat.replace(this.placeholderRegex, m => {

@@ -6,7 +6,6 @@ import * as TJS from '@barusu/typescript-json-schema'
 import { removeIgnoredDataTypes, calcConfigFilePath } from '../src'
 import { PartialArgs } from '@barusu/typescript-json-schema'
 
-
 const tsconfigPath = path.resolve(__dirname, '../tsconfig.json')
 const additionalCompilerOptions = {}
 const additionalSchemaArgs: PartialArgs = {
@@ -17,10 +16,14 @@ const additionalSchemaArgs: PartialArgs = {
   aliasRef: true,
 }
 const program: ts.Program = TJS.programFromConfig(
-  tsconfigPath, undefined, additionalCompilerOptions)
+  tsconfigPath,
+  undefined,
+  additionalCompilerOptions,
+)
 const generator: TJS.JsonSchemaGenerator = TJS.buildGenerator(
-  program, additionalSchemaArgs)!
-
+  program,
+  additionalSchemaArgs,
+)!
 
 async function generate(
   modelName: string,
@@ -28,7 +31,7 @@ async function generate(
 ): Promise<void> {
   const symbols = generator.getSymbols(modelName)
   if (symbols.length <= 0) {
-    throw new Error(`${ modelName } not found.`)
+    throw new Error(`${modelName} not found.`)
   }
 
   // If no title is specified, the model name is the title
@@ -39,10 +42,9 @@ async function generate(
   const json = removeIgnoredDataTypes(model, [])
   const data = JSON.stringify(json, null, 2)
 
-  console.log(chalk.green(`output ${ rawSchemaPath }`))
+  console.log(chalk.green(`output ${rawSchemaPath}`))
   await fs.writeFile(rawSchemaPath, data, 'utf-8')
 }
-
 
 // generate('app')
 generate('RawApiConfig', calcConfigFilePath('api-raw-schema.json'))

@@ -18,13 +18,15 @@ export interface TestCase {
   readonly title: string
 }
 
-
 /**
  * test case group
  *
  * 测试用例组
  */
-export interface TestCaseGroup<I extends TestCase, G extends TestCaseGroup<I, G>> {
+export interface TestCaseGroup<
+  I extends TestCase,
+  G extends TestCaseGroup<I, G>
+> {
   /**
    * title of test case group
    *
@@ -45,23 +47,24 @@ export interface TestCaseGroup<I extends TestCase, G extends TestCaseGroup<I, G>
   readonly cases: I[]
 }
 
-
 /**
  * handler of TestCase
  */
-export type TestCaseAnswerFunc<I extends TestCase> =
-  (kase: I) => Promise<void>
+export type TestCaseAnswerFunc<I extends TestCase> = (kase: I) => Promise<void>
 
 /**
  *
  * step1: yield {string}            #title
  * step2: yield {(): Promise<void>} #realTestTask
  */
-export type TestCaseMatchFunc<I extends TestCase> =
-  (kase: I) => IterableIterator<string | (() => Promise<void>)>
+export type TestCaseMatchFunc<I extends TestCase> = (
+  kase: I,
+) => IterableIterator<string | (() => Promise<void>)>
 
-
-export abstract class TestCaseMaster<I extends TestCase, G extends TestCaseGroup<I, G>> {
+export abstract class TestCaseMaster<
+  I extends TestCase,
+  G extends TestCaseGroup<I, G>
+> {
   protected readonly _caseGroups: G[]
   protected readonly caseRootDirectory: string
 

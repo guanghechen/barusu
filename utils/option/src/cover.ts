@@ -1,7 +1,6 @@
 import { convertToBoolean, convertToNumber, convertToString } from './convert'
 import { isFunction } from './is'
 
-
 /**
  * 当 value 为 null/undefined 时，返回 @defaultValue
  * 否则返回 @value
@@ -21,7 +20,6 @@ export function cover<T>(
   return value!
 }
 
-
 /**
  * 先将 @value 转成布尔值，然后调用 cover 函数
  * @param defaultValue
@@ -36,7 +34,6 @@ export function coverBoolean(
   return cover<boolean>(defaultValue, v, isValueValid)
 }
 
-
 /**
  * 先将 @value 转成数字，然后调用 cover 函数
  * @param defaultValue
@@ -50,7 +47,6 @@ export function coverNumber(
   const v = convertToNumber(value)
   return cover<number>(defaultValue, v, isValueValid)
 }
-
 
 /**
  * If value isn't a string, return #defaultValue

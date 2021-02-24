@@ -15,10 +15,8 @@ import {
   configurationMaster,
 } from '../../src'
 
-
 chai.use(chaiExclude)
 const { expect } = chai
-
 
 /**
  * the content format in the input file of the DataValidator test case
@@ -40,15 +38,12 @@ export interface DataValidatorTestCaseInputData {
   cases: any[]
 }
 
-
 /**
  * expected verification results for the DataValidator test case
  *
  * DataValidator 测试用例的预期校验结果
  */
 export type DataValidatorTestCaseAnswerData = any[]
-
-
 
 /**
  * 输出数据
@@ -59,29 +54,36 @@ export interface DataValidatorOutputData {
   warnings: DSCResult['warnings']
 }
 
-
 /**
  * DataSchema 编译器测试用例辅助类
  */
-export class DataValidatorTestCaseMaster extends FileTestCaseMaster<DVResult[], DataValidatorOutputData[]> {
+export class DataValidatorTestCaseMaster extends FileTestCaseMaster<
+  DVResult[],
+  DataValidatorOutputData[]
+> {
   public constructor({
     caseRootDirectory,
     inputFileNameSuffix = 'input.json',
     answerFileNameSuffix = 'answer.json',
-  }: PickPartial<FileTestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
+  }: PickPartial<
+    FileTestCaseMasterProps,
+    'inputFileNameSuffix' | 'answerFileNameSuffix'
+  >) {
     super({ caseRootDirectory, inputFileNameSuffix, answerFileNameSuffix })
   }
 
   // override
   public async consume(kase: FileTestCase): Promise<DVResult[] | never> {
     const { dir, inputFilePath } = kase
-    const inputData: DataValidatorTestCaseInputData = await fs.readJSON(inputFilePath)
+    const inputData: DataValidatorTestCaseInputData = await fs.readJSON(
+      inputFilePath,
+    )
     const { schema: schemaFilePath, cases } = inputData
     const absoluteSchemaFilePath = path.resolve(dir, schemaFilePath)
 
     // DataSchema not found
     if (!fs.existsSync(absoluteSchemaFilePath)) {
-      throw `[Error] bad schema: ${ absoluteSchemaFilePath } is not exists.`
+      throw `[Error] bad schema: ${absoluteSchemaFilePath} is not exists.`
     }
 
     const rawDataSchema = await fs.readJSON(absoluteSchemaFilePath)
@@ -89,11 +91,13 @@ export class DataValidatorTestCaseMaster extends FileTestCaseMaster<DVResult[], 
 
     // DataSchema is invalid
     if (CompileResult.hasError) {
-      throw `[Error] bad schema: ${ absoluteSchemaFilePath } exists errors: ${ CompileResult.errorDetails }`
+      throw `[Error] bad schema: ${absoluteSchemaFilePath} exists errors: ${CompileResult.errorDetails}`
     }
 
     if (CompileResult.hasWarning) {
-      console.log(`[Warning] schema: ${ absoluteSchemaFilePath } exists warnings: ${ CompileResult.warningDetails }`)
+      console.log(
+        `[Warning] schema: ${absoluteSchemaFilePath} exists warnings: ${CompileResult.warningDetails}`,
+      )
     }
 
     const schema: DSchema = CompileResult.value!
@@ -108,9 +112,7 @@ export class DataValidatorTestCaseMaster extends FileTestCaseMaster<DVResult[], 
   // override
   public async check(outputs: DVResult[], answers: DVResult[]): Promise<void> {
     // 输出和答案应有相同的数据数
-    expect(outputs)
-      .to.be.an('array')
-      .to.have.lengthOf(answers.length)
+    expect(outputs).to.be.an('array').to.have.lengthOf(answers.length)
 
     const outputDataList = this.toJSON(outputs)
     const answerDataList = this.toJSON(answers)
@@ -147,7 +149,10 @@ export class DataValidatorTestCaseMaster extends FileTestCaseMaster<DVResult[], 
   // override
   public toJSON(data: DVResult[]): DataValidatorOutputData[] {
     const mapper = (x: DataHandleResultException) => {
-      const result: DataHandleResultException = { constraint: x.constraint, reason: x.reason }
+      const result: DataHandleResultException = {
+        constraint: x.constraint,
+        reason: x.reason,
+      }
       if (x.property != null) result.property = x.property
       if (x.traces != null) result.traces = x.traces.map(mapper)
       return result

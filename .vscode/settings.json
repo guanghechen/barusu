@@ -4,6 +4,7 @@
     "CASELABEL",
     "Encryptor",
     "Lerna",
+    "Parens",
     "Subcommand",
     "autoprefixer",
     "autorestart",
@@ -29,6 +30,7 @@
     "flexbugs",
     "flowtype",
     "funcs",
+    "gitmoji",
     "globby",
     "guanghechen",
     "iife",
@@ -45,6 +47,7 @@
     "nonwords",
     "ntvs",
     "parastic",
+    "pinst",
     "plopfile",
     "plusplus",
     "postbuild",
@@ -66,5 +69,8 @@
     "typeof",
     "verbo",
     "ymal"
-  ]
+  ],
+  "files.associations": {
+    ".prettierrc": "yaml"
+  }
 }

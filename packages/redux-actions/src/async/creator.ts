@@ -1,13 +1,12 @@
 import { AsyncActionStatus, AsyncActions } from './action'
 
-
 /**
  * Creators of async actions
  */
 export interface AsyncActionCreators<
   T extends string | symbol,
   As extends AsyncActions<T>
-  > {
+> {
   /**
    * Requested action creator
    */
@@ -22,7 +21,6 @@ export interface AsyncActionCreators<
   failure: (payload: As['failure']['payload']) => As['failure']
 }
 
-
 /**
  * Create async action types and async action creators
  *
@@ -31,7 +29,7 @@ export interface AsyncActionCreators<
 export function createAsyncActionCreator<
   T extends string | symbol,
   As extends AsyncActions<T>
-  >(actionType: T): AsyncActionCreators<T, As> {
+>(actionType: T): AsyncActionCreators<T, As> {
   type RA = As['request']
   type SA = As['success']
   type FA = As['failure']

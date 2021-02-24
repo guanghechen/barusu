@@ -4,10 +4,23 @@ import { colorToChalk } from '../src/color'
 import { DEBUG, Level, VERBOSE } from '../src/level'
 import { Logger, LoggerOptions } from '../src/logger'
 
-
 describe('Logger', function () {
-  const levels: string[] = ['debug', 'verbose', 'info', 'warn', 'error', 'fatal']
-  const methods: string[] = ['debug', 'verbose', 'info', 'warn', 'error', 'fatal']
+  const levels: string[] = [
+    'debug',
+    'verbose',
+    'info',
+    'warn',
+    'error',
+    'fatal',
+  ]
+  const methods: string[] = [
+    'debug',
+    'verbose',
+    'info',
+    'warn',
+    'error',
+    'fatal',
+  ]
   const workspaceRootDir = path.resolve(__dirname, '../../../')
 
   describe('base', function () {
@@ -34,17 +47,33 @@ describe('Logger', function () {
 
                 // eslint-disable-next-line no-loop-func
                 test(title, function (): void {
-                  const logger = new Logger({ ...options, name: level, })
-                  const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
+                  const logger = new Logger({ ...options, name: level })
+                  const loggerMock = createLoggerMocker({
+                    logger,
+                    workspaceRootDir,
+                  })
                   loggerMock.mock()
 
                   for (const method of methods) {
                     const log = logger[method].bind(logger)
-                    log('{}, {}, {}, {}, {}, {}, {}', 1, 'ooo', null, true, false, undefined, 'a\nb')
+                    log(
+                      '{}, {}, {}, {}, {}, {}, {}',
+                      1,
+                      'ooo',
+                      null,
+                      true,
+                      false,
+                      undefined,
+                      'a\nb',
+                    )
                     log('This is a literal string', ['a', 'b'])
                     log('Output object: {}', { x: 1, y: { z: 'o' } })
                     log('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
-                    log('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+                    log('user(<>)', {
+                      username: 'lemon-clown',
+                      avatar:
+                        'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4',
+                    })
                   }
 
                   expect(loggerMock.data()).toMatchSnapshot()
@@ -72,12 +101,38 @@ describe('Logger', function () {
     loggerMock.mock()
 
     const log = logger.debug.bind(logger)
-    log('{}, {}, {}, {}, {}, {}, {}', 1, 'ooo', null, true, false, undefined, () => 'a\nb\n')
-    log('<>, <>, <>, <>, <>, <>, <>', 1, 'ooo', null, true, false, undefined, () => 'a\nb\n')
-    log('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+    log(
+      '{}, {}, {}, {}, {}, {}, {}',
+      1,
+      'ooo',
+      null,
+      true,
+      false,
+      undefined,
+      () => 'a\nb\n',
+    )
+    log(
+      '<>, <>, <>, <>, <>, <>, <>',
+      1,
+      'ooo',
+      null,
+      true,
+      false,
+      undefined,
+      () => 'a\nb\n',
+    )
+    log('user(<>)', {
+      username: 'lemon-clown',
+      avatar:
+        'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4',
+    })
 
     // Error is hard to test
-    log('bad argument (<>). error({})', { username: 123 }, (new Error('username is invalid')).message)
+    log(
+      'bad argument (<>). error({})',
+      { username: 123 },
+      new Error('username is invalid').message,
+    )
 
     expect(loggerMock.data()).toMatchSnapshot()
     loggerMock.restore()
@@ -102,7 +157,11 @@ describe('Logger', function () {
     log('This is a literal string')
     log('Output object: {}', { x: 1, y: { z: 'o' } })
     log('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
-    log('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+    log('user(<>)', {
+      username: 'lemon-clown',
+      avatar:
+        'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4',
+    })
 
     expect(loggerMock.data()).toMatchSnapshot()
     loggerMock.restore()

@@ -6,7 +6,6 @@ import { parseCommentsIntoDefinition } from './comment-definition'
 import { getDefinitionForProperty } from './property-definition'
 import { getTypeDefinition } from './type-definition'
 
-
 /**
  *
  * @param context
@@ -41,40 +40,60 @@ export function getClassDefinition(
     if (!context.args.excludePrivate) return true
 
     const decls = prop.declarations
-    return decls?.filter(decl => {
-      const mods = decl.modifiers
-      return mods && mods.filter(mod => mod.kind === ts.SyntaxKind.PrivateKeyword).length > 0
-    }).length <= 0
+    return (
+      decls?.filter(decl => {
+        const mods = decl.modifiers
+        return (
+          mods &&
+          mods.filter(mod => mod.kind === ts.SyntaxKind.PrivateKeyword).length >
+            0
+        )
+      }).length <= 0
+    )
   })
 
   const fullName = context.checker.typeToString(
-    clazzType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
+    clazzType,
+    undefined,
+    ts.TypeFormatFlags.UseFullyQualifiedType,
+  )
   const modifierFlags = ts.getCombinedModifierFlags(node)
   const inheritingTypes = context.inheritingTypes[fullName]
-  if (Boolean(modifierFlags & ts.ModifierFlags.Abstract) && inheritingTypes != null) {
-    const oneOf = inheritingTypes.map((typename) => {
+  if (
+    Boolean(modifierFlags & ts.ModifierFlags.Abstract) &&
+    inheritingTypes != null
+  ) {
+    const oneOf = inheritingTypes.map(typename => {
       return getTypeDefinition(context, context.allSymbols[typename])
     })
     // eslint-disable-next-line no-param-reassign
     definition.oneOf = oneOf
   } else {
     if (clazz.members) {
-      const indexSignatures = clazz.members == null
-        ? []
-        : clazz.members.filter(x => x.kind === ts.SyntaxKind.IndexSignature)
+      const indexSignatures =
+        clazz.members == null
+          ? []
+          : clazz.members.filter(x => x.kind === ts.SyntaxKind.IndexSignature)
       if (indexSignatures.length === 1) {
         // for case 'array-types'
         const indexSignature = indexSignatures[0] as ts.IndexSignatureDeclaration
         if (indexSignature.parameters.length !== 1) {
-          throw new Error('Not supported: IndexSignatureDeclaration parameters.length != 1')
+          throw new Error(
+            'Not supported: IndexSignatureDeclaration parameters.length != 1',
+          )
         }
-        const indexSymbol: ts.Symbol = (indexSignature.parameters[0] as any).symbol
-        const indexType = context.checker.getTypeOfSymbolAtLocation(indexSymbol, node)
-        const isStringIndexed = (indexType.flags === ts.TypeFlags.String)
+        const indexSymbol: ts.Symbol = (indexSignature.parameters[0] as any)
+          .symbol
+        const indexType = context.checker.getTypeOfSymbolAtLocation(
+          indexSymbol,
+          node,
+        )
+        const isStringIndexed = indexType.flags === ts.TypeFlags.String
         if (indexType.flags !== ts.TypeFlags.Number && !isStringIndexed) {
           throw new Error(
             'Not supported: IndexSignatureDeclaration with index symbol' +
-            ' other than a number or a string')
+              ' other than a number or a string',
+          )
         }
         const type = context.checker.getTypeAtLocation(indexSignature.type!)
         const def = getTypeDefinition(context, type, undefined, 'anyOf')
@@ -108,7 +127,10 @@ export function getClassDefinition(
       definition.type = 'object'
     }
 
-    if (definition.type === 'object' && Object.keys(propertyDefinitions).length > 0) {
+    if (
+      definition.type === 'object' &&
+      Object.keys(propertyDefinitions).length > 0
+    ) {
       // eslint-disable-next-line no-param-reassign
       definition.properties = propertyDefinitions
     }
@@ -118,7 +140,10 @@ export function getClassDefinition(
       definition.defaultProperties = []
     }
 
-    if (context.args.noExtraProps && definition.additionalProperties === undefined) {
+    if (
+      context.args.noExtraProps &&
+      definition.additionalProperties === undefined
+    ) {
       // eslint-disable-next-line no-param-reassign
       definition.additionalProperties = false
     }
@@ -135,19 +160,22 @@ export function getClassDefinition(
     }
 
     if (context.args.required) {
-      const requiredProps = props.reduce((required: string[], prop: ts.Symbol) => {
-        const def = {}
-        parseCommentsIntoDefinition(context, prop, def, {})
-        if (
-          !(prop.flags & ts.SymbolFlags.Optional) &&
-          !(prop.flags & ts.SymbolFlags.Method) &&
-          !(prop as any).mayBeUndefined &&
-          !def.hasOwnProperty('ignore')
-        ) {
-          required.push(prop.getName())
-        }
-        return required
-      }, [])
+      const requiredProps = props.reduce(
+        (required: string[], prop: ts.Symbol) => {
+          const def = {}
+          parseCommentsIntoDefinition(context, prop, def, {})
+          if (
+            !(prop.flags & ts.SymbolFlags.Optional) &&
+            !(prop.flags & ts.SymbolFlags.Method) &&
+            !(prop as any).mayBeUndefined &&
+            !def.hasOwnProperty('ignore')
+          ) {
+            required.push(prop.getName())
+          }
+          return required
+        },
+        [],
+      )
 
       if (requiredProps.length > 0) {
         // eslint-disable-next-line no-param-reassign

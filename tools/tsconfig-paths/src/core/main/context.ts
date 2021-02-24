@@ -4,11 +4,9 @@ import { absoluteOfWorkspace } from '@barusu/util-cli'
 import { coverString } from '@barusu/util-option'
 import { logger } from '../../env/logger'
 
-
 export interface Paths {
   readonly [key: string]: string[]
 }
-
 
 export interface TsconfigPathsContext {
   /**
@@ -57,7 +55,6 @@ export interface TsconfigPathsContext {
   readonly tsconfigPathAlias?: Paths
 }
 
-
 interface Params {
   /**
    * Path of currently executing command
@@ -89,25 +86,31 @@ interface Params {
   readonly dstRootDir: string
 }
 
-
 /**
  * Create TsconfigPathsContext
  *
  * @param params
  */
 export async function createTsconfigPathsContext(
-  params: Params
+  params: Params,
 ): Promise<TsconfigPathsContext> {
   const { path: configPath, config } = TsconfigUtil.loadSync(
-    params.cwd, params.tsconfigPath)
+    params.cwd,
+    params.tsconfigPath,
+  )
 
   // resolve workspace
-  const workspace = coverString(params.workspace, absoluteOfWorkspace(
-    params.cwd, path.dirname(configPath || '')))
+  const workspace = coverString(
+    params.workspace,
+    absoluteOfWorkspace(params.cwd, path.dirname(configPath || '')),
+  )
   logger.debug('[createTsconfigPathsContext] workspace:', workspace)
 
   // resolve tsconfigRootDir
-  const tsconfigRootDir: string = coverString('.', config?.compilerOptions?.rootDir)
+  const tsconfigRootDir: string = coverString(
+    '.',
+    config?.compilerOptions?.rootDir,
+  )
   logger.debug('[createTsconfigPathsContext] tsconfigRootDir:', tsconfigRootDir)
 
   // resolve tsconfigBaseUrl
@@ -116,7 +119,10 @@ export async function createTsconfigPathsContext(
 
   // resolve tsconfigPathAlias
   const tsconfigPathAlias: Paths | undefined = config?.compilerOptions?.paths
-  logger.debug('[createTsconfigPathsContext] tsconfigPathAlias:', tsconfigPathAlias)
+  logger.debug(
+    '[createTsconfigPathsContext] tsconfigPathAlias:',
+    tsconfigPathAlias,
+  )
 
   const context: TsconfigPathsContext = {
     cwd: params.cwd,

@@ -52,7 +52,6 @@ export interface GitCipherInitContext {
   readonly maxPasswordLength: number
 }
 
-
 interface Params {
   /**
    * Path of currently executing command
@@ -104,14 +103,13 @@ interface Params {
   readonly maxPasswordLength: number
 }
 
-
 /**
  * Create GitCipherInitContext
  *
  * @param params
  */
 export async function createGitCipherInitContext(
-  params: Params
+  params: Params,
 ): Promise<GitCipherInitContext> {
   const context: GitCipherInitContext = {
     cwd: params.cwd,

@@ -1,16 +1,15 @@
 import { ColorfulChalk } from './color'
 
-
 export class Level {
   public static valueOf(levelName: string): Level | undefined {
     return Level.levels.get(levelName.toLowerCase())
   }
 
-  private static currentRank = 0        // rank increase counter
+  private static currentRank = 0 // rank increase counter
   private static readonly levels = new Map<string, Level>()
 
-  public readonly rank: number                 // level's rank
-  public readonly desc: string                 // level's description
+  public readonly rank: number // level's rank
+  public readonly desc: string // level's description
   public readonly headerChalk: ColorfulChalk
   public readonly contentChalk: ColorfulChalk
 
@@ -18,7 +17,7 @@ export class Level {
     keys: string[],
     desc: string,
     headerChalk: ColorfulChalk,
-    contentChalk: ColorfulChalk
+    contentChalk: ColorfulChalk,
   ) {
     Level.currentRank += 1
     this.rank = Level.currentRank
@@ -31,7 +30,6 @@ export class Level {
     }
   }
 }
-
 
 export const DEBUG = new Level(
   ['debug'],

@@ -13,23 +13,11 @@ import {
   packageVersion,
 } from './index'
 
+const program = createTopCommand(COMMAND_NAME, packageVersion)
 
-const program = createTopCommand(
-  COMMAND_NAME,
-  packageVersion,
-)
+interface CommandOptions extends CommandConfigurationOptions {}
 
-
-
-interface CommandOptions extends CommandConfigurationOptions {
-
-}
-
-
-const defaultCommandOptions: CommandOptions = {
-}
-
-
+const defaultCommandOptions: CommandOptions = {}
 
 program
   .usage('<workspace> [options]')
@@ -39,15 +27,19 @@ program
 
     type R = CommandOptions & CommandConfigurationFlatOpts
     const defaultOptions: R = resolveCommandConfigurationOptions<
-      CommandOptions, CommandOptions>(
-        logger, packageName, false,
-        defaultCommandOptions, _workspaceDir, options)
+      CommandOptions,
+      CommandOptions
+    >(logger, packageName, false, defaultCommandOptions, _workspaceDir, options)
 
-    const rootPackageJsonPath: string | null = findPackageJsonPath(defaultOptions.workspace)
+    const rootPackageJsonPath: string | null = findPackageJsonPath(
+      defaultOptions.workspace,
+    )
     logger.debug('rootPackageJsonPath:', rootPackageJsonPath)
 
     if (rootPackageJsonPath == null) {
-      logger.error(`Cannot find valid package.json on the workspace ${ rootPackageJsonPath }`)
+      logger.error(
+        `Cannot find valid package.json on the workspace ${rootPackageJsonPath}`,
+      )
       process.exit(-1)
     }
 

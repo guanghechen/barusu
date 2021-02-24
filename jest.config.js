@@ -1,40 +1,29 @@
 const path = require('path')
 const { compilerOptions } = require('./tsconfig')
 
-
 const moduleNameMapper = {}
 for (const moduleName of Object.getOwnPropertyNames(compilerOptions.paths)) {
-  const paths = compilerOptions.paths[moduleName]
-    .map(p => path.resolve(__dirname, p))
+  const paths = compilerOptions.paths[moduleName].map(p =>
+    path.resolve(__dirname, p),
+  )
   let pattern = '^' + moduleName.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&') + '$'
   moduleNameMapper[pattern] = paths.length === 1 ? paths[0] : paths
 }
-
 
 module.exports = {
   bail: true,
   verbose: true,
   errorOnDeprecated: true,
-  roots: [
-    '<rootDir>/src',
-    '<rootDir>/__test__',
-  ],
-  moduleFileExtensions: [
-    'ts',
-    'tsx',
-    'js',
-    'jsx',
-    'json',
-    'node'
-  ],
+  roots: ['<rootDir>/src', '<rootDir>/__test__'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper,
   globals: {
     'ts-jest': {
-      'tsconfig': '<rootDir>/tsconfig.json'
-    }
+      tsconfig: '<rootDir>/tsconfig.json',
+    },
   },
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
   },
   testRegex: '/(__test__)/[^/]+\\.spec\\.tsx?$',
   testPathIgnorePatterns: [
@@ -51,7 +40,7 @@ module.exports = {
     '/doc/',
     '/tmp/',
     '/__tmp__/',
-    '/script/'
+    '/script/',
   ],
   collectCoverage: true,
   collectCoverageFrom: [
@@ -74,18 +63,15 @@ module.exports = {
     '!**/tmp/**',
     '!**/__tmp__/**',
     '!**/script/**',
-    '!**/coverage/**'
+    '!**/coverage/**',
   ],
   coverageThreshold: {
-    'global': {
-      'branches': 60,
-      'functions': 60,
-      'lines': 60,
-      'statements': 60
-    }
+    global: {
+      branches: 60,
+      functions: 60,
+      lines: 60,
+      statements: 60,
+    },
   },
-  coverageReporters: [
-    'text',
-    'text-summary'
-  ]
+  coverageReporters: ['text', 'text-summary'],
 }

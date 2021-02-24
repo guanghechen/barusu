@@ -13,10 +13,8 @@ import {
   RDSchema,
 } from '../../src'
 
-
 chai.use(chaiExclude)
 const { expect } = chai
-
 
 /**
  * 输出数据
@@ -27,18 +25,26 @@ export interface DataSchemaCompilerOutputData {
   warnings: DSCResult['warnings']
 }
 
-
 /**
  * DataSchema 编译器测试用例辅助类
  */
-export class DataSchemaCompilerTestCaseMaster extends FileTestCaseMaster<DSCResult, DataSchemaCompilerOutputData> {
+export class DataSchemaCompilerTestCaseMaster extends FileTestCaseMaster<
+  DSCResult,
+  DataSchemaCompilerOutputData
+> {
   protected readonly configurationMaster: ConfigurationMaster
 
-  public constructor(configurationMaster: ConfigurationMaster, {
-    caseRootDirectory,
-    inputFileNameSuffix = 'schema.json',
-    answerFileNameSuffix = 'schema.answer.json',
-  }: PickPartial<FileTestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
+  public constructor(
+    configurationMaster: ConfigurationMaster,
+    {
+      caseRootDirectory,
+      inputFileNameSuffix = 'schema.json',
+      answerFileNameSuffix = 'schema.answer.json',
+    }: PickPartial<
+      FileTestCaseMasterProps,
+      'inputFileNameSuffix' | 'answerFileNameSuffix'
+    >,
+  ) {
     super({ caseRootDirectory, inputFileNameSuffix, answerFileNameSuffix })
     this.configurationMaster = configurationMaster
   }
@@ -47,7 +53,9 @@ export class DataSchemaCompilerTestCaseMaster extends FileTestCaseMaster<DSCResu
   public async consume(kase: FileTestCase): Promise<DSCResult | never> {
     const { inputFilePath: schemaFilePath } = kase
     const rawDataSchema: RDSchema = await fs.readJSON(schemaFilePath)
-    const CompileResult: DSCResult = this.configurationMaster.compile(rawDataSchema)
+    const CompileResult: DSCResult = this.configurationMaster.compile(
+      rawDataSchema,
+    )
     return CompileResult
   }
 
@@ -84,7 +92,9 @@ export class DataSchemaCompilerTestCaseMaster extends FileTestCaseMaster<DSCResu
     // check load
     if (answer.value != null) {
       const answerSchema = this.configurationMaster.parseJSON(answer.value)
-      const answerJson = JSON.parse(JSON.stringify(this.configurationMaster.toJSON(answerSchema)))
+      const answerJson = JSON.parse(
+        JSON.stringify(this.configurationMaster.toJSON(answerSchema)),
+      )
       expect(outputDataValue).to.deep.equal(answerJson)
     }
   }
@@ -92,14 +102,20 @@ export class DataSchemaCompilerTestCaseMaster extends FileTestCaseMaster<DSCResu
   // override
   public toJSON(data: DSCResult): DataSchemaCompilerOutputData {
     const mapper = (x: DataHandleResultException) => {
-      const result: DataHandleResultException = { constraint: x.constraint, reason: x.reason }
+      const result: DataHandleResultException = {
+        constraint: x.constraint,
+        reason: x.reason,
+      }
       if (x.property != null) result.property = x.property
       if (x.traces != null) result.traces = x.traces.map(mapper)
       return result
     }
 
     const result: DataSchemaCompilerOutputData = {
-      value: data.value == null ? data.value : this.configurationMaster.toJSON(data.value) as any,
+      value:
+        data.value == null
+          ? data.value
+          : (this.configurationMaster.toJSON(data.value) as any),
       errors: data.errors.map(mapper),
       warnings: data.warnings.map(mapper),
     }

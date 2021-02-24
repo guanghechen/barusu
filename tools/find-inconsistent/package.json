@@ -35,8 +35,7 @@
     "prebuild": "rimraf lib/",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "test": "echo 'no test yet.'",
-    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
+    "test": "echo 'no test yet.'"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.45",
@@ -46,7 +45,6 @@
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.45",
     "@barusu/rollup-config": "^0.0.45",
     "rollup": "2.37.0"
   }

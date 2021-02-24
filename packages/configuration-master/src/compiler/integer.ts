@@ -11,12 +11,15 @@ import {
   RawIntegerDataSchema as RDS,
 } from '../schema/integer'
 
-
 /**
  * IntegerDataSchema 编译结果的数据类型
  */
-export type IntegerDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
+export type IntegerDataSchemaCompileResult = DataSchemaCompileResult<
+  T,
+  V,
+  RDS,
+  DS
+>
 
 /**
  * 数字类型的模式的编译器
@@ -28,7 +31,6 @@ export type IntegerDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, 
 export class IntegerDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -41,20 +43,32 @@ export class IntegerDataSchemaCompiler
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>(
-      'default', coverInteger)
+      'default',
+      coverInteger,
+    )
     const minimumResult = result.compileConstraint<number>(
-      'minimum', coverInteger)
+      'minimum',
+      coverInteger,
+    )
     const maximumResult = result.compileConstraint<number>(
-      'maximum', coverInteger)
+      'maximum',
+      coverInteger,
+    )
     const exclusiveMinimumResult = result.compileConstraint<number>(
-      'exclusiveMinimum', coverInteger)
+      'exclusiveMinimum',
+      coverInteger,
+    )
     const exclusiveMaximumResult = result.compileConstraint<number>(
-      'exclusiveMaximum', coverInteger)
+      'exclusiveMaximum',
+      coverInteger,
+    )
     const enumValueResult = result.compileConstraint<number[]>(
-      'enum', coverArray<number>(coverInteger))
+      'enum',
+      coverArray<number>(coverInteger),
+    )
 
-    const ceil = (x?: number) => x == null ? x : Math.ceil(x)
-    const floor = (x?: number) => x == null ? x : Math.floor(x)
+    const ceil = (x?: number) => (x == null ? x : Math.ceil(x))
+    const floor = (x?: number) => (x == null ? x : Math.floor(x))
 
     // IntegerDataSchema
     const schema: DS = {
@@ -90,6 +104,7 @@ export class IntegerDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#parseJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),

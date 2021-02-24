@@ -5,13 +5,11 @@ import * as path from 'path'
 import webpack from 'webpack'
 import { resize } from './resize'
 
-
 interface SourceContentItem {
   index: number
   source: string
   content: string
 }
-
 
 /**
  * process sourcemap
@@ -25,11 +23,7 @@ export function processSourceMap(
   context: webpack.loader.LoaderContext,
   callback: (sourcemap: RawSourceMap) => void,
 ): void {
-  const {
-    resolve,
-    emitWarning,
-    addDependency,
-  } = context
+  const { resolve, emitWarning, addDependency } = context
 
   // eslint-disable-next-line no-param-reassign
   rawSourceMap.sourcesContent = rawSourceMap.sourcesContent || []
@@ -60,7 +54,9 @@ export function processSourceMap(
     return
   }
 
-  const sourcePrefix = rawSourceMap.sourceRoot ? rawSourceMap.sourceRoot + '/' : ''
+  const sourcePrefix = rawSourceMap.sourceRoot
+    ? rawSourceMap.sourceRoot + '/'
+    : ''
   const tasks: Promise<SourceContentItem | null>[] = []
   for (const item of sourcesWithoutContent) {
     const source = sourcePrefix + item.source
@@ -69,32 +65,36 @@ export function processSourceMap(
     // eslint-disable-next-line no-param-reassign
     delete rawSourceMap.sourceRoot
 
-    const task = new Promise<SourceContentItem | null>((onFulfilled) => {
-      resolve(resolveContext, loaderUtils.urlToRequest(source, true as any), (err, result) => {
-        if (err) {
-          emitWarning('Cannot find source file \'' + source + '\': ' + err)
-          return onFulfilled(null)
-        }
-        addDependency(result)
-        fs.readFile(result, 'utf-8', function (err, content) {
+    const task = new Promise<SourceContentItem | null>(onFulfilled => {
+      resolve(
+        resolveContext,
+        loaderUtils.urlToRequest(source, true as any),
+        (err, result) => {
           if (err) {
-            emitWarning('Cannot open source file \'' + result + '\': ' + err)
+            emitWarning("Cannot find source file '" + source + "': " + err)
             return onFulfilled(null)
           }
-          onFulfilled({
-            index: item.index,
-            source: result,
-            content: content
+          addDependency(result)
+          fs.readFile(result, 'utf-8', function (err, content) {
+            if (err) {
+              emitWarning("Cannot open source file '" + result + "': " + err)
+              return onFulfilled(null)
+            }
+            onFulfilled({
+              index: item.index,
+              source: result,
+              content: content,
+            })
           })
-        })
-      })
+        },
+      )
     })
     tasks.push(task)
   }
 
-  Promise
-    .all(tasks)           // waiting all tasks are completed
-    .then(results => {    // get results in defined ordered
+  Promise.all(tasks) // waiting all tasks are completed
+    .then(results => {
+      // get results in defined ordered
       for (const result of results) {
         if (result == null) continue
         // eslint-disable-next-line no-param-reassign

@@ -2,7 +2,6 @@ import { isNotEmptyString } from '@barusu/util-option'
 import { destroyBuffer } from '../buffer'
 import { EventTypes, eventBus } from '../events'
 
-
 /**
  * @param question
  * @param isValidCharacter
@@ -41,22 +40,23 @@ export function inputOneLine(
     // on data
     const onData = (chunk: Buffer) => {
       let pieceTot: number = chunkAcc == null ? 0 : chunkAcc.length
-      const piece: Buffer = chunkAcc == null ? chunk : Buffer.concat([chunkAcc, chunk])
+      const piece: Buffer =
+        chunkAcc == null ? chunk : Buffer.concat([chunkAcc, chunk])
       for (let i = 0; i < chunk.length; ++i) {
         switch (chunk[i]) {
-          case 0x03:  // Ctrl-c
+          case 0x03: // Ctrl-c
             eventBus.dispatch({ type: EventTypes.CANCELED })
             return
-          case 0x7f:  // Backspace
+          case 0x7f: // Backspace
             if (pieceTot > 0) {
               pieceTot -= 1
               stdout.moveCursor(-1, 0)
               stdout.clearLine(1)
             }
             break
-          case 0x04:  // Ctrl-d
-          case 0x0a:  // LF  (line feed)
-          case 0x0d:  // CR  (carriage return)
+          case 0x04: // Ctrl-d
+          case 0x0a: // LF  (line feed)
+          case 0x0d: // CR  (carriage return)
             stdout.write('\n')
             stdin.setRawMode(false)
             stdin.pause()
@@ -101,7 +101,6 @@ export function inputOneLine(
   })
 }
 
-
 /**
  * Get data from stdin
  * @param question
@@ -132,7 +131,11 @@ export async function input(
     destroyBuffer(answer)
     answer = null
 
-    answer = await inputOneLine(questionWithHint, isValidCharacter, showAsterisk)
+    answer = await inputOneLine(
+      questionWithHint,
+      isValidCharacter,
+      showAsterisk,
+    )
     if (!isValidAnswer || isValidAnswer(answer)) break
   }
   return answer

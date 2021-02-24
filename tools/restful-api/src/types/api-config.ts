@@ -1,5 +1,4 @@
-  import { RawApiItemGroup } from './api-item-group/raw'
-
+import { RawApiItemGroup } from './api-item-group/raw'
 
 /**
  * 未经处理的 API 配置内容
@@ -20,7 +19,6 @@ export interface RawApiConfig {
   api: RawApiItemGroup[] | { [name: string]: Omit<RawApiItemGroup, 'name'> }
 }
 
-
 /**
  * API 配置内容
  */
@@ -34,7 +32,6 @@ export interface ApiConfig extends ApiConfigContext {
    */
   api: RawApiItemGroup[]
 }
-
 
 /**
  * 解析 API 条目/组的上下文配置

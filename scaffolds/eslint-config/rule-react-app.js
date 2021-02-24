@@ -5,14 +5,12 @@
  */
 const restrictedGlobals = require('confusing-browser-globals')
 
-
-
 // rules for *.js, *.jsx, *.ts, *.tsx
 const jsRules = {
   'array-callback-return': 'warn',
   'default-case': ['warn', { commentPattern: '^no default$' }],
   'dot-location': ['warn', 'property'],
-  'eqeqeq': ['warn', 'smart'],
+  eqeqeq: ['warn', 'smart'],
   'new-parens': 'warn',
   'no-array-constructor': 'warn',
   'no-caller': 'warn',
@@ -117,7 +115,7 @@ const jsRules = {
   'no-whitespace-before-property': 'warn',
   'require-yield': 'warn',
   'rest-spread-spacing': ['warn', 'never'],
-  'strict': ['warn', 'never'],
+  strict: ['warn', 'never'],
   'unicode-bom': ['warn', 'never'],
   'use-isnan': 'warn',
   'valid-typeof': 'warn',
@@ -144,7 +142,6 @@ const jsRules = {
   'import/no-anonymous-default-export': 'warn',
   'import/no-webpack-loader-syntax': 'error',
 }
-
 
 // rules for *.ts, *.tsx
 const tsRules = {
@@ -191,6 +188,5 @@ const tsRules = {
   'no-useless-constructor': 'off',
   '@typescript-eslint/no-useless-constructor': 'warn',
 }
-
 
 module.exports = { jsRules, tsRules }

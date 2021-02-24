@@ -18,7 +18,7 @@
     "@barusu/tool-sort-imports": "^0.0.28",
     "nodemon": "^2.0.4",
     "ts-node": "~9.0.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.1.5"
   },
   "@barusu/tool-sort-imports": {
     "pattern": [

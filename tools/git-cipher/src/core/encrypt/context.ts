@@ -61,7 +61,6 @@ export interface GitCipherEncryptContext {
   readonly updateBeforeEncrypt: boolean
 }
 
-
 interface Params {
   /**
    * Path of currently executing command
@@ -122,14 +121,13 @@ interface Params {
   readonly updateBeforeEncrypt: boolean
 }
 
-
 /**
  * Create GitCipherEncryptContext
  *
  * @param params
  */
 export async function createGitCipherEncryptContext(
-  params: Params
+  params: Params,
 ): Promise<GitCipherEncryptContext> {
   const context: GitCipherEncryptContext = {
     cwd: params.cwd,

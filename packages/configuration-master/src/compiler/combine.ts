@@ -15,12 +15,15 @@ import {
   combineStrategies,
 } from '../schema/combine'
 
-
 /**
  * CombineDataSchema 编译结果的数据类型
  */
-export type CombineDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
+export type CombineDataSchemaCompileResult = DataSchemaCompileResult<
+  T,
+  V,
+  RDS,
+  DS
+>
 
 /**
  * 组合类型的模式的编译器
@@ -30,7 +33,6 @@ export type CombineDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, 
 export class CombineDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -46,11 +48,17 @@ export class CombineDataSchemaCompiler
 
     // strategy 的默认值为 all
     const strategyResult = result.compileConstraint<CombineStrategy>(
-      'strategy', coverString as any, CombineStrategy.ALL)
-    if (strategyResult.value == null || !combineStrategies.includes(strategyResult.value)) {
+      'strategy',
+      coverString as any,
+      CombineStrategy.ALL,
+    )
+    if (
+      strategyResult.value == null ||
+      !combineStrategies.includes(strategyResult.value)
+    ) {
       result.addError({
         constraint: 'strategy',
-        reason: `unknown strategy: ${ stringify(rawSchema.strategy) }`
+        reason: `unknown strategy: ${stringify(rawSchema.strategy)}`,
       })
       strategyResult.setValue(CombineStrategy.ALL)
     }
@@ -63,7 +71,7 @@ export class CombineDataSchemaCompiler
      */
     const compileSchemas = (
       constraint: 'allOf' | 'anyOf' | 'oneOf',
-      rawSchemas?: RDSchema[]
+      rawSchemas?: RDSchema[],
     ): DSchema[] | undefined => {
       if (rawSchemas == null || rawSchemas.length <= 0) return undefined
       const schemas: DSchema[] = []
@@ -81,9 +89,18 @@ export class CombineDataSchemaCompiler
       return schemas
     }
 
-    const allOf: DSchema[] | undefined = compileSchemas('allOf', rawSchema.allOf)
-    const anyOf: DSchema[] | undefined = compileSchemas('anyOf', rawSchema.anyOf)
-    const oneOf: DSchema[] | undefined = compileSchemas('oneOf', rawSchema.oneOf)
+    const allOf: DSchema[] | undefined = compileSchemas(
+      'allOf',
+      rawSchema.allOf,
+    )
+    const anyOf: DSchema[] | undefined = compileSchemas(
+      'anyOf',
+      rawSchema.anyOf,
+    )
+    const oneOf: DSchema[] | undefined = compileSchemas(
+      'oneOf',
+      rawSchema.oneOf,
+    )
 
     // allOf, anyOf, oneOf 至少要设置一项有效值
     if (
@@ -93,8 +110,9 @@ export class CombineDataSchemaCompiler
     ) {
       return result.addError({
         constraint: 'type',
-        reason: 'CombineDataSchema must be set at least one valid value' +
-          ' of properties: `allOf`, `anyOf`, `oneOf`.'
+        reason:
+          'CombineDataSchema must be set at least one valid value' +
+          ' of properties: `allOf`, `anyOf`, `oneOf`.',
       })
     }
 
@@ -122,9 +140,11 @@ export class CombineDataSchemaCompiler
     }
 
     for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
-      if (schema[propertyName] == null || schema[propertyName].length <= 0) continue
-      json[propertyName] = (schema[propertyName] as DSchema[])
-        .map(item => this.context.toJSON(item))
+      if (schema[propertyName] == null || schema[propertyName].length <= 0)
+        continue
+      json[propertyName] = (schema[propertyName] as DSchema[]).map(item =>
+        this.context.toJSON(item),
+      )
     }
     return json
   }
@@ -133,6 +153,7 @@ export class CombineDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#parseJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),
@@ -141,8 +162,9 @@ export class CombineDataSchemaCompiler
 
     for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
       if (json[propertyName] == null || json[propertyName].length <= 0) continue
-      schema[propertyName] = json[propertyName]
-        .map((item: Record<string, unknown>) => this.context.parseJSON(item))
+      schema[propertyName] = json[
+        propertyName
+      ].map((item: Record<string, unknown>) => this.context.parseJSON(item))
     }
     return schema
   }

@@ -2,7 +2,6 @@ import fs from 'fs-extra'
 import path from 'path'
 import { ApiItemParser, ResolvedApiItemGroup } from '../src'
 
-
 // override
 function formatApiItemGroup(data: ResolvedApiItemGroup[]): any {
   const projectDir = path.resolve()
@@ -24,7 +23,6 @@ function formatApiItemGroup(data: ResolvedApiItemGroup[]): any {
   return JSON.parse(JSON.stringify(data, stringifyFilter))
 }
 
-
 describe('api-parser', function () {
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'api-parser')
   const kases = fs.readdirSync(caseRootDirectory)
@@ -33,7 +31,10 @@ describe('api-parser', function () {
   for (const apiConfigFilePath of kases) {
     const title = path.parse(apiConfigFilePath).name
     test(title, async function () {
-      const apiConfigFilepath = path.resolve(caseRootDirectory, apiConfigFilePath)
+      const apiConfigFilepath = path.resolve(
+        caseRootDirectory,
+        apiConfigFilePath,
+      )
       parser.scan(apiConfigFilepath, 'utf-8')
       const apiItemGroups = parser.collect()
       const data = formatApiItemGroup(apiItemGroups)

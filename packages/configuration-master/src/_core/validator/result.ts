@@ -5,7 +5,6 @@ import {
 import { stringify } from '../../_util/string-util'
 import { DataSchema } from '../schema'
 
-
 /**
  * 数据项的校验结果
  *
@@ -14,9 +13,10 @@ import { DataSchema } from '../schema'
  * @template DS   typeof <X>DataSchema
  */
 export class DataValidationResult<
-  T extends string, V,
-  DS extends DataSchema<T, V>,
-  > extends DataHandleResult<V> {
+  T extends string,
+  V,
+  DS extends DataSchema<T, V>
+> extends DataHandleResult<V> {
   public readonly _schema: DS
 
   public constructor(schema: DS) {
@@ -29,11 +29,15 @@ export class DataValidationResult<
    * @param data          待校验的数据
    * @param extraMessage  附加信息
    */
-  public typeConstraintException(data: any, extraMessage?: string): DataHandleResultException {
+  public typeConstraintException(
+    data: unknown,
+    extraMessage?: string,
+  ): DataHandleResultException {
     const schema = this._schema
     const a = /^[aeiou]/.test(schema.type) ? 'an' : 'a'
-    const reason = `expected ${ a } ${ schema.type }, but got (${ stringify(data) })`
-      + (extraMessage != null ? ': ' + extraMessage : '.')
+    const reason =
+      `expected ${a} ${schema.type}, but got (${stringify(data)})` +
+      (extraMessage != null ? ': ' + extraMessage : '.')
     return { constraint: 'type', reason }
   }
 }

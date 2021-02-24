@@ -1,6 +1,5 @@
 import { ChalkLogger, DEBUG, ERROR, FATAL, INFO, VERBOSE, WARN } from '../src'
 
-
 describe('ChalkLogger', function () {
   test('setName and setBaseName', function () {
     const logger = new ChalkLogger({ name: 'basename' })

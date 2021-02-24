@@ -14,7 +14,6 @@ import {
 } from '../option'
 import { RestfulApiInitContext, createRestfulApiInitContext } from './context'
 
-
 interface SubCommandOptions extends GlobalCommandOptions {
   /**
    * Pass to plop
@@ -22,56 +21,65 @@ interface SubCommandOptions extends GlobalCommandOptions {
   readonly plopBypass: string[]
 }
 
-
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
   plopBypass: [],
 }
 
-
-export type SubCommandInitOptions = SubCommandOptions & CommandConfigurationFlatOpts
-
+export type SubCommandInitOptions = SubCommandOptions &
+  CommandConfigurationFlatOpts
 
 /**
  * create Sub-command: init
  */
-export const createSubCommandInit: SubCommandCreator<SubCommandInitOptions> =
-  function (
-    handle?: SubCommandProcessor<SubCommandInitOptions>,
-    commandName = 'init',
-    aliases: string[] = ['i'],
-  ): Command {
-    const command = new Command()
+export const createSubCommandInit: SubCommandCreator<SubCommandInitOptions> = function (
+  handle?: SubCommandProcessor<SubCommandInitOptions>,
+  commandName = 'init',
+  aliases: string[] = ['i'],
+): Command {
+  const command = new Command()
 
-    command
-      .name(commandName)
-      .aliases(aliases)
-      .arguments('<workspace>')
-      .option('--plop-bypass <plopBypass>', 'bypass array to plop', (val, acc: string[]) => acc.concat(val), [])
-      .action(async function ([_workspaceDir], options: SubCommandOptions) {
-        logger.setName(commandName)
+  command
+    .name(commandName)
+    .aliases(aliases)
+    .arguments('<workspace>')
+    .option(
+      '--plop-bypass <plopBypass>',
+      'bypass array to plop',
+      (val, acc: string[]) => acc.concat(val),
+      [],
+    )
+    .action(async function ([_workspaceDir], options: SubCommandOptions) {
+      logger.setName(commandName)
 
-        const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
-          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+      const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
+        packageName,
+        commandName,
+        __defaultCommandOptions,
+        _workspaceDir,
+        options,
+      )
 
-        // resolve plopBypass
-        const plopBypass: string[] = cover<string[]>(
-          defaultOptions.plopBypass, options.plopBypass, isNotEmptyArray)
-        logger.debug('plopBypass:', plopBypass)
+      // resolve plopBypass
+      const plopBypass: string[] = cover<string[]>(
+        defaultOptions.plopBypass,
+        options.plopBypass,
+        isNotEmptyArray,
+      )
+      logger.debug('plopBypass:', plopBypass)
 
-        const resolvedOptions: SubCommandInitOptions = {
-          ...defaultOptions,
-          plopBypass,
-        }
+      const resolvedOptions: SubCommandInitOptions = {
+        ...defaultOptions,
+        plopBypass,
+      }
 
-        if (handle != null) {
-          await handle(resolvedOptions)
-        }
-      })
+      if (handle != null) {
+        await handle(resolvedOptions)
+      }
+    })
 
-    return command
-  }
-
+  return command
+}
 
 /**
  * Create RestfulApiInitContext

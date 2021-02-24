@@ -11,12 +11,10 @@ import {
   RawNullDataSchema as RDS,
 } from '../schema/null'
 
-
 /**
  * NullDataSchema 编译结果的数据类型
  */
 export type NullDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
 
 /**
  * 布尔类型的模式的编译器
@@ -24,7 +22,6 @@ export type NullDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 export class NullDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**

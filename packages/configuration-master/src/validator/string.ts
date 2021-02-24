@@ -24,25 +24,25 @@ import {
   StringTransformType,
 } from '../schema/string'
 
-
 /**
  * StringDataSchema 校验结果的数据类型
  */
 export type StringDataValidationResult = DataValidationResult<T, V, DS>
 
-
 /**
  * 字符串类型的校验器
  */
 // eslint-disable-next-line max-len
-export class StringDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
+export class StringDataValidator
+  extends BaseDataValidator<T, V, DS>
+  implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
    * 包装 StringDataSchema 的实例，使其具备校验给定数据是否为合法字符串的能力
    * @param data
    */
-  public validate(data: any): StringDataValidationResult {
+  public validate(data: unknown): StringDataValidationResult {
     const { schema } = this
     const result: StringDataValidationResult = super.validate(data)
     let value = result.value
@@ -90,7 +90,9 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.minLength != null && schema.minLength > value.length) {
       return result.addError({
         constraint: 'minLength',
-        reason: `minLength expected is ${ schema.minLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
+        reason: `minLength expected is ${
+          schema.minLength
+        }, but got value (${stringify(value)}) with length (${value.length}).`,
       })
     }
 
@@ -98,7 +100,9 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.maxLength != null && schema.maxLength < value.length) {
       return result.addError({
         constraint: 'maxLength',
-        reason: `maxLength expected is ${ schema.maxLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
+        reason: `maxLength expected is ${
+          schema.maxLength
+        }, but got value (${stringify(value)}) with length (${value.length}).`,
       })
     }
 
@@ -106,7 +110,9 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.pattern != null && !schema.pattern.test(value)) {
       return result.addError({
         constraint: 'pattern',
-        reason: `expected value pattern is (${ stringify(schema.pattern.source) }), but got (${ stringify(value) }).`
+        reason: `expected value pattern is (${stringify(
+          schema.pattern.source,
+        )}), but got (${stringify(value)}).`,
       })
     }
 
@@ -116,7 +122,11 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
       for (const format of schema.format) {
         const test = () => {
           // check if the full-date is legal
-          const testFullDate = (year: number, month: number, day: number): boolean => {
+          const testFullDate = (
+            year: number,
+            month: number,
+            day: number,
+          ): boolean => {
             if (day <= 28) return true
             if (month !== 2) {
               if (day <= 30) return true
@@ -125,7 +135,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
             if (day > 29) return false
 
             // check leap year for date YYYY-02-29
-            return (year & 3) ? false : (year % 100 === 0 ? year % 400 === 0 : true)
+            return year & 3 ? false : year % 100 === 0 ? year % 400 === 0 : true
           }
 
           switch (format) {
@@ -171,7 +181,8 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
               const day = Number.parseInt(match[3])
               return testFullDate(year, month, day)
             }
-            default: return false
+            default:
+              return false
           }
         }
 
@@ -182,9 +193,10 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
         }
       }
       if (!valid) {
-        const reason = schema.format.length > 1
-          ? `not matched any format in ${ stringify(schema.format) }`
-          : `not matched \`${ schema.format }\``
+        const reason =
+          schema.format.length > 1
+            ? `not matched any format in ${stringify(schema.format)}`
+            : `not matched \`${schema.format}\``
         return result.addError({
           constraint: 'format',
           reason,
@@ -193,10 +205,16 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     }
 
     // 检查枚举值
-    if (schema.enum != null && schema.enum.length > 0 && schema.enum.indexOf(value) < 0) {
+    if (
+      schema.enum != null &&
+      schema.enum.length > 0 &&
+      schema.enum.indexOf(value) < 0
+    ) {
       return result.addError({
         constraint: 'enum',
-        reason: `expected value should in the ${ stringify(schema.enum) }, but got (${ stringify(value) }).`
+        reason: `expected value should in the ${stringify(
+          schema.enum,
+        )}, but got (${stringify(value)}).`,
       })
     }
 
@@ -208,19 +226,22 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
    * override method
    * @see DataValidator#checkType
    */
-  public checkType(data: any): data is V {
+  public checkType(data: unknown): data is V {
     return isString(data)
   }
 }
 
-
 /**
  * 字符串类型的校验器的工厂对象实例
  */
-export class StringDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
+export class StringDataValidatorFactory extends BaseDataValidatorFactory<
+  T,
+  V,
+  DS
+> {
   public readonly type: T = T
 
-  public create(schema: DS) {
+  public create(schema: DS): StringDataValidator {
     return new StringDataValidator(schema, this.context)
   }
 }

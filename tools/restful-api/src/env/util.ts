@@ -10,7 +10,6 @@ import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import { configRootDir } from './constant'
 import { logger } from './logger'
 
-
 /**
  * Calc absolute path of configs
  * @param filePath
@@ -18,7 +17,6 @@ import { logger } from './logger'
 export function calcConfigFilePath(...filePath: string[]): string {
   return path.resolve(configRootDir, ...filePath)
 }
-
 
 /**
  * Load JSON-Schema of Configuration
@@ -29,12 +27,11 @@ export function loadConfigSchema(
   configurationMaster: ConfigurationMaster,
   schemaName: string,
 ): any {
-  const schemaPath: string = calcConfigFilePath(`${ schemaName }-schema.json`)
+  const schemaPath: string = calcConfigFilePath(`${schemaName}-schema.json`)
   const schemaContent = fs.readJSONSync(schemaPath)
   const schema = configurationMaster.parseJSON(schemaContent)
   return schema
 }
-
 
 /**
  * Load config
@@ -47,12 +44,12 @@ export function loadConfigSchema(
  *  - preParse      preprocessor of config file
  */
 export function loadContextConfig<R, T>(params: {
-  configurationMaster: ConfigurationMaster,
-  schema: DSchema,
-  configPath: string,
-  encoding: string,
-  preprocess?: (json: any) => R,
-  fallbackData?: any,
+  configurationMaster: ConfigurationMaster
+  schema: DSchema
+  configPath: string
+  encoding: string
+  preprocess?: (json: any) => R
+  fallbackData?: any
 }): T | never {
   let json: R
   if (params.fallbackData == null) {
@@ -73,8 +70,9 @@ export function loadContextConfig<R, T>(params: {
         break
       default:
         throw new Error(
-          `Unsupported file format, filePath(${ params.configPath })`
-          + ' should be a file in json or yaml format with a suffix of `.json` / `.yml` / `.yaml`')
+          `Unsupported file format, filePath(${params.configPath})` +
+            ' should be a file in json or yaml format with a suffix of `.json` / `.yml` / `.yaml`',
+        )
     }
   } else {
     json = params.fallbackData!
@@ -88,10 +86,15 @@ export function loadContextConfig<R, T>(params: {
   // parse config
   const result = configurationMaster.validate(params.schema, json)
   if (result.hasError) {
-    throw new Error(`Bad data of \`${ params.configPath }\` ${ result.errorSummary }`)
+    throw new Error(
+      `Bad data of \`${params.configPath}\` ${result.errorSummary}`,
+    )
   }
   if (result.hasWarning) {
-    logger.warn(`[loadContextConfig ${ params.configPath }]`, result.warningSummary)
+    logger.warn(
+      `[loadContextConfig ${params.configPath}]`,
+      result.warningSummary,
+    )
   }
   return result.value
 }

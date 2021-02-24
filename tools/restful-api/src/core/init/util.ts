@@ -7,7 +7,6 @@ import { templateRootDir } from '../../env/constant'
 import { logger } from '../../env/logger'
 import { RestfulApiInitContext } from './context'
 
-
 /**
  * Render handlebar boilerplates
  * @param context
@@ -23,17 +22,19 @@ export async function renderTemplates(
   if (plopBypass.length > 0) {
     templateName = plopBypass.shift()!
   } else {
-    templateName = (await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'templateName',
-        default: availableTemplates[0],
-        message: 'Which mock server template preferred?',
-        choices: availableTemplates,
-        filter: x => toLowerCase(x).trim(),
-        transformer: (x: string) => toLowerCase(x).trim(),
-      },
-    ])).templateName
+    templateName = (
+      await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'templateName',
+          default: availableTemplates[0],
+          message: 'Which mock server template preferred?',
+          choices: availableTemplates,
+          filter: x => toLowerCase(x).trim(),
+          transformer: (x: string) => toLowerCase(x).trim(),
+        },
+      ])
+    ).templateName
   }
 
   const templateDir = path.join(templateRootDir, templateName)
@@ -42,7 +43,10 @@ export async function renderTemplates(
   logger.debug('templateDir:', templateDir)
   logger.debug('templateConfig:', templateConfig)
 
-  const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
+  const plop = nodePlop(templateConfig, {
+    force: false,
+    destBasePath: context.workspace,
+  })
 
   // get prompts length to calculate the number of bypass parameters consumed
   let bypassForPlopConfigCount = 0
@@ -59,5 +63,7 @@ export async function renderTemplates(
   const bypassForPlopConfig = plopBypass.splice(0, bypassForPlopConfigCount)
   logger.debug('bypassForPlopConfig:', bypassForPlopConfig)
 
-  await runPlop(plop, logger, bypassForPlopConfig, { workspace: context.workspace })
+  await runPlop(plop, logger, bypassForPlopConfig, {
+    workspace: context.workspace,
+  })
 }

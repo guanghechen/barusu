@@ -7,7 +7,6 @@ import {
   performCharacterStatistics,
 } from '../src'
 
-
 /**
  * load content from absoluteFilepath
  * @param absoluteFilepath
@@ -17,7 +16,6 @@ export async function loadContent(absoluteFilepath: string): Promise<string> {
   return content
 }
 
-
 describe('util', function () {
   const rootDir = path.resolve(__dirname, 'cases/files')
   const filenames = globby.sync('*', {
@@ -25,7 +23,9 @@ describe('util', function () {
     onlyFiles: true,
     expandDirectories: false,
   })
-  const filepaths: string[] = filenames.map(p => path.resolve(rootDir, p)).sort()
+  const filepaths: string[] = filenames
+    .map(p => path.resolve(rootDir, p))
+    .sort()
 
   describe('calcCharacterStat', function () {
     for (const filepath of filepaths) {
@@ -47,8 +47,12 @@ describe('util', function () {
         const content: string = await loadContent(filepath)
         const detailMap = performCharacterStatistics(content)
 
-        expect(formatCharacterStat(calcCharacterStat(detailMap, 10, false))).toMatchSnapshot()
-        expect(formatCharacterStat(calcCharacterStat(detailMap, 10, true))).toMatchSnapshot()
+        expect(
+          formatCharacterStat(calcCharacterStat(detailMap, 10, false)),
+        ).toMatchSnapshot()
+        expect(
+          formatCharacterStat(calcCharacterStat(detailMap, 10, true)),
+        ).toMatchSnapshot()
       })
     }
   })

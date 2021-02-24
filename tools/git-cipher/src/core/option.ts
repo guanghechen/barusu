@@ -13,7 +13,6 @@ import {
 } from '@barusu/util-option'
 import { logger } from '../env/logger'
 
-
 /**
  * Global command options
  */
@@ -70,7 +69,6 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
   maxPasswordLength: number
 }
 
-
 /**
  * Default value of global options
  */
@@ -87,7 +85,6 @@ export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
   maxPasswordLength: 100,
 }
 
-
 /**
  *
  * @param flatOpts
@@ -100,68 +97,111 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   defaultOptions: C,
   workspaceDir: string,
   options: C & GlobalCommandOptions,
-  strategies: Partial<Record<keyof (C & GlobalCommandOptions), MergeStrategy>> = {},
+  strategies: Partial<
+    Record<keyof (C & GlobalCommandOptions), MergeStrategy>
+  > = {},
 ): C & GlobalCommandOptions & CommandConfigurationFlatOpts {
   type R = C & GlobalCommandOptions & CommandConfigurationFlatOpts
   const resolvedDefaultOptions: R = resolveCommandConfigurationOptions<
-    C & GlobalCommandOptions, C & GlobalCommandOptions>(
-      logger,
-      commandName,
-      subCommandName,
-      { ...__defaultGlobalCommandOptions, ...defaultOptions },
-      workspaceDir,
-      options,
-      strategies
-    )
+    C & GlobalCommandOptions,
+    C & GlobalCommandOptions
+  >(
+    logger,
+    commandName,
+    subCommandName,
+    { ...__defaultGlobalCommandOptions, ...defaultOptions },
+    workspaceDir,
+    options,
+    strategies,
+  )
 
   // resolve encoding
   const encoding: string = cover<string>(
-    resolvedDefaultOptions.encoding, options.encoding, isNotEmptyString)
+    resolvedDefaultOptions.encoding,
+    options.encoding,
+    isNotEmptyString,
+  )
   logger.debug('encoding:', encoding)
 
   // resolve secretFilepath
-  const secretFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
-    resolvedDefaultOptions.secretFilepath, options.secretFilepath, isNotEmptyString))
+  const secretFilepath: string = absoluteOfWorkspace(
+    workspaceDir,
+    cover<string>(
+      resolvedDefaultOptions.secretFilepath,
+      options.secretFilepath,
+      isNotEmptyString,
+    ),
+  )
   logger.debug('secretFilepath:', secretFilepath)
 
   // resolve secretFileEncoding
   const secretFileEncoding: string = cover<string>(
-    resolvedDefaultOptions.secretFileEncoding, options.secretFileEncoding, isNotEmptyString)
+    resolvedDefaultOptions.secretFileEncoding,
+    options.secretFileEncoding,
+    isNotEmptyString,
+  )
   logger.debug('secretFileEncoding:', secretFileEncoding)
 
   // resolve indexFilepath
-  const indexFilepath: string = absoluteOfWorkspace(workspaceDir, cover<string>(
-    resolvedDefaultOptions.indexFilepath, options.indexFilepath, isNotEmptyString))
+  const indexFilepath: string = absoluteOfWorkspace(
+    workspaceDir,
+    cover<string>(
+      resolvedDefaultOptions.indexFilepath,
+      options.indexFilepath,
+      isNotEmptyString,
+    ),
+  )
   logger.debug('indexFilepath:', indexFilepath)
 
   // resolve indexFileEncoding
   const indexFileEncoding: string = cover<string>(
-    resolvedDefaultOptions.indexFileEncoding, options.indexFileEncoding, isNotEmptyString)
+    resolvedDefaultOptions.indexFileEncoding,
+    options.indexFileEncoding,
+    isNotEmptyString,
+  )
   logger.debug('indexFileEncoding:', indexFileEncoding)
 
   // resolve ciphertextRootDir
-  const ciphertextRootDir: string = absoluteOfWorkspace(workspaceDir, cover<string>(
-    resolvedDefaultOptions.ciphertextRootDir, options.ciphertextRootDir, isNotEmptyString))
+  const ciphertextRootDir: string = absoluteOfWorkspace(
+    workspaceDir,
+    cover<string>(
+      resolvedDefaultOptions.ciphertextRootDir,
+      options.ciphertextRootDir,
+      isNotEmptyString,
+    ),
+  )
   logger.debug('ciphertextRootDir:', ciphertextRootDir)
 
   // resolve plaintextRootDir
-  const plaintextRootDir: string = absoluteOfWorkspace(workspaceDir, cover<string>(
-    resolvedDefaultOptions.plaintextRootDir, options.plaintextRootDir, isNotEmptyString))
+  const plaintextRootDir: string = absoluteOfWorkspace(
+    workspaceDir,
+    cover<string>(
+      resolvedDefaultOptions.plaintextRootDir,
+      options.plaintextRootDir,
+      isNotEmptyString,
+    ),
+  )
   logger.debug('plaintextRootDir:', plaintextRootDir)
 
   // resolve showAsterisk
   const showAsterisk: boolean = cover<boolean>(
-    resolvedDefaultOptions.showAsterisk, convertToBoolean(options.showAsterisk))
+    resolvedDefaultOptions.showAsterisk,
+    convertToBoolean(options.showAsterisk),
+  )
   logger.debug('showAsterisk:', showAsterisk)
 
   // resolve minPasswordLength
   const minPasswordLength: number = cover<number>(
-    resolvedDefaultOptions.minPasswordLength, convertToNumber(options.minPasswordLength))
+    resolvedDefaultOptions.minPasswordLength,
+    convertToNumber(options.minPasswordLength),
+  )
   logger.debug('minPasswordLength:', minPasswordLength)
 
   // resolve maxPasswordLength
   const maxPasswordLength: number = cover<number>(
-    resolvedDefaultOptions.maxPasswordLength, convertToNumber(options.maxPasswordLength))
+    resolvedDefaultOptions.maxPasswordLength,
+    convertToNumber(options.maxPasswordLength),
+  )
   logger.debug('maxPasswordLength:', maxPasswordLength)
 
   return {

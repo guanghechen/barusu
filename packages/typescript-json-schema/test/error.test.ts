@@ -1,7 +1,6 @@
 import { assert } from 'chai'
 import { exec, getDefaultArgs } from '../src'
 
-
 describe('error', () => {
   it('error-check', () => {
     assert.throws(
@@ -10,7 +9,7 @@ describe('error', () => {
         exec('test/programs/dates/', 'MyObject', getDefaultArgs())
       },
       Error,
-      'No output definition. Probably caused by errors prior to this?'
+      'No output definition. Probably caused by errors prior to this?',
     )
   })
 })

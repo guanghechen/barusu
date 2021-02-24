@@ -12,11 +12,14 @@ import {
   createAsyncStateItem,
 } from '../src'
 
-
 describe('state', function () {
   test('createAsyncStateItem', function () {
-    const emptyState: AsyncStateItem<{ username: string }> = createAsyncStateItem()
-    const state: AsyncStateItem<{ username: string }> = createAsyncStateItem({ username: 'waw' })
+    const emptyState: AsyncStateItem<{
+      username: string
+    }> = createAsyncStateItem()
+    const state: AsyncStateItem<{ username: string }> = createAsyncStateItem({
+      username: 'waw',
+    })
 
     expect(emptyState).toEqual({
       loading: false,
@@ -32,12 +35,11 @@ describe('state', function () {
   })
 })
 
-
 describe('creator', function () {
   test('createAsyncActionCreator', function () {
     type T = 'fetch-user'
     type RP = { username: string }
-    type SP = { username: string, age: number }
+    type SP = { username: string; age: number }
     type FP = AsyncFailureResponse
     type As = AsyncActions<T, RP, SP, FP>
 
@@ -53,7 +55,9 @@ describe('creator', function () {
         payload: { username: 'alice' },
       })
 
-      expect(fetchUserActionCreators.success({ username: 'alice', age: 32 })).toEqual({
+      expect(
+        fetchUserActionCreators.success({ username: 'alice', age: 32 }),
+      ).toEqual({
         type: 'fetch-user',
         status: AsyncActionStatus.SUCCEED,
         payload: { username: 'alice', age: 32 },
@@ -68,7 +72,7 @@ describe('creator', function () {
           // @ts-ignore
           // Extra argument will cause the Type Checking Error by ts
           extra: 'no',
-        })
+        }),
       ).toEqual({
         type: 'fetch-user',
         status: AsyncActionStatus.FAILED,
@@ -77,12 +81,11 @@ describe('creator', function () {
           message: 'Internal Server Error',
           debug: '`alice` cannot be accessible',
           extra: 'no',
-        }
+        },
       })
     }
   })
 })
-
 
 describe('reducer', function () {
   test('createAsyncActionReducer', function () {
@@ -103,28 +106,27 @@ describe('reducer', function () {
     ]
 
     for (const reducer of reducers) {
-      expect(
-        reducer.process(state, creators.request('world!'))
-      ).toEqual({
+      expect(reducer.process(state, creators.request('world!'))).toEqual({
         loading: true,
         data: 'hello',
         error: null,
       })
 
-      expect(
-        reducer.process(state, creators.success('world!'))
-      ).toEqual({
+      expect(reducer.process(state, creators.success('world!'))).toEqual({
         loading: false,
         data: 'world!',
         error: null,
       })
 
       expect(
-        reducer.process(state, creators.failure({
-          code: 500,
-          message: 'Internal Server Error',
-          debug: '`alice` cannot be accessible',
-        }))
+        reducer.process(
+          state,
+          creators.failure({
+            code: 500,
+            message: 'Internal Server Error',
+            debug: '`alice` cannot be accessible',
+          }),
+        ),
       ).toEqual({
         loading: false,
         data: 'hello',
@@ -135,12 +137,10 @@ describe('reducer', function () {
         },
       })
 
-      expect(
-        reducer.process(state, { type: 'waw' } as any)
-      ).toEqual(state)
+      expect(reducer.process(state, { type: 'waw' } as any)).toEqual(state)
 
       expect(
-        reducer.process(state, { type: actionType, status: 'waw' } as any)
+        reducer.process(state, { type: actionType, status: 'waw' } as any),
       ).toEqual(state)
     }
   })
@@ -152,32 +152,33 @@ describe('reducer', function () {
 
     type T = typeof actionType
     type S = typeof initialState
-    const actionReducer = createAsyncActionReducer<S, T, AsyncActions<T>>(actionType)
+    const actionReducer = createAsyncActionReducer<S, T, AsyncActions<T>>(
+      actionType,
+    )
     const reducer = assembleActionReducers<S, T>(initialState, [actionReducer])
 
     for (const state of [undefined, initialState]) {
-      expect(
-        reducer(state, creators.request('world!'))
-      ).toEqual({
+      expect(reducer(state, creators.request('world!'))).toEqual({
         loading: true,
         data: 'hello',
         error: null,
       })
 
-      expect(
-        reducer(state, creators.success('world!'))
-      ).toEqual({
+      expect(reducer(state, creators.success('world!'))).toEqual({
         loading: false,
         data: 'world!',
         error: null,
       })
 
       expect(
-        reducer(state, creators.failure({
-          code: 500,
-          message: 'Internal Server Error',
-          debug: '`alice` cannot be accessible',
-        }))
+        reducer(
+          state,
+          creators.failure({
+            code: 500,
+            message: 'Internal Server Error',
+            debug: '`alice` cannot be accessible',
+          }),
+        ),
       ).toEqual({
         loading: false,
         data: 'hello',
@@ -188,12 +189,10 @@ describe('reducer', function () {
         },
       })
 
-      expect(
-        reducer(state, { type: 'waw' } as any)
-      ).toEqual(initialState)
+      expect(reducer(state, { type: 'waw' } as any)).toEqual(initialState)
 
       expect(
-        reducer(state, { type: actionType, status: 'waw' } as any)
+        reducer(state, { type: actionType, status: 'waw' } as any),
       ).toEqual(initialState)
     }
   })

@@ -2,7 +2,6 @@ import ts from 'typescript'
 import { JsonSchemaContext } from '../schema-context'
 import { Definition, PrimitiveType } from '../types'
 
-
 /**
  * Get definition of enum type
  *
@@ -17,7 +16,10 @@ export function getEnumDefinition(
 ): void {
   const node = clazzType.getSymbol()!.getDeclarations()![0]
   const fullName = context.checker.typeToString(
-    clazzType, undefined, ts.TypeFormatFlags.UseFullyQualifiedType)
+    clazzType,
+    undefined,
+    ts.TypeFormatFlags.UseFullyQualifiedType,
+  )
   const members: ts.NodeArray<ts.EnumMember> =
     node.kind === ts.SyntaxKind.EnumDeclaration
       ? (node as ts.EnumDeclaration).members
@@ -57,7 +59,9 @@ export function getEnumDefinition(
       ) {
         addEnum('boolean', exp.kind === ts.SyntaxKind.TrueKeyword)
       } else {
-        console.warn(`initializer is expression for enum: ${ fullName }.${ caseLabel }`)
+        console.warn(
+          `initializer is expression for enum: ${fullName}.${caseLabel}`,
+        )
       }
     } else if (initial.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
       addEnum('string', initial.getText())
@@ -68,7 +72,7 @@ export function getEnumDefinition(
 
   if (enumTypes.length > 0) {
     // eslint-disable-next-line no-param-reassign
-    definition.type = (enumTypes.length === 1) ? enumTypes[0] : enumTypes
+    definition.type = enumTypes.length === 1 ? enumTypes[0] : enumTypes
   }
 
   if (enumValues.length > 0) {

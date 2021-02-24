@@ -3,7 +3,6 @@ import fs from 'fs-extra'
 import yaml from 'js-yaml'
 import path from 'path'
 
-
 /**
  * Check whether if the filepath is a file path.
  *
@@ -15,7 +14,6 @@ export async function isFile(filepath: string | null): Promise<boolean> {
   const stat = await fs.stat(filepath)
   return stat.isFile()
 }
-
 
 /**
  * Check whether if the filepath is a file path. (synchronizing)
@@ -29,7 +27,6 @@ export function isFileSync(filepath: string | null): boolean {
   return stat.isFile()
 }
 
-
 /**
  * Check whether if the dirpath is a directory path. (synchronizing)
  *
@@ -41,7 +38,6 @@ export function isDirectorySync(dirpath: string | null): boolean {
   const stat = fs.statSync(dirpath)
   return stat.isDirectory()
 }
-
 
 /**
  * Check whether if the dirPath is a non-existent path or empty folder.
@@ -58,7 +54,6 @@ export function isNonExistentOrEmpty(dirpath: string | null): boolean {
   return files.length <= 0
 }
 
-
 /**
  * If the give file path does not exist, then create it.
  * @param filepath  the give file path
@@ -67,17 +62,16 @@ export function isNonExistentOrEmpty(dirpath: string | null): boolean {
 export function mkdirsIfNotExists(
   filepath: string,
   isDir: boolean,
-  logger?: Logger
+  logger?: Logger,
 ): void {
   const dirPath = isDir ? filepath : path.dirname(filepath)
   if (fs.existsSync(dirPath)) return
 
   if (logger != null && logger.verbose != null) {
-    logger.verbose(`mkdirs: ${ dirPath }`)
+    logger.verbose(`mkdirs: ${dirPath}`)
   }
   fs.mkdirsSync(dirPath)
 }
-
 
 /**
  * Ensure critical filepath exists, otherwise, kill the process
@@ -87,16 +81,16 @@ export function mkdirsIfNotExists(
  */
 export async function ensureCriticalFilepathExists(
   filepath: string | null,
-  logger?: Logger
+  logger?: Logger,
 ): Promise<void | never> {
   let errMsg: string | null = null
 
   if (filepath == null) {
     errMsg = 'invalid path: null.'
   } else if (!fs.existsSync(filepath!)) {
-    errMsg = `${ filepath } is not found.`
+    errMsg = `${filepath} is not found.`
   } else if (!(await isFile(filepath))) {
-    errMsg = `${ filepath } is not a file.`
+    errMsg = `${filepath} is not a file.`
   }
 
   // print error and kill process
@@ -105,7 +99,6 @@ export async function ensureCriticalFilepathExists(
     process.exit(-1)
   }
 }
-
 
 /**
  * Ensure critical filepath exists, otherwise, kill the process (synchronizing)
@@ -115,16 +108,16 @@ export async function ensureCriticalFilepathExists(
  */
 export function ensureCriticalFilepathExistsSync(
   filepath: string | null,
-  logger?: Logger
+  logger?: Logger,
 ): void | never {
   let errMsg: string | null = null
 
   if (filepath == null) {
     errMsg = 'invalid path: null.'
   } else if (!fs.existsSync(filepath!)) {
-    errMsg = `${ filepath } is not found.`
-  } else if (!(isFileSync(filepath))) {
-    errMsg = `${ filepath } is not a file.`
+    errMsg = `${filepath} is not found.`
+  } else if (!isFileSync(filepath)) {
+    errMsg = `${filepath} is not a file.`
   }
 
   // print error and kill process
@@ -134,7 +127,6 @@ export function ensureCriticalFilepathExistsSync(
   }
 }
 
-
 /**
  * Load configuration file with format .json / .yml / .yaml
  *
@@ -143,7 +135,7 @@ export function ensureCriticalFilepathExistsSync(
  */
 export async function loadJsonOrYaml(
   filepath: string,
-  encoding = 'utf-8'
+  encoding = 'utf-8',
 ): Promise<unknown | never> {
   const extname = path.extname(filepath)
 
@@ -151,7 +143,7 @@ export async function loadJsonOrYaml(
   const loadContent = async (): Promise<string> => {
     if (__content != null) return __content
     if (!(await isFile(filepath))) {
-      throw new Error(`${ filepath } is an invalid file path`)
+      throw new Error(`${filepath} is an invalid file path`)
     }
     __content = fs.readFileSync(filepath, encoding)
     return __content
@@ -173,12 +165,12 @@ export async function loadJsonOrYaml(
       }
       break
     default:
-      throw new Error(`Only files in .json / .yml / .ymal format are supported. filepath(${ filepath }`)
+      throw new Error(
+        `Only files in .json / .yml / .ymal format are supported. filepath(${filepath}`,
+      )
   }
   return result
 }
-
-
 
 /**
  * Load configuration file with format .json / .yml / .yaml  (synchronizing)
@@ -186,14 +178,17 @@ export async function loadJsonOrYaml(
  * @param filepath
  * @param logger
  */
-export function loadJsonOrYamlSync(filepath: string, encoding = 'utf-8'): unknown | never {
+export function loadJsonOrYamlSync(
+  filepath: string,
+  encoding = 'utf-8',
+): unknown | never {
   const extname = path.extname(filepath)
 
   let __content: string | null = null
   const loadContent = (): string => {
     if (__content != null) return __content
     if (!isFileSync(filepath)) {
-      throw new Error(`${ filepath } is an invalid file path`)
+      throw new Error(`${filepath} is an invalid file path`)
     }
     __content = fs.readFileSync(filepath, encoding)
     return __content
@@ -215,11 +210,12 @@ export function loadJsonOrYamlSync(filepath: string, encoding = 'utf-8'): unknow
       }
       break
     default:
-      throw new Error(`Only files in .json / .yml / .ymal format are supported. filepath(${ filepath }`)
+      throw new Error(
+        `Only files in .json / .yml / .ymal format are supported. filepath(${filepath}`,
+      )
   }
   return result
 }
-
 
 /**
  * Collect all files under the directory
@@ -229,7 +225,7 @@ export function loadJsonOrYamlSync(filepath: string, encoding = 'utf-8'): unknow
  */
 export function collectAllFilesSync(
   dir: string,
-  predicate: ((p: string) => boolean) | null
+  predicate: ((p: string) => boolean) | null,
 ): string[] {
   const stat = fs.statSync(dir)
   const results: string[] = []

@@ -1,20 +1,28 @@
 import chalk, { Chalk } from 'chalk'
 
-
 export type Color = string | [number, number, number]
 
-
 const colorKeywords = new Set([
-  'black', 'red', 'green', 'yellow', 'blue',
-  'magenta', 'cyan', 'white', 'gray',
+  'black',
+  'red',
+  'green',
+  'yellow',
+  'blue',
+  'magenta',
+  'cyan',
+  'white',
+  'gray',
 ])
-
 
 const brightColorKeywords = new Set([
-  'redBright', 'greenBright', 'yellowBright', 'blueBright',
-  'magentaBright', 'cyanBright', 'whiteBright',
+  'redBright',
+  'greenBright',
+  'yellowBright',
+  'blueBright',
+  'magentaBright',
+  'cyanBright',
+  'whiteBright',
 ])
-
 
 export function colorToChalk(color: Color, fg: boolean): Chalk {
   if (typeof color === 'string') {
@@ -35,7 +43,6 @@ export function colorToChalk(color: Color, fg: boolean): Chalk {
     ? chalk.rgb(color[0], color[1], color[2])
     : chalk.bgRgb(color[0], color[1], color[2])
 }
-
 
 export class ColorfulChalk {
   public readonly fg: Chalk

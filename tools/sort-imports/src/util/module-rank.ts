@@ -12,34 +12,38 @@ export interface ModuleRankItem {
   rank: number
 }
 
-
 export const defaultModuleRankItems: ModuleRankItem[] = [
-  { // npm package
+  {
+    // npm package
     regex: /^[a-zA-Z\d][\w\-.]*/,
     rank: 1.1,
   },
-  { // npm scoped package
+  {
+    // npm scoped package
     regex: /^@[a-zA-Z\d][\w\-.]*\/[a-zA-Z\d][\w\-.]*/,
     rank: 1.2,
   },
-  { // paths alias
+  {
+    // paths alias
     regex: /^@\//,
     rank: 2.1,
   },
-  { // absolute path
+  {
+    // absolute path
     regex: /^(?:\/|[a-zA-Z]:)/,
     rank: 3.1,
   },
-  { // relative path (parent)
+  {
+    // relative path (parent)
     regex: /^[.]{2}[/\\][^\n]*/,
     rank: 3.2,
   },
-  { // relative path
+  {
+    // relative path
     regex: /^[.][/\\][^\n]*/,
     rank: 3.3,
-  }
+  },
 ]
-
 
 /**
  * Compare the two module paths and determine which one should be ranked first
@@ -50,7 +54,7 @@ export const defaultModuleRankItems: ModuleRankItem[] = [
 export function compareModulePath(
   p1: string,
   p2: string,
-  moduleItems: ModuleRankItem[]
+  moduleItems: ModuleRankItem[],
 ): number {
   if (p1 === p2) return 0
   let rankOfP1: number | null = null

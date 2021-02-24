@@ -1,7 +1,6 @@
 import { RawApiItem } from '../api-item/raw'
 import { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
 
-
 /**
  * 未经处理的，用户直接在配置文件中指定的 API 条目组
  *  - 子组中对应的未设置的项将继承父接口组中对应的项
@@ -103,7 +102,9 @@ export interface RawApiItemGroup {
    *              either an array format or an object format;
    *              if it is an object format, the key is the name of the entry
    */
-  subGroups?: RawApiItemGroup[] | { [name: string]: Omit<RawApiItemGroup, 'name'> }
+  subGroups?:
+    | RawApiItemGroup[]
+    | { [name: string]: Omit<RawApiItemGroup, 'name'> }
   /**
    * 接口组的接口内容
    * 既可为数组格式，也可为对象格式；若为对象格式，键值为条目的 `name`

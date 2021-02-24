@@ -4,7 +4,6 @@ import { Argument, parseArgument } from './util/argument'
 import { CommandError } from './util/error'
 import { Option } from './util/option'
 
-
 export class Command extends EventEmitter implements Command {
   public readonly parent: Command | null = null
   public readonly args: Argument[] = []
@@ -63,7 +62,7 @@ export class Command extends EventEmitter implements Command {
     if (alias === undefined) return self._aliases[0]
 
     if (alias === self._name) {
-      throw new Error('Command alias can\'t be the same as its name')
+      throw new Error("Command alias can't be the same as its name")
     }
 
     self._aliases.push(alias)
@@ -75,7 +74,7 @@ export class Command extends EventEmitter implements Command {
     const self = this
     if (aliases === undefined) return self._aliases
 
-    aliases.forEach((alias) => self.alias(alias))
+    aliases.forEach(alias => self.alias(alias))
     return self
   }
 
@@ -90,15 +89,14 @@ export class Command extends EventEmitter implements Command {
     self._version = version
 
     // register version option
-    self._registerOption(
-      optionFlags, false, optionDescription, this._version)
+    self._registerOption(optionFlags, false, optionDescription, this._version)
     return self
   }
 
   // @override
   public description(
     description?: string,
-    argsDescription?: Record<string, string>
+    argsDescription?: Record<string, string>,
   ): string | this {
     const self = this
     if (description === undefined && argsDescription === undefined) {
@@ -116,9 +114,11 @@ export class Command extends EventEmitter implements Command {
     if (usage === undefined) {
       if (self._usage != null) return self._usage
       const args = this.args.map(arg => arg.friendlyDesc)
-      return '[options]' +
+      return (
+        '[options]' +
         (this.commands.length > 0 ? ' [command]' : '') +
         (args.length > 0 ? ' ' + args.join(' ') : '')
+      )
     }
     self._usage = usage
     return self
@@ -132,7 +132,9 @@ export class Command extends EventEmitter implements Command {
   ): Command | this {
     const self = this
 
-    let desc: string | null | undefined = execOptsOrExecDesc as string | undefined
+    let desc: string | null | undefined = execOptsOrExecDesc as
+      | string
+      | undefined
     let opts: CommandExecOption = execOpts || {}
     if (typeof desc === 'object' && desc !== null) {
       opts = desc
@@ -143,7 +145,7 @@ export class Command extends EventEmitter implements Command {
     const subCommand = new Command(self)
     subCommand.name(args.shift())
     subCommand._consumeCommandArguments(args)
-    subCommand._visible = !Boolean(opts.hidden)
+    subCommand._visible = !opts.hidden
     subCommand._executableFile = opts.executableFile || null
 
     if (opts.isDefault) {
@@ -164,7 +166,8 @@ export class Command extends EventEmitter implements Command {
       this._exit(
         1,
         'command.addCommand',
-        'Command passed to .addCommand() must have a name')
+        'Command passed to .addCommand() must have a name',
+      )
     }
 
     const self = this
@@ -178,7 +181,8 @@ export class Command extends EventEmitter implements Command {
           self._exit(
             1,
             'command.addCommand',
-            `Must specify executableFile for deeply nested executable: ${ cmd.name() }`)
+            `Must specify executableFile for deeply nested executable: ${cmd.name()}`,
+          )
         }
         checkExplicitNames(cmd.commands)
       }
@@ -191,11 +195,11 @@ export class Command extends EventEmitter implements Command {
 
     if (opts.hidden) {
       // eslint-disable-next-line no-param-reassign
-      cmd._visible = false  // modifying passed command due to existing implementation
+      cmd._visible = false // modifying passed command due to existing implementation
     }
 
     // eslint-disable-next-line no-param-reassign
-    ; (cmd as any).parent = self
+    ;(cmd as any).parent = self
     self.commands.push(cmd)
     return self
   }
@@ -216,7 +220,12 @@ export class Command extends EventEmitter implements Command {
   ): this {
     const self = this
     self._registerOption<T>(
-      flags, false, description, defaultValue, processOptionValue)
+      flags,
+      false,
+      description,
+      defaultValue,
+      processOptionValue,
+    )
     return self
   }
 
@@ -229,7 +238,12 @@ export class Command extends EventEmitter implements Command {
   ): this {
     const self = this
     self._registerOption<T>(
-      flags, true, description, defaultValue, processOptionValue)
+      flags,
+      true,
+      description,
+      defaultValue,
+      processOptionValue,
+    )
     return self
   }
 
@@ -241,13 +255,16 @@ export class Command extends EventEmitter implements Command {
   }
 
   // @override
-  public parseOptions(argv: string[]): { operands: string[], unknown: string[] } {
+  public parseOptions(
+    argv: string[],
+  ): { operands: string[]; unknown: string[] } {
     const self = this
     const args = argv.slice()
     const operands: string[] = []
     const unknown: string[] = []
 
-    const isPotentialOption = (arg: string): boolean => arg.length > 1 && arg[0] === '-'
+    const isPotentialOption = (arg: string): boolean =>
+      arg.length > 1 && arg[0] === '-'
 
     let dest = operands
     while (args.length > 0) {
@@ -268,7 +285,7 @@ export class Command extends EventEmitter implements Command {
           if (option.required) {
             const value = args.shift()
             if (value === undefined) self._missingOptionArgument(option)
-            self.emit(`option:${ option.name }`, value)
+            self.emit(`option:${option.name}`, value)
           } else if (option.optional) {
             let value = null
             // historical behavior is optional value is following arg unless
@@ -276,9 +293,10 @@ export class Command extends EventEmitter implements Command {
             if (args.length > 0 && !isPotentialOption(args[0])) {
               value = args.shift()
             }
-            this.emit(`option:${ option.name }`, value)
-          } else { // boolean flag
-            this.emit(`option:${ option.name }`)
+            this.emit(`option:${option.name}`, value)
+          } else {
+            // boolean flag
+            this.emit(`option:${option.name}`)
           }
           continue
         }
@@ -286,16 +304,16 @@ export class Command extends EventEmitter implements Command {
 
       // Look for combo options following single dash, eat first one if known.
       if (arg.length > 2 && arg[0] === '-' && arg[1] !== '-') {
-        const option = this._findOption(`-${ arg[1] }`)
+        const option = this._findOption(`-${arg[1]}`)
         if (option) {
           if (option.required || option.optional) {
             // option with value following in same argument
-            this.emit(`option:${ option.name }`, arg.slice(2))
+            this.emit(`option:${option.name}`, arg.slice(2))
           } else {
             // boolean option, emit and put back remainder of arg for further
             // processing
-            this.emit(`option:${ option.name }`)
-            args.unshift(`-${ arg.slice(2) }`)
+            this.emit(`option:${option.name}`)
+            args.unshift(`-${arg.slice(2)}`)
           }
           continue
         }
@@ -306,7 +324,7 @@ export class Command extends EventEmitter implements Command {
         const index = arg.indexOf('=')
         const option = this._findOption(arg.slice(0, index))
         if (option != null && (option.required || option.optional)) {
-          this.emit(`option:${ option.name }`, arg.slice(index + 1))
+          this.emit(`option:${option.name}`, arg.slice(index + 1))
           continue
         }
       }
@@ -359,7 +377,7 @@ export class Command extends EventEmitter implements Command {
         self.opts(),
 
         // Extra arguments so available too.
-        args.slice(expectedArgsCount)
+        args.slice(expectedArgsCount),
       ]
 
       const actionResult = fn.apply(this, actionArgs)
@@ -406,7 +424,9 @@ export class Command extends EventEmitter implements Command {
         userArgs = argv.slice(0)
         break
       default:
-        throw new Error(`unexpected parse option { from: '${parseOptions.from}' }`)
+        throw new Error(
+          `unexpected parse option { from: '${parseOptions.from}' }`,
+        )
     }
 
     if (scriptPath != null && process.mainModule) {
@@ -427,7 +447,7 @@ export class Command extends EventEmitter implements Command {
     if (exitCallback) {
       self._exitCallback = exitCallback
     } else {
-      self._exitCallback = (err) => {
+      self._exitCallback = err => {
         if (err.code !== 'commander.executeSubCommandAsync') {
           throw err
         } else {
@@ -443,15 +463,15 @@ export class Command extends EventEmitter implements Command {
    */
   protected _preparedCommandsDetails(): [string, string][] {
     const commandDetails = this.commands
-      .filter((cmd) => cmd._visible)
+      .filter(cmd => cmd._visible)
       .map((cmd): [string, string] => {
-        const args = cmd.args.map((arg) => arg.friendlyDesc).join(' ')
+        const args = cmd.args.map(arg => arg.friendlyDesc).join(' ')
         return [
           cmd._name +
-          (cmd._aliases[0] ? '|' + cmd._aliases[0] : '') +
-          (cmd.options.length ? ' [options]' : '') +
-          (args ? ' ' + args : ''),
-          cmd._description
+            (cmd._aliases[0] ? '|' + cmd._aliases[0] : '') +
+            (cmd.options.length ? ' [options]' : '') +
+            (args ? ' ' + args : ''),
+          cmd._description,
         ]
       })
     return commandDetails
@@ -473,15 +493,14 @@ export class Command extends EventEmitter implements Command {
     processOptionValue?: OptionValueProcessor<T> | RegExp,
   ): Option {
     const self = this
-    const option = new Option<T>(
-      flags, mandatory, description, defaultValue)
+    const option = new Option<T>(flags, mandatory, description, defaultValue)
 
     let fn: OptionValueProcessor<T> | null = null
     if (processOptionValue instanceof RegExp) {
       const regex: RegExp = processOptionValue
       fn = (newVal, oldVal) => {
         const m = regex.exec(newVal)
-        return m == null ? oldVal : m[0] as unknown as T
+        return m == null ? oldVal : ((m[0] as unknown) as T)
       }
     } else if (processOptionValue instanceof Function) {
       fn = processOptionValue
@@ -489,13 +508,19 @@ export class Command extends EventEmitter implements Command {
 
     // preassign default value for --no-*, [optional], <required>,
     // or plain flag if boolean value
-    if (option.negate || option.optional || option.required || typeof defaultValue === 'boolean') {
+    if (
+      option.negate ||
+      option.optional ||
+      option.required ||
+      typeof defaultValue === 'boolean'
+    ) {
       // when --no-foo we make sure default is true,
       // unless a --foo option is already defined
       if (option.negate) {
         // eslint-disable-next-line no-param-reassign
-        defaultValue = (
-          option.defaultValue === undefined ? true : option.defaultValue) as unknown as T
+        defaultValue = ((option.defaultValue === undefined
+          ? true
+          : option.defaultValue) as unknown) as T
       }
 
       // preassign only if we have a default
@@ -522,12 +547,14 @@ export class Command extends EventEmitter implements Command {
         typeof option.value === 'undefined'
       ) {
         if (val == null) {
-          option.value = (option.negate ? false : (defaultValue || true)) as unknown as T
+          option.value = ((option.negate
+            ? false
+            : defaultValue || true) as unknown) as T
         } else {
-          option.value = val as unknown as T
+          option.value = (val as unknown) as T
         }
       } else {
-        option.value = (option.negate ? false : defaultValue) as unknown as T
+        option.value = ((option.negate ? false : defaultValue) as unknown) as T
       }
     })
 
@@ -540,7 +567,9 @@ export class Command extends EventEmitter implements Command {
    * @param name
    */
   protected _findCommand(name: string): Command | undefined {
-    return this.commands.find(cmd => cmd._name === name || cmd._aliases.includes(name))
+    return this.commands.find(
+      cmd => cmd._name === name || cmd._aliases.includes(name),
+    )
   }
 
   /**
@@ -561,8 +590,9 @@ export class Command extends EventEmitter implements Command {
       partCommands.unshift(parentCmd.name())
     }
     const fullCommand = partCommands.join(' ')
-    const message = `error: unknown command '${ this._rawArgs[0] }'.` +
-      ` See '${ fullCommand } ${ this._helpLongFlag }'.`
+    const message =
+      `error: unknown command '${this._rawArgs[0]}'.` +
+      ` See '${fullCommand} ${this._helpLongFlag}'.`
     console.error(message)
     this._exit(1, 'command._unknownCommand', message)
   }
@@ -574,7 +604,7 @@ export class Command extends EventEmitter implements Command {
   protected _unknownOption(flags: string): void | never {
     const self = this
     if (self._allowUnknownOption) return
-    const message = `error: unknown option '${ flags }'`
+    const message = `error: unknown option '${flags}'`
     console.error(message)
     self._exit(1, 'command._unknownOption', message)
   }
@@ -583,7 +613,7 @@ export class Command extends EventEmitter implements Command {
    * Argument `name` is missing.
    */
   protected _missingCommandArgument(name: string): never {
-    const message = `error: missing required argument '${ name }'`
+    const message = `error: missing required argument '${name}'`
     console.error(message)
     this._exit(1, 'command._missingCommandArgument', message)
   }
@@ -594,7 +624,7 @@ export class Command extends EventEmitter implements Command {
    * @param option
    */
   protected _missingOptionArgument(option: Option): never {
-    const message = `error: option '${ option.flags }' argument missing`
+    const message = `error: option '${option.flags}' argument missing`
     console.error(message)
     this._exit(1, 'command._missingOptionArgument', message)
   }
@@ -609,7 +639,6 @@ export class Command extends EventEmitter implements Command {
     console.error(message)
     this._exit(1, 'command._missingMandatoryOptionValue', message)
   }
-
 
   /**
    * Parse expected `args`.
@@ -634,7 +663,8 @@ export class Command extends EventEmitter implements Command {
         throw new CommandError(
           -1,
           'command._consumeCommandArguments',
-          `Only the last argument can be variadic '${ arg.name }'`)
+          `Only the last argument can be variadic '${arg.name}'`,
+        )
       }
     }
   }
@@ -655,20 +685,20 @@ export class Command extends EventEmitter implements Command {
   }
 }
 
-
 /**
  * Process option value
  * @param newVal  new option value
  * @param oldVal  old option value
  */
-export type OptionValueProcessor<T> = (newVal: string, oldVal?: T) => T | undefined
-
+export type OptionValueProcessor<T> = (
+  newVal: string,
+  oldVal?: T,
+) => T | undefined
 
 /**
  * Callback for handling the exiting event
  */
 export type CommandExitEventCallback = (error: CommandError) => void | never
-
 
 /**
  *
@@ -679,7 +709,6 @@ export interface CommandParseOption {
    */
   from?: string
 }
-
 
 /**
  * Configuration options that affect Command execution
@@ -699,7 +728,6 @@ export interface CommandExecOption {
   isDefault?: boolean
 }
 
-
 /**
  * Callback for handling the command
  *
@@ -712,7 +740,6 @@ export type CommandActionCallback = (
   options: Record<string, unknown>,
   extra: string[],
 ) => void | Promise<void> | never
-
 
 export interface Command extends EventEmitter {
   readonly parent: Command | null
@@ -751,7 +778,7 @@ export interface Command extends EventEmitter {
   version(
     version: string,
     optionFlags?: string,
-    optionDescription?: string
+    optionDescription?: string,
   ): this
 
   /**
@@ -760,7 +787,7 @@ export interface Command extends EventEmitter {
   description(): string
   description(
     description: string,
-    argsDescription?: Record<string, string>
+    argsDescription?: Record<string, string>,
   ): this
 
   /**
@@ -900,7 +927,7 @@ export interface Command extends EventEmitter {
    *
    * @param argv
    */
-  parseOptions(argv: string[]): { operands: string[], unknown: string[] }
+  parseOptions(argv: string[]): { operands: string[]; unknown: string[] }
 
   /**
    * Return an object containing options as key-value pairs

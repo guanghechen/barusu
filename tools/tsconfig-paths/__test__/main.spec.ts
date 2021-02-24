@@ -3,12 +3,12 @@ import path from 'path'
 import { createLoggerMocker, desensitize } from '@barusu/util-jest'
 import { COMMAND_NAME, execMainCommand, logger } from '../src'
 
-
 describe('main', function () {
   const configFilepath = path.resolve(__dirname, 'cases', 'config.json')
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'main')
-  const kases: string[] = fs.readdirSync(caseRootDirectory)
-    .filter(p => fs.statSync(path.resolve(caseRootDirectory,p)).isDirectory())
+  const kases: string[] = fs
+    .readdirSync(caseRootDirectory)
+    .filter(p => fs.statSync(path.resolve(caseRootDirectory, p)).isDirectory())
 
   for (const kase of kases) {
     const { name: title } = path.parse(kase)
@@ -17,7 +17,8 @@ describe('main', function () {
 
     const workspaceRootDir: string = path.resolve(__dirname, '..')
     test(title, async function () {
-      const desensitizeContent = (text: string) => desensitize(text, workspaceRootDir)
+      const desensitizeContent = (text: string) =>
+        desensitize(text, workspaceRootDir)
 
       const loggerMock = createLoggerMocker({
         logger,
@@ -31,11 +32,12 @@ describe('main', function () {
         .mockImplementation(function (
           absolutePath: string | any,
           resolveContent: string | any,
-          encoding: string | any
+          encoding: string | any,
         ) {
           expect(encoding).toEqual('utf-8')
-          expect(desensitizeContent(resolveContent))
-            .toMatchSnapshot(`[${ desensitizeContent(absolutePath) }] resolved content`)
+          expect(desensitizeContent(resolveContent)).toMatchSnapshot(
+            `[${desensitizeContent(absolutePath)}] resolved content`,
+          )
         })
 
       const args = [

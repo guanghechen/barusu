@@ -1,6 +1,5 @@
 import fs from 'fs-extra'
 
-
 /**
  * Case node without children
  */
@@ -19,7 +18,6 @@ export interface CaseLeafNode {
   inputs?: unknown[]
 }
 
-
 /**
  * Case node with children
  */
@@ -34,10 +32,8 @@ export interface CaseParentNode {
   cases: (CaseParentNode | CaseLeafNode)[]
 }
 
-
 export type CaseTree = CaseParentNode
 export type CaseNode = CaseParentNode | CaseLeafNode
-
 
 /**
  * Case item passed to doTest func
@@ -52,7 +48,6 @@ export interface CaseItem {
    */
   input: unknown
 }
-
 
 export function runCaseTree<C extends CaseItem>(
   caseFilepath: string,
@@ -81,7 +76,7 @@ export function runCaseTree<C extends CaseItem>(
         const kase = {
           ...others,
           title,
-          input: item
+          input: item,
         } as C
         await doTest(kase)
       }

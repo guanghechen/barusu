@@ -56,7 +56,6 @@ export interface GitCipherDecryptContext {
   readonly outDir: string | null
 }
 
-
 interface Params {
   /**
    * Path of currently executing command
@@ -112,14 +111,13 @@ interface Params {
   readonly outDir: string | null
 }
 
-
 /**
  * Create GitCipherDecryptContext
  *
  * @param params
  */
 export async function createGitCipherDecryptContext(
-  params: Params
+  params: Params,
 ): Promise<GitCipherDecryptContext> {
   const context: GitCipherDecryptContext = {
     cwd: params.cwd,

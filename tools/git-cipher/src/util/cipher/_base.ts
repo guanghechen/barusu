@@ -1,6 +1,5 @@
 import { EventTypes, eventBus } from '../events'
 
-
 /**
  *
  */
@@ -31,24 +30,17 @@ export interface Cipher {
    * Encrypt contents from plainFilepath,
    * and save the result into cipherFilepath
    */
-  encryptFile(
-    plainFilepath: string,
-    cipherFilepath: string,
-  ): Promise<void>
+  encryptFile(plainFilepath: string, cipherFilepath: string): Promise<void>
   /**
    * Decrypt contents from cipherFilepath,
    * and save the result into plainFilepath
    */
-  decryptFile(
-    cipherFilepath: string,
-    plainFilepath: string,
-  ): Promise<void>
+  decryptFile(cipherFilepath: string, plainFilepath: string): Promise<void>
   /**
    * Destroy secret and sensitive data
    */
   cleanup(): void
 }
-
 
 /**
  * Factory class that produces Cipher
@@ -56,7 +48,6 @@ export interface Cipher {
 export interface CipherFactory {
   create(): Cipher
 }
-
 
 /**
  *

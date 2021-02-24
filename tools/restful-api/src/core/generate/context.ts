@@ -12,7 +12,6 @@ import { logger } from '../../env/logger'
 import { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 
-
 /**
  * Context variables for RestfulApiGenerateProcessor
  */
@@ -64,11 +63,10 @@ export interface RestfulApiGenerateContext {
   readonly generator: TJS.JsonSchemaGenerator
 }
 
-
 interface Params {
   /**
- * Path of currently executing command
- */
+   * Path of currently executing command
+   */
   readonly cwd: string
   /**
    * Working directory
@@ -121,15 +119,16 @@ interface Params {
   additionalCompilerOptions?: ts.CompilerOptions
 }
 
-
 /**
  * Create RestfulApiGenerateContext
  */
 export async function createRestfulApiGenerateContext(
-  params: Params
+  params: Params,
 ): Promise<RestfulApiGenerateContext> {
   const apiItemParser = new ApiItemParser(params.schemaRootPath)
-  const apiConfigPaths: string[] = await globby(params.apiConfigPath, { cwd: params.workspace })
+  const apiConfigPaths: string[] = await globby(params.apiConfigPath, {
+    cwd: params.workspace,
+  })
   for (const apiConfigPath of apiConfigPaths) {
     apiItemParser.scan(apiConfigPath)
   }
@@ -141,9 +140,14 @@ export async function createRestfulApiGenerateContext(
   }
 
   const program: ts.Program = TJS.programFromConfig(
-    params.tsconfigPath, undefined, params.additionalCompilerOptions)
+    params.tsconfigPath,
+    undefined,
+    params.additionalCompilerOptions,
+  )
   const generator: TJS.JsonSchemaGenerator = TJS.buildGenerator(
-    program, params.additionalSchemaArgs)!
+    program,
+    params.additionalSchemaArgs,
+  )!
 
   if (generator == null) {
     logger.debug('createGenerateCommandContext params: {}', params)
@@ -158,7 +162,11 @@ export async function createRestfulApiGenerateContext(
     encoding: coverString('utf-8', params.encoding, isNotEmptyString),
     muteMissingModel: coverBoolean(false, params.muteMissingModel),
     clean: coverBoolean(false, params.clean),
-    ignoredDataTypes: cover<string[]>([], params.ignoredDataTypes, isNotEmptyArray),
+    ignoredDataTypes: cover<string[]>(
+      [],
+      params.ignoredDataTypes,
+      isNotEmptyArray,
+    ),
     apiItems,
     program,
     generator,

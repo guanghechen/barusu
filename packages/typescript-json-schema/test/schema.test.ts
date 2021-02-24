@@ -5,15 +5,14 @@ import { resolve } from 'path'
 import { versionMajorMinor as typescriptVersionMajorMinor } from 'typescript'
 import * as TJS from '../src'
 
-
 let ajvWarnings: string[] = []
 const ajv = new Ajv({
   logger: {
     log: console.log,
-    warn: (message) => {
+    warn: message => {
       ajvWarnings.push(message)
     },
-    error: (message) => {
+    error: message => {
       throw new Error('AJV error: ' + message)
     },
   },
@@ -22,8 +21,8 @@ const ajv = new Ajv({
 const BASE = 'test/programs/'
 
 interface AjvTestOptions {
-  skipCompile: boolean;
-  expectedWarnings: string[];
+  skipCompile: boolean
+  expectedWarnings: string[]
 }
 
 export function assertSchema(
@@ -32,7 +31,7 @@ export function assertSchema(
   settings: TJS.PartialArgs = {},
   compilerOptions?: TJS.CompilerOptions,
   only?: boolean,
-  ajvOptions: Partial<AjvTestOptions> = {}
+  ajvOptions: Partial<AjvTestOptions> = {},
 ): void {
   const run = only ? it.only : it
 
@@ -44,7 +43,11 @@ export function assertSchema(
 
     const files = [resolve(BASE + group + '/main.ts')]
     const actual = TJS.generateSchema(
-      TJS.getProgramFromFiles(files, compilerOptions), type, settings, files)
+      TJS.getProgramFromFiles(files, compilerOptions),
+      type,
+      settings,
+      files,
+    )
 
     // writeFileSync(BASE + group + "/schema.json", stringify(actual, {space: 4}) + "\n\n");
 
@@ -64,7 +67,11 @@ export function assertSchema(
       if (!ajvOptions.skipCompile) {
         ajvWarnings = []
         ajv.compile(actual)
-        assert.deepEqual(ajvWarnings, ajvOptions.expectedWarnings || [], 'Got unexpected AJV warnings')
+        assert.deepEqual(
+          ajvWarnings,
+          ajvOptions.expectedWarnings || [],
+          'Got unexpected AJV warnings',
+        )
       }
     }
   })
@@ -74,7 +81,7 @@ export function assertSchemas(
   group: string,
   type: string,
   settings: TJS.PartialArgs = {},
-  compilerOptions?: TJS.CompilerOptions
+  compilerOptions?: TJS.CompilerOptions,
 ): void {
   it(group + ' should create correct schema', () => {
     if (!('required' in settings)) {
@@ -83,8 +90,11 @@ export function assertSchemas(
     }
 
     const generator = TJS.buildGenerator(
-      TJS.getProgramFromFiles([resolve(BASE + group + '/main.ts')], compilerOptions),
-      settings
+      TJS.getProgramFromFiles(
+        [resolve(BASE + group + '/main.ts')],
+        compilerOptions,
+      ),
+      settings,
     )
     const symbols = generator!.getSymbols(type)
 
@@ -93,7 +103,10 @@ export function assertSchemas(
 
       // writeFileSync(BASE + group + `/schema.${symbol.name}.json`, JSON.stringify(actual, null, 4) + "\n\n");
 
-      const file = readFileSync(BASE + group + `/schema.${ symbol.name }.json`, 'utf8')
+      const file = readFileSync(
+        BASE + group + `/schema.${symbol.name}.json`,
+        'utf8',
+      )
       const expected = JSON.parse(file)
 
       assert.isObject(actual)
@@ -112,7 +125,7 @@ export function assertRejection(
   group: string,
   type: string,
   settings: TJS.PartialArgs = {},
-  compilerOptions?: TJS.CompilerOptions
+  compilerOptions?: TJS.CompilerOptions,
 ): void {
   it(group + ' should reject input', () => {
     let schema = null
@@ -124,7 +137,11 @@ export function assertRejection(
 
       const files = [resolve(BASE + group + '/main.ts')]
       schema = TJS.generateSchema(
-        TJS.getProgramFromFiles(files, compilerOptions), type, settings, files)
+        TJS.getProgramFromFiles(files, compilerOptions),
+        type,
+        settings,
+        files,
+      )
     })
     assert.equal(schema, null, 'Expected no schema to be generated')
   })
@@ -132,7 +149,9 @@ export function assertRejection(
 
 describe('interfaces', () => {
   it('should return an instance of JsonSchemaGenerator', () => {
-    const program = TJS.getProgramFromFiles([resolve(BASE + 'comments/main.ts')])
+    const program = TJS.getProgramFromFiles([
+      resolve(BASE + 'comments/main.ts'),
+    ])
     const generator = TJS.buildGenerator(program)
 
     assert.instanceOf(generator, TJS.JsonSchemaGenerator)
@@ -146,7 +165,9 @@ describe('interfaces', () => {
     }
   })
   it('should output the schemas set by setSchemaOverride', () => {
-    const program = TJS.getProgramFromFiles([resolve(BASE + 'interface-multi/main.ts')])
+    const program = TJS.getProgramFromFiles([
+      resolve(BASE + 'interface-multi/main.ts'),
+    ])
     const generator = TJS.buildGenerator(program)
     assert(generator !== null)
     if (generator !== null) {
@@ -159,7 +180,9 @@ describe('interfaces', () => {
     }
   })
   it('should ignore type aliases that have schema overrides', () => {
-    const program = TJS.getProgramFromFiles([resolve(BASE + 'type-alias-schema-override/main.ts')])
+    const program = TJS.getProgramFromFiles([
+      resolve(BASE + 'type-alias-schema-override/main.ts'),
+    ])
     const generator = TJS.buildGenerator(program)
     assert(generator !== null)
     if (generator !== null) {
@@ -265,7 +288,7 @@ describe('schema', () => {
   describe('annotations', () => {
     assertSchema('annotation-default', 'MyObject')
     assertSchema('annotation-ref', 'MyObject', {}, undefined, undefined, {
-      skipCompile: true
+      skipCompile: true,
     })
     assertSchema('annotation-tjs', 'MyObject', {
       validationKeywords: ['hide'],
@@ -275,8 +298,8 @@ describe('schema', () => {
         'schema id ignored',
         'schema id ignored',
         'schema id ignored',
-        'schema id ignored'
-      ]
+        'schema id ignored',
+      ],
     })
     assertSchema('annotation-items', 'MyObject')
 
@@ -426,7 +449,9 @@ describe('schema', () => {
 
   describe('object index', () => {
     assertSchema('object-numeric-index', 'IndexInterface')
-    assertSchema('object-numeric-index-as-property', 'Target', { required: false })
+    assertSchema('object-numeric-index-as-property', 'Target', {
+      required: false,
+    })
   })
 
   describe('recursive type', () => {
@@ -440,27 +465,34 @@ describe('schema', () => {
 
 describe('tsconfig.json', () => {
   it('should read files from tsconfig.json', () => {
-    const program = TJS.programFromConfig(resolve(BASE + 'tsconfig/tsconfig.json'))
+    const program = TJS.programFromConfig(
+      resolve(BASE + 'tsconfig/tsconfig.json'),
+    )
     const generator = TJS.buildGenerator(program)
     assert(generator !== null)
     assert.instanceOf(generator, TJS.JsonSchemaGenerator)
     if (generator !== null) {
       assert.doesNotThrow(() => generator.getSchemaForSymbol('IncludedAlways'))
-      assert.doesNotThrow(() => generator.getSchemaForSymbol('IncludedOnlyByTsConfig'))
+      assert.doesNotThrow(() =>
+        generator.getSchemaForSymbol('IncludedOnlyByTsConfig'),
+      )
       assert.throws(() => generator.getSchemaForSymbol('Excluded'))
     }
   })
   it('should support includeOnlyFiles with tsconfig.json', () => {
-    const program = TJS.programFromConfig(resolve(BASE + 'tsconfig/tsconfig.json'), [
-      resolve(BASE + 'tsconfig/includedAlways.ts'),
-    ])
+    const program = TJS.programFromConfig(
+      resolve(BASE + 'tsconfig/tsconfig.json'),
+      [resolve(BASE + 'tsconfig/includedAlways.ts')],
+    )
     const generator = TJS.buildGenerator(program)
     assert(generator !== null)
     assert.instanceOf(generator, TJS.JsonSchemaGenerator)
     if (generator !== null) {
       assert.doesNotThrow(() => generator.getSchemaForSymbol('IncludedAlways'))
       assert.throws(() => generator.getSchemaForSymbol('Excluded'))
-      assert.throws(() => generator.getSchemaForSymbol('IncludedOnlyByTsConfig'))
+      assert.throws(() =>
+        generator.getSchemaForSymbol('IncludedOnlyByTsConfig'),
+      )
     }
   })
 })

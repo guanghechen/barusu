@@ -9,7 +9,6 @@ import { isPlainObject } from 'is-plain-object'
 import path from 'path'
 import { generateCopyTarget, stringify } from './util'
 
-
 /**
  *
  * @param options
@@ -38,7 +37,7 @@ export function copy(options: RollupPluginCopyOptions = {}) {
         message = message()
       }
       console.log(message)
-    }
+    },
   }
 
   let copied = false
@@ -56,35 +55,47 @@ export function copy(options: RollupPluginCopyOptions = {}) {
     if (Array.isArray(targets) && targets.length) {
       for (const target of targets) {
         if (!isPlainObject(target)) {
-          throw new Error(`${ stringify(target) } target must be an object`)
+          throw new Error(`${stringify(target)} target must be an object`)
         }
 
         const { dest, rename, src, transform, ...restTargetOptions } = target
 
         if (!src || !dest) {
-          throw new Error(`${ stringify(target) } target must have "src" and "dest" properties`)
+          throw new Error(
+            `${stringify(target)} target must have "src" and "dest" properties`,
+          )
         }
 
-        if (rename && typeof rename !== 'string' && typeof rename !== 'function') {
-          throw new Error(`${ stringify(target) } target's "rename" property must be a string or a function`)
+        if (
+          rename &&
+          typeof rename !== 'string' &&
+          typeof rename !== 'function'
+        ) {
+          throw new Error(
+            `${stringify(
+              target,
+            )} target's "rename" property must be a string or a function`,
+          )
         }
 
         const matchedPaths = await globby(src, {
           expandDirectories: false,
           onlyFiles: false,
           ...globalGlobbyOptions,
-          ...restTargetOptions
+          ...restTargetOptions,
         })
 
         if (matchedPaths.length) {
           for (const matchedPath of matchedPaths) {
             const destinations = Array.isArray(dest) ? dest : [dest]
             const generatedCopyTargets = await Promise.all(
-              destinations.map((destination) => generateCopyTarget(
-                matchedPath,
-                destination,
-                { flatten, rename, transform }
-              ))
+              destinations.map(destination =>
+                generateCopyTarget(matchedPath, destination, {
+                  flatten,
+                  rename,
+                  transform,
+                }),
+              ),
             )
             copyTargets.push(...generatedCopyTargets)
           }
@@ -123,13 +134,18 @@ export function copy(options: RollupPluginCopyOptions = {}) {
         }
 
         log.verbose(() => {
-          let message = chalk.green(`  ${ chalk.bold(src) } → ${ chalk.bold(dest) }`)
+          let message = chalk.green(
+            `  ${chalk.bold(src)} → ${chalk.bold(dest)}`,
+          )
           const flags = Object.entries(copyTarget)
-            .filter(([key, value]) => ['renamed', 'transformed'].includes(key) && value)
+            .filter(
+              ([key, value]) =>
+                ['renamed', 'transformed'].includes(key) && value,
+            )
             .map(([key]) => key.charAt(0).toUpperCase())
 
           if (flags.length) {
-            message = `${ message } ${ chalk.yellow(`[${ flags.join(', ') }]`) }`
+            message = `${message} ${chalk.yellow(`[${flags.join(', ')}]`)}`
           }
 
           return message
@@ -154,7 +170,7 @@ export function copy(options: RollupPluginCopyOptions = {}) {
       if (hook === watchHook) {
         await handleCopy.call(self, ...args)
       }
-    }
+    },
   }
 
   if (hook !== watchHook) {

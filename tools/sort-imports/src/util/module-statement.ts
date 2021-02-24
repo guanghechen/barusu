@@ -37,7 +37,6 @@ export interface StaticModuleStatementItem {
   defaultExport?: string
 }
 
-
 export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
   const optionalSpacesRegex = /\s*/
   const requiredSpacesRegex = /\s+/
@@ -61,9 +60,12 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
      *  ```
      */
     new RegExp(
-      importTypeRegex.source + optionalSpacesRegex.source +
-      moduleNameRegex.source + remainOfLineRegex.source,
-      flags),
+      importTypeRegex.source +
+        optionalSpacesRegex.source +
+        moduleNameRegex.source +
+        remainOfLineRegex.source,
+      flags,
+    ),
     /**
      * Import default
      *
@@ -75,10 +77,15 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
      *  ```
      */
     new RegExp(
-      importTypeRegex.source + requiredSpacesRegex.source +
-      importDefaultRegex.source + requiredSpacesRegex.source + fromRegex.source +
-      moduleNameRegex.source + remainOfLineRegex.source,
-      flags),
+      importTypeRegex.source +
+        requiredSpacesRegex.source +
+        importDefaultRegex.source +
+        requiredSpacesRegex.source +
+        fromRegex.source +
+        moduleNameRegex.source +
+        remainOfLineRegex.source,
+      flags,
+    ),
     /**
      * Export default
      *
@@ -88,10 +95,15 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
      *  ```
      */
     new RegExp(
-      exportTypeRegex.source + optionalSpacesRegex.source +
-      exportDefaultRegex.source + requiredSpacesRegex.source + fromRegex.source +
-      moduleNameRegex.source + remainOfLineRegex.source,
-      flags),
+      exportTypeRegex.source +
+        optionalSpacesRegex.source +
+        exportDefaultRegex.source +
+        requiredSpacesRegex.source +
+        fromRegex.source +
+        moduleNameRegex.source +
+        remainOfLineRegex.source,
+      flags,
+    ),
     /**
      * ImportN
      *
@@ -103,10 +115,15 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
      *  ```
      */
     new RegExp(
-      typeRegex.source + optionalSpacesRegex.source +
-      importOrExportNRegex.source + optionalSpacesRegex.source + fromRegex.source +
-      moduleNameRegex.source + remainOfLineRegex.source,
-      flags),
+      typeRegex.source +
+        optionalSpacesRegex.source +
+        importOrExportNRegex.source +
+        optionalSpacesRegex.source +
+        fromRegex.source +
+        moduleNameRegex.source +
+        remainOfLineRegex.source,
+      flags,
+    ),
     /**
      * Import default + ImportN
      *  ```typescript
@@ -116,16 +133,21 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
      *  ```
      */
     new RegExp(
-      importTypeRegex.source + optionalSpacesRegex.source +
-      importDefaultRegex.source + /(?:\s*,\s*)/.source + importOrExportNRegex.source +
-      optionalSpacesRegex.source + fromRegex.source +
-      moduleNameRegex.source + remainOfLineRegex.source,
-      flags),
+      importTypeRegex.source +
+        optionalSpacesRegex.source +
+        importDefaultRegex.source +
+        /(?:\s*,\s*)/.source +
+        importOrExportNRegex.source +
+        optionalSpacesRegex.source +
+        fromRegex.source +
+        moduleNameRegex.source +
+        remainOfLineRegex.source,
+      flags,
+    ),
   ]
 
   return regexList
 }
-
 
 /**
  * Run regex.exec all regexList, return the exec-result with minimum index
@@ -137,9 +159,9 @@ export function createStaticImportOrExportRegexList(flags: string): RegExp[] {
 export function execWithMultipleRegex(
   regexList: RegExp[],
   content: string,
-  lastIndex = 0
-): { regex: RegExp, result: RegExpExecArray } | null {
-  let result: { regex: RegExp, result: RegExpExecArray } | null = null
+  lastIndex = 0,
+): { regex: RegExp; result: RegExpExecArray } | null {
+  let result: { regex: RegExp; result: RegExpExecArray } | null = null
   for (const regex of regexList) {
     regex.lastIndex = lastIndex
     const m = regex.exec(content)
@@ -152,20 +174,20 @@ export function execWithMultipleRegex(
   return result
 }
 
-
 /**
  * Extract StaticModuleStatementItem from result.groups
  * @param groups
  */
 export function extractStaticModuleStatementItem(
-  groups: Record<string, string>
+  groups: Record<string, string>,
 ): Omit<StaticModuleStatementItem, 'fullStatement'> {
-  const exportN: string[] = groups.exportN != null
-    ? groups.exportN.split(/\s*,\s*/g)
-    : []
+  const exportN: string[] =
+    groups.exportN != null ? groups.exportN.split(/\s*,\s*/g) : []
   const item: Omit<StaticModuleStatementItem, 'fullStatement'> = {
     type: groups.type as 'import' | 'export',
-    moduleName: groups.moduleName.replace(/([/\\])\.[/\\]/g, '$1').replace(/([/\\])+/g, '$1'),
+    moduleName: groups.moduleName
+      .replace(/([/\\])\.[/\\]/g, '$1')
+      .replace(/([/\\])+/g, '$1'),
     exportN: exportN.filter(x => /\S/.test(x)).sort(),
     remainOfLine: groups.remainOfLine as string,
     keywordType: groups.keywordType as 'type' | undefined,
@@ -174,7 +196,6 @@ export function extractStaticModuleStatementItem(
   }
   return item
 }
-
 
 /**
  *
@@ -199,21 +220,25 @@ export function formatStaticModuleStatementItem(
       if (item.exportN.length > 0) {
         const keywordType = item.keywordType ? item.keywordType + ' ' : ''
         if (multiline) {
-          result += ` ${keywordType}{\n` + item.exportN.map(x => indent + x + ',').join('\n') + '\n}'
+          result +=
+            ` ${keywordType}{\n` +
+            item.exportN.map(x => indent + x + ',').join('\n') +
+            '\n}'
         } else {
-          result += ` ${keywordType}{ ${ item.exportN.join(', ') } }`
+          result += ` ${keywordType}{ ${item.exportN.join(', ')} }`
         }
       }
     }
     if (item.keywordFrom != null) result += ' ' + item.keywordFrom
-    result += ` ${ quote }${ item.moduleName }${ quote }`
+    result += ` ${quote}${item.moduleName}${quote}`
     if (semicolon) result += ';'
     return result + item.remainOfLine
   }
 
   let result = assembleStatement(false)
-  if (result.length >= maxColumn && item.exportN) {
-    // 将花括号中的 export 拆成多行
+
+  // Split into multiple lines if there exists more than one exportN items.
+  if (result.length > maxColumn && item.exportN.length > 1) {
     result = assembleStatement(true)
   }
   return result

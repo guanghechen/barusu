@@ -1,9 +1,7 @@
 import { JSONSchema7 } from 'json-schema'
 import ts from 'typescript'
 
-
 export type ObjectMap<T> = { [key: string]: T }
-
 
 export interface SymbolRef {
   name: string
@@ -11,7 +9,6 @@ export interface SymbolRef {
   fullyQualifiedName: string
   symbol: ts.Symbol
 }
-
 
 export type RedefinedFields =
   | 'type'
@@ -34,10 +31,8 @@ export type RedefinedFields =
 
 export type DefinitionOrBoolean = Definition | boolean
 
-
 // 基础类型
 export type PrimitiveType = number | boolean | string | null
-
 
 export interface Definition extends Omit<JSONSchema7, RedefinedFields> {
   // The type field here is incompatible with the standard definition
@@ -76,7 +71,6 @@ export interface Definition extends Omit<JSONSchema7, RedefinedFields> {
   }
 }
 
-
 export interface SchemaArgs {
   ref: boolean
   aliasRef: boolean
@@ -99,9 +93,7 @@ export interface SchemaArgs {
   defaultNumberType: 'number' | 'integer'
 }
 
-
 export type PartialArgs = Partial<SchemaArgs>
-
 
 /**
  *

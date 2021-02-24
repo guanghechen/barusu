@@ -4,7 +4,6 @@ import { logger } from '../../env/logger'
 import { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 
-
 /**
  * Context variables for RestfulApiServeContext
  */
@@ -75,11 +74,10 @@ export interface RestfulApiServeContext {
   readonly apiItems: ResolvedApiItem[]
 }
 
-
 interface Params {
   /**
- * Path of currently executing command
- */
+   * Path of currently executing command
+   */
   readonly cwd: string
   /**
    * Working directory
@@ -148,15 +146,16 @@ interface Params {
   readonly mockResourceRootDir?: string
 }
 
-
 /**
  * Create RestfulApiServeContext
  */
 export async function createRestfulApiServeContext(
-  params: Params
+  params: Params,
 ): Promise<RestfulApiServeContext> {
   const apiItemParser = new ApiItemParser(params.schemaRootPath)
-  const apiConfigPaths: string[] = await globby(params.apiConfigPath, { cwd: params.workspace })
+  const apiConfigPaths: string[] = await globby(params.apiConfigPath, {
+    cwd: params.workspace,
+  })
   for (const apiConfigPath of apiConfigPaths) {
     apiItemParser.scan(apiConfigPath)
   }
@@ -181,7 +180,10 @@ export async function createRestfulApiServeContext(
     mockOptionalsProbability: params.mockOptionalsProbability,
     mockDataPrefixUrl: coverString(params.prefixUrl, params.mockDataPrefixUrl),
     mockDataRootDir: params.mockDataRootDir,
-    mockResourcePrefixUrl: coverString(params.prefixUrl, params.mockResourcePrefixUrl),
+    mockResourcePrefixUrl: coverString(
+      params.prefixUrl,
+      params.mockResourcePrefixUrl,
+    ),
     mockResourceRootDir: params.mockResourceRootDir,
     apiItems,
   }

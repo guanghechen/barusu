@@ -2,7 +2,6 @@ import type { Logger } from './types'
 import fs from 'fs-extra'
 import path from 'path'
 
-
 /**
  * Follow the ancestor node to find the path where package.json is located.
  * null will be returned if the package.json is not found.
@@ -15,7 +14,6 @@ export function findPackageJsonPath(p: string): string | null {
   return findPackageJsonPath(dirname)
 }
 
-
 /**
  * Find all dependencies
  */
@@ -24,7 +22,7 @@ export function collectAllDependencies(
   additionalDependencies?: string[],
   dependenciesFields: string[] = ['dependencies'],
   ignoredModuleRegex = /^@types\//,
-  logger?: Logger
+  logger?: Logger,
 ): string[] {
   const result: string[] = []
 
@@ -89,5 +87,4 @@ export function collectAllDependencies(
   }
 
   return result
-
 }

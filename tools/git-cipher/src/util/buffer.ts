@@ -1,6 +1,5 @@
 import crypto from 'crypto'
 
-
 /**
  * Fill buffer with a random number
  */
@@ -10,7 +9,6 @@ export function destroyBuffer(buffer: Buffer | null): void {
   buffer.fill(1)
   buffer.fill(Math.random() * 127)
 }
-
 
 /**
  * Destroy buffers
@@ -22,7 +20,6 @@ export function destroyBuffers(buffers: (Buffer | null)[] | null): void {
   }
 }
 
-
 /**
  * Create random initial vector
  */
@@ -30,14 +27,12 @@ export function createRandomIv(size = 32): Buffer {
   return crypto.randomBytes(size)
 }
 
-
 /**
  * Create random key of aes
  */
 export function createRandomKey(size = 32): Buffer {
   return crypto.randomBytes(size)
 }
-
 
 /**
  * calc Message Authentication Code

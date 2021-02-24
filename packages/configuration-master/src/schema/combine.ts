@@ -1,6 +1,5 @@
 import { DSchema, DataSchema, RDSchema, RawDataSchema } from '../_core/schema'
 
-
 // CombineDataSchema.type 的类型
 export const COMBINE_T_TYPE = 'combine'
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -8,7 +7,6 @@ export type COMBINE_T_TYPE = typeof COMBINE_T_TYPE
 
 // CombineDataSchema.value 的类型
 export type COMBINE_V_TYPE = any
-
 
 /**
  * 组合模式策略
@@ -28,10 +26,8 @@ export enum CombineStrategy {
   ONE = 'one',
 }
 
-
 // values of CombineStrategy
 export const combineStrategies: string[] = Object.values(CombineStrategy)
-
 
 /**
  * 原生的组合类型数据模式，用户在配置文件中指定的对象类型
@@ -41,7 +37,8 @@ export const combineStrategies: string[] = Object.values(CombineStrategy)
  *
  * 参见 https://json-schema.org/understanding-json-schema/reference/combine.html
  */
-export interface RawCombineDataSchema extends RawDataSchema<COMBINE_T_TYPE, COMBINE_V_TYPE> {
+export interface RawCombineDataSchema
+  extends RawDataSchema<COMBINE_T_TYPE, COMBINE_V_TYPE> {
   /**
    * 当 allOf, anyOf, oneOf 这三项中有多项被指定时的模式策略
    * @default all
@@ -64,14 +61,14 @@ export interface RawCombineDataSchema extends RawDataSchema<COMBINE_T_TYPE, COMB
   oneOf?: RDSchema[]
 }
 
-
 /**
  * 组合类型的数据模式，编译 RawCombineDataSchema 后得到的结果
  *
  * allOf, anyOf, oneOf 这三项至少指定一个，
  * 若指定了多个，则按照 'strategy' 中定义的值来处理
  */
-export interface CombineDataSchema extends DataSchema<COMBINE_T_TYPE, COMBINE_V_TYPE> {
+export interface CombineDataSchema
+  extends DataSchema<COMBINE_T_TYPE, COMBINE_V_TYPE> {
   /**
    * 当 allOf, anyOf, oneOf 这三项中有多项被指定时的模式策略
    */

@@ -8,9 +8,9 @@ export * from './util/option'
 export * from './util/process'
 export * from './util/resize'
 
-
 // Matches only the last occurrence of sourceMappingURL
-const sourceMappingURL = /\s*[@#]\s*sourceMappingURL\s*=\s*([^\s]*)(?![\S\s]*sourceMappingURL)/.source
+const sourceMappingURL = /\s*[@#]\s*sourceMappingURL\s*=\s*([^\s]*)(?![\S\s]*sourceMappingURL)/
+  .source
 
 // Matches /* ... */ comments
 const blockCommentRegex = new RegExp('/\\*' + sourceMappingURL + '\\s*\\*/')
@@ -20,7 +20,6 @@ const inlineCommentRegex = new RegExp('//' + sourceMappingURL + '($|\n|\r\n?)')
 
 // Matches DataUrls
 const dataUrlRegex = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,([a-zA-Z0-9+/]+={0,2})/
-
 
 /**
  *
@@ -32,15 +31,10 @@ const dataUrlRegex = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,([a-zA-Z0-9+/]+={
  */
 export default function loader(
   content: string | Buffer,
-  rawSourceMap?: RawSourceMap
+  rawSourceMap?: RawSourceMap,
 ): string | Buffer | void | undefined {
   const context: webpack.loader.LoaderContext = this as any
-  const {
-    cacheable,
-    resolve,
-    addDependency,
-    emitWarning,
-  } = context
+  const { cacheable, resolve, addDependency, emitWarning } = context
   let callback: webpack.loader.loaderCallback | undefined = context.callback
 
   // Make this loader result cacheable
@@ -59,7 +53,8 @@ export default function loader(
     return untouched()
   }
 
-  const smuMatch = content.match(blockCommentRegex) || content.match(inlineCommentRegex)
+  const smuMatch =
+    content.match(blockCommentRegex) || content.match(inlineCommentRegex)
   if (smuMatch == null) {
     return untouched()
   }
@@ -74,37 +69,43 @@ export default function loader(
   const dataUrlMatch = dataUrlRegex.exec(url)
   if (dataUrlMatch) {
     const mapBase64 = dataUrlMatch[1]
-    const mapStr = (new Buffer(mapBase64, 'base64')).toString()
+    const mapStr = new Buffer(mapBase64, 'base64').toString()
     let sourcemap
     try {
       sourcemap = JSON.parse(mapStr)
     } catch (e) {
-      emitWarning('Cannot parse inline SourceMap \'' + mapBase64.substr(0, 50) + '\': ' + e)
+      emitWarning(
+        "Cannot parse inline SourceMap '" + mapBase64.substr(0, 50) + "': " + e,
+      )
       return untouched()
     }
     processSourceMap(sourcemap, context.context, context, setResult)
   } else {
-    resolve(context.context, loaderUtils.urlToRequest(url, true as any), function (err, result) {
-      if (err) {
-        emitWarning('Cannot find SourceMap \'' + url + '\': ' + err)
-        return untouched()
-      }
-      addDependency(result)
-      fs.readFile(result, 'utf-8', function (err, content) {
+    resolve(
+      context.context,
+      loaderUtils.urlToRequest(url, true as any),
+      function (err, result) {
         if (err) {
-          emitWarning('Cannot open SourceMap \'' + result + '\': ' + err)
+          emitWarning("Cannot find SourceMap '" + url + "': " + err)
           return untouched()
         }
-        let sourcemap
-        try {
-          sourcemap = JSON.parse(content)
-        } catch (e) {
-          emitWarning('Cannot parse SourceMap \'' + url + '\': ' + e)
-          return untouched()
-        }
-        processSourceMap(sourcemap, path.dirname(result), context, setResult)
-      })
-    })
+        addDependency(result)
+        fs.readFile(result, 'utf-8', function (err, content) {
+          if (err) {
+            emitWarning("Cannot open SourceMap '" + result + "': " + err)
+            return untouched()
+          }
+          let sourcemap
+          try {
+            sourcemap = JSON.parse(content)
+          } catch (e) {
+            emitWarning("Cannot parse SourceMap '" + url + "': " + e)
+            return untouched()
+          }
+          processSourceMap(sourcemap, path.dirname(result), context, setResult)
+        })
+      },
+    )
     return
   }
 }

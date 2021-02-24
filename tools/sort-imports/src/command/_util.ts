@@ -1,7 +1,6 @@
 import { SimpleEventBus } from '@barusu/event-bus'
 import { logger } from '../env/logger'
 
-
 export enum EventTypes {
   /**
    * Cancelled, exit program
@@ -13,9 +12,7 @@ export enum EventTypes {
   EXITING = 'EXITING',
 }
 
-
 export const eventBus = new SimpleEventBus<EventTypes>()
-
 
 eventBus.on(EventTypes.CANCELED, function () {
   logger.info('canceled')
@@ -23,13 +20,11 @@ eventBus.on(EventTypes.CANCELED, function () {
   eventBus.dispatch({ type: EventTypes.EXITING })
 })
 
-
 eventBus.on(EventTypes.EXITING, function () {
   setTimeout(() => {
     process.exit(0)
   }, 0)
 })
-
 
 /**
  * handle error

@@ -1,7 +1,6 @@
 import { DSchema, DataSchema, TDSchema } from '../schema'
 import { DataValidationResult } from './result'
 
-
 // short format of DataValidationResult (value?: DataSchema)
 export type DVResult = DataValidationResult<string, any, DSchema>
 
@@ -15,8 +14,11 @@ export type DValidator = DataValidator<string, any, DSchema>
 export type DVFactory = DataValidatorFactory<string, any, DSchema>
 
 // short format of DataValidatorFactoryConstructor
-export type DVFactoryConstructor = DataValidatorFactoryConstructor<string, any, DSchema>
-
+export type DVFactoryConstructor = DataValidatorFactoryConstructor<
+  string,
+  any,
+  DSchema
+>
 
 /**
  * the context of DataSchemaValidator
@@ -52,13 +54,16 @@ export interface DataValidatorContext {
   getDefinition(idOrPath: string): DSchema | undefined
 }
 
-
 /**
  * data validator
  *
  * 数据校验器
  */
-export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>> {
+export interface DataValidator<
+  T extends string,
+  V,
+  DS extends DataSchema<T, V>
+> {
   /**
    * Corresponds to the type in DataSchema, used as a unique identifier,
    * indicating what type of DataSchema instance the validator receives
@@ -87,13 +92,16 @@ export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>>
   preprocessData(data: any, result: DVResult): V | undefined
 }
 
-
 /**
  * Factory class for data validator
  *
  * 数据校验器的工厂类
  */
-export interface DataValidatorFactory<T extends string, V, DS extends DataSchema<T, V>> {
+export interface DataValidatorFactory<
+  T extends string,
+  V,
+  DS extends DataSchema<T, V>
+> {
   /**
    * Corresponds to the type in DataSchema, used as a unique identifier,
    * indicating what type of validator the validator factory class produces
@@ -108,9 +116,8 @@ export interface DataValidatorFactory<T extends string, V, DS extends DataSchema
    * 通过 DataSchema 创建与之对应的数据校验器
    * @param schema
    */
-  create (schema: DS): DataValidator<T, V, DS>
+  create(schema: DS): DataValidator<T, V, DS>
 }
-
 
 /**
  * DataValidator's constructor interface
@@ -120,7 +127,7 @@ export interface DataValidatorFactory<T extends string, V, DS extends DataSchema
 export interface DataValidatorFactoryConstructor<
   T extends string,
   V,
-  DS extends DataSchema<T, V>,
+  DS extends DataSchema<T, V>
 > {
   /**
    * constructor of DataValidatorFactory<T, V, DS>

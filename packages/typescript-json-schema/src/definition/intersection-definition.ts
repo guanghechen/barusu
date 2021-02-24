@@ -3,7 +3,6 @@ import { JsonSchemaContext } from '../schema-context'
 import { Definition } from '../types'
 import { getTypeDefinition } from './type-definition'
 
-
 /**
  * Get definition of intersect type (|)
  *

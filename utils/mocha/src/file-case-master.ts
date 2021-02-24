@@ -9,7 +9,6 @@ import {
   TestCaseMatchFunc,
 } from './case-master'
 
-
 /**
  * test case
  *
@@ -30,15 +29,13 @@ export interface FileTestCase extends TestCase {
   readonly answerFilePath: string
 }
 
-
 /**
  * test case group
  *
  * 测试用例组
  */
 export interface FileTestCaseGroup
-  extends TestCaseGroup<FileTestCase, FileTestCaseGroup> { }
-
+  extends TestCaseGroup<FileTestCase, FileTestCaseGroup> {}
 
 /**
  * params of  TestCaseMaster.constructor
@@ -62,9 +59,10 @@ export interface FileTestCaseMasterProps {
   answerFileNameSuffix: string
 }
 
-
-export abstract class FileTestCaseMaster<T, D>
-  extends TestCaseMaster<FileTestCase, FileTestCaseGroup> {
+export abstract class FileTestCaseMaster<T, D> extends TestCaseMaster<
+  FileTestCase,
+  FileTestCaseGroup
+> {
   protected readonly inputFileNameSuffix: string
   protected readonly answerFileNameSuffix: string
 
@@ -195,7 +193,9 @@ export abstract class FileTestCaseMaster<T, D>
    * override method
    * @see TestCaseMaster#answer
    */
-  public async answer(doAnswer?: TestCaseAnswerFunc<FileTestCase>): Promise<void> {
+  public async answer(
+    doAnswer?: TestCaseAnswerFunc<FileTestCase>,
+  ): Promise<void> {
     const self = this
     if (doAnswer == null) {
       // eslint-disable-next-line no-param-reassign
@@ -219,7 +219,7 @@ export abstract class FileTestCaseMaster<T, D>
       // eslint-disable-next-line no-param-reassign
       doTest = function* (kase) {
         if (!fs.existsSync(kase.answerFilePath)) {
-          throw new Error(`answer file (${ kase.answerFilePath }) not found`)
+          throw new Error(`answer file (${kase.answerFilePath}) not found`)
         }
         yield kase.title
         yield async function () {

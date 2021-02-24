@@ -1,7 +1,6 @@
 import { ResolvedApiItem } from '../api-item/resolved'
 import { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
 
-
 /**
  * 格式化后的 API 条目组
  * @description Formatted API item group

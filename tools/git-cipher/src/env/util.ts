@@ -1,7 +1,6 @@
 import path from 'path'
 import { configRootDir, templateRootDir } from './constant'
 
-
 /**
  * Calc absolute path of configs
  * @param filepath
@@ -9,7 +8,6 @@ import { configRootDir, templateRootDir } from './constant'
 export function resolveConfigFilepath(...filepath: string[]): string {
   return path.resolve(configRootDir, ...filepath)
 }
-
 
 /**
  * Calc absolute path of template files

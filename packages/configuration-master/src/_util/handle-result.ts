@@ -1,6 +1,5 @@
 import { stringify } from './string-util'
 
-
 /**
  * 处理结果的信息对象
  */
@@ -87,7 +86,6 @@ export abstract class HandleResult<T, E> {
     return this
   }
 
-
   /**
    * 合并结果
    * @param result
@@ -98,7 +96,6 @@ export abstract class HandleResult<T, E> {
     return this
   }
 }
-
 
 /**
  * 异常信息对象为字符串的处理结果
@@ -129,7 +126,6 @@ export class StringExceptionHandleResult<T> extends HandleResult<T, string> {
   }
 }
 
-
 /**
  * 处理结果
  */
@@ -152,18 +148,26 @@ export interface DataHandleResultException {
   traces?: DataHandleResultException[]
 }
 
-
-export class DataHandleResult<T> extends HandleResult<T, DataHandleResultException> {
+export class DataHandleResult<T> extends HandleResult<
+  T,
+  DataHandleResultException
+> {
   /**
    * 从结果信息对象中提取当前层级的错误原因
    * @param exception 异常信息对象
    * @param p         当前属性对应的路径
    */
-  private calcSummary(exceptions: DataHandleResultException[], p = ''): string[] {
+  private calcSummary(
+    exceptions: DataHandleResultException[],
+    p = '',
+  ): string[] {
     if (exceptions.length <= 0) return []
     const messages: string[] = []
     for (const exception of exceptions) {
-      const c = exception.property != null ? (p.length > 0 ? p + '.' : p) + exception.property : p
+      const c =
+        exception.property != null
+          ? (p.length > 0 ? p + '.' : p) + exception.property
+          : p
       if (exception.traces == null || exception.traces.length <= 0) {
         const message = c + '#' + exception.constraint + ': ' + exception.reason
         messages.push(message)
@@ -250,7 +254,7 @@ export class DataHandleResult<T> extends HandleResult<T, DataHandleResultExcepti
     constraint: string,
     result: DataHandleResult<V>,
     property?: string,
-    errReason = ''
+    errReason = '',
   ): this {
     if (result.hasError) {
       const e = {

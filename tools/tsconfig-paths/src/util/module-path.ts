@@ -1,9 +1,11 @@
 import { createStaticImportOrExportRegexList } from '@barusu/tool-sort-imports'
 
-
-const esStaticImportOrExportRegexList: RegExp[] = createStaticImportOrExportRegexList('')
-const esStaticImportOrExportPatternList: RegExp[] = createStaticImportOrExportRegexList('g')
-
+const esStaticImportOrExportRegexList: RegExp[] = createStaticImportOrExportRegexList(
+  '',
+)
+const esStaticImportOrExportPatternList: RegExp[] = createStaticImportOrExportRegexList(
+  'g',
+)
 
 /**
  *
@@ -18,7 +20,7 @@ export function correctModulePath(
   for (let i = 0; i < esStaticImportOrExportRegexList.length; ++i) {
     const regex = esStaticImportOrExportRegexList[i]
     const pattern = esStaticImportOrExportPatternList[i]
-    result = result.replace(pattern, (rawString) => {
+    result = result.replace(pattern, rawString => {
       const m = regex.exec(rawString)!
       const { quote, moduleName } = m.groups!
       const p: string = transform(moduleName)

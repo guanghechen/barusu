@@ -5,7 +5,6 @@ import path from 'path'
 import { relativeOfWorkspace } from '@barusu/util-cli'
 import { logger } from '../../../env/logger'
 
-
 interface Params {
   /**
    * Working directory
@@ -21,31 +20,46 @@ interface Params {
   mockResourceRootDir: string
 }
 
-
 /**
  * Serve resource file under <mockResourceRootDir>
  */
-export function serveResourceFile(
-  { workspaceDir, prefixUrl, mockResourceRootDir }: Params
-): Koa.Middleware {
-  logger.info(`[serveResourceFile]: mount ${ prefixUrl } --> ${ relativeOfWorkspace(workspaceDir, mockResourceRootDir) }`)
-  return async function (ctx: Koa.Context, next: () => Promise<void>): Promise<any> {
+export function serveResourceFile({
+  workspaceDir,
+  prefixUrl,
+  mockResourceRootDir,
+}: Params): Koa.Middleware {
+  logger.info(
+    `[serveResourceFile]: mount ${prefixUrl} --> ${relativeOfWorkspace(
+      workspaceDir,
+      mockResourceRootDir,
+    )}`,
+  )
+  return async function (
+    ctx: Koa.Context,
+    next: () => Promise<void>,
+  ): Promise<any> {
     if (ctx.path.startsWith(prefixUrl)) {
       const filepath = ctx.path.slice(prefixUrl.length).replace(/^[/\\]/, '')
 
       const resolvedFilepath: string | null = (() => {
-        const potentialDataPaths = ['']
-          .map(ext => filepath + ext)
+        const potentialDataPaths = [''].map(ext => filepath + ext)
 
         for (const p of potentialDataPaths) {
           const absoluteFilepath = path.resolve(mockResourceRootDir, p)
-          const relativeFilepath = relativeOfWorkspace(workspaceDir, absoluteFilepath)
+          const relativeFilepath = relativeOfWorkspace(
+            workspaceDir,
+            absoluteFilepath,
+          )
 
           if (fs.existsSync(absoluteFilepath)) {
-            logger.debug(`[serveResourceFile hit] try filepath: ${ relativeFilepath }`)
+            logger.debug(
+              `[serveResourceFile hit] try filepath: ${relativeFilepath}`,
+            )
             return p
           }
-          logger.debug(`[serveResourceFile miss] try filepath: ${ relativeFilepath }`)
+          logger.debug(
+            `[serveResourceFile miss] try filepath: ${relativeFilepath}`,
+          )
         }
         return null
       })()

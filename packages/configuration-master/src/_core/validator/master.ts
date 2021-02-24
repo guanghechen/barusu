@@ -3,13 +3,12 @@ import { DSchema, TDSchema, TopDataSchemaMaster } from '../schema'
 import { DataValidationResult } from './result'
 import { DVFactory, DVResult, DataValidatorContext, TDVResult } from './types'
 
-
 /**
  * Data validator management object
- *  - Registration operation: make the data corresponding to a user-defined
-      Schema type be verified correctly
- *  - Replace operation: replace a data validator of the original type
- *  - Parsing operation: for the specified Schema object and data object,
+ *  - Registration operation: make the data corresponding to a user-defined
+ *    Schema type be verified correctly
+ *  - Replace operation: replace a data validator of the original type
+ *  - Parsing operation: for the specified Schema object and data object,
  *    verify that the data conforms to the definition of this Schema
  *
  * 数据校验器的管理对象
@@ -32,7 +31,8 @@ export class DataValidatorMaster implements DataValidatorContext {
   protected readonly topDataSchemaMaster: TopDataSchemaMaster
 
   public constructor(validatorFactoryMap?: Map<string, DVFactory>) {
-    this.validatorFactoryMap = validatorFactoryMap != null ? validatorFactoryMap : new Map()
+    this.validatorFactoryMap =
+      validatorFactoryMap != null ? validatorFactoryMap : new Map()
     this.topDataSchemaMaster = new TopDataSchemaMaster()
   }
 
@@ -44,7 +44,10 @@ export class DataValidatorMaster implements DataValidatorContext {
    * @param type
    * @param dataValidatorFactory
    */
-  public registerValidatorFactory(type: string, dataValidatorFactory: DVFactory): void {
+  public registerValidatorFactory(
+    type: string,
+    dataValidatorFactory: DVFactory,
+  ): void {
     if (this.validatorFactoryMap.has(type)) return
     this.validatorFactoryMap.set(type, dataValidatorFactory)
   }
@@ -58,7 +61,10 @@ export class DataValidatorMaster implements DataValidatorContext {
    * @param type
    * @param dataValidatorFactory
    */
-  public replaceValidatorFactory(type: string, dataValidatorFactory: DVFactory) {
+  public replaceValidatorFactory(
+    type: string,
+    dataValidatorFactory: DVFactory,
+  ): void {
     this.validatorFactoryMap.set(type, dataValidatorFactory)
   }
 
@@ -66,14 +72,14 @@ export class DataValidatorMaster implements DataValidatorContext {
    * override method
    * @see DataValidatorContext#validateDataSchema
    */
-  public validateDataSchema(schema: DSchema, data: any): DVResult {
+  public validateDataSchema(schema: DSchema, data: unknown): DVResult {
     // 获取 DataValidatorFactory
     const validatorFactory = this.validatorFactoryMap.get(schema.type)
     if (validatorFactory == null) {
       const result: DVResult = new DataValidationResult(schema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown schema type: ${ stringify(schema.type) }.`
+        reason: `unknown schema type: ${stringify(schema.type)}.`,
       })
     }
 
@@ -86,7 +92,7 @@ export class DataValidatorMaster implements DataValidatorContext {
    * override method
    * @see DataValidatorContext#validateTopDataSchema
    */
-  public validateTopDataSchema(schema: TDSchema, data: any): TDVResult {
+  public validateTopDataSchema(schema: TDSchema, data: unknown): TDVResult {
     this.topDataSchemaMaster.setSchema(schema)
     return this.validateDataSchema(schema, data)
   }

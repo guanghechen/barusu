@@ -16,16 +16,23 @@
     "node": ">= 12.16.0"
   },
   "scripts": {
-    ":publish": "yarn format && yarn test && lerna publish --no-private",
+    ":publish": "yarn format && yarn test && lerna publish",
     "build": "lerna run --concurrency 1 build",
-    "test": "lerna exec --concurrency 1 'echo && pwd && yarn test'",
     "clean": "lerna clean --yes && yarn install",
+    "format": "run-s format:find-inconsistent format:sort-imports format:lint:fix format:prettier",
+    "format:prettier": "prettier --write .",
+    "format:find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js .",
+    "format:lint:fix": "eslint . --fix",
+    "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
+    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
+    "prepublishOnly": "pinst --disable",
+    "postinstall": "run-p postinstall:**",
+    "postinstall:main": "yarn update:lock",
+    "postinstall:dev": "is-ci || husky install",
     "rebuild": "yarn clean && yarn build",
-    "format": "yarn find-inconsistent && yarn sort-imports && yarn lint:fix",
-    "lint:fix": "lerna run --parallel lint:fix",
-    "find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js . --log-level=verbose",
-    "sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js . --log-level=verbose",
-    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js"
+    "test": "lerna exec --concurrency 1 'echo && pwd && yarn test'",
+    "update:changelog": "gitmoji-changelog update",
+    "update:lock": "yarn-deduplicate"
   },
   "workspaces": [
     "packages/*",
@@ -42,17 +49,25 @@
     "chai": "^4.2.0",
     "chai-exclude": "^2.0.2",
     "cross-env": "^7.0.3",
-    "lerna": "^3.22.1",
+    "gitmoji-changelog": "^2.2.0",
+    "husky": "^5.0.9",
+    "is-ci": "^3.0.0",
+    "lerna": "^4.0.0",
+    "lint-staged": "^10.5.4",
     "jest": "^26.6.3",
     "mocha": "^8.1.1",
+    "npm-run-all": "^4.1.5",
+    "pinst": "^2.1.6",
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^26.4.4",
     "ts-node": "~9.1.1",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "~4.1.3"
+    "typescript": "~4.1.5",
+    "yarn-deduplicate": "^3.1.0"
   },
   "@barusu/tool-sort-imports": {
+    "logLevel": "verbose",
     "pattern": [
       "{packages,scaffolds,templates,tools,utils}/*/{src,test,__test__}/*.{ts,tsx}",
       "{packages,scaffolds,templates,tools,utils}/*/src/**/*.{ts,tsx}"
@@ -94,6 +109,13 @@
     "indent": "  ",
     "quote": "'",
     "semicolon": false,
-    "maxColumn": 80
+    "maxColumn": 80,
+    "blankLinesAfterStatement": 1
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

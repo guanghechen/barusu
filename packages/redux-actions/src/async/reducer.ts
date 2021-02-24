@@ -7,26 +7,29 @@ import {
   AsyncSucceedAction,
 } from './action'
 
-
 type Reducer<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  As extends AsyncActions<T>,
-  > = (state: S | undefined, action: As['request'] | As['success'] | As['failure']) => S
-
+  As extends AsyncActions<T>
+> = (
+  state: S | undefined,
+  action: As['request'] | As['success'] | As['failure'],
+) => S
 
 export type AsyncActionHandler<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  A extends AsyncRequestedAction<T> | AsyncSucceedAction<T> | AsyncFailedAction<T>,
-  > = (state: S, action: A) => S
-
+  A extends
+    | AsyncRequestedAction<T>
+    | AsyncSucceedAction<T>
+    | AsyncFailedAction<T>
+> = (state: S, action: A) => S
 
 export interface AsyncActionReducer<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  As extends AsyncActions<T>,
-  > {
+  As extends AsyncActions<T>
+> {
   /**
    * Accepted action type
    */
@@ -35,9 +38,12 @@ export interface AsyncActionReducer<
    * @param state   StateItem
    * @param action  async actions for this state item
    */
-  process: AsyncActionHandler<S, T, As['request'] | As['success'] | As['failure']>
+  process: AsyncActionHandler<
+    S,
+    T,
+    As['request'] | As['success'] | As['failure']
+  >
 }
-
 
 /**
  * Create reducer of async actions
@@ -46,16 +52,15 @@ export interface AsyncActionReducer<
 export function createAsyncActionReducer<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  As extends AsyncActions<T>,
+  As extends AsyncActions<T>
 >(
   actionType: T,
   handlers: {
-    onRequestedAction?: AsyncActionHandler<S, T, As['request']>,
-    onSucceedAction?: AsyncActionHandler<S, T, As['success']>,
-    onFailedAction?: AsyncActionHandler<S, T, As['failure']>,
+    onRequestedAction?: AsyncActionHandler<S, T, As['request']>
+    onSucceedAction?: AsyncActionHandler<S, T, As['success']>
+    onFailedAction?: AsyncActionHandler<S, T, As['failure']>
   } = {},
 ): AsyncActionReducer<S, T, As> {
-
   type RA = As['request']
   type SA = As['success']
   type FA = As['failure']
@@ -67,12 +72,12 @@ export function createAsyncActionReducer<
   const onRequestedAction: AsyncActionHandler<S, T, RA> =
     handlers.onRequestedAction != null
       ? handlers.onRequestedAction
-      : (state) => {
-        return {
-          ...state,
-          loading: true
+      : state => {
+          return {
+            ...state,
+            loading: true,
+          }
         }
-      }
 
   /**
    * Succeed action handler
@@ -81,14 +86,14 @@ export function createAsyncActionReducer<
     handlers.onSucceedAction != null
       ? handlers.onSucceedAction
       : (state, action) => {
-        const { payload } = action
-        return {
-          ...state,
-          loading: false,
-          data: payload == null ? null : payload,
-          error: null,
+          const { payload } = action
+          return {
+            ...state,
+            loading: false,
+            data: payload == null ? null : payload,
+            error: null,
+          }
         }
-      }
 
   /**
    * Failed action handler
@@ -97,13 +102,13 @@ export function createAsyncActionReducer<
     handlers.onFailedAction != null
       ? handlers.onFailedAction
       : (state, action) => {
-        const { payload } = action
-        return {
-          ...state,
-          loading: false,
-          error: payload == null ? null : payload,
+          const { payload } = action
+          return {
+            ...state,
+            loading: false,
+            error: payload == null ? null : payload,
+          }
         }
-      }
 
   const actionReducer: AsyncActionReducer<S, T, As> = {
     actionType,
@@ -119,12 +124,11 @@ export function createAsyncActionReducer<
         default:
           return state
       }
-    }
+    },
   }
 
   return actionReducer
 }
-
 
 /**
  * Create redux reducer
@@ -135,12 +139,12 @@ export function createAsyncActionReducer<
 export function assembleActionReducers<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  R extends AsyncActionReducer<S, T, AsyncActions<T>>
-    = AsyncActionReducer<S, T, AsyncActions<T>>
->(
-  initialState: S,
-  actionReducers: R[],
-): Reducer<S, T, AsyncActions<T>> {
+  R extends AsyncActionReducer<S, T, AsyncActions<T>> = AsyncActionReducer<
+    S,
+    T,
+    AsyncActions<T>
+  >
+>(initialState: S, actionReducers: R[]): Reducer<S, T, AsyncActions<T>> {
   type As = AsyncActions<T>
   type A = As['request'] | As['success'] | As['failure']
 

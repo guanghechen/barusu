@@ -12,12 +12,10 @@ import {
   RefDataSchema as DS,
 } from '../schema/ref'
 
-
 /**
  * RefDataSchema 编译结果的数据类型
  */
 export type RefDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
 
 /**
  * 引用类型的模式的编译器
@@ -25,7 +23,6 @@ export type RefDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 export class RefDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -42,7 +39,9 @@ export class RefDataSchemaCompiler
     if ($refResult.hasError || $refResult.value == null) {
       return result.addError({
         constraint: '$ref',
-        reason: `bad \`$ref\`, expected a string, but got (${ stringify(rawSchema.$ref)}).`
+        reason: `bad \`$ref\`, expected a string, but got (${stringify(
+          rawSchema.$ref,
+        )}).`,
       })
     }
 
@@ -51,7 +50,7 @@ export class RefDataSchemaCompiler
     if (!this.context.hasDefinition($ref)) {
       return result.addError({
         constraint: '$ref',
-        reason: `bad \`$ref\`, cannot find DataSchema with $id(${ $ref })`
+        reason: `bad \`$ref\`, cannot find DataSchema with $id(${$ref})`,
       })
     }
 
@@ -88,6 +87,7 @@ export class RefDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#parseJSON
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public parseJSON(json: any): DS {
     const schema: DS = {
       ...super.parseJSON(json),

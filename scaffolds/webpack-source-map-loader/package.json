@@ -32,15 +32,13 @@
     "prebuild": "rimraf lib/",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "test": "echo 'no test yet.'",
-    "lint:fix": "eslint '{src,__test__}/**/*.{ts,tsx}' --fix"
+    "test": "echo 'no test yet.'"
   },
   "dependencies": {
     "@types/loader-utils": "^1.1.3",
     "loader-utils": "^2.0.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.45",
     "@barusu/rollup-config": "^0.0.45",
     "@types/webpack": "^4.41.6",
     "rollup": "2.37.0"

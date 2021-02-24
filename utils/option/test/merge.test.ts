@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import { defaultMergeStrategies, merge } from '../src/merge'
 
-
 describe('merge', function () {
   describe('simple', function () {
     const options = [
@@ -12,10 +11,14 @@ describe('merge', function () {
     ]
 
     it('default strategies', function () {
-      expect(
-        merge(options)
-      ).to.eql({
-        x: 23, y: 'x', c: true, d: Symbol.for('x'), e: BigInt(2), f: 'waw', g: 'ss'
+      expect(merge(options)).to.eql({
+        x: 23,
+        y: 'x',
+        c: true,
+        d: Symbol.for('x'),
+        e: BigInt(2),
+        f: 'waw',
+        g: 'ss',
       })
     })
 
@@ -23,9 +26,16 @@ describe('merge', function () {
       expect(
         merge(options, {
           x: defaultMergeStrategies.retain,
-          g: defaultMergeStrategies.retain })
+          g: defaultMergeStrategies.retain,
+        }),
       ).to.eql({
-        x: 1, y: 'x', c: true, d: Symbol.for('x'), e: BigInt(2), f: 'waw', g: 'dd'
+        x: 1,
+        y: 'x',
+        c: true,
+        d: Symbol.for('x'),
+        e: BigInt(2),
+        f: 'waw',
+        g: 'dd',
       })
     })
   })
@@ -42,7 +52,8 @@ describe('merge', function () {
       expect(
         merge(options, {
           a: defaultMergeStrategies.concat,
-          b: defaultMergeStrategies.retain })
+          b: defaultMergeStrategies.retain,
+        }),
       ).to.eql({
         a: [1, 2],
         b: [1],
@@ -53,7 +64,8 @@ describe('merge', function () {
       expect(
         merge(options, {
           a: defaultMergeStrategies.retain,
-          b: defaultMergeStrategies.concat })
+          b: defaultMergeStrategies.concat,
+        }),
       ).to.eql({
         a: [],
         b: [1, 'x', 'y', 'waw'],
@@ -72,7 +84,8 @@ describe('merge', function () {
       expect(
         merge(options, {
           a: defaultMergeStrategies.assign,
-          b: defaultMergeStrategies.retain })
+          b: defaultMergeStrategies.retain,
+        }),
       ).to.eql({
         a: { x: 1, y: 'waw', z: 2 },
         b: { a: 1 },
@@ -82,7 +95,8 @@ describe('merge', function () {
       expect(
         merge(options, {
           a: defaultMergeStrategies.assign,
-          b: defaultMergeStrategies.assign })
+          b: defaultMergeStrategies.assign,
+        }),
       ).to.eql({
         a: { x: 1, y: 'waw', z: 2 },
         b: { a: ['x', 'y'] },

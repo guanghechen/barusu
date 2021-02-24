@@ -20,7 +20,6 @@ export interface Argument {
   friendlyDesc: string
 }
 
-
 /**
  * Regex to match argument
  *
@@ -31,7 +30,6 @@ export interface Argument {
  *  '<...pepper>'
  */
 export const argumentRegex = /^\s*([[<])\s*([.]{3})?([\w-]+)\s*([\]>])\s*$/
-
 
 /**
  * Parse arg string to structured data

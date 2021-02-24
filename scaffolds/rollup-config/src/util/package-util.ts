@@ -2,7 +2,6 @@ import chalk from 'chalk'
 import fs from 'fs-extra'
 import path from 'path'
 
-
 /**
  * Follow the ancestor node to find the path where package.json is located.
  * null will be returned if the package.json is not found.
@@ -14,7 +13,6 @@ export function findPackageJsonPath(p: string): string | null {
   if (dirname === p) return null
   return findPackageJsonPath(dirname)
 }
-
 
 /**
  * Find all dependencies
@@ -46,7 +44,7 @@ export function collectAllDependencies(
       }
     }
     if (nextPackageJsonPath == null) {
-      console.warn(chalk.yellow(`cannot find package.json for '${ dependency }'`))
+      console.warn(chalk.yellow(`cannot find package.json for '${dependency}'`))
       return
     }
 
@@ -56,7 +54,9 @@ export function collectAllDependencies(
 
   const collectDependencies = (dependencyPackageJsonPath: string): void => {
     if (!fs.existsSync(dependencyPackageJsonPath)) {
-      console.warn(chalk.yellow(`no such file or directory: ${ dependencyPackageJsonPath }`))
+      console.warn(
+        chalk.yellow(`no such file or directory: ${dependencyPackageJsonPath}`),
+      )
       return
     }
 

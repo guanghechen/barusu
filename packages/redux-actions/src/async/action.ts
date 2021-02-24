@@ -1,6 +1,5 @@
 import type { Action } from '../plain/action'
 
-
 /**
  * Status of async action
  */
@@ -18,7 +17,6 @@ export enum AsyncActionStatus {
    */
   FAILED = 'FAILED',
 }
-
 
 /**
  * Response of failed request
@@ -38,7 +36,6 @@ export interface AsyncFailureResponse {
   debug?: string
 }
 
-
 /**
  * Async action passed in redux Flow
  */
@@ -46,7 +43,7 @@ export interface AsyncAction<
   T extends symbol | string,
   P extends unknown,
   S extends AsyncActionStatus
-  > extends Action<T, P> {
+> extends Action<T, P> {
   /**
    * Action type
    */
@@ -61,33 +58,29 @@ export interface AsyncAction<
   payload?: P
 }
 
-
 /**
  * Requested action
  */
 export interface AsyncRequestedAction<
   T extends string | symbol,
-  P extends unknown = unknown>
-  extends AsyncAction<T, P, AsyncActionStatus.REQUESTED> { }
-
+  P extends unknown = unknown
+> extends AsyncAction<T, P, AsyncActionStatus.REQUESTED> {}
 
 /**
  * Request succeed action
  */
 export interface AsyncSucceedAction<
   T extends string | symbol,
-  P extends unknown = unknown>
-  extends Required<AsyncAction<T, P, AsyncActionStatus.SUCCEED>> { }
-
+  P extends unknown = unknown
+> extends Required<AsyncAction<T, P, AsyncActionStatus.SUCCEED>> {}
 
 /**
  * Request failed action
  */
 export interface AsyncFailedAction<
   T extends string | symbol,
-  P extends AsyncFailureResponse = AsyncFailureResponse>
-  extends Required<AsyncAction<T, P, AsyncActionStatus.FAILED>> { }
-
+  P extends AsyncFailureResponse = AsyncFailureResponse
+> extends Required<AsyncAction<T, P, AsyncActionStatus.FAILED>> {}
 
 /**
  * Async actions
@@ -96,9 +89,9 @@ export type AsyncActions<
   T extends string | symbol,
   RP extends unknown = unknown,
   SP extends unknown = unknown,
-  FP extends AsyncFailureResponse = AsyncFailureResponse>
-  = {
-    request: AsyncRequestedAction<T, RP>   // Requested action
-    success: AsyncSucceedAction<T, SP>     // Succeed action
-    failure: AsyncFailedAction<T, FP>      // Failed action
-  }
+  FP extends AsyncFailureResponse = AsyncFailureResponse
+> = {
+  request: AsyncRequestedAction<T, RP> // Requested action
+  success: AsyncSucceedAction<T, SP> // Succeed action
+  failure: AsyncFailedAction<T, FP> // Failed action
+}

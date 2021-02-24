@@ -1,29 +1,28 @@
 import { CommandError } from './error'
 
-
 /**
  * -x, -xxxx [args]
  * -x, -xxxx <args>
  */
 export const optionFlagsRegex = new RegExp(
   /^\s*/.source +
-  /(-[a-zA-Z])?/.source +                                           // short
-  /([, |]\s*)?/.source +
-  /(--[a-zA-Z](?:[a-zA-Z\-\d]+[a-zA-Z\d])?[a-zA-Z\d]*)?/.source +   // long
-  /\s*/.source +
-  /(\[[^\]]*\]|<[^>]*>)?/.source +                                  // option arg
-  /\s*$/.source
+    /(-[a-zA-Z])?/.source + // short
+    /([, |]\s*)?/.source +
+    /(--[a-zA-Z](?:[a-zA-Z\-\d]+[a-zA-Z\d])?[a-zA-Z\d]*)?/.source + // long
+    /\s*/.source +
+    /(\[[^\]]*\]|<[^>]*>)?/.source + // option arg
+    /\s*$/.source,
 )
-
 
 /**
  * Transform option arg to camel case
  * @param optionArg
  */
 export function transformOptionArgToCamelCase(optionArg: string): string {
-  return optionArg.split('-').reduce((s, w) => s + w[0].toUpperCase() + w.slice(1))
+  return optionArg
+    .split('-')
+    .reduce((s, w) => s + w[0].toUpperCase() + w.slice(1))
 }
-
 
 export class Option<T = unknown> implements Option<T> {
   public readonly name: string
@@ -43,14 +42,14 @@ export class Option<T = unknown> implements Option<T> {
     flags: string,
     mandatory: boolean,
     description?: string,
-    defaultValue?: T
+    defaultValue?: T,
   ) {
     const match = optionFlagsRegex.exec(flags)
     if (match == null) {
       throw new CommandError(
         -1,
         'Option.constructor:illegal option',
-        `Not a valid option flags(${ flags })`
+        `Not a valid option flags(${flags})`,
       )
     }
 
@@ -59,7 +58,7 @@ export class Option<T = unknown> implements Option<T> {
       throw new CommandError(
         -1,
         'Option.constructor:illegal option',
-        `Not a valid option flags(${ flags }). Bad option name`
+        `Not a valid option flags(${flags}). Bad option name`,
       )
     }
 
@@ -68,7 +67,9 @@ export class Option<T = unknown> implements Option<T> {
     this.description = description || ''
     this.defaultValue = defaultValue
     this.name = long != null ? long.replace(/^--/, '') : short.replace(/^-/, '')
-    this.argName = transformOptionArgToCamelCase(this.name.replace(/^(no-([^-]))?/, '$1'))
+    this.argName = transformOptionArgToCamelCase(
+      this.name.replace(/^(no-([^-]))?/, '$1'),
+    )
     this.negate = long == null || /^--(?:no-([^-]))?/.test(long)
     this.required = optionArg != null && optionArg[0] === '<'
     this.optional = optionArg != null && optionArg[0] === '['
@@ -85,7 +86,6 @@ export class Option<T = unknown> implements Option<T> {
     return this.short === arg || this.long === arg
   }
 }
-
 
 /**
  *

@@ -3,7 +3,6 @@ import { DataSchema, RawDataSchema } from '../schema'
 import { DataSchemaCompileResult } from './result'
 import { DataSchemaCompiler, DataSchemaCompilerContext } from './types'
 
-
 /**
  * DataSchema compiler to compile RawDataSchema content into DataSchema
  *
@@ -17,8 +16,8 @@ export abstract class BaseDataSchemaCompiler<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
-  DS extends DataSchema<T, V>>
-  implements DataSchemaCompiler<T, V, RDS, DS> {
+  DS extends DataSchema<T, V>
+> implements DataSchemaCompiler<T, V, RDS, DS> {
   /**
    * override member variable
    * @see DataSchemaCompiler#type
@@ -35,14 +34,24 @@ export abstract class BaseDataSchemaCompiler<
    * override method
    * @see DataSchemaCompiler#compile
    */
-  public compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS> {
+  public compile(
+    rawSchema: RawDataSchema<T, V>,
+  ): DataSchemaCompileResult<T, V, RDS, DS> {
     // eslint-disable-next-line no-param-reassign
     rawSchema = this.normalizeRawSchema(rawSchema)
-    const result: DataSchemaCompileResult<T, V, RDS, DS> =
-      (new DataSchemaCompileResult(rawSchema)) as any
+    const result: DataSchemaCompileResult<
+      T,
+      V,
+      RDS,
+      DS
+    > = new DataSchemaCompileResult(rawSchema) as any
 
     // required 的默认值为 false
-    const requiredResult = result.compileConstraint<boolean>('required', coverBoolean, false)
+    const requiredResult = result.compileConstraint<boolean>(
+      'required',
+      coverBoolean,
+      false,
+    )
 
     const schema: DS = {
       type: rawSchema.type,
@@ -58,7 +67,9 @@ export abstract class BaseDataSchemaCompiler<
    * override method
    * @see DataSchemaCompiler#normalizeRawSchema
    */
-  public normalizeRawSchema(rawSchema: RawDataSchema<T, V>): RawDataSchema<T, V> {
+  public normalizeRawSchema(
+    rawSchema: RawDataSchema<T, V>,
+  ): RawDataSchema<T, V> {
     return this.context.normalizeRawSchema(rawSchema) as RawDataSchema<T, V>
   }
 
