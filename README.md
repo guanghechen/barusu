@@ -1,3 +1,15 @@
+<header>
+  <h1 align="center"><span>Barusu<span></h1>
+</header>
+
+
+[![License](https://img.shields.io/github/license/guanghechen/barusu)](#license)
+[![Tested With Jest](https://img.shields.io/badge/tested_with-jest-9c465e.svg)](https://github.com/facebook/jest)
+[![Code Style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Package version](https://img.shields.io/github/v/tag/guanghechen/barusu?include_prereleases&sort=semver)](https://github.com/guanghechen/barusu/tags)
+[![Github Top Language](https://img.shields.io/github/languages/top/guanghechen/barusu)](https://github.com/guanghechen/barusu/search?l=typescript)
+[![Node Version](https://img.shields.io/node/v/@barusu/chalk-logger)](https://github.com/guanghechen/barusu)
+
 # Introduction
 
 

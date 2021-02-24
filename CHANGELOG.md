@@ -1,5 +1,27 @@
 # Changelog
 
+<a name="0.0.46"></a>
+## 0.0.46 (2021-02-24)
+
+### Changed
+
+- 🔧 chore: fix broken test script &amp; update snapshot [[70a2e7c](https://github.com/guanghechen/barusu/commit/70a2e7cc9213111cad50c9f53fe91ed308a976dc)]
+- 🎨 style: format codes with prettier [[a379351](https://github.com/guanghechen/barusu/commit/a379351926ed75d144e3462c2b5f8ad0f16e6dc2)]
+- 🔧 chore: upgrade lerna and typescript [[2f615b9](https://github.com/guanghechen/barusu/commit/2f615b9b1a43d395a35d991b1ddac398a8cc96e7)]
+- 🔧 chore: config prettier and format codes with prettier [[c175788](https://github.com/guanghechen/barusu/commit/c17578871c1c753a8c897d07b2adfaf990da9a28)]
+- 🔧 chore: use husky and enable lint-staged in pre-commit hook [[6b5922e](https://github.com/guanghechen/barusu/commit/6b5922ebe874b9159e4b4fe0988881e311193a40)]
+- 🔧 chore: upgrade eslint &amp; update eslint configs &amp; lint codes [[407f647](https://github.com/guanghechen/barusu/commit/407f64718a38e891928fb93009ff3298ac1abaa3)]
+- 🔧 chore: use yarn-deduplicate to deduplicate lock [[e642499](https://github.com/guanghechen/barusu/commit/e64249981efb9ae3fe7d1cf87d1bce2c0b317b50)]
+- 🔧 chore: use gitmoji-changelog &amp; generate CHANGELOG [[f9e99af](https://github.com/guanghechen/barusu/commit/f9e99afd82573d1f9525b584707cbd55944b17d0)]
+- 🎨 style: format codes [[e6ecbdb](https://github.com/guanghechen/barusu/commit/e6ecbdb2a989cfc16aabfeab19302dc784061fd7)]
+
+### Miscellaneous
+
+- 🔀 Merge branch &#x27;develop&#x27; [[5d3d7ff](https://github.com/guanghechen/barusu/commit/5d3d7ffd1d8dd2cdb10b77ca3cd894f5209ecba1)]
+- 🚧 [sort-imports]: split import/export statement into multiple line only when more one exportN statement exists [[439f189](https://github.com/guanghechen/barusu/commit/439f189ab65fea40b093dc69c3674f33d37893ed)]
+- 🚧 [tools/sort-imports] feat: support new option &#x27;blankLinesAfterStatement&#x27; to determine blank lines after import/export statement [[0fe2965](https://github.com/guanghechen/barusu/commit/0fe296536f095da4f60dbff15939cf75282f531d)]
+
+
 <a name="0.0.45"></a>
 ## 0.0.45 (2021-01-20)
 
