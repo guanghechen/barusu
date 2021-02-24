@@ -11,7 +11,6 @@ export * from './creator'
 export * from './reducer'
 export * from './state'
 
-
 /**
  * Shorthand for create both AsyncActionCreator and AsyncActionReducer
  * @param actionType
@@ -20,16 +19,16 @@ export * from './state'
 export function createAsyncAction<
   S extends AsyncStateItem<unknown>,
   T extends string | symbol,
-  As extends AsyncActions<T>,
+  As extends AsyncActions<T>
 >(
   actionType: T,
   handlers?: {
-    onRequestedAction?: AsyncActionHandler<S, T, As['request']>,
-    onSucceedAction?: AsyncActionHandler<S, T, As['success']>,
-    onFailedAction?: AsyncActionHandler<S, T, As['failure']>,
+    onRequestedAction?: AsyncActionHandler<S, T, As['request']>
+    onSucceedAction?: AsyncActionHandler<S, T, As['success']>
+    onFailedAction?: AsyncActionHandler<S, T, As['failure']>
   },
 ): {
-  creator: AsyncActionCreators<T, As>,
+  creator: AsyncActionCreators<T, As>
   reducer: AsyncActionReducer<S, T, As>
 } {
   const creator = createAsyncActionCreator<T, As>(actionType)

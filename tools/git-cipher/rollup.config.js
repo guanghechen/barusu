@@ -3,7 +3,6 @@ import { createRollupConfig } from '@barusu/rollup-config'
 import { copy } from '@barusu/rollup-plugin-copy'
 import manifest from './package.json'
 
-
 const resolvePath = p => path.resolve(__dirname, p)
 const paths = {
   tsconfig: resolvePath('tsconfig.src.json'),
@@ -15,9 +14,8 @@ const baseConfig = createRollupConfig({
     typescriptOptions: {
       tsconfig: paths.tsconfig,
     },
-  }
+  },
 })
-
 
 const { external, plugins } = baseConfig
 const config = [
@@ -32,10 +30,10 @@ const config = [
           {
             src: resolvePath('src/config/*'),
             dest: resolvePath('lib/config'),
-          }
-        ]
-      })
-    ]
+          },
+        ],
+      }),
+    ],
   },
   {
     input: resolvePath('src/cli.ts'),
@@ -48,13 +46,12 @@ const config = [
         banner: '#! /usr/bin/env node',
       },
     ],
-    external: (id) => {
+    external: id => {
       if (external(id)) return true
       return id === './index'
     },
     plugins,
-  }
+  },
 ]
-
 
 export default config

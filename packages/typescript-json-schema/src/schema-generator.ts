@@ -13,7 +13,6 @@ import { getUnionDefinition } from './definition/union-definition'
 import { JsonSchemaContext } from './schema-context'
 import { Definition, ObjectMap, SchemaArgs, SymbolRef } from './types'
 
-
 export class JsonSchemaGenerator {
   private readonly context: JsonSchemaContext
 
@@ -27,7 +26,14 @@ export class JsonSchemaGenerator {
   ) {
     const validationKeywords = { ...defaultValidationKeywords }
     const context = new JsonSchemaContext(
-      validationKeywords, symbols, allSymbols, userSymbols, inheritingTypes, checker, args)
+      validationKeywords,
+      symbols,
+      allSymbols,
+      userSymbols,
+      inheritingTypes,
+      checker,
+      args,
+    )
     this.context = context
   }
 
@@ -35,12 +41,21 @@ export class JsonSchemaGenerator {
     this.context.setSchemaOverride(symbolName, schema)
   }
 
-  public getSchemaForSymbol(symbolName: string, includeReffedDefinitions = true): Definition {
+  public getSchemaForSymbol(
+    symbolName: string,
+    includeReffedDefinitions = true,
+  ): Definition {
     return this.context.getSchemaForSymbol(symbolName, includeReffedDefinitions)
   }
 
-  public getSchemaForSymbols(symbolNames: string[], includeReffedDefinitions = true): Definition {
-    return this.context.getSchemaForSymbols(symbolNames, includeReffedDefinitions)
+  public getSchemaForSymbols(
+    symbolNames: string[],
+    includeReffedDefinitions = true,
+  ): Definition {
+    return this.context.getSchemaForSymbols(
+      symbolNames,
+      includeReffedDefinitions,
+    )
   }
 
   public getSymbols(name?: string): SymbolRef[] {
@@ -51,7 +66,10 @@ export class JsonSchemaGenerator {
     return this.context.getUserSymbols(name)
   }
 
-  public getMainFileSymbols(program: ts.Program, onlyIncludeFiles?: string[]): string[] {
+  public getMainFileSymbols(
+    program: ts.Program,
+    onlyIncludeFiles?: string[],
+  ): string[] {
     return this.context.getMainFileSymbols(program, onlyIncludeFiles)
   }
 
@@ -79,7 +97,10 @@ export class JsonSchemaGenerator {
     return definition
   }
 
-  public getDefinitionForProperty(prop: ts.Symbol, node: ts.Node): Definition | null {
+  public getDefinitionForProperty(
+    prop: ts.Symbol,
+    node: ts.Node,
+  ): Definition | null {
     return getDefinitionForProperty(this.context, prop, node)
   }
 
@@ -102,7 +123,14 @@ export class JsonSchemaGenerator {
     pairedSymbol?: ts.Symbol,
   ): Definition {
     return getTypeDefinition(
-      this.context, type, asRef, unionModifier, prop, reffedType, pairedSymbol)
+      this.context,
+      type,
+      asRef,
+      unionModifier,
+      prop,
+      reffedType,
+      pairedSymbol,
+    )
   }
 
   public getDefinitionForRootType(
@@ -118,8 +146,13 @@ export class JsonSchemaGenerator {
     symbol: ts.Symbol,
     definition: { description?: string },
     // eslint-disable-next-line @typescript-eslint/ban-types
-    otherAnnotations: {}
+    otherAnnotations: {},
   ): void {
-    parseCommentsIntoDefinition(this.context, symbol, definition, otherAnnotations)
+    parseCommentsIntoDefinition(
+      this.context,
+      symbol,
+      definition,
+      otherAnnotations,
+    )
   }
 }

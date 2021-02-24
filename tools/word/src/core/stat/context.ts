@@ -37,7 +37,6 @@ export interface WordStatContext {
   readonly showSummaryOnly: boolean
 }
 
-
 interface Params {
   /**
    * Path of currently executing command
@@ -74,14 +73,13 @@ interface Params {
   readonly showSummaryOnly: boolean
 }
 
-
 /**
  * Create WordStatContext
  *
  * @param params
  */
 export async function createWordStatContext(
-  params: Params
+  params: Params,
 ): Promise<WordStatContext> {
   const context: WordStatContext = {
     cwd: params.cwd,

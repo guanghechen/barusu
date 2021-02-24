@@ -3,7 +3,6 @@ import { destroyBuffer } from '../buffer'
 import { CustomError, ErrorCode } from '../events'
 import { input } from './input'
 
-
 /**
  *
  * @param question           Question to ask for input password
@@ -25,11 +24,11 @@ export async function inputPassword(
       password == null ||
       (minimumSize > 0 && password.length < minimumSize)
     ) {
-      hint = `At least ${ minimumSize } ascii non-space characters needed`
+      hint = `At least ${minimumSize} ascii non-space characters needed`
       return false
     }
     if (maximumSize >= minimumSize && password.length > maximumSize) {
-      hint = 'It\'s too long, do not exceed 100 characters'
+      hint = "It's too long, do not exceed 100 characters"
       return false
     }
     return true
@@ -37,7 +36,7 @@ export async function inputPassword(
 
   const isValidCharacter = (c: number): boolean => {
     // ignore control characters or invalid ascii characters
-    if (c <= 0x20 || c >= 0x7F) return false
+    if (c <= 0x20 || c >= 0x7f) return false
 
     // ignore slash and backslash
     if (c === 0x2f || c === 0x5c) return false
@@ -50,7 +49,7 @@ export async function inputPassword(
     question.padStart(20),
     isValidPassword,
     isValidCharacter,
-    () => `(${ hint }) ${ question }`,
+    () => `(${hint}) ${question}`,
     maxInputRetryTimes,
     showAsterisk,
   )
@@ -58,8 +57,9 @@ export async function inputPassword(
   if (password == null) {
     const error: CustomError = {
       code: ErrorCode.BAD_PASSWORD,
-      message: 'too many times failed to get answer of ' +
-        `'${ question.replace(/^[\s:]*([\s\S]+?)[\s:]*$/, '$1') }'`,
+      message:
+        'too many times failed to get answer of ' +
+        `'${question.replace(/^[\s:]*([\s\S]+?)[\s:]*$/, '$1')}'`,
     }
     throw error
   }
@@ -71,7 +71,6 @@ export async function inputPassword(
   destroyBuffer(password)
   return hashedPassword
 }
-
 
 /**
  * Ask for repeat password from terminal
@@ -89,7 +88,12 @@ export async function confirmPassword(
   maximumSize = -1,
 ): Promise<boolean | never> {
   const repeatedPassword: Buffer = await inputPassword(
-    question, showAsterisk, 1, minimumSize, maximumSize)
+    question,
+    showAsterisk,
+    1,
+    minimumSize,
+    maximumSize,
+  )
   const isSame = (): boolean => {
     if (repeatedPassword.length !== password.length) return false
     for (let i = 0; i < password.length; ++i) {

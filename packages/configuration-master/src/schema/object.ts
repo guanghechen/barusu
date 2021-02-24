@@ -1,7 +1,6 @@
 import { DSchema, DataSchema, RDSchema, RawDataSchema } from '../_core/schema'
 import { RawStringDataSchema, StringDataSchema } from './string'
 
-
 // ObjectDataSchema.type 的类型
 export const OBJECT_T_TYPE = 'object'
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -10,12 +9,12 @@ export type OBJECT_T_TYPE = typeof OBJECT_T_TYPE
 // ObjectDataSchema.value 的类型
 export type OBJECT_V_TYPE = Record<string, unknown>
 
-
 /**
  * 原生的对象类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/object.html
  */
-export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
+export interface RawObjectDataSchema
+  extends RawDataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**
    * 必须存在的属性，若属性自身设置了 required，可以覆盖此值
    */
@@ -29,7 +28,9 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
    * 对象属性的类型，和 properties 类似，但是名称为正则表达式
    * @member pattern  属性名称的正则表达式
    */
-  patternProperties?: { [pattern: string]: RDSchema } | { pattern: string, schema: RDSchema }[]
+  patternProperties?:
+    | { [pattern: string]: RDSchema }
+    | { pattern: string; schema: RDSchema }[]
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略，
@@ -69,11 +70,11 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
   silentIgnore?: boolean
 }
 
-
 /**
  * 对象类型的数据模式，编译 RawObjectDataSchema 后得到的结果
  */
-export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
+export interface ObjectDataSchema
+  extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略
@@ -97,7 +98,7 @@ export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYP
    * 对象属性的类型，和 properties 类似，但是名称为正则表达式
    * @member pattern  属性名称的正则表达式
    */
-  patternProperties?: { pattern: RegExp, schema: DSchema }[]
+  patternProperties?: { pattern: RegExp; schema: DSchema }[]
   /**
    * 对象属性名的数据类型
    */

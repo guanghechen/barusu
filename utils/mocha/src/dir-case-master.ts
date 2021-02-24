@@ -3,16 +3,13 @@ import fs from 'fs-extra'
 import path from 'path'
 import { TestCase, TestCaseGroup, TestCaseMaster } from './case-master'
 
-
 /**
  * test case
  *
  * 测试用例
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface DirTestCase extends TestCase {
-}
-
+export interface DirTestCase extends TestCase {}
 
 /**
  * test case group
@@ -20,7 +17,8 @@ export interface DirTestCase extends TestCase {
  * 测试用例组
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface DirTestCaseGroup extends TestCaseGroup<DirTestCase, DirTestCaseGroup> { }
+export interface DirTestCaseGroup
+  extends TestCaseGroup<DirTestCase, DirTestCaseGroup> {}
 
 /**
  * params of TestCaseMaster.constructor
@@ -40,12 +38,18 @@ export interface DirTestCaseMasterProps {
   checkIfTestDir: (dirPath: string) => boolean
 }
 
-
-export abstract class DirTestCaseMaster extends TestCaseMaster<DirTestCase, DirTestCaseGroup> {
+export abstract class DirTestCaseMaster extends TestCaseMaster<
+  DirTestCase,
+  DirTestCaseGroup
+> {
   protected readonly encoding: string
   protected readonly checkIfTestDir: (dirPath: string) => boolean
 
-  public constructor({ encoding, caseRootDirectory, checkIfTestDir }: DirTestCaseMasterProps) {
+  public constructor({
+    encoding,
+    caseRootDirectory,
+    checkIfTestDir,
+  }: DirTestCaseMasterProps) {
     super(caseRootDirectory)
     this.encoding = encoding
     this.checkIfTestDir = checkIfTestDir
@@ -145,7 +149,11 @@ export abstract class DirTestCaseMaster extends TestCaseMaster<DirTestCase, DirT
       const absoluteAnswerFilePath = path.join(answerPath, filename)
       const stat = fs.statSync(absoluteOutputFilePath)
       if (stat.isDirectory()) {
-        this.compareDirs(absoluteOutputFilePath, absoluteAnswerFilePath, encoding)
+        this.compareDirs(
+          absoluteOutputFilePath,
+          absoluteAnswerFilePath,
+          encoding,
+        )
         continue
       }
       if (stat.isFile()) {

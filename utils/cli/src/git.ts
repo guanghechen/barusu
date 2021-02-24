@@ -3,7 +3,6 @@ import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
 
-
 /**
  * Create a git commit with all file changes
  *
@@ -12,12 +11,11 @@ import inquirer from 'inquirer'
  */
 export async function createCommitAll(
   execaOptions: execa.Options,
-  message: string
+  message: string,
 ): Promise<void> {
   await execa('git', ['add', '-A'], execaOptions)
   await execa('git', ['commit', '-m', message], execaOptions)
 }
-
 
 /**
  * Create initial commit
@@ -41,20 +39,21 @@ export async function createInitialCommit(
   let doInitialCommit: boolean
   if (plopBypass.length > 0) {
     const booleanString = plopBypass.shift()!.toLowerCase()
-    doInitialCommit = (
+    doInitialCommit =
       booleanString === 'true' ||
       booleanString === 'yes' ||
       booleanString === 'y'
-    )
   } else {
-    doInitialCommit = (await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'doInitialCommit',
-        default: false,
-        message: 'Create initial commit?',
-      },
-    ])).doInitialCommit
+    doInitialCommit = (
+      await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'doInitialCommit',
+          default: false,
+          message: 'Create initial commit?',
+        },
+      ])
+    ).doInitialCommit
   }
 
   if (logger != null && logger.debug != null) {

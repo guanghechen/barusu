@@ -5,7 +5,6 @@ import { logger } from '../../env/logger'
 import { RestfulApiGenerateContext } from './context'
 import { clearSchemaRootPath, removeIgnoredDataTypes } from './util'
 
-
 export class RestfulApiGenerateProcessor {
   protected readonly context: RestfulApiGenerateContext
 
@@ -29,13 +28,19 @@ export class RestfulApiGenerateProcessor {
     for (const item of context.apiItems) {
       // RequestData
       if (item.request.voName != null && item.request.schemaPath != null) {
-        const task = self.generateDataSchema(item.request.voName, item.request.schemaPath)
+        const task = self.generateDataSchema(
+          item.request.voName,
+          item.request.schemaPath,
+        )
         tasks.push(task)
       }
 
       // ResponseData
       if (item.response.voName != null) {
-        const task = self.generateDataSchema(item.response.voName, item.response.schemaPath)
+        const task = self.generateDataSchema(
+          item.response.voName,
+          item.response.schemaPath,
+        )
         tasks.push(task)
       }
     }
@@ -52,14 +57,16 @@ export class RestfulApiGenerateProcessor {
     if (symbols.length <= 0) {
       // If the model is not found and muteMissingModel are set to true, skipped
       if (context.muteMissingModel) {
-        logger.info(`cannot find ${ modelName }. skipped.`)
+        logger.info(`cannot find ${modelName}. skipped.`)
         return
       }
-      throw new Error(`${ modelName } not found.`)
+      throw new Error(`${modelName} not found.`)
     }
 
     // If no title is specified, the model name is the title
-    const model: TJS.Definition = context.generator.getSchemaForSymbol(modelName)
+    const model: TJS.Definition = context.generator.getSchemaForSymbol(
+      modelName,
+    )
     if (model.title == null) model.title = modelName
 
     // Make sure the folder on the output path has been created
@@ -70,6 +77,6 @@ export class RestfulApiGenerateProcessor {
     const data = JSON.stringify(json, null, 2)
 
     await fs.writeFile(schemaPath, data, context.encoding)
-    logger.info(`output schema: [${ modelName }] ${ schemaPath }`)
+    logger.info(`output schema: [${modelName}] ${schemaPath}`)
   }
 }

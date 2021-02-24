@@ -2,7 +2,6 @@ import fs from 'fs-extra'
 import { isArray, isObject } from '@barusu/util-option'
 import { logger } from '../../env/logger'
 
-
 /**
  * ignore undefined types
  * @param json
@@ -30,13 +29,14 @@ export function removeIgnoredDataTypes<T extends unknown>(
   return json
 }
 
-
 /**
  * Clear root path of data schemas
  * @param schemaRootPath
  */
-export async function clearSchemaRootPath(schemaRootPath: string): Promise<void> {
+export async function clearSchemaRootPath(
+  schemaRootPath: string,
+): Promise<void> {
   const targetDirectory = schemaRootPath
-  logger.info(`clearing schemas root path: ${ targetDirectory }.`)
+  logger.info(`clearing schemas root path: ${targetDirectory}.`)
   await fs.remove(targetDirectory)
 }

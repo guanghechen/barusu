@@ -11,12 +11,15 @@ import {
   RawBooleanDataSchema as RDS,
 } from '../schema/boolean'
 
-
 /**
  * BooleanDataSchema 编译结果的数据类型
  */
-export type BooleanDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
+export type BooleanDataSchemaCompileResult = DataSchemaCompileResult<
+  T,
+  V,
+  RDS,
+  DS
+>
 
 /**
  * 布尔类型的模式的编译器
@@ -24,7 +27,6 @@ export type BooleanDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, 
 export class BooleanDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -36,7 +38,10 @@ export class BooleanDataSchemaCompiler
     // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileConstraint<V>('default', coverBoolean)
+    const defaultValueResult = result.compileConstraint<V>(
+      'default',
+      coverBoolean,
+    )
 
     // BooleanDataSchema
     const schema: DS = {

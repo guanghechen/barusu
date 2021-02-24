@@ -13,12 +13,15 @@ import {
   RawArrayDataSchema as RDS,
 } from '../schema/array'
 
-
 /**
  * ArrayDataSchema 编译结果的数据类型
  */
-export type ArrayDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
+export type ArrayDataSchemaCompileResult = DataSchemaCompileResult<
+  T,
+  V,
+  RDS,
+  DS
+>
 
 /**
  * 数组类型的模式的编译器
@@ -28,7 +31,6 @@ export type ArrayDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS
 export class ArrayDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -41,7 +43,11 @@ export class ArrayDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // unique 的默认值为 false
-    const uniqueResult = result.compileConstraint<boolean>('unique', coverBoolean, false)
+    const uniqueResult = result.compileConstraint<boolean>(
+      'unique',
+      coverBoolean,
+      false,
+    )
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined
@@ -49,7 +55,9 @@ export class ArrayDataSchemaCompiler
       if (!isArray(rawSchema.default)) {
         result.addError({
           constraint: 'default',
-          reason: `expected an array, but got (${ stringify(rawSchema.default) }).`
+          reason: `expected an array, but got (${stringify(
+            rawSchema.default,
+          )}).`,
         })
       } else {
         defaultValue = rawSchema.default

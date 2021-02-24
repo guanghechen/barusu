@@ -4,7 +4,6 @@ import execa from 'execa'
 import inquirer from 'inquirer'
 import { toLowerCase } from '@barusu/util-option'
 
-
 /**
  * Run `npm/yarn install` to Install node.js dependencies
  * @param execaOptions
@@ -30,17 +29,19 @@ export async function installDependencies(
   if (plopBypass.length > 0) {
     npmScript = plopBypass.shift()!
   } else {
-    npmScript = (await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'npmScript',
-        default: hasYarnInstalled ? 'yarn' : 'npm',
-        message: 'npm or yarn?',
-        choices: ['npm', 'yarn', 'skip'],
-        filter: x => toLowerCase(x).trim(),
-        transformer: (x: string) => toLowerCase(x).trim(),
-      },
-    ])).npmScript
+    npmScript = (
+      await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'npmScript',
+          default: hasYarnInstalled ? 'yarn' : 'npm',
+          message: 'npm or yarn?',
+          choices: ['npm', 'yarn', 'skip'],
+          filter: x => toLowerCase(x).trim(),
+          transformer: (x: string) => toLowerCase(x).trim(),
+        },
+      ])
+    ).npmScript
   }
 
   if (logger != null && logger.debug != null) {

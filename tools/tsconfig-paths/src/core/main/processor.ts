@@ -7,13 +7,10 @@ import { logger } from '../../env/logger'
 import { correctModulePath } from '../../util/module-path'
 import { TsconfigPathsContext } from './context'
 
-
 export class TsconfigPathsProcessor {
   protected readonly context: TsconfigPathsContext
 
-  public constructor(
-    context: TsconfigPathsContext,
-  ) {
+  public constructor(context: TsconfigPathsContext) {
     this.context = context
   }
 
@@ -21,30 +18,45 @@ export class TsconfigPathsProcessor {
     const { context } = this
 
     // no path alias used
-    if (
-      context.tsconfigBaseUrl == null ||
-      context.tsconfigPathAlias == null
-    ) return
+    if (context.tsconfigBaseUrl == null || context.tsconfigPathAlias == null)
+      return
 
     const paths = context.tsconfigPathAlias
-    const absoluteBaseUrl = path.resolve(context.workspace, context.tsconfigBaseUrl)
+    const absoluteBaseUrl = path.resolve(
+      context.workspace,
+      context.tsconfigBaseUrl,
+    )
     const extensions = Object.keys(require.extensions).concat(['.ts', '.d.ts'])
 
     // transform path alias
     const match = createMatchPath(absoluteBaseUrl, paths)
-    const transform = (dstFilepath: string, requiredFilePath: string): string => {
+    const transform = (
+      dstFilepath: string,
+      requiredFilePath: string,
+    ): string => {
       const resolvedPath: string | undefined = match(
-        requiredFilePath, undefined, undefined, extensions)
+        requiredFilePath,
+        undefined,
+        undefined,
+        extensions,
+      )
       if (resolvedPath == null) return requiredFilePath
 
-      const srcFilepath = absoluteOfWorkspace(context.srcRootDir,
-        relativeOfWorkspace(context.dstRootDir, dstFilepath))
+      const srcFilepath = absoluteOfWorkspace(
+        context.srcRootDir,
+        relativeOfWorkspace(context.dstRootDir, dstFilepath),
+      )
       const relativeRequiredFilepath = path.relative(
-        path.dirname(srcFilepath), resolvedPath)
-      const resolvedModulePath: string = path.normalize(relativeRequiredFilepath)
+        path.dirname(srcFilepath),
+        resolvedPath,
+      )
+      const resolvedModulePath: string = path
+        .normalize(relativeRequiredFilepath)
         .replace(/^([^.])/, '.' + path.sep + '$1')
 
-      logger.verbose(`[processDts] correct module: (${ requiredFilePath }) => (${ resolvedModulePath })`)
+      logger.verbose(
+        `[processDts] correct module: (${requiredFilePath}) => (${resolvedModulePath})`,
+      )
       return resolvedModulePath
     }
 
@@ -53,7 +65,8 @@ export class TsconfigPathsProcessor {
       const content: string = await fs.readFile(filePath, context.encoding)
       const resolvedContent: string = correctModulePath(
         content,
-        (modulePath: string) => transform(filePath, modulePath))
+        (modulePath: string) => transform(filePath, modulePath),
+      )
       await fs.writeFile(filePath, resolvedContent, context.encoding)
     }
 

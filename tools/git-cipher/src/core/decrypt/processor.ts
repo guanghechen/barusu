@@ -7,7 +7,6 @@ import { AESCipher, Cipher } from '../../util/cipher'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherDecryptContext } from './context'
 
-
 export class GitCipherDecryptProcessor {
   protected readonly context: GitCipherDecryptContext
   protected readonly secretMaster: SecretMaster
@@ -64,20 +63,37 @@ export class GitCipherDecryptProcessor {
 
     const tasks: Promise<void>[] = []
     for (const item of catalog.items) {
-      const absoluteCiphertextFilepath = catalog
-        .resolveAbsoluteCiphertextFilepath(item.ciphertextFilepath)
-      const absolutePlaintextFilepath = absoluteOfWorkspace(outRootDir, item.plaintextFilepath)
+      const absoluteCiphertextFilepath = catalog.resolveAbsoluteCiphertextFilepath(
+        item.ciphertextFilepath,
+      )
+      const absolutePlaintextFilepath = absoluteOfWorkspace(
+        outRootDir,
+        item.plaintextFilepath,
+      )
 
-      const from = relativeOfWorkspace(context.workspace, absoluteCiphertextFilepath)
-      const to = relativeOfWorkspace(context.workspace, absolutePlaintextFilepath)
+      const from = relativeOfWorkspace(
+        context.workspace,
+        absoluteCiphertextFilepath,
+      )
+      const to = relativeOfWorkspace(
+        context.workspace,
+        absolutePlaintextFilepath,
+      )
 
-      const task = cipher.decryptFile(absoluteCiphertextFilepath, absolutePlaintextFilepath)
+      const task = cipher.decryptFile(
+        absoluteCiphertextFilepath,
+        absolutePlaintextFilepath,
+      )
       task
         .then(() => {
           logger.verbose('[decryptFiles] decrypted ({}) --> ({})', from, to)
         })
         .catch(error => {
-          logger.error('[decryptFiles] failed: decrypting ({}) --> ({})', from, to)
+          logger.error(
+            '[decryptFiles] failed: decrypting ({}) --> ({})',
+            from,
+            to,
+          )
           throw error
         })
       tasks.push(task)

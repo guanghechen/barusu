@@ -1,6 +1,5 @@
 import { isNotEmptyArray, isNotEmptyObject } from './is'
 
-
 /**
  * The strategy for merging options
  *
@@ -8,8 +7,10 @@ import { isNotEmptyArray, isNotEmptyObject } from './is'
  * @param nextOption   next option item
  * @returns option item merged prevOption and nextOption
  */
-export type MergeStrategy<T = unknown> = (prevOption: T, nextOption: T | null) => T
-
+export type MergeStrategy<T = unknown> = (
+  prevOption: T,
+  nextOption: T | null,
+) => T
 
 /**
  * Default merging strategy
@@ -32,7 +33,10 @@ export const defaultMergeStrategies = {
   /**
    * Merge arrays, like Array.prototype.concat
    */
-  concat: function (prevOption: unknown[], nextOption: unknown[] | null): unknown[] {
+  concat: function (
+    prevOption: unknown[],
+    nextOption: unknown[] | null,
+  ): unknown[] {
     if (isNotEmptyArray(nextOption)) {
       return prevOption.length > 0 ? [...prevOption, ...nextOption] : nextOption
     }
@@ -43,7 +47,7 @@ export const defaultMergeStrategies = {
    */
   assign: function (
     prevOption: Record<string, unknown>,
-    nextOption: Record<string, unknown> | null
+    nextOption: Record<string, unknown> | null,
   ): Record<string, unknown> {
     if (isNotEmptyObject(nextOption)) {
       return { ...prevOption, ...nextOption }
@@ -51,7 +55,6 @@ export const defaultMergeStrategies = {
     return prevOption
   } as MergeStrategy<Record<string, unknown>>,
 }
-
 
 /**
  * Merge options
@@ -68,7 +71,10 @@ export function merge<O extends Record<string, unknown>>(
     for (const key of Object.keys(option)) {
       const strategy: MergeStrategy = strategies[key] || defaultStrategy
       if (result[key] != null) {
-        result[key as keyof O] = strategy(result[key], option[key]) as O[keyof O]
+        result[key as keyof O] = strategy(
+          result[key],
+          option[key],
+        ) as O[keyof O]
       } else {
         result[key as keyof O] = option[key] as O[keyof O]
       }

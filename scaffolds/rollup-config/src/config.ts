@@ -14,7 +14,6 @@ import nodeResolve from '@rollup/plugin-node-resolve'
 import { convertToBoolean, coverBoolean } from './util/option-util'
 import { collectAllDependencies } from './util/package-util'
 
-
 export interface ProdConfigParams extends rollup.InputOptions {
   /**
    * 是否生成 sourceMap （包括 declarationMap）
@@ -54,7 +53,7 @@ export interface ProdConfigParams extends rollup.InputOptions {
     /**
      * options for @rollup/plugin-json
      */
-    jsonOptions?: JsonOptions,
+    jsonOptions?: JsonOptions
     /**
      * options for @rollup/plugin-node-resolve
      */
@@ -74,19 +73,23 @@ export interface ProdConfigParams extends rollup.InputOptions {
   }
 }
 
-
 const builtinExternals: string[] = [
   'glob',
   'sync',
   ...require('builtin-modules'),
 ]
 
-
-export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOptions => {
+export const createRollupConfig = (
+  props: ProdConfigParams,
+): rollup.RollupOptions => {
   const DEFAULT_USE_SOURCE_MAP = coverBoolean(
-    true, convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP))
+    true,
+    convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP),
+  )
   const DEFAULT_EXTERNAL_ALL_DEPENDENCIES = coverBoolean(
-    true, convertToBoolean(process.env.ROLLUP_EXTERNAL_ALL_DEPENDENCIES))
+    true,
+    convertToBoolean(process.env.ROLLUP_EXTERNAL_ALL_DEPENDENCIES),
+  )
 
   // process task
   const {
@@ -135,7 +138,7 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
         format: 'es',
         exports: 'named',
         sourcemap: useSourceMap,
-      }
+      },
     ].filter(Boolean) as rollup.OutputOptions[],
     external: function (id: string): boolean {
       const m = /^([.][\s\S]*|@[^/\s]+[/][^/\s]+|[^/\s]+)/.exec(id)
@@ -165,12 +168,12 @@ export const createRollupConfig = (props: ProdConfigParams): rollup.RollupOption
             declarationMap: true,
             declarationDir: 'lib/types',
             outDir: 'lib',
-          }
+          },
         },
         tsconfigOverride: {
           compilerOptions: {
             declarationMap: useSourceMap,
-          }
+          },
         },
         ...typescriptOptions,
       }),

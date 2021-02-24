@@ -3,7 +3,6 @@ import { DSchema, TDSchema, TopDataSchemaMaster } from '../schema'
 import { DataValidationResult } from './result'
 import { DVFactory, DVResult, DataValidatorContext, TDVResult } from './types'
 
-
 /**
  * Data validator management object
  *  - Registration operation: make the data corresponding to a user-defined
@@ -32,7 +31,8 @@ export class DataValidatorMaster implements DataValidatorContext {
   protected readonly topDataSchemaMaster: TopDataSchemaMaster
 
   public constructor(validatorFactoryMap?: Map<string, DVFactory>) {
-    this.validatorFactoryMap = validatorFactoryMap != null ? validatorFactoryMap : new Map()
+    this.validatorFactoryMap =
+      validatorFactoryMap != null ? validatorFactoryMap : new Map()
     this.topDataSchemaMaster = new TopDataSchemaMaster()
   }
 
@@ -44,7 +44,10 @@ export class DataValidatorMaster implements DataValidatorContext {
    * @param type
    * @param dataValidatorFactory
    */
-  public registerValidatorFactory(type: string, dataValidatorFactory: DVFactory): void {
+  public registerValidatorFactory(
+    type: string,
+    dataValidatorFactory: DVFactory,
+  ): void {
     if (this.validatorFactoryMap.has(type)) return
     this.validatorFactoryMap.set(type, dataValidatorFactory)
   }
@@ -58,7 +61,10 @@ export class DataValidatorMaster implements DataValidatorContext {
    * @param type
    * @param dataValidatorFactory
    */
-  public replaceValidatorFactory(type: string, dataValidatorFactory: DVFactory): void {
+  public replaceValidatorFactory(
+    type: string,
+    dataValidatorFactory: DVFactory,
+  ): void {
     this.validatorFactoryMap.set(type, dataValidatorFactory)
   }
 
@@ -73,7 +79,7 @@ export class DataValidatorMaster implements DataValidatorContext {
       const result: DVResult = new DataValidationResult(schema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown schema type: ${ stringify(schema.type) }.`
+        reason: `unknown schema type: ${stringify(schema.type)}.`,
       })
     }
 

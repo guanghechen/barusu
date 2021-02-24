@@ -5,18 +5,21 @@
  *  - 否则，返回 Boolean(@value)
  * @param value
  */
-export function convertToBoolean(value?: string | boolean | any): boolean | undefined {
+export function convertToBoolean(
+  value?: string | boolean | any,
+): boolean | undefined {
   if (value == null) return undefined
   if (typeof value === 'string') {
     switch (value.toLowerCase()) {
-      case 'false': return false
-      case 'true': return true
+      case 'false':
+        return false
+      case 'true':
+        return true
     }
     return undefined
   }
   return Boolean(value)
 }
-
 
 /**
  * 当 value 为 null/undefined 时，返回 @defaultValue
@@ -28,7 +31,6 @@ export function cover<T>(defaultValue: T, value: T | null | undefined): T {
   if (value == null) return defaultValue
   return value
 }
-
 
 /**
  * 先将 @value 转成布尔值，然后调用 cover 函数

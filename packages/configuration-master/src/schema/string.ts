@@ -1,6 +1,5 @@
 import { DataSchema, RawDataSchema } from '../_core/schema'
 
-
 // IntegerDataSchema.type 的类型
 export const STRING_T_TYPE = 'string'
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -8,7 +7,6 @@ export type STRING_T_TYPE = typeof STRING_T_TYPE
 
 // IntegerDataSchema.value 的类型
 export type STRING_V_TYPE = string
-
 
 /**
  * 特定类型的字符串格式
@@ -50,7 +48,6 @@ export enum StringFormat {
 
 // StringFormat 集合
 export const StringFormatSet = new Set<string>(Object.values(StringFormat))
-
 
 /**
  * 字符串数据的转换方式
@@ -94,16 +91,17 @@ export enum StringTransformType {
   CONSTANT_CASE = 'constant-case',
 }
 
-
 // StringTransformType 集合
-export const StringTransformTypeSet = new Set<string>(Object.values(StringTransformType))
-
+export const StringTransformTypeSet = new Set<string>(
+  Object.values(StringTransformType),
+)
 
 /**
  * 原生的字符串类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/string.html
  */
-export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING_V_TYPE> {
+export interface RawStringDataSchema
+  extends RawDataSchema<STRING_T_TYPE, STRING_V_TYPE> {
   /**
    * 最小的长度，需大于等于 0
    */
@@ -134,11 +132,11 @@ export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING
   enum?: string[]
 }
 
-
 /**
  * 字符串类型的数据模式，编译 RawStringDataSchema 后得到的结果
  */
-export interface StringDataSchema extends DataSchema<STRING_T_TYPE, STRING_V_TYPE> {
+export interface StringDataSchema
+  extends DataSchema<STRING_T_TYPE, STRING_V_TYPE> {
   /**
    * 最小的长度，需大于等于 0
    */

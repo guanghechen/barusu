@@ -3,7 +3,6 @@ import path from 'path'
 import { createLoggerMocker } from '@barusu/util-jest'
 import { COMMAND_NAME, createProgram, execSubCommandStat, logger } from '../src'
 
-
 describe('stat', function () {
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'files')
   const workspaceRootDir: string = path.resolve(__dirname, '..')

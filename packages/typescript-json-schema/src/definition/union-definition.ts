@@ -4,7 +4,6 @@ import { Definition, PrimitiveType } from '../types'
 import { extractLiteralValue } from '../util'
 import { getTypeDefinition } from './type-definition'
 
-
 /**
  * Get definition of intersect type (&)
  *
@@ -74,11 +73,11 @@ export function getUnionDefinition(
 
       // if all values are of the same primitive type, add a 'type' field
       // to the schema
-      if (enumValues.every((x) => typeof x === 'string')) {
+      if (enumValues.every(x => typeof x === 'string')) {
         enumSchema.type = 'string'
-      } else if (enumValues.every((x) => typeof x === 'number')) {
+      } else if (enumValues.every(x => typeof x === 'number')) {
         enumSchema.type = 'number'
-      } else if (enumValues.every((x) => typeof x === 'boolean')) {
+      } else if (enumValues.every(x => typeof x === 'boolean')) {
         enumSchema.type = 'boolean'
       }
       schemas.push(enumSchema)

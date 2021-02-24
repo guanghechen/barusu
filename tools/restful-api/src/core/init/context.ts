@@ -24,7 +24,6 @@ export interface RestfulApiInitContext {
   readonly plopBypass: string[]
 }
 
-
 interface Params {
   /**
    * Path of currently executing command
@@ -49,13 +48,12 @@ interface Params {
   readonly plopBypass: string[]
 }
 
-
 /**
  * Create RestfulApiInitContext
  * @param params
  */
 export function createRestfulApiInitContext(
-  params: Params
+  params: Params,
 ): RestfulApiInitContext {
   const context: RestfulApiInitContext = {
     cwd: params.cwd,

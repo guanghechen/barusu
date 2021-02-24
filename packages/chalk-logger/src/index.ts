@@ -6,7 +6,6 @@ export * from './command'
 export * from './level'
 export * from './logger'
 
-
 export class ChalkLogger extends Logger {
   /**
    * prefix of logger.name
@@ -22,7 +21,7 @@ export class ChalkLogger extends Logger {
       ...options,
       ...calcLoggerOptionsFromArgs(args || []),
     })
-    const basename = (options != null && options.name != null) ? options.name : ''
+    const basename = options != null && options.name != null ? options.name : ''
     this.setBaseName(basename)
   }
 
@@ -67,6 +66,5 @@ export class ChalkLogger extends Logger {
     self.mode = mode
   }
 }
-
 
 export default ChalkLogger

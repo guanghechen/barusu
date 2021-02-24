@@ -1,14 +1,11 @@
 import type { Mocker } from './types'
 import { desensitize } from './util'
 
-
 export type LoggerMocker = Mocker<string[][]>
-
 
 interface Logger {
   write: (text: string) => void
 }
-
 
 interface CreateLoggerMockParams {
   /**
@@ -29,7 +26,6 @@ interface CreateLoggerMockParams {
   formatter?: (text: string) => string
 }
 
-
 /**
  * Create a LogMocker
  * @param logger
@@ -43,11 +39,13 @@ export function createLoggerMocker({
 }: CreateLoggerMockParams): LoggerMocker {
   let cliInfos: string[][] = []
   const collectLog = (...args: any[]) => {
-    cliInfos.push(args.map(x => {
-      const text = typeof x === 'string' ? x : JSON.stringify(x)
-      if (formatter != null) return formatter(text)
-      return desensitize(text, workspaceRootDir)
-    }))
+    cliInfos.push(
+      args.map(x => {
+        const text = typeof x === 'string' ? x : JSON.stringify(x)
+        if (formatter != null) return formatter(text)
+        return desensitize(text, workspaceRootDir)
+      }),
+    )
   }
 
   let writeMock: jest.MockInstance<any, any>
@@ -55,9 +53,7 @@ export function createLoggerMocker({
 
   // mock logger
   const mock = (): void => {
-    writeMock = jest
-      .spyOn(logger, 'write')
-      .mockImplementation(collectLog)
+    writeMock = jest.spyOn(logger, 'write').mockImplementation(collectLog)
     if (spyOnGlobalConsole) {
       consoleLogMock = jest
         .spyOn(global.console, 'log')

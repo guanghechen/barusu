@@ -10,7 +10,6 @@ import {
 } from '../../util/character-stats'
 import { WordStatContext } from './context'
 
-
 export class WordStatProcessor {
   protected readonly context: WordStatContext
 
@@ -23,24 +22,29 @@ export class WordStatProcessor {
 
     const filePaths = [
       ...new Set(
-        context.filePath.concat(
-          await globby(context.filePattern, {
-            cwd: context.workspace,
-            onlyFiles: true,
-            expandDirectories: false,
-          }))
-          .map(p => absoluteOfWorkspace(context.workspace, p))
-      )
+        context.filePath
+          .concat(
+            await globby(context.filePattern, {
+              cwd: context.workspace,
+              onlyFiles: true,
+              expandDirectories: false,
+            }),
+          )
+          .map(p => absoluteOfWorkspace(context.workspace, p)),
+      ),
     ].sort()
 
     console.log()
 
-    const result: Record < string, CharacterDetail > = {}
+    const result: Record<string, CharacterDetail> = {}
     for (const filePath of filePaths) {
       const content = await fs.readFile(filePath, context.encoding)
       const detailMap = performCharacterStatistics(content)
       const stat = calcCharacterStat(
-        detailMap, context.showDetails, context.showDetailsPretty)
+        detailMap,
+        context.showDetails,
+        context.showDetailsPretty,
+      )
 
       // display statistics for each file
       if (!context.showSummaryOnly) {
@@ -55,7 +59,10 @@ export class WordStatProcessor {
     // or showSummaryOnly is specified
     if (context.showSummaryOnly || filePaths.length > 1) {
       const stat = calcCharacterStat(
-        result, context.showDetails, context.showDetailsPretty)
+        result,
+        context.showDetails,
+        context.showDetailsPretty,
+      )
       console.log('Summary')
       console.log(formatCharacterStat(stat))
     }

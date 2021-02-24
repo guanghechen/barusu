@@ -8,10 +8,8 @@ import { PlopGenerator } from 'node-plop'
 import Ora from 'ora'
 import { choosePlopGenerator, typeMap } from './out'
 
-
 // eslint-disable-next-line new-cap
 const progressSpinner = Ora()
-
 
 /**
  *
@@ -38,19 +36,29 @@ export async function doThePlop(
 
   const onSuccess = (change: PlopActionHooksChanges) => {
     let line = ''
-    if (change.type) { line += ` ${ typeMap(change.type, noMap) }` }
-    if (change.path) { line += ` ${ change.path }` }
+    if (change.type) {
+      line += ` ${typeMap(change.type, noMap)}`
+    }
+    if (change.path) {
+      line += ` ${change.path}`
+    }
     progressSpinner.succeed(line)
     progressSpinner.start()
   }
 
   const onFailure = (fail: PlopActionHooksFailures) => {
     let line = ''
-    if (fail.type) { line += ` ${ typeMap(fail.type, noMap) }` }
-    if (fail.path) { line += ` ${ fail.path }` }
+    if (fail.type) {
+      line += ` ${typeMap(fail.type, noMap)}`
+    }
+    if (fail.path) {
+      line += ` ${fail.path}`
+    }
 
     const errMsg = fail.error || fail.message
-    if (errMsg) { line += ` ${ errMsg }` }
+    if (errMsg) {
+      line += ` ${errMsg}`
+    }
     progressSpinner.fail(line)
     progressSpinner.start()
   }
@@ -59,7 +67,6 @@ export async function doThePlop(
   await generator.runActions(answers, { onSuccess, onFailure, onComment })
   progressSpinner.stop()
 }
-
 
 /**
  * Execute plop

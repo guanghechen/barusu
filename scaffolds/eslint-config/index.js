@@ -1,7 +1,6 @@
 const customRules = require('./rule-custom')
 const reactAppRules = require('./rule-react-app')
 
-
 module.exports = {
   root: true,
   env: { browser: true, commonjs: true, es6: true, jest: true, node: true },

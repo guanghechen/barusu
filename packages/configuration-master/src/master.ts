@@ -37,7 +37,6 @@ import { ObjectDataValidatorFactory } from './validator/object'
 import { RefDataValidatorFactory } from './validator/ref'
 import { StringDataValidatorFactory } from './validator/string'
 
-
 /**
  * Management object for parsing data schema and verifying data
  *
@@ -67,8 +66,13 @@ export class ConfigurationMaster {
    * @param type
    * @param SchemaCompilerConstructor
    */
-  public registerCompiler(type: string, SchemaCompilerConstructor: DSCompilerConstructor): this {
-    const schemaCompiler = new SchemaCompilerConstructor(this.schemaCompilerMaster)
+  public registerCompiler(
+    type: string,
+    SchemaCompilerConstructor: DSCompilerConstructor,
+  ): this {
+    const schemaCompiler = new SchemaCompilerConstructor(
+      this.schemaCompilerMaster,
+    )
     this.schemaCompilerMaster.registerCompiler(type, schemaCompiler)
     return this
   }
@@ -82,8 +86,13 @@ export class ConfigurationMaster {
    * @param type
    * @param SchemaCompilerConstructor
    */
-  public replaceCompiler(type: string, SchemaCompilerConstructor: DSCompilerConstructor): this {
-    const schemaCompiler = new SchemaCompilerConstructor(this.schemaCompilerMaster)
+  public replaceCompiler(
+    type: string,
+    SchemaCompilerConstructor: DSCompilerConstructor,
+  ): this {
+    const schemaCompiler = new SchemaCompilerConstructor(
+      this.schemaCompilerMaster,
+    )
     this.schemaCompilerMaster.replaceCompiler(type, schemaCompiler)
     return this
   }
@@ -98,10 +107,15 @@ export class ConfigurationMaster {
    */
   public registerValidatorFactory(
     type: string,
-    DataValidatorFactoryConstructor: DVFactoryConstructor
+    DataValidatorFactoryConstructor: DVFactoryConstructor,
   ): this {
-    const dataValidatorFactory = new DataValidatorFactoryConstructor(this.dataValidatorMaster)
-    this.dataValidatorMaster.registerValidatorFactory(type, dataValidatorFactory)
+    const dataValidatorFactory = new DataValidatorFactoryConstructor(
+      this.dataValidatorMaster,
+    )
+    this.dataValidatorMaster.registerValidatorFactory(
+      type,
+      dataValidatorFactory,
+    )
     return this
   }
 
@@ -117,7 +131,9 @@ export class ConfigurationMaster {
     type: string,
     DataValidatorFactoryConstructor: DVFactoryConstructor,
   ): this {
-    const dataValidatorFactory = new DataValidatorFactoryConstructor(this.dataValidatorMaster)
+    const dataValidatorFactory = new DataValidatorFactoryConstructor(
+      this.dataValidatorMaster,
+    )
     this.dataValidatorMaster.replaceValidatorFactory(type, dataValidatorFactory)
     return this
   }
@@ -202,7 +218,6 @@ export class ConfigurationMaster {
     return this
   }
 }
-
 
 /**
  * 默认的 CompilerMaster；

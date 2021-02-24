@@ -9,7 +9,6 @@ import {
 } from './types'
 import { convertMapToObject } from './util'
 
-
 /**
  *
  * @member checker
@@ -70,8 +69,10 @@ export class JsonSchemaContext {
     checker: Readonly<ts.TypeChecker>,
     args: Readonly<SchemaArgs>,
   ) {
-    const userValidationKeywords = args.validationKeywords
-      .reduce((acc, word) => ({ ...acc, [word]: true, }), {})
+    const userValidationKeywords = args.validationKeywords.reduce(
+      (acc, word) => ({ ...acc, [word]: true }),
+      {},
+    )
     this.userValidationKeywords = Object.freeze({ ...userValidationKeywords })
     this.validationKeywords = Object.freeze({ ...validationKeywords })
     this.args = Object.freeze({ ...args })
@@ -123,9 +124,12 @@ export class JsonSchemaContext {
     this.schemaOverrides.set(symbolName, schema)
   }
 
-  public getSchemaForSymbol(symbolName: string, includeReffedDefinitions = true): Definition {
+  public getSchemaForSymbol(
+    symbolName: string,
+    includeReffedDefinitions = true,
+  ): Definition {
     if (!this.allSymbols[symbolName]) {
-      throw new Error(`type ${ symbolName } not found`)
+      throw new Error(`type ${symbolName} not found`)
     }
     const def = getTypeDefinition(
       this,
@@ -134,9 +138,13 @@ export class JsonSchemaContext {
       undefined,
       undefined,
       undefined,
-      this.userSymbols[symbolName] || undefined
+      this.userSymbols[symbolName] || undefined,
     )
-    if (this.args.ref && includeReffedDefinitions && this.reffedDefinitions.size > 0) {
+    if (
+      this.args.ref &&
+      includeReffedDefinitions &&
+      this.reffedDefinitions.size > 0
+    ) {
       def.definitions = {}
       for (const [key, val] of this.reffedDefinitions) {
         def.definitions[key] = val
@@ -147,7 +155,10 @@ export class JsonSchemaContext {
     return def
   }
 
-  public getSchemaForSymbols(symbolNames: string[], includeReffedDefinitions = true): Definition {
+  public getSchemaForSymbols(
+    symbolNames: string[],
+    includeReffedDefinitions = true,
+  ): Definition {
     const root = {
       $schema: 'http://json-schema.org/draft-07/schema#',
       definitions: {},
@@ -165,13 +176,20 @@ export class JsonSchemaContext {
         undefined,
         undefined,
         undefined,
-        this.userSymbols[symbolName]
+        this.userSymbols[symbolName],
       )
       root.definitions[symbolName] = definition
     }
 
-    if (this.args.ref && includeReffedDefinitions && this.reffedDefinitions.size > 0) {
-      root.definitions = { ...root.definitions, ...convertMapToObject(this.reffedDefinitions) }
+    if (
+      this.args.ref &&
+      includeReffedDefinitions &&
+      this.reffedDefinitions.size > 0
+    ) {
+      root.definitions = {
+        ...root.definitions,
+        ...convertMapToObject(this.reffedDefinitions),
+      }
     }
     return root
   }
@@ -183,7 +201,9 @@ export class JsonSchemaContext {
 
   public getUserSymbols(name?: string): string[] {
     if (name == null) return [...Object.keys(this.userSymbols)]
-    return [...Object.keys(this.userSymbols)].filter(typeName => typeName === name)
+    return [...Object.keys(this.userSymbols)].filter(
+      typeName => typeName === name,
+    )
   }
 
   /**
@@ -194,9 +214,9 @@ export class JsonSchemaContext {
     const decl = prop.getDeclarations()
     if (decl?.length) {
       const type = (decl[0] as any).type as ts.TypeReferenceNode
-      if (type && (type.kind & ts.SyntaxKind.TypeReference) && type.typeName) {
+      if (type && type.kind & ts.SyntaxKind.TypeReference && type.typeName) {
         const symbol = this.checker.getSymbolAtLocation(type.typeName)
-        if (symbol && (symbol.flags & ts.SymbolFlags.Alias)) {
+        if (symbol && symbol.flags & ts.SymbolFlags.Alias) {
           return this.checker.getAliasedSymbol(symbol)
         }
         return symbol
@@ -223,7 +243,8 @@ export class JsonSchemaContext {
     if (files.length) {
       return Object.keys(this.userSymbols).filter(key => {
         const symbol = this.userSymbols[key]
-        if (!symbol || !symbol.declarations || !symbol.declarations.length) return false
+        if (!symbol || !symbol.declarations || !symbol.declarations.length)
+          return false
 
         let node: ts.Node = symbol.declarations[0]
         while (node?.parent) node = node.parent
@@ -248,7 +269,8 @@ export class JsonSchemaContext {
       .typeToString(
         type,
         undefined,
-        ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType
+        ts.TypeFormatFlags.NoTruncation |
+          ts.TypeFormatFlags.UseFullyQualifiedType,
       )
       .replace(new RegExp(this.REGEX_FILE_NAME_OR_SPACE, 'g'), '')
     return this.makeTypeNameUnique(type, typeName)
@@ -266,9 +288,11 @@ export class JsonSchemaContext {
     let name = originName
     for (
       let order = 1;
-      this.typeIdsByName.get(name) != null && this.typeIdsByName.get(name) !== id;
+      this.typeIdsByName.get(name) != null &&
+      this.typeIdsByName.get(name) !== id;
+
     ) {
-      name = `${ originName }_${ order }`
+      name = `${originName}_${order}`
       order += 1
     }
     this.typeNamesById.set(id, name)

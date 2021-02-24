@@ -24,7 +24,6 @@ export enum HttpVerb {
   DELETE = 'DELETE',
 }
 
-
 /**
  * HTTP Headers
  */
@@ -35,18 +34,12 @@ export interface HttpHeaders {
   [key: string]: string | number
 }
 
-
 /**
  * HTTP Request Headers
  */
-export interface HttpRequestHeaders extends HttpHeaders {
-
-}
-
+export interface HttpRequestHeaders extends HttpHeaders {}
 
 /**
  * HTTP Response Headers
  */
-export interface HttpResponseHeaders extends HttpHeaders {
-
-}
+export interface HttpResponseHeaders extends HttpHeaders {}

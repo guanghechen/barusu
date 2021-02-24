@@ -9,7 +9,6 @@ import { logger } from '../../env/logger'
 import { RestfulApiInitContext } from './context'
 import { renderTemplates } from './util'
 
-
 export class RestfulApiInitProcessor {
   protected readonly context: RestfulApiInitContext
 
@@ -26,7 +25,7 @@ export class RestfulApiInitProcessor {
     // ensure target path is empty
     if (!isNonExistentOrEmpty(context.workspace)) {
       const relativeProjectPath = path.relative(context.cwd, context.workspace)
-      logger.error(`${ relativeProjectPath } is not a non-empty directory path`)
+      logger.error(`${relativeProjectPath} is not a non-empty directory path`)
       return
     }
 
@@ -34,7 +33,10 @@ export class RestfulApiInitProcessor {
 
     await renderTemplates(context, plopBypass)
 
-    const execaOptions: execa.Options = { stdio: 'inherit', cwd: context.workspace }
+    const execaOptions: execa.Options = {
+      stdio: 'inherit',
+      cwd: context.workspace,
+    }
 
     // install dependencies
     await installDependencies(execaOptions, plopBypass, logger)

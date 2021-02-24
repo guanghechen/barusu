@@ -1,6 +1,5 @@
 import path from 'path'
 
-
 /**
  * Calc absolute path of p under the workspace
  *
@@ -27,7 +26,6 @@ export function absoluteOfWorkspace(
   const absoluteDir: string = path.resolve(workspace, targetDir)
   return absoluteDir
 }
-
 
 /**
  * Calc relative path to workspace

@@ -13,18 +13,18 @@ import {
   ArrayDataSchema as DS,
 } from '../schema/array'
 
-
 /**
  * ArrayDataSchema 校验结果的数据类型
  */
 export type ArrayDataValidationResult = DataValidationResult<T, V, DS>
 
-
 /**
  * 数组类型的校验器
  */
 // eslint-disable-next-line max-len
-export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
+export class ArrayDataValidator
+  extends BaseDataValidator<T, V, DS>
+  implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -46,7 +46,7 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
       if (valueSet.size !== value.length) {
         return result.addError({
           constraint: 'unique',
-          reason: `expected a unique array, but got (${ stringify(value) }).`
+          reason: `expected a unique array, but got (${stringify(value)}).`,
         })
       }
     }
@@ -56,7 +56,10 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
       const newValues = []
       for (let i = 0; i < value.length; ++i) {
         const d = value[i]
-        const xValidateResult: DVResult = this.context.validateDataSchema(schema.items, d)
+        const xValidateResult: DVResult = this.context.validateDataSchema(
+          schema.items,
+          d,
+        )
         result.addHandleResult('items', xValidateResult, '' + i)
         if (!xValidateResult.hasError) {
           newValues.push(xValidateResult.value)
@@ -81,14 +84,17 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements D
   }
 }
 
-
 /**
  * 数组类型的校验器的工厂对象
  */
-export class ArrayDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
-  public readonly type: T = T;
+export class ArrayDataValidatorFactory extends BaseDataValidatorFactory<
+  T,
+  V,
+  DS
+> {
+  public readonly type: T = T
 
   public create(schema: DS): ArrayDataValidator {
-    return new ArrayDataValidator(schema, this.context);
+    return new ArrayDataValidator(schema, this.context)
   }
 }

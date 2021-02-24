@@ -21,12 +21,15 @@ import {
   StringTransformTypeSet,
 } from '../schema/string'
 
-
 /**
  * StringDataSchema 编译结果的数据类型
  */
-export type StringDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
+export type StringDataSchemaCompileResult = DataSchemaCompileResult<
+  T,
+  V,
+  RDS,
+  DS
+>
 
 /**
  * 数字类型的模式的编译器
@@ -36,7 +39,6 @@ export type StringDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, D
 export class StringDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -49,20 +51,32 @@ export class StringDataSchemaCompiler
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>(
-      'default', coverString)
+      'default',
+      coverString,
+    )
     const patternResult = result.compileConstraint<RegExp>(
-      'pattern', coverRegex)
+      'pattern',
+      coverRegex,
+    )
     const enumValueResult = result.compileConstraint<string[]>(
-      'enum', coverArray<string>(coverString))
+      'enum',
+      coverArray<string>(coverString),
+    )
     const minLengthResult = result.compileConstraint<number>(
-      'minLength', coverInteger)
+      'minLength',
+      coverInteger,
+    )
     const maxLengthResult = result.compileConstraint<number>(
-      'maxLength', coverInteger)
+      'maxLength',
+      coverInteger,
+    )
 
     let format: StringFormat[] | undefined
     if (rawSchema.format != null) {
       // 先检查是否为字符串数组
-      const formats: string[] = isString(rawSchema.format) ? [rawSchema.format] : rawSchema.format
+      const formats: string[] = isString(rawSchema.format)
+        ? [rawSchema.format]
+        : rawSchema.format
       const formatResult = coverArray<string>(coverString)(formats)
       if (formatResult.hasError) {
         result.addError({
@@ -76,7 +90,7 @@ export class StringDataSchemaCompiler
           if (!StringFormatSet.has(f)) {
             result.addWarning({
               constraint: 'format',
-              reason: `unsupported format: ${ f }`
+              reason: `unsupported format: ${f}`,
             })
             continue
           }
@@ -106,7 +120,7 @@ export class StringDataSchemaCompiler
           if (!StringTransformTypeSet.has(f)) {
             result.addWarning({
               constraint: 'transform',
-              reason: `unsupported transform: ${ f }`
+              reason: `unsupported transform: ${f}`,
             })
             continue
           }
@@ -115,7 +129,6 @@ export class StringDataSchemaCompiler
         if (transform.length <= 0) transform = undefined
       }
     }
-
 
     if (minLengthResult.value != null) {
       if (minLengthResult.value < 0) {
@@ -132,7 +145,10 @@ export class StringDataSchemaCompiler
           constraint: 'maxLength',
           reason: 'maxLength must be a positive integer',
         })
-      } else if (minLengthResult.value != null && minLengthResult.value > maxLengthResult.value) {
+      } else if (
+        minLengthResult.value != null &&
+        minLengthResult.value > maxLengthResult.value
+      ) {
         result.addError({
           constraint: 'minLength',
           reason: 'minLength must be less than or equal maxLength',

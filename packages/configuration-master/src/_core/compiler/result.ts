@@ -5,7 +5,6 @@ import {
 import { DataHandleResult } from '../../_util/handle-result'
 import { DataSchema, RawDataSchema } from '../schema'
 
-
 /**
  * DataSchema 的编译结果
  * 当 errors 为空数组时，schema 应不为 undefined
@@ -19,9 +18,8 @@ export class DataSchemaCompileResult<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
-  DS extends DataSchema<T, V>>
-  extends DataHandleResult<DS> {
-
+  DS extends DataSchema<T, V>
+> extends DataHandleResult<DS> {
   public readonly _rawSchema: RDS
 
   /**
@@ -43,7 +41,7 @@ export class DataSchemaCompileResult<
   public compileConstraint<P>(
     constraintName: keyof RDS,
     coverFunc: CoverOperationFunc<P>,
-    defaultValue?: P
+    defaultValue?: P,
   ): CoverOperationResult<P> {
     const rawSchema = this._rawSchema
     const result = coverFunc(defaultValue, rawSchema[constraintName])

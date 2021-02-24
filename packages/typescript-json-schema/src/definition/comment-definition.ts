@@ -3,7 +3,6 @@ import { subDefinitions } from '../config'
 import { JsonSchemaContext } from '../schema-context'
 import { parseJson } from '../util'
 
-
 /**
  * Parse the comments of a symbol into the definition and other annotations.
  *
@@ -17,7 +16,7 @@ export function parseCommentsIntoDefinition(
   symbol: ts.Symbol | undefined | null,
   definition: { description?: string },
   // eslint-disable-next-line @typescript-eslint/ban-types
-  otherAnnotations: {}
+  otherAnnotations: {},
 ): void {
   if (symbol == null) return
 
@@ -26,9 +25,13 @@ export function parseCommentsIntoDefinition(
   if (comments.length > 0) {
     // eslint-disable-next-line no-param-reassign
     definition.description = comments
-      .map(comment => comment.kind === 'lineBreak'
-        ? comment.text
-        : comment.text.trim().replace(new RegExp(context.REGEX_LINE_BREAK, 'g'), '\n'))
+      .map(comment =>
+        comment.kind === 'lineBreak'
+          ? comment.text
+          : comment.text
+              .trim()
+              .replace(new RegExp(context.REGEX_LINE_BREAK, 'g'), '\n'),
+      )
       .join('')
   }
 
@@ -49,7 +52,9 @@ export function parseCommentsIntoDefinition(
         text = 'true'
       }
     } else if (name === 'TJS' && text.startsWith('-')) {
-      const match: string[] | RegExpExecArray | null = tjsDocRegex.exec(doc.text!)
+      const match: string[] | RegExpExecArray | null = tjsDocRegex.exec(
+        doc.text!,
+      )
       if (match) {
         name = match[1]
         text = match[2]
@@ -63,7 +68,9 @@ export function parseCommentsIntoDefinition(
     // In TypeScript ~3.5, the annotation name splits at the dot character
     // so we have to process the "." and beyond from the value
     if (subDefinitions[name]) {
-      const match: string[] | RegExpExecArray | null = groupJsDocRegex.exec(text)
+      const match: string[] | RegExpExecArray | null = groupJsDocRegex.exec(
+        text,
+      )
       if (match) {
         const k = match[1]
         const v = match[2]
@@ -85,7 +92,10 @@ export function parseCommentsIntoDefinition(
       }
     }
 
-    if (context.validationKeywords[name] || context.userValidationKeywords[name]) {
+    if (
+      context.validationKeywords[name] ||
+      context.userValidationKeywords[name]
+    ) {
       // eslint-disable-next-line no-param-reassign
       definition[name] = text === undefined ? '' : parseJson(text)
     } else {

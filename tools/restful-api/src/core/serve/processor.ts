@@ -13,7 +13,6 @@ import { accessLog } from './middleware/access-log'
 import { serveDataFile } from './middleware/serve-data-file'
 import { serveResourceFile } from './middleware/serve-resource-file'
 
-
 export class RestfulApiServeProcessor {
   public app: Koa | null
   public server: http.Server | null
@@ -35,15 +34,13 @@ export class RestfulApiServeProcessor {
   }
 
   /**
-  * start server
-  */
+   * start server
+   */
   public async start(): Promise<Koa> {
     const { context } = this
     const app = new Koa()
 
-    app
-      .use(accessLog())
-      .use(koaCors())
+    app.use(accessLog()).use(koaCors())
 
     // run custom router first
     for (const router of this.routers) {
@@ -54,49 +51,48 @@ export class RestfulApiServeProcessor {
           logger.info('load router: {} {}', method.padEnd(6), layer.path)
         }
       }
-      app
-        .use(router.routes())
-        .use(router.allowedMethods())
+      app.use(router.routes()).use(router.allowedMethods())
     }
 
     // If mockResourceRootDir is specified, the file data source is used
     // as a resource file data source
     if (context.mockResourceRootDir != null) {
-      app.use(serveResourceFile({
-        workspaceDir: context.workspace,
-        prefixUrl: context.mockDataPrefixUrl,
-        mockResourceRootDir: context.mockResourceRootDir,
-      }))
+      app.use(
+        serveResourceFile({
+          workspaceDir: context.workspace,
+          prefixUrl: context.mockDataPrefixUrl,
+          mockResourceRootDir: context.mockResourceRootDir,
+        }),
+      )
     }
 
     // run koa-json after custom router
-    app
-      .use(koaJson())
+    app.use(koaJson())
 
     // If mockDataRootDir is specified, the file data source is used as a
     // json data source and be prior than mock data generated from schemas
     if (context.mockDataRootDir != null) {
-      app.use(serveDataFile({
-        workspaceDir: context.workspace,
-        prefixUrl: context.mockResourcePrefixUrl,
-        mockDataRootDir: context.mockDataRootDir,
-      }))
+      app.use(
+        serveDataFile({
+          workspaceDir: context.workspace,
+          prefixUrl: context.mockResourcePrefixUrl,
+          mockDataRootDir: context.mockDataRootDir,
+        }),
+      )
     }
 
     // run generated router from api-items
     // don't execute `this.routers.push(await this.generateRoutes())`,
     // as `this.start` may be called in multiple times.
     const router = await this.generateRoutes()
-    app
-      .use(router.routes())
-      .use(router.allowedMethods())
+    app.use(router.routes()).use(router.allowedMethods())
 
     // start server
     const server = app.listen(context.port, context.host, () => {
-      const url = `http://${ context.host }:${ context.port }`
+      const url = `http://${context.host}:${context.port}`
       const address = JSON.stringify(server.address())
-      logger.info(`address: ${ address }`)
-      logger.info(`listening on ${ url }`)
+      logger.info(`address: ${address}`)
+      logger.info(`listening on ${url}`)
     })
 
     this.app = app
@@ -146,21 +142,28 @@ export class RestfulApiServeProcessor {
         item.method.padEnd(6),
         prefixUrl,
         item.path,
-        chalk.gray('(' + (item.response.voName || '') + ')') ,
+        chalk.gray('(' + (item.response.voName || '') + ')'),
       )
-      router.register(item.path, [item.method], [
-        async (ctx: Router.RouterContext) => {
-          const schemaPath = item.response.schemaPath
-          if (!(await isFile(schemaPath))) {
-            throw new Error(`bad schema: ${ schemaPath } is not found.`)
-          }
-          const schemaContent: string = await fs.readFile(schemaPath, encoding)
-          const schema = JSON.parse(schemaContent)
-          const data = jsf.generate(schema)
-          // eslint-disable-next-line no-param-reassign
-          ctx.body = data
-        }
-      ])
+      router.register(
+        item.path,
+        [item.method],
+        [
+          async (ctx: Router.RouterContext) => {
+            const schemaPath = item.response.schemaPath
+            if (!(await isFile(schemaPath))) {
+              throw new Error(`bad schema: ${schemaPath} is not found.`)
+            }
+            const schemaContent: string = await fs.readFile(
+              schemaPath,
+              encoding,
+            )
+            const schema = JSON.parse(schemaContent)
+            const data = jsf.generate(schema)
+            // eslint-disable-next-line no-param-reassign
+            ctx.body = data
+          },
+        ],
+      )
     }
     return router
   }

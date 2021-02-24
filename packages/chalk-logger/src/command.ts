@@ -1,7 +1,6 @@
 import type { LoggerOptions } from './logger'
 import { Level } from './level'
 
-
 /**
  * Commander options
  */
@@ -32,27 +31,25 @@ interface CommanderOptions {
   logEncoding?: string
 }
 
-
 interface Command {
   option(
     flags: string,
     description?: string,
-    defaultValue?: string | boolean
+    defaultValue?: string | boolean,
   ): this
   option(
     flags: string,
     description: string,
     regexp: RegExp,
-    defaultValue?: string | boolean
+    defaultValue?: string | boolean,
   ): this
   option<T>(
     flags: string,
     description: string,
     fn: (value: string, previous: T) => T,
-    defaultValue?: T
+    defaultValue?: T,
   ): this
 }
-
 
 /**
  * register to commander
@@ -61,24 +58,25 @@ interface Command {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function registerCommanderOptions(program: Command): void {
   program
-    .option('--log-level <level>', 'specify logger\'s level.')
-    .option('--log-name <name>', 'specify logger\'s name.')
-    .option('--log-mode <\'normal\' | \'loose\'>', 'specify logger\'s name.')
+    .option('--log-level <level>', "specify logger's level.")
+    .option('--log-name <name>', "specify logger's name.")
+    .option("--log-mode <'normal' | 'loose'>", "specify logger's name.")
     .option(
       '--log-flag <option>',
-      'specify logger\' option. [[no-]<date|title|colorful|inline>]',
-      (val: string, acc: string[]) => acc.concat(val), [])
-    .option('--log-filepath <filepath>', 'specify logger\' output path.')
+      "specify logger' option. [[no-]<date|title|colorful|inline>]",
+      (val: string, acc: string[]) => acc.concat(val),
+      [],
+    )
+    .option('--log-filepath <filepath>', "specify logger' output path.")
     .option('--log-encoding <encoding>', 'specify output file encoding.')
 }
-
 
 /**
  *
  * @param commanderOptions
  */
 export function calcLoggerOptionsFromCommanderOptions(
-  commanderOptions: CommanderOptions
+  commanderOptions: CommanderOptions,
 ): LoggerOptions {
   const options: LoggerOptions = {}
 
@@ -140,7 +138,6 @@ export function calcLoggerOptionsFromCommanderOptions(
 
   return options
 }
-
 
 /**
  *

@@ -14,7 +14,6 @@ import { AESCipher, Cipher } from '../../util/cipher'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherEncryptContext } from './context'
 
-
 export class GitCipherEncryptProcessor {
   protected readonly context: GitCipherEncryptContext
   protected readonly secretMaster: SecretMaster
@@ -52,7 +51,6 @@ export class GitCipherEncryptProcessor {
     let commitMessage = ''
 
     try {
-
       // fetch from remote source repository
       if (context.updateBeforeEncrypt) {
         await this.fetchFromRemote()
@@ -73,10 +71,13 @@ export class GitCipherEncryptProcessor {
     }
 
     // do commit
-    await createCommitAll({
-      stdio: 'inherit',
-      cwd: context.workspace,
-    }, commitMessage + ` -- ${ (new Date().toISOString()) }`)
+    await createCommitAll(
+      {
+        stdio: 'inherit',
+        cwd: context.workspace,
+      },
+      commitMessage + ` -- ${new Date().toISOString()}`,
+    )
   }
 
   /**
@@ -90,10 +91,13 @@ export class GitCipherEncryptProcessor {
     await catalog.load(context.indexFilepath)
 
     const fullPlaintextFilepaths: string[] = collectAllFilesSync(
-      path.join(context.plaintextRootDir, '.git'), null)
+      path.join(context.plaintextRootDir, '.git'),
+      null,
+    )
 
-    const modifiedPlaintextFilepaths: string[] = fullPlaintextFilepaths
-      .filter(p => !catalog.isNotModified(fs.statSync(p)))
+    const modifiedPlaintextFilepaths: string[] = fullPlaintextFilepaths.filter(
+      p => !catalog.isNotModified(fs.statSync(p)),
+    )
 
     // remove files that deleted
     await catalog.removeDeletedFiles(fullPlaintextFilepaths)
@@ -117,7 +121,9 @@ export class GitCipherEncryptProcessor {
     await catalog.save(context.indexFilepath)
 
     const plaintextFilepaths = collectAllFilesSync(
-      path.join(context.plaintextRootDir, '.git'), null)
+      path.join(context.plaintextRootDir, '.git'),
+      null,
+    )
 
     // encrypt files
     await this.encryptFiles(cipher, catalog, plaintextFilepaths)
@@ -145,26 +151,44 @@ export class GitCipherEncryptProcessor {
   protected async encryptFiles(
     cipher: Cipher,
     catalog: WorkspaceCatalog,
-    plaintextFilepaths: string[]
+    plaintextFilepaths: string[],
   ): Promise<void> {
     if (plaintextFilepaths.length <= 0) return
 
     const { context } = this
     const tasks: Promise<void>[] = []
     for (const plaintextFilepath of plaintextFilepaths) {
-      const absolutePlaintextFilepath = absoluteOfWorkspace(context.workspace, plaintextFilepath)
-      const absoluteCiphertextFilepath = catalog.insertOrUpdateItem(absolutePlaintextFilepath)
+      const absolutePlaintextFilepath = absoluteOfWorkspace(
+        context.workspace,
+        plaintextFilepath,
+      )
+      const absoluteCiphertextFilepath = catalog.insertOrUpdateItem(
+        absolutePlaintextFilepath,
+      )
 
-      const from = relativeOfWorkspace(context.workspace, absolutePlaintextFilepath)
-      const to = relativeOfWorkspace(context.workspace, absoluteCiphertextFilepath)
+      const from = relativeOfWorkspace(
+        context.workspace,
+        absolutePlaintextFilepath,
+      )
+      const to = relativeOfWorkspace(
+        context.workspace,
+        absoluteCiphertextFilepath,
+      )
 
-      const task = cipher.encryptFile(absolutePlaintextFilepath, absoluteCiphertextFilepath)
+      const task = cipher.encryptFile(
+        absolutePlaintextFilepath,
+        absoluteCiphertextFilepath,
+      )
       task
         .then(() => {
           logger.verbose('[encryptFiles] encrypted ({}) --> ({})', from, to)
         })
         .catch(error => {
-          logger.error('[encryptFiles] failed: encrypting ({}) --> ({})', from, to)
+          logger.error(
+            '[encryptFiles] failed: encrypting ({}) --> ({})',
+            from,
+            to,
+          )
           throw error
         })
       tasks.push(task)

@@ -8,7 +8,6 @@ import { destroyBuffer } from './buffer'
 import { Cipher } from './cipher'
 import { ErrorCode } from './events'
 
-
 /**
  * Entries in the index table of ciphertext files
  */
@@ -28,7 +27,6 @@ export interface WorkspaceCatalogItem {
   ciphertextFilepath: string
 }
 
-
 /**
  * Index table of ciphertext files
  */
@@ -42,7 +40,6 @@ export interface WorkspaceCatalogData {
    */
   items: WorkspaceCatalogItem[]
 }
-
 
 /**
  * Params of constructor of WorkspaceCatalog
@@ -72,7 +69,6 @@ export interface WorkspaceCatalogParams {
   readonly indexContentEncoding?: BufferEncoding
 }
 
-
 /**
  * Index table of the ciphertext workspace
  */
@@ -82,17 +78,29 @@ export class WorkspaceCatalog {
   protected readonly ciphertextRootDir: string
   protected readonly indexFileEncoding: string
   protected readonly indexContentEncoding: BufferEncoding
-  protected readonly plaintextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
-  protected readonly ciphertextFilepathMap: Map<string, Readonly<WorkspaceCatalogItem>>
+  protected readonly plaintextFilepathMap: Map<
+    string,
+    Readonly<WorkspaceCatalogItem>
+  >
+  protected readonly ciphertextFilepathMap: Map<
+    string,
+    Readonly<WorkspaceCatalogItem>
+  >
   protected mtime: string | null
   public readonly items: Readonly<WorkspaceCatalogItem>[]
 
   public constructor(params: WorkspaceCatalogParams) {
     this.cipher = params.cipher
     this.indexFileEncoding = coverString(
-      'utf-8', params.indexFileEncoding, isNotEmptyString)
+      'utf-8',
+      params.indexFileEncoding,
+      isNotEmptyString,
+    )
     this.indexContentEncoding = coverString(
-      'base64', params.indexContentEncoding, isNotEmptyString) as BufferEncoding
+      'base64',
+      params.indexContentEncoding,
+      isNotEmptyString,
+    ) as BufferEncoding
     this.plaintextRootDir = params.plaintextRootDir
     this.ciphertextRootDir = params.ciphertextRootDir
     this.items = []
@@ -109,18 +117,21 @@ export class WorkspaceCatalog {
     if (!fs.existsSync(indexFilepath)) {
       throw {
         code: ErrorCode.FILEPATH_NOT_FOUND,
-        message: `cannot find index file (${ indexFilepath })`
+        message: `cannot find index file (${indexFilepath})`,
       }
     }
 
-    const {
-      indexFileEncoding,
-      indexContentEncoding,
-    } = this
+    const { indexFileEncoding, indexContentEncoding } = this
 
     // load content from index file
-    const rawCiphertextContent = await fs.readFile(indexFilepath, indexFileEncoding)
-    const ciphertextContent: Buffer = Buffer.from(rawCiphertextContent, indexContentEncoding)
+    const rawCiphertextContent = await fs.readFile(
+      indexFilepath,
+      indexFileEncoding,
+    )
+    const ciphertextContent: Buffer = Buffer.from(
+      rawCiphertextContent,
+      indexContentEncoding,
+    )
 
     // do decryption
     const rawContent = this.cipher.decrypt(ciphertextContent)
@@ -159,7 +170,9 @@ export class WorkspaceCatalog {
 
     // save into the index file
     const plainTextData: Buffer = Buffer.from(content, 'utf-8')
-    const ciphertextData = cipher.encrypt(plainTextData).toString(indexContentEncoding)
+    const ciphertextData = cipher
+      .encrypt(plainTextData)
+      .toString(indexContentEncoding)
     destroyBuffer(plainTextData)
     await fs.writeFile(indexFilepath, ciphertextData, indexFileEncoding)
   }
@@ -190,13 +203,15 @@ export class WorkspaceCatalog {
    */
   public insertOrUpdateItem(absolutePlaintextFilepath: string): string | never {
     const stat = fs.statSync(absolutePlaintextFilepath)
-    const mtime = (new Date(stat.mtime)).toISOString()
-    const plaintextFilepath = this.resolvePlaintextFilepath(absolutePlaintextFilepath)
+    const mtime = new Date(stat.mtime).toISOString()
+    const plaintextFilepath = this.resolvePlaintextFilepath(
+      absolutePlaintextFilepath,
+    )
 
     // If it is existed, then just update the mtime
     const oldItem = this.plaintextFilepathMap.get(plaintextFilepath)
     if (oldItem != null) {
-      ; (oldItem as WorkspaceCatalogItem).mtime = mtime
+      ;(oldItem as WorkspaceCatalogItem).mtime = mtime
       return this.resolveAbsoluteCiphertextFilepath(oldItem.ciphertextFilepath)
     }
 
@@ -234,8 +249,10 @@ export class WorkspaceCatalog {
     this.ciphertextFilepathMap.delete(item.ciphertextFilepath)
     this.plaintextFilepathMap.delete(item.plaintextFilepath)
     this.items.splice(
-      this.items.findIndex(x => x.plaintextFilepath === item!.plaintextFilepath),
-      1
+      this.items.findIndex(
+        x => x.plaintextFilepath === item!.plaintextFilepath,
+      ),
+      1,
     )
   }
 
@@ -244,17 +261,21 @@ export class WorkspaceCatalog {
    *
    * @param fullPlaintextFilepaths
    */
-  public async removeDeletedFiles(fullPlaintextFilepaths: string[]): Promise<void> {
+  public async removeDeletedFiles(
+    fullPlaintextFilepaths: string[],
+  ): Promise<void> {
     const validItems = new Set(
       fullPlaintextFilepaths
         .map(p => this.findItemByAbsolutePlaintextFilepath(p))
-        .filter(x => x != null)
+        .filter(x => x != null),
     )
 
     for (const item of this.items) {
       if (validItems.has(item)) continue
       this.removeItem(item)
-      const targetFilepath = this.resolveAbsoluteCiphertextFilepath(item.ciphertextFilepath)
+      const targetFilepath = this.resolveAbsoluteCiphertextFilepath(
+        item.ciphertextFilepath,
+      )
       logger.verbose('unlink {}', targetFilepath)
       await fs.unlink(targetFilepath)
     }
@@ -265,11 +286,13 @@ export class WorkspaceCatalog {
    * @param absolutePlaintextFilepath
    */
   public findItemByAbsolutePlaintextFilepath(
-    absolutePlaintextFilepath: string
+    absolutePlaintextFilepath: string,
   ): WorkspaceCatalogItem | null {
-    const plaintextFilepath = this.resolvePlaintextFilepath(absolutePlaintextFilepath)
+    const plaintextFilepath = this.resolvePlaintextFilepath(
+      absolutePlaintextFilepath,
+    )
     const result = this.plaintextFilepathMap.get(plaintextFilepath)
-    return (result == null) ? null : result
+    return result == null ? null : result
   }
 
   /**
@@ -277,11 +300,13 @@ export class WorkspaceCatalog {
    * @param absoluteCiphertextFilepath
    */
   public findItemByAbsoluteCiphertextFilepath(
-    absoluteCiphertextFilepath: string
+    absoluteCiphertextFilepath: string,
   ): WorkspaceCatalogItem | null {
-    const ciphertextFilepath = this.resolvePlaintextFilepath(absoluteCiphertextFilepath)
+    const ciphertextFilepath = this.resolvePlaintextFilepath(
+      absoluteCiphertextFilepath,
+    )
     const result = this.ciphertextFilepathMap.get(ciphertextFilepath)
-    return (result == null) ? null : result
+    return result == null ? null : result
   }
 
   /**
@@ -290,16 +315,21 @@ export class WorkspaceCatalog {
   public checkIntegrity(): void | never {
     const allCiphertextFiles = collectAllFilesSync(this.ciphertextRootDir, null)
     if (allCiphertextFiles.length !== this.items.length) {
-      throw new Error(`[INTEGRITY DAMAGE] there are ${ this.items.length } files in index file,` +
-        ` but actually there are ${ allCiphertextFiles.length } files in the cipher directory`)
+      throw new Error(
+        `[INTEGRITY DAMAGE] there are ${this.items.length} files in index file,` +
+          ` but actually there are ${allCiphertextFiles.length} files in the cipher directory`,
+      )
     }
 
     let damaged = false
     for (const item of this.items) {
-      const absoluteCiphertextFilepath =
-        this.resolveAbsoluteCiphertextFilepath(item.ciphertextFilepath)
+      const absoluteCiphertextFilepath = this.resolveAbsoluteCiphertextFilepath(
+        item.ciphertextFilepath,
+      )
       if (!fs.existsSync(absoluteCiphertextFilepath)) {
-        console.error(`[INTEGRITY DAMAGE] cannot found ${ absoluteCiphertextFilepath }`)
+        console.error(
+          `[INTEGRITY DAMAGE] cannot found ${absoluteCiphertextFilepath}`,
+        )
         damaged = true
       }
     }
@@ -316,7 +346,9 @@ export class WorkspaceCatalog {
    */
   public resolvePlaintextFilepath(absolutePlaintextFilepath: string): string {
     const plaintextFilepath = relativeOfWorkspace(
-      this.plaintextRootDir, absolutePlaintextFilepath)
+      this.plaintextRootDir,
+      absolutePlaintextFilepath,
+    )
     return path.normalize(plaintextFilepath).replace(/[/\\]+/g, '/')
   }
 
@@ -336,7 +368,9 @@ export class WorkspaceCatalog {
    */
   public resolveCiphertextFilepath(absoluteCiphertextFilepath: string): string {
     const ciphertextFilepath = relativeOfWorkspace(
-      this.ciphertextRootDir, absoluteCiphertextFilepath)
+      this.ciphertextRootDir,
+      absoluteCiphertextFilepath,
+    )
     return path.normalize(ciphertextFilepath).replace(/[/\\]+/g, '/')
   }
 
@@ -368,8 +402,6 @@ export class WorkspaceCatalog {
    * @param content
    */
   protected removeSalt(content: string): string {
-    return content
-      .replace(/^[0-9a-z]+/, '')
-      .replace(/[0-9a-z]+$/, '')
+    return content.replace(/^[0-9a-z]+/, '').replace(/[0-9a-z]+$/, '')
   }
 }

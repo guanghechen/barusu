@@ -1,6 +1,5 @@
 import { isBoolean, isNumber, isString } from './is'
 
-
 /**
  * Convert to boolean
  *  - If v is null / undefined, return undefined
@@ -10,18 +9,21 @@ import { isBoolean, isNumber, isString } from './is'
  *
  * @param v
  */
-export function convertToBoolean(v: string | boolean | unknown): boolean | undefined {
+export function convertToBoolean(
+  v: string | boolean | unknown,
+): boolean | undefined {
   if (v == null) return undefined
   if (isString(v)) {
     switch (v.toLowerCase()) {
-      case 'false': return false
-      case 'true': return true
+      case 'false':
+        return false
+      case 'true':
+        return true
     }
     return undefined
   }
   return Boolean(v)
 }
-
 
 /**
  * Convert to number
@@ -33,7 +35,9 @@ export function convertToBoolean(v: string | boolean | unknown): boolean | undef
  *
  * @param v
  */
-export function convertToNumber(v: number | string | unknown): number | undefined {
+export function convertToNumber(
+  v: number | string | unknown,
+): number | undefined {
   if (v == null) return undefined
   if (isString(v)) {
     if (v.length <= 0) return undefined
@@ -43,7 +47,6 @@ export function convertToNumber(v: number | string | unknown): number | undefine
   if (isNumber(v)) return v
   return undefined
 }
-
 
 /**
  * Convert to string
@@ -55,11 +58,7 @@ export function convertToNumber(v: number | string | unknown): number | undefine
  */
 export function convertToString(v: string | unknown): string | undefined {
   if (v == null) return undefined
-  if (
-    isString(v) ||
-    isNumber(v) ||
-    isBoolean(v)
-  ) {
+  if (isString(v) || isNumber(v) || isBoolean(v)) {
     return v.toString()
   }
   return undefined

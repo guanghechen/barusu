@@ -2,7 +2,6 @@
 const path = require('path')
 const manifest = require('@barusu/tool-restful-api/package.json')
 
-
 module.exports = function (plop) {
   plop.setGenerator('mock-server', {
     description: 'create mock server',
@@ -12,14 +11,14 @@ module.exports = function (plop) {
         name: 'packageName',
         default: path.basename(path.resolve()),
         message: 'package name',
-        transform: (text) => text.trim(),
+        transform: text => text.trim(),
       },
       {
         type: 'input',
         name: 'encoding',
         default: 'utf-8',
         message: 'encoding',
-        transform: (text) => text.trim(),
+        transform: text => text.trim(),
       },
       {
         type: 'list',
@@ -27,8 +26,8 @@ module.exports = function (plop) {
         default: 'verbose',
         message: 'log level',
         choices: ['debug', 'verbose', 'info', 'warn', 'error'],
-        filter: (text) => text.toLowerCase().trim(),
-        transformer: (text) => text.toLowerCase().trim(),
+        filter: text => text.toLowerCase().trim(),
+        transformer: text => text.toLowerCase().trim(),
       },
     ],
     actions: function (answers) {
@@ -36,8 +35,8 @@ module.exports = function (plop) {
       answers.templateVersion = manifest.version
 
       const workspace = answers.workspace || path.resolve()
-      const resolveSourcePath = (p) => path.normalize(path.resolve(__dirname, p))
-      const resolveTargetPath = (p) => path.normalize(path.resolve(workspace, p))
+      const resolveSourcePath = p => path.normalize(path.resolve(__dirname, p))
+      const resolveTargetPath = p => path.normalize(path.resolve(workspace, p))
 
       return [
         {
@@ -121,6 +120,6 @@ module.exports = function (plop) {
           templateFile: resolveSourcePath('tsconfig.json.hbs'),
         },
       ]
-    }
+    },
   })
 }

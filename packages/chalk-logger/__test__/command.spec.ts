@@ -5,7 +5,6 @@ import {
   registerCommanderOptions,
 } from '../src'
 
-
 describe('command funcs', function () {
   test('generateOptions', function () {
     const logFilepath = path.resolve(__dirname, 'command.log')
@@ -21,7 +20,7 @@ describe('command funcs', function () {
         '--log-filepath',
         logFilepath,
         '--log-encoding=utf-8',
-      ])
+      ]),
     ).toEqual({
       level: DEBUG,
       name: 'waw',
@@ -30,7 +29,7 @@ describe('command funcs', function () {
       inline: false,
       colorful: false,
       filepath: logFilepath,
-      encoding: 'utf-8'
+      encoding: 'utf-8',
     })
   })
 
@@ -41,7 +40,7 @@ describe('command funcs', function () {
       option: (...args: any[]) => {
         infos.push(args)
         return program
-      }
+      },
     }
 
     registerCommanderOptions(program)

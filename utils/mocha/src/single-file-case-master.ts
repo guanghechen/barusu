@@ -9,7 +9,6 @@ import {
   TestCaseMatchFunc,
 } from './case-master'
 
-
 export interface SingleTestCaseItem {
   /**
    * case description
@@ -25,7 +24,6 @@ export interface SingleTestCaseItem {
   [key: string]: any
 }
 
-
 /**
  * content type of case file
  */
@@ -33,7 +31,6 @@ export interface SingleFileCaseData {
   title: string
   cases: SingleTestCaseItem[]
 }
-
 
 /**
  * test case
@@ -47,17 +44,13 @@ export interface SingleFileTestCase extends TestCase {
   readonly filePath: string
 }
 
-
 /**
  * test case group
  *
  * 测试用例组
  */
 export interface SingleFileTestCaseGroup
-  extends TestCaseGroup<SingleFileTestCase, SingleFileTestCaseGroup> {
-
-}
-
+  extends TestCaseGroup<SingleFileTestCase, SingleFileTestCaseGroup> {}
 
 /**
  * params of  TestCaseMaster.constructor
@@ -81,9 +74,10 @@ export interface SingleFileTestCaseMasterProps {
   readonly answerField: string
 }
 
-
-export abstract class SingleFileTestCaseMaster<Output, OutputData>
-  extends TestCaseMaster<SingleFileTestCase, SingleFileTestCaseGroup> {
+export abstract class SingleFileTestCaseMaster<
+  Output,
+  OutputData
+> extends TestCaseMaster<SingleFileTestCase, SingleFileTestCaseGroup> {
   protected readonly inputField: string
   protected readonly answerField: string
 
@@ -97,11 +91,19 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
    * override method
    * @see TestCaseMaster#scan
    */
-  public async scan(caseDirectoryOrFile: string, recursive = true): Promise<this> {
+  public async scan(
+    caseDirectoryOrFile: string,
+    recursive = true,
+  ): Promise<this> {
     // eslint-disable-next-line no-param-reassign
-    caseDirectoryOrFile = path.resolve(this.caseRootDirectory, caseDirectoryOrFile)
+    caseDirectoryOrFile = path.resolve(
+      this.caseRootDirectory,
+      caseDirectoryOrFile,
+    )
     const self = this
-    const scan = async (dirOrFile: string): Promise<SingleFileTestCaseGroup> => {
+    const scan = async (
+      dirOrFile: string,
+    ): Promise<SingleFileTestCaseGroup> => {
       const stat = fs.statSync(dirOrFile)
       let dir = dirOrFile
       let files: string[] = []
@@ -125,7 +127,9 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
         if (stat.isDirectory()) {
           // recursive scanning
           if (recursive) {
-            const subGroup: SingleFileTestCaseGroup = await scan(absoluteFilePath)
+            const subGroup: SingleFileTestCaseGroup = await scan(
+              absoluteFilePath,
+            )
 
             /**
              * append sub-case groups directly to caseGroup if there are only
@@ -214,7 +218,9 @@ export abstract class SingleFileTestCaseMaster<Output, OutputData>
    * override method
    * @see TestCaseMaster#answer
    */
-  public async answer(doAnswer?: TestCaseAnswerFunc<SingleFileTestCase>): Promise<void> {
+  public async answer(
+    doAnswer?: TestCaseAnswerFunc<SingleFileTestCase>,
+  ): Promise<void> {
     const self = this
     if (doAnswer == null) {
       // eslint-disable-next-line no-param-reassign

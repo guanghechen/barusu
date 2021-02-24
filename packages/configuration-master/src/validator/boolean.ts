@@ -12,18 +12,18 @@ import {
   BooleanDataSchema as DS,
 } from '../schema/boolean'
 
-
 /**
  * BooleanDataSchema 校验结果的数据类型
  */
 export type BooleanDataValidationResult = DataValidationResult<T, V, DS>
 
-
 /**
  * 布尔值类型的校验器
  */
 // eslint-disable-next-line max-len
-export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
+export class BooleanDataValidator
+  extends BaseDataValidator<T, V, DS>
+  implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -57,15 +57,18 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements
    */
   public preprocessData(data: unknown): V | undefined {
     const xResult = coverBoolean(undefined, data)
-    return xResult.value === undefined ? (data as V) : xResult.value;
+    return xResult.value === undefined ? (data as V) : xResult.value
   }
 }
-
 
 /**
  * 布尔值类型的校验器的工厂对象
  */
-export class BooleanDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
+export class BooleanDataValidatorFactory extends BaseDataValidatorFactory<
+  T,
+  V,
+  DS
+> {
   public readonly type: T = T
 
   public create(schema: DS): BooleanDataValidator {

@@ -11,7 +11,6 @@ import { Cipher, CipherFactory } from './cipher'
 import { ErrorCode, EventTypes, eventBus } from './events'
 import * as io from './io'
 
-
 /**
  * Params for SecretMaster.constructor
  */
@@ -52,7 +51,6 @@ export interface SecretMasterParams {
   maxPasswordLength?: number
 }
 
-
 /**
  * @member secretCipher           cipher initialized by secret
  * @member cipherFactory          factory to produce Cipher
@@ -83,9 +81,15 @@ export class SecretMaster {
     this.secretCipher = params.cipherFactory.create()
     this.cipherFactory = params.cipherFactory
     this.secretFileEncoding = coverString(
-      'utf-8', params.secretFileEncoding, isNotEmptyString)
+      'utf-8',
+      params.secretFileEncoding,
+      isNotEmptyString,
+    )
     this.secretContentEncoding = coverString(
-      'hex', params.secretContentEncoding, isNotEmptyString) as BufferEncoding
+      'hex',
+      params.secretContentEncoding,
+      isNotEmptyString,
+    ) as BufferEncoding
     this.showAsterisk = coverBoolean(true, params.showAsterisk)
     this.maxRetryTimes = coverNumber(2, params.maxRetryTimes)
     this.minPasswordLength = coverNumber(6, params.minPasswordLength)
@@ -101,7 +105,7 @@ export class SecretMaster {
     if (!fs.existsSync(secretFilepath)) {
       throw {
         code: ErrorCode.FILEPATH_NOT_FOUND,
-        message: `cannot find secret file (${ secretFilepath })`
+        message: `cannot find secret file (${secretFilepath})`,
       }
     }
 
@@ -111,12 +115,19 @@ export class SecretMaster {
       secretContentEncoding,
       secretFileEncoding,
     } = this
-    const secretContent: string = await fs.readFile(secretFilepath, secretFileEncoding)
+    const secretContent: string = await fs.readFile(
+      secretFilepath,
+      secretFileEncoding,
+    )
     const secretSepIndex = secretContent.indexOf('.')
     const encryptedSecret: Buffer = Buffer.from(
-      secretContent.slice(0, secretSepIndex), secretContentEncoding)
+      secretContent.slice(0, secretSepIndex),
+      secretContentEncoding,
+    )
     const encryptedSecretMac: Buffer = Buffer.from(
-      secretContent.slice(secretSepIndex + 1), secretContentEncoding)
+      secretContent.slice(secretSepIndex + 1),
+      secretContentEncoding,
+    )
 
     this.encryptedSecret = encryptedSecret
     this.encryptedSecretMac = encryptedSecretMac
@@ -129,7 +140,7 @@ export class SecretMaster {
       if (password == null) {
         throw {
           code: ErrorCode.WRONG_PASSWORD,
-          message: 'Password incorrect'
+          message: 'Password incorrect',
         }
       }
       passwordCipher.initKeyFromPassword(password)
@@ -159,19 +170,24 @@ export class SecretMaster {
     if (encryptedSecret == null || encryptedSecretMac == null) {
       throw {
         code: ErrorCode.NULL_POINTER_ERROR,
-        message: '[save] encryptedSecret / encryptedSecretMac are not specified',
+        message:
+          '[save] encryptedSecret / encryptedSecretMac are not specified',
       }
     }
 
-    const secretContent = encryptedSecret.toString(secretContentEncoding) +
-      '.' + encryptedSecretMac.toString(secretContentEncoding)
+    const secretContent =
+      encryptedSecret.toString(secretContentEncoding) +
+      '.' +
+      encryptedSecretMac.toString(secretContentEncoding)
     await fs.writeFile(secretFilepath, secretContent, secretFileEncoding)
   }
 
   /**
    * create a new secret key
    */
-  public async recreate(params: Partial<SecretMasterParams> = {}): Promise<SecretMaster> {
+  public async recreate(
+    params: Partial<SecretMasterParams> = {},
+  ): Promise<SecretMaster> {
     const {
       cipherFactory,
       secretContentEncoding,
@@ -196,9 +212,19 @@ export class SecretMaster {
     const passwordCipher: Cipher = cipherFactory.create()
     try {
       password = await io.inputPassword(
-        'Password: ', showAsterisk, 3, minPasswordLength, maxPasswordLength)
+        'Password: ',
+        showAsterisk,
+        3,
+        minPasswordLength,
+        maxPasswordLength,
+      )
       const isSame = await io.confirmPassword(
-        password, undefined, showAsterisk, minPasswordLength, maxPasswordLength)
+        password,
+        undefined,
+        showAsterisk,
+        minPasswordLength,
+        maxPasswordLength,
+      )
 
       if (!isSame) {
         throw {
@@ -254,7 +280,12 @@ export class SecretMaster {
     for (let i = 0; i <= maxRetryTimes; ++i) {
       const question = i > 0 ? '(Retry) Password: ' : 'Password: '
       password = await io.inputPassword(
-        question, showAsterisk, 1, minPasswordLength, maxPasswordLength)
+        question,
+        showAsterisk,
+        1,
+        minPasswordLength,
+        maxPasswordLength,
+      )
       if (this.testPassword(password)) break
       destroyBuffer(password)
       password = null
@@ -269,7 +300,9 @@ export class SecretMaster {
   protected testPassword(password: Buffer): boolean {
     const { cipherFactory, encryptedSecret, encryptedSecretMac } = this
     if (encryptedSecret == null || encryptedSecretMac == null) {
-      logger.error('[testPassword] encryptedSecret / encryptedSecretMac are not specified')
+      logger.error(
+        '[testPassword] encryptedSecret / encryptedSecretMac are not specified',
+      )
       return false
     }
 

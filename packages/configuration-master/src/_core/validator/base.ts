@@ -8,7 +8,6 @@ import {
   DataValidatorFactory,
 } from './types'
 
-
 /**
  * Data validator: Encapsulates a DataSchema instance with the ability to
  * verify that the data conforms to its defined data type
@@ -18,8 +17,11 @@ import {
  * @template V    typeof <X>DataSchema.V
  * @template DS   typeof <X>DataSchema
  */
-export abstract class BaseDataValidator<T extends string, V, DS extends DataSchema<T, V>>
-  implements DataValidator<T, V, DS> {
+export abstract class BaseDataValidator<
+  T extends string,
+  V,
+  DS extends DataSchema<T, V>
+> implements DataValidator<T, V, DS> {
   /**
    * override method
    * @see DataValidator#type
@@ -43,7 +45,9 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
    */
   public validate(data: unknown): DataValidationResult<T, V, DS> {
     const { schema } = this
-    const result: DataValidationResult<T, V, DS> = new DataValidationResult(schema)
+    const result: DataValidationResult<T, V, DS> = new DataValidationResult(
+      schema,
+    )
 
     // 检查是否未设置值
     if (data === undefined) {
@@ -64,7 +68,7 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
     if (schema.required && data === undefined) {
       result.addError({
         constraint: 'required',
-        reason: `required, but got (${ stringify(data) }).`
+        reason: `required, but got (${stringify(data)}).`,
       })
     }
 
@@ -100,12 +104,14 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
   }
 }
 
-
 /**
  * DataValidator 的工厂类
  */
-export abstract class BaseDataValidatorFactory<T extends string, V, DS extends DataSchema<T, V>>
-  implements DataValidatorFactory<T, V, DS> {
+export abstract class BaseDataValidatorFactory<
+  T extends string,
+  V,
+  DS extends DataSchema<T, V>
+> implements DataValidatorFactory<T, V, DS> {
   /**
    * override method
    * @see DataValidatorFactory#type

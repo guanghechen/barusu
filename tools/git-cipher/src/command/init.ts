@@ -14,27 +14,26 @@ import { GitCipherInitContext } from '../core/init/context'
 import { GitCipherInitProcessor } from '../core/init/processor'
 import { handleError } from './_util'
 
-
 /**
  * Process sub-command: 'init'
  *
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandInit: SubCommandProcessor<SubCommandInitOptions, void> =
-  async function (
-    options: SubCommandInitOptions
-  ): Promise<void> {
-    try {
-      const context: GitCipherInitContext =
-        await createGitCipherInitContextFromOptions(options)
-        const processor = new GitCipherInitProcessor(context)
-        await processor.init()
-    } catch (error) {
-      handleError(error)
-    }
+export const processSubCommandInit: SubCommandProcessor<
+  SubCommandInitOptions,
+  void
+> = async function (options: SubCommandInitOptions): Promise<void> {
+  try {
+    const context: GitCipherInitContext = await createGitCipherInitContextFromOptions(
+      options,
+    )
+    const processor = new GitCipherInitProcessor(context)
+    await processor.init()
+  } catch (error) {
+    handleError(error)
   }
-
+}
 
 /**
  * Mount Sub-command: init
@@ -42,12 +41,10 @@ export const processSubCommandInit: SubCommandProcessor<SubCommandInitOptions, v
  * @param {Command}   parentCommand
  * @returns {void}
  */
-export const mountSubCommandInit: SubCommandMounter =
-  createSubCommandMounter<SubCommandInitOptions, void>(
-    createSubCommandInit,
-    processSubCommandInit,
-  )
-
+export const mountSubCommandInit: SubCommandMounter = createSubCommandMounter<
+  SubCommandInitOptions,
+  void
+>(createSubCommandInit, processSubCommandInit)
 
 /**
  * Execute sub-command: 'init'
@@ -56,8 +53,7 @@ export const mountSubCommandInit: SubCommandMounter =
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandInit: SubCommandExecutor<void>
-  = createSubCommandExecutor<SubCommandInitOptions, void>(
-    createSubCommandInit,
-    processSubCommandInit,
-  )
+export const execSubCommandInit: SubCommandExecutor<void> = createSubCommandExecutor<
+  SubCommandInitOptions,
+  void
+>(createSubCommandInit, processSubCommandInit)

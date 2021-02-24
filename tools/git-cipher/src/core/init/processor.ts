@@ -19,7 +19,6 @@ import { AESCipher, Cipher } from '../../util/cipher'
 import { SecretMaster } from '../../util/secret'
 import { GitCipherInitContext } from './context'
 
-
 export class GitCipherInitProcessor {
   protected readonly context: GitCipherInitContext
   protected secretMaster: SecretMaster
@@ -53,16 +52,24 @@ export class GitCipherInitProcessor {
     await this.createIndexFile()
 
     // install dependencies
-    await installDependencies({
-      stdio: 'inherit',
-      cwd: context.workspace,
-    }, [], logger)
+    await installDependencies(
+      {
+        stdio: 'inherit',
+        cwd: context.workspace,
+      },
+      [],
+      logger,
+    )
 
     // create initial commit
-    await createInitialCommit({
-      stdio: 'inherit',
-      cwd: context.workspace,
-    }, [], logger)
+    await createInitialCommit(
+      {
+        stdio: 'inherit',
+        cwd: context.workspace,
+      },
+      [],
+      logger,
+    )
   }
 
   /**
@@ -85,7 +92,10 @@ export class GitCipherInitProcessor {
     // resolve plaintextRepositoryUrl
     if (isNotEmptyString(plaintextRepositoryUrl)) {
       if (/^[.]/.test(plaintextRepositoryUrl)) {
-        plaintextRepositoryUrl = absoluteOfWorkspace(context.workspace, plaintextRepositoryUrl)
+        plaintextRepositoryUrl = absoluteOfWorkspace(
+          context.workspace,
+          plaintextRepositoryUrl,
+        )
       }
     }
     logger.debug('plaintextRepositoryUrl:', plaintextRepositoryUrl)
@@ -96,17 +106,32 @@ export class GitCipherInitProcessor {
     }
 
     const templateConfig = resolveTemplateFilepath('plop.js')
-    const plop = nodePlop(templateConfig, { force: false, destBasePath: context.workspace })
+    const plop = nodePlop(templateConfig, {
+      force: false,
+      destBasePath: context.workspace,
+    })
     await runPlop(plop, logger, undefined, {
       workspace: context.workspace,
       templateVersion: packageVersion,
       encoding: context.encoding,
-      secretFilepath: relativeOfWorkspace(context.workspace, context.secretFilepath),
+      secretFilepath: relativeOfWorkspace(
+        context.workspace,
+        context.secretFilepath,
+      ),
       secretFileEncoding: context.secretFileEncoding,
-      indexFilepath: relativeOfWorkspace(context.workspace, context.indexFilepath),
+      indexFilepath: relativeOfWorkspace(
+        context.workspace,
+        context.indexFilepath,
+      ),
       indexFileEncoding: context.indexFileEncoding,
-      ciphertextRootDir: relativeOfWorkspace(context.workspace, context.ciphertextRootDir),
-      plaintextRootDir: relativeOfWorkspace(context.workspace, context.plaintextRootDir),
+      ciphertextRootDir: relativeOfWorkspace(
+        context.workspace,
+        context.ciphertextRootDir,
+      ),
+      plaintextRootDir: relativeOfWorkspace(
+        context.workspace,
+        context.plaintextRootDir,
+      ),
       plaintextRepositoryUrl,
       showAsterisk: context.showAsterisk,
       minPasswordLength: context.minPasswordLength,
@@ -145,13 +170,19 @@ export class GitCipherInitProcessor {
    * Clone from remote plaintext repository
    * @param plaintextRepositoryUrl  url of remote source repository
    */
-  protected async cloneFromRemote(plaintextRepositoryUrl: string): Promise<void> {
+  protected async cloneFromRemote(
+    plaintextRepositoryUrl: string,
+  ): Promise<void> {
     const { context } = this
 
     mkdirsIfNotExists(context.plaintextRootDir, true, logger)
-    await execa('git', ['clone', plaintextRepositoryUrl, context.plaintextRootDir], {
-      stdio: 'inherit',
-      cwd: context.plaintextRootDir,
-    })
+    await execa(
+      'git',
+      ['clone', plaintextRepositoryUrl, context.plaintextRootDir],
+      {
+        stdio: 'inherit',
+        cwd: context.plaintextRootDir,
+      },
+    )
   }
 }

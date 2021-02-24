@@ -3,7 +3,6 @@ import fs from 'fs-extra'
 import path from 'path'
 import { toKebabCase } from '@barusu/util-option'
 
-
 /**
  * 测试案例
  */
@@ -22,14 +21,15 @@ interface CaseItem {
   answerDataFilePath: string
 }
 
-
-it('This is a required placeholder to allow before() to work', () => { })
-
+it('This is a required placeholder to allow before() to work', () => {})
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 before(async function () {
-  const scanDir = async function (rootDir: string, p: string): Promise<CaseItem[]> {
+  const scanDir = async function (
+    rootDir: string,
+    p: string,
+  ): Promise<CaseItem[]> {
     const files = await fs.readdir(p)
     const items: CaseItem[] = []
     for (const f of files) {
@@ -46,7 +46,7 @@ before(async function () {
         const item: CaseItem = {
           title: path.relative(rootDir, p) + ' ' + prefix,
           inputDataFilePath: abf,
-          answerDataFilePath: path.join(p, answerFilepath)
+          answerDataFilePath: path.join(p, answerFilepath),
         }
         items.push(item)
         continue
@@ -56,7 +56,11 @@ before(async function () {
   }
 
   const caseRootDir = path.resolve('test/cases')
-  const test = async function (title: string, caseDir: string, func: (x: any) => any) {
+  const test = async function (
+    title: string,
+    caseDir: string,
+    func: (x: any) => any,
+  ) {
     const cases: CaseItem[] = await scanDir(caseRootDir, caseDir)
     describe(title, function () {
       for (const kase of cases) {
@@ -66,9 +70,7 @@ before(async function () {
           const outputs: any[] = inputs.map(input => func(input))
 
           // 输出和答案应有相同的数据数
-          expect(outputs)
-            .to.be.an('array')
-            .to.have.lengthOf(answers.length)
+          expect(outputs).to.be.an('array').to.have.lengthOf(answers.length)
 
           // check data
           expect(outputs).to.deep.equal(answers)
@@ -78,5 +80,9 @@ before(async function () {
   }
 
   // test _util/string-util
-  test('_util/string-util', path.join(caseRootDir, '_util/string-util'), toKebabCase)
+  test(
+    '_util/string-util',
+    path.join(caseRootDir, '_util/string-util'),
+    toKebabCase,
+  )
 })

@@ -3,7 +3,6 @@ import path from 'path'
 import { createLoggerMocker } from '@barusu/util-jest'
 import { COMMAND_NAME, execMainCommand, logger } from '../src'
 
-
 describe('stat', function () {
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'files')
   const configFilepath = path.resolve(__dirname, 'cases', 'config.json')
@@ -26,11 +25,13 @@ describe('stat', function () {
         .mockImplementation(function (
           absolutePath: string | any,
           resolveContent: string | any,
-          encoding: string | any
+          encoding: string | any,
         ) {
           expect(absolutePath).toEqual(absoluteFilepath)
           expect(encoding).toEqual('utf-8')
-          expect(resolveContent).toMatchSnapshot(`[${ filepath }] resolved content`)
+          expect(resolveContent).toMatchSnapshot(
+            `[${filepath}] resolved content`,
+          )
         })
 
       const args = [

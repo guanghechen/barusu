@@ -11,7 +11,6 @@ import {
 import { ErrorCode } from '../events'
 import { BaseCipher, Cipher } from './_base'
 
-
 export class AESCipher extends BaseCipher implements Cipher {
   protected readonly ivSize = 32
   protected readonly keySize = 32
@@ -19,11 +18,13 @@ export class AESCipher extends BaseCipher implements Cipher {
   protected iv: Buffer | null
   protected key: Buffer | null
 
-  public constructor(options: {
-    algorithm?: crypto.CipherGCMTypes
-    iv?: Buffer
-    key?: Buffer
-  } = {}) {
+  public constructor(
+    options: {
+      algorithm?: crypto.CipherGCMTypes
+      iv?: Buffer
+      key?: Buffer
+    } = {},
+  ) {
     super()
     this.algorithm = options.algorithm || 'aes-256-gcm'
     this.key = options.key || null
@@ -96,7 +97,6 @@ export class AESCipher extends BaseCipher implements Cipher {
     this.key = key
   }
 
-
   /**
    * Encrypt plainData using the AES algorithm
    * @override
@@ -106,7 +106,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     if (key == null || iv == null) {
       throw {
         code: ErrorCode.NULL_POINTER_ERROR,
-        message: 'iv / key is null'
+        message: 'iv / key is null',
       }
     }
 
@@ -135,7 +135,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     if (key == null || iv == null) {
       throw {
         code: ErrorCode.NULL_POINTER_ERROR,
-        message: 'iv / key is null'
+        message: 'iv / key is null',
       }
     }
 
@@ -167,7 +167,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     if (key == null || iv == null) {
       throw {
         code: ErrorCode.NULL_POINTER_ERROR,
-        message: 'iv / key is null'
+        message: 'iv / key is null',
       }
     }
 
@@ -196,7 +196,7 @@ export class AESCipher extends BaseCipher implements Cipher {
     if (key == null || iv == null) {
       throw {
         code: ErrorCode.NULL_POINTER_ERROR,
-        message: 'iv / key is null'
+        message: 'iv / key is null',
       }
     }
 

@@ -2,7 +2,6 @@ import crypto from 'crypto'
 import ts from 'typescript'
 import { Definition, PrimitiveType } from './types'
 
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function extend(target: any, ...args: any[]): any {
   if (target == null) {
@@ -26,7 +25,6 @@ export function extend(target: any, ...args: any[]): any {
   return to
 }
 
-
 /**
  * 去重
  * @param arr
@@ -35,7 +33,6 @@ export function unique<T>(arr: T[]): T[] {
   const set: Set<T> = new Set(arr)
   return [...set]
 }
-
 
 /**
  * 尝试将 value 作为 JSON 字符串解析；若解析失败，返回原字符串
@@ -49,7 +46,6 @@ export function parseJson(value: string): any | string {
   }
 }
 
-
 /**
  * 提取字面量值
  * @param type
@@ -57,7 +53,8 @@ export function parseJson(value: string): any | string {
 export function extractLiteralValue(type: ts.Type): PrimitiveType | undefined {
   const { value = (type as any).text } = type as ts.LiteralType
   if (type.flags & ts.TypeFlags.StringLiteral) return value
-  if (type.flags & ts.TypeFlags.BooleanLiteral) return (type as any).intrinsicName === 'true'
+  if (type.flags & ts.TypeFlags.BooleanLiteral)
+    return (type as any).intrinsicName === 'true'
   if (type.flags & ts.TypeFlags.EnumLiteral) {
     const num = Number(value)
     return Number.isNaN(num) ? value : num
@@ -65,7 +62,6 @@ export function extractLiteralValue(type: ts.Type): PrimitiveType | undefined {
   if (type.flags & ts.TypeFlags.NumberLiteral) return Number(value)
   return undefined
 }
-
 
 /**
  * convert map to object
@@ -79,31 +75,33 @@ export function convertMapToObject<T>(m: Map<string, T>): { [key: string]: T } {
   }, {})
 }
 
-
 /**
  * checks whether a type is a tuple type.
  */
-export function resolveTupleType(propertyType: ts.Type): ts.TupleTypeNode | null {
+export function resolveTupleType(
+  propertyType: ts.Type,
+): ts.TupleTypeNode | null {
   if (
     !propertyType.getSymbol() &&
-    (propertyType.getFlags() & ts.TypeFlags.Object) &&
-    ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference)
-  ) return (propertyType as ts.TypeReference).target as any
+    propertyType.getFlags() & ts.TypeFlags.Object &&
+    (propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference
+  )
+    return (propertyType as ts.TypeReference).target as any
 
   if (
     !(
-      (propertyType.getFlags() & ts.TypeFlags.Object) &&
-      ((propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Tuple)
+      propertyType.getFlags() & ts.TypeFlags.Object &&
+      (propertyType as ts.ObjectType).objectFlags & ts.ObjectFlags.Tuple
     )
-  ) return null
+  )
+    return null
 
   return propertyType as any
 }
 
-
 const simpleTypesAllowedProperties = {
   type: true,
-  description: true
+  description: true,
 }
 
 function addSimpleType(def: Definition, type: string) {
@@ -132,7 +130,6 @@ function addSimpleType(def: Definition, type: string) {
   return true
 }
 
-
 export function makeNullable(def: Definition): Definition {
   if (!addSimpleType(def, 'null')) {
     const union = def.oneOf || def.anyOf
@@ -154,21 +151,22 @@ export function makeNullable(def: Definition): Definition {
   return def
 }
 
-
 /**
  * generate global unique name
  * @param node
  * @param relativePath
  */
-export function generateHashOfNode(node: ts.Node, relativePath: string): string {
-  return crypto.createHash('md5')
+export function generateHashOfNode(
+  node: ts.Node,
+  relativePath: string,
+): string {
+  return crypto
+    .createHash('md5')
     .update(relativePath)
     .update(node.pos.toString())
     .digest('hex')
     .substring(0, 8)
 }
-
-
 
 export function normalizeFileName(filename: string): string {
   while (filename.substr(0, 2) === './') {
@@ -177,7 +175,6 @@ export function normalizeFileName(filename: string): string {
   }
   return filename
 }
-
 
 /**
  * Given a Symbol, returns a canonical Definition. That can be either:
@@ -197,7 +194,9 @@ export function getCanonicalDeclaration(sym: ts.Symbol): ts.Declaration {
     return sym.declarations[0]
   }
 
-  throw new Error(`Symbol "${ sym.name }" has no valueDeclaration and ${ sym.declarations.length } declarations.`)
+  throw new Error(
+    `Symbol "${sym.name}" has no valueDeclaration and ${sym.declarations.length} declarations.`,
+  )
 }
 
 /**
@@ -209,7 +208,9 @@ export function getSourceFile(sym: ts.Symbol): ts.SourceFile {
 
   while (currentDecl.kind !== ts.SyntaxKind.SourceFile) {
     if (currentDecl.parent === undefined) {
-      throw new Error(`Unable to locate source file for declaration "${ sym.name }".`)
+      throw new Error(
+        `Unable to locate source file for declaration "${sym.name}".`,
+      )
     }
     currentDecl = currentDecl.parent
   }

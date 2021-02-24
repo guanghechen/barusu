@@ -5,9 +5,7 @@ import {
   mountSubCommandInit,
 } from './index'
 
-
 const program = createProgram()
-
 
 // mount sub-command: init
 mountSubCommandInit(program)
@@ -18,6 +16,4 @@ mountSubCommandEncrypt(program)
 // mount sub-command: decrypt
 mountSubCommandDecrypt(program)
 
-
-program
-  .parse(process.argv)
+program.parse(process.argv)

@@ -19,7 +19,8 @@
     ":publish": "yarn format && yarn test && lerna publish",
     "build": "lerna run --concurrency 1 build",
     "clean": "lerna clean --yes && yarn install",
-    "format": "run-s format:find-inconsistent format:sort-imports format:lint:fix",
+    "format": "run-s format:find-inconsistent format:sort-imports format:lint:fix format:prettier",
+    "format:prettier": "prettier --write .",
     "format:find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js .",
     "format:lint:fix": "eslint . --fix",
     "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
@@ -109,14 +110,11 @@
     "quote": "'",
     "semicolon": false,
     "maxColumn": 80,
-    "blankLinesAfterStatement": 2
+    "blankLinesAfterStatement": 1
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{md,mdx}": [
       "prettier --write"
     ]
   }

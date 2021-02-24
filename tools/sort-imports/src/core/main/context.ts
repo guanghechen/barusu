@@ -1,7 +1,6 @@
 import { ModuleRankItem } from '../../util/module-rank'
 import { StaticModuleStatementItem } from '../../util/module-statement'
 
-
 export interface SortImportsContext {
   /**
    * Path of currently executing command
@@ -52,7 +51,6 @@ export interface SortImportsContext {
    */
   readonly blankLinesAfterStatement: number
 }
-
 
 interface Params {
   /**
@@ -105,14 +103,13 @@ interface Params {
   readonly typeRank?: Record<StaticModuleStatementItem['type'], number>
 }
 
-
 /**
  * Create SortImportsContext
  *
  * @param params
  */
 export async function createSortImportsContext(
-  params: Params
+  params: Params,
 ): Promise<SortImportsContext> {
   const context: SortImportsContext = {
     cwd: params.cwd,
@@ -126,7 +123,8 @@ export async function createSortImportsContext(
     typeFirst: params.typeFirst,
     moduleRanks: params.moduleRanks,
     blankLinesAfterStatement: params.blankLinesAfterStatement,
-    typeRank: params.typeRank != null ? params.typeRank : { 'import': 1, 'export': 2 },
+    typeRank:
+      params.typeRank != null ? params.typeRank : { import: 1, export: 2 },
   }
   return context
 }

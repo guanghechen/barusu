@@ -1,6 +1,5 @@
 import type { WriteFileOptions } from 'fs-extra'
 
-
 /**
  * Copy target option
  *
@@ -76,7 +75,9 @@ import type { WriteFileOptions } from 'fs-extra'
  *    })
  *    ```
  */
-export interface RollupPluginCopyTargetOption extends WriteFileOptions, RollupPluginCopyOptions {
+export interface RollupPluginCopyTargetOption
+  extends WriteFileOptions,
+    RollupPluginCopyOptions {
   /**
    * Path or glob of what to copy
    */
@@ -99,10 +100,9 @@ export interface RollupPluginCopyTargetOption extends WriteFileOptions, RollupPl
   transform?: (
     content: string | ArrayBuffer,
     srcPath: string,
-    dstPath: string
+    dstPath: string,
   ) => Promise<string | ArrayBuffer>
 }
-
 
 /**
  * Options of @barusu/rollup-plugin-copy
@@ -144,7 +144,6 @@ export interface RollupPluginCopyOptions extends WriteFileOptions {
    */
   watchHook?: string
 }
-
 
 /**
  * Copy target item

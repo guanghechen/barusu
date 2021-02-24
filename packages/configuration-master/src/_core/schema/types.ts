@@ -10,7 +10,6 @@ export type DDSchema = DefinitionDataSchema<string, any>
 export type RTDSchema = RawTopDataSchema<string, any>
 export type TDSchema = TopDataSchema<string, any>
 
-
 /**
  * the raw data object of DataSchema
  *
@@ -37,7 +36,6 @@ export interface RawDataSchema<T extends string, V> {
   description?: string
 }
 
-
 /**
  * 数据模式对象
  */
@@ -60,7 +58,6 @@ export interface DataSchema<T extends string, V> {
   readonly description?: string
 }
 
-
 /**
  * the raw data object of DefinitionDataSchema
  *
@@ -68,7 +65,8 @@ export interface DataSchema<T extends string, V> {
  *
  * @see #DefinitionDataSchema
  */
-export interface RawDefinitionDataSchema<T extends string, V> extends RawDataSchema<T, V> {
+export interface RawDefinitionDataSchema<T extends string, V>
+  extends RawDataSchema<T, V> {
   /**
    * The unique identifier of the DataSchema;
    * If this value is specified, it can be directly referenced by a
@@ -82,7 +80,6 @@ export interface RawDefinitionDataSchema<T extends string, V> extends RawDataSch
   $id?: string
 }
 
-
 /**
  * Define a reusable DataSchema which can be referenced by $ref in RefDataSchema
  *
@@ -90,7 +87,8 @@ export interface RawDefinitionDataSchema<T extends string, V> extends RawDataSch
  *
  * @see https://json-schema.org/understanding-json-schema/structuring.html#reuse
  */
-export interface DefinitionDataSchema<T extends string, V> extends DataSchema<T, V> {
+export interface DefinitionDataSchema<T extends string, V>
+  extends DataSchema<T, V> {
   /**
    * The unique identifier of the DataSchema;
    * If this value is specified, it can be directly referenced
@@ -104,7 +102,6 @@ export interface DefinitionDataSchema<T extends string, V> extends DataSchema<T,
   readonly $id?: string
 }
 
-
 /**
  * the raw data object of TopDataSchema
  *
@@ -112,7 +109,8 @@ export interface DefinitionDataSchema<T extends string, V> extends DataSchema<T,
  *
  * @see #TopDataSchema
  */
-export interface RawTopDataSchema<T extends string, V> extends RawDataSchema<T, V> {
+export interface RawTopDataSchema<T extends string, V>
+  extends RawDataSchema<T, V> {
   /**
    * Define a DataSchema that can be reused, that is, a DataSchema
    * referenced by `$ref` in RefDataSchema
@@ -128,7 +126,6 @@ export interface RawTopDataSchema<T extends string, V> extends RawDataSchema<T, 
    */
   definitions?: { [name: string]: RawDefinitionDataSchema<T, V> }
 }
-
 
 /**
  * The top-level DataSchema, which is the root node of the DataSchema data tree.

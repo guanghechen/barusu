@@ -19,7 +19,6 @@ import {
   TDSCResult,
 } from './types'
 
-
 /**
  * Objects managed by the data pattern compiler
  *  - Registration operation: enable a user-defined Schema type
@@ -93,7 +92,9 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
-        reason: `\`schema.type\` must be a string, but got (${ stringify(rawSchema.type) }).`
+        reason: `\`schema.type\` must be a string, but got (${stringify(
+          rawSchema.type,
+        )}).`,
       })
     }
 
@@ -103,7 +104,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown \`schema.type\`: ${ stringify(rawSchema.type) }.`
+        reason: `unknown \`schema.type\`: ${stringify(rawSchema.type)}.`,
       })
     }
 
@@ -114,9 +115,9 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#compileDefinitionDataSchema
    */
-  public * compileDefinitionDataSchema(
+  public *compileDefinitionDataSchema(
     name: string,
-    rawSchema: RDDSchema
+    rawSchema: RDDSchema,
   ): Generator<string, DDSCResult> {
     // eslint-disable-next-line no-param-reassign
     rawSchema = this.normalizeRawSchema(rawSchema)
@@ -167,7 +168,10 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
         const compileDefinitionTasks = {}
         for (const name of Object.getOwnPropertyNames(rawSchema.definitions)) {
           const rawDefinitionSchema = rawSchema.definitions[name]
-          const compileDefinitionTask = this.compileDefinitionDataSchema(name, rawDefinitionSchema)
+          const compileDefinitionTask = this.compileDefinitionDataSchema(
+            name,
+            rawDefinitionSchema,
+          )
           compileDefinitionTask.next()
           compileDefinitionTasks[name] = compileDefinitionTask
         }
@@ -178,7 +182,10 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
           const { value: definitionSchemaResult } = compileDefinitionTask.next()
 
           // merge errors and warnings
-          if (definitionSchemaResult.hasError || definitionSchemaResult.hasWarning) {
+          if (
+            definitionSchemaResult.hasError ||
+            definitionSchemaResult.hasWarning
+          ) {
             result.addHandleResult('definitions', definitionSchemaResult, name)
           }
           // collect definition
@@ -238,7 +245,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     if (rawSchema != null && isArray(rawSchema.type)) {
       // optimization when only one data type is specified
       if (rawSchema.type.length === 1) {
-        return { ...rawSchema, type: rawSchema.type[0]}
+        return { ...rawSchema, type: rawSchema.type[0] }
       }
 
       // compile to combine
@@ -260,7 +267,10 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#inheritRawSchema
    */
-  public inheritRawSchema<T extends RDSchema>(defaultRawSchema: RDSchema, rawSchema: T): T {
+  public inheritRawSchema<T extends RDSchema>(
+    defaultRawSchema: RDSchema,
+    rawSchema: T,
+  ): T {
     return {
       required: defaultRawSchema.required,
       ...rawSchema,
@@ -275,9 +285,12 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     const json: any = this.toJSON(schema)
     if (schema.definitions != null) {
       json.definitions = {}
-      for (const propertyName of Object.getOwnPropertyNames(schema.definitions)) {
-        json.definitions[propertyName] =
-          this.definitionSchemaToJSON(schema.definitions[propertyName])
+      for (const propertyName of Object.getOwnPropertyNames(
+        schema.definitions,
+      )) {
+        json.definitions[propertyName] = this.definitionSchemaToJSON(
+          schema.definitions[propertyName],
+        )
       }
     }
     return json
@@ -291,10 +304,11 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
   public parseTopSchemaJSON(json: any): TDSchema {
     const schema: TDSchema = this.parseJSON(json)
     if (json.definitions != null) {
-      ; (schema as any).definitions = {}
+      ;(schema as any).definitions = {}
       for (const propertyName of Object.getOwnPropertyNames(json.definitions)) {
-        schema.definitions![propertyName] =
-          this.parseDefinitionSchemaJSON(json.definitions[propertyName])
+        schema.definitions![propertyName] = this.parseDefinitionSchemaJSON(
+          json.definitions[propertyName],
+        )
       }
     }
     return schema
@@ -332,7 +346,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
   public toJSON(schema: DSchema): Record<string, unknown> {
     const compiler = this.compilerMap.get(schema.type)
     if (compiler == null) {
-      throw new Error(`cannot find compiler for type(${ schema.type })`)
+      throw new Error(`cannot find compiler for type(${schema.type})`)
     }
     return compiler.toJSON(schema)
   }
@@ -345,7 +359,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
   public parseJSON(json: any): DSchema {
     const compiler = this.compilerMap.get(json.type)
     if (compiler == null) {
-      throw new Error(`cannot find compiler for type(${ json.type })`)
+      throw new Error(`cannot find compiler for type(${json.type})`)
     }
     return compiler.parseJSON(json)
   }

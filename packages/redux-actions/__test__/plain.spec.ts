@@ -1,10 +1,11 @@
 import { createActionCreator } from '../src'
 
-
 describe('optional payload', function () {
   test('literal string type', function () {
     const createTogglingMenuAction = createActionCreator<
-      'toggle-menu', { id: string }>('toggle-menu', false)
+      'toggle-menu',
+      { id: string }
+    >('toggle-menu', false)
     const type: 'toggle-menu' = createTogglingMenuAction().type
 
     expect(createTogglingMenuAction()).toEqual({
@@ -23,8 +24,8 @@ describe('optional payload', function () {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // Extra properties will cause the Type Checking Error by ts
-        extra: 1
-      })
+        extra: 1,
+      }),
     ).toEqual({
       type,
       payload: { id: 'waw', extra: 1 },
@@ -34,7 +35,9 @@ describe('optional payload', function () {
   test('symbol type', function () {
     const type: unique symbol = Symbol('toggle-menu')
     const createTogglingMenuAction = createActionCreator<
-      typeof type, { id: string }>(type, false)
+      typeof type,
+      { id: string }
+    >(type, false)
 
     expect(createTogglingMenuAction()).toEqual({
       type,
@@ -52,8 +55,8 @@ describe('optional payload', function () {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // Extra properties will cause the Type Checking Error by ts
-        extra: 1
-      })
+        extra: 1,
+      }),
     ).toEqual({
       type,
       payload: { id: 'waw', extra: 1 },
@@ -61,11 +64,12 @@ describe('optional payload', function () {
   })
 })
 
-
 describe('required payload', function () {
   test('literal string type', function () {
     const createTogglingMenuAction = createActionCreator<
-      'toggle-menu', { id: string }>('toggle-menu', true)
+      'toggle-menu',
+      { id: string }
+    >('toggle-menu', true)
     const type: 'toggle-menu' = createTogglingMenuAction({ id: '' }).type
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -87,8 +91,8 @@ describe('required payload', function () {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // Extra properties will cause the Type Checking Error by ts
-        extra: 1
-      })
+        extra: 1,
+      }),
     ).toEqual({
       type,
       payload: { id: 'waw', extra: 1 },
@@ -97,8 +101,10 @@ describe('required payload', function () {
 
   test('symbol type', function () {
     const type: unique symbol = Symbol('toggle-menu')
-    const createTogglingMenuAction = createActionCreator<
-      typeof type, string>(type, false)
+    const createTogglingMenuAction = createActionCreator<typeof type, string>(
+      type,
+      false,
+    )
 
     expect(createTogglingMenuAction()).toEqual({
       type,

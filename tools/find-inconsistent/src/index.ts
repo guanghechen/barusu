@@ -8,13 +8,11 @@ export * from './env/constant'
 export * from './env/logger'
 export * from './util'
 
-
 export type PackageDependencies = { [name: string]: string }
 export type DependencyItem = {
   version: string
   dependents: string[]
 }
-
 
 export interface PackageJSON {
   name: string
@@ -26,14 +24,13 @@ export interface PackageJSON {
   peerDependencies?: PackageDependencies
 }
 
-
 export class PackageManager {
   protected readonly packageMap: Map<string, string> = new Map()
   protected readonly dependencyMap: Map<string, DependencyItem> = new Map()
 
   public async resolve(rootPackageJsonPath: string): Promise<void> {
     if (!fs.existsSync(rootPackageJsonPath)) {
-      throw new Error(`${ rootPackageJsonPath } is not found.`)
+      throw new Error(`${rootPackageJsonPath} is not found.`)
     }
 
     const self = this
@@ -43,7 +40,9 @@ export class PackageManager {
     self.resolvePackageJSON(manifest)
 
     if (manifest.workspaces == null) {
-      throw new Error(`workspaces field is not specified in ${ rootPackageJsonPath }`)
+      throw new Error(
+        `workspaces field is not specified in ${rootPackageJsonPath}`,
+      )
     }
 
     const tasks: Promise<void>[] = []
@@ -58,7 +57,7 @@ export class PackageManager {
           for (const filePath of files) {
             const packageJsonPath = path.join(filePath, 'package.json')
             if (!fs.existsSync(packageJsonPath)) {
-              logger.warn(`no package.json found in ${ filePath }`)
+              logger.warn(`no package.json found in ${filePath}`)
               continue
             }
 
@@ -97,8 +96,9 @@ export class PackageManager {
         }
         if (dependencies[dependency] !== version) {
           logger.error(
-            `[${ json.name }] ${ dependency } has difference versions:`,
-            `(${ dependencies[dependency] }), (${ version })`)
+            `[${json.name}] ${dependency} has difference versions:`,
+            `(${dependencies[dependency]}), (${version})`,
+          )
           process.exit(-1)
         }
       }
@@ -106,7 +106,9 @@ export class PackageManager {
 
     let hasError = false
     for (const [dependency, version] of Object.entries(dependencies)) {
-      const dependencyItem: DependencyItem | undefined = self.dependencyMap.get(dependency)
+      const dependencyItem: DependencyItem | undefined = self.dependencyMap.get(
+        dependency,
+      )
 
       // new dependency
       if (dependencyItem == null) {
@@ -126,8 +128,11 @@ export class PackageManager {
       // eslint-disable-next-line max-len
       // Inconsistent version number of the same dependency in other packages found.
       logger.error(
-        `[${ json.name }] ${ dependency } has a different version(${ version }) in other packages:`,
-        dependencyItem.dependents.map(d => `${ d }(${ dependencyItem.version })`).join(','))
+        `[${json.name}] ${dependency} has a different version(${version}) in other packages:`,
+        dependencyItem.dependents
+          .map(d => `${d}(${dependencyItem.version})`)
+          .join(','),
+      )
       hasError = true
     }
 
@@ -143,12 +148,18 @@ export class PackageManager {
       if (dependencyItem == null) continue
 
       // There is no '^' prefix of the field 'version' in package.version
-      const normalizedDependencyVersion = dependencyItem.version.replace(/^[^]/, '')
+      const normalizedDependencyVersion = dependencyItem.version.replace(
+        /^[^]/,
+        '',
+      )
       if (normalizedDependencyVersion === version) continue
 
       logger.error(
-        `[${ packageName }] has a different version(${ version }) in other packages:`,
-        dependencyItem.dependents.map(d => `${ d }(${ dependencyItem.version })`).join(','))
+        `[${packageName}] has a different version(${version}) in other packages:`,
+        dependencyItem.dependents
+          .map(d => `${d}(${dependencyItem.version})`)
+          .join(','),
+      )
       hasError = true
     }
     checkFatalError(hasError)

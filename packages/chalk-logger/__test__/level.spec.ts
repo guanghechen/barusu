@@ -1,6 +1,5 @@
 import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from '../src'
 
-
 describe('Level', function () {
   test('debug', function () {
     expect(Level.valueOf('debug')).toBe(DEBUG)

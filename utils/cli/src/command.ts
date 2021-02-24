@@ -2,7 +2,6 @@ import type { CommandConfigurationOptions } from './option'
 import commander from 'commander'
 import { registerCommanderOptions } from '@barusu/chalk-logger'
 
-
 /**
  * Callback for handling the command
  *
@@ -15,7 +14,6 @@ export type CommandActionCallback<T extends CommandConfigurationOptions> = (
   options: T,
   extra: string[],
 ) => void | Promise<void> | never
-
 
 export class Command extends commander.Command {
   /**
@@ -34,7 +32,9 @@ export class Command extends commander.Command {
    * @return {Command} `this` command for chaining
    * @api public
    */
-  public action<T extends CommandConfigurationOptions>(fn: CommandActionCallback<T>): this {
+  public action<T extends CommandConfigurationOptions>(
+    fn: CommandActionCallback<T>,
+  ): this {
     const self = this
 
     const listener = (args: string[]): void => {
@@ -51,7 +51,7 @@ export class Command extends commander.Command {
         self.opts() as T,
 
         // Extra arguments so available too.
-        args.slice(expectedArgsCount)
+        args.slice(expectedArgsCount),
       ]
 
       const actionResult = fn.apply(self, actionArgs)
@@ -83,7 +83,7 @@ export class Command extends commander.Command {
       if (o._storeOptionsAsProperties) {
         for (const option of o.options) {
           const key = option.attributeName()
-          options[key] = (key === o._versionOptionName) ? o._version : o[key]
+          options[key] = key === o._versionOptionName ? o._version : o[key]
         }
       } else {
         for (const key of Object.getOwnPropertyNames(o._optionValues)) {
@@ -102,9 +102,7 @@ export class Command extends commander.Command {
   }
 }
 
-
 export { commander }
-
 
 /**
  * Create top command
@@ -127,13 +125,23 @@ export function createTopCommand(
   registerCommanderOptions(program)
 
   program
-    .option('-c, --config-path <configFilepath>', 'config filepaths', (val, acc: string[]) => acc.concat(val), [])
-    .option('--parastic-config-path <parasticConfigFilepath>', 'parastic config filepath')
-    .option('--parastic-config-entry <parasticConfigFilepath>', 'parastic config filepath')
+    .option(
+      '-c, --config-path <configFilepath>',
+      'config filepaths',
+      (val, acc: string[]) => acc.concat(val),
+      [],
+    )
+    .option(
+      '--parastic-config-path <parasticConfigFilepath>',
+      'parastic config filepath',
+    )
+    .option(
+      '--parastic-config-entry <parasticConfigFilepath>',
+      'parastic config filepath',
+    )
 
   return program
 }
-
 
 /**
  * Process sub-command
@@ -143,22 +151,20 @@ export function createTopCommand(
  */
 export type SubCommandProcessor<
   O extends CommandConfigurationOptions,
-  V extends unknown = void,
-  > = (options: O) => V | Promise<V>
-
+  V extends unknown = void
+> = (options: O) => V | Promise<V>
 
 /**
  * Create sub-command
  */
 export type SubCommandCreator<
   O extends CommandConfigurationOptions,
-  V extends unknown = void,
-  > = (
-    handle?: SubCommandProcessor<O, V>,
-    commandName?: string,
-    aliases?: string[],
-  ) => Command
-
+  V extends unknown = void
+> = (
+  handle?: SubCommandProcessor<O, V>,
+  commandName?: string,
+  aliases?: string[],
+) => Command
 
 /**
  * Mount sub-command
@@ -169,9 +175,8 @@ export type SubCommandCreator<
  */
 export type SubCommandMounter = (
   parentCommand: Command,
-  opts?: commander.CommandOptions
+  opts?: commander.CommandOptions,
 ) => void
-
 
 /**
  * Execute sub-command
@@ -180,9 +185,10 @@ export type SubCommandMounter = (
  * @param {string[]}  args
  * @returns {Promise}
  */
-export type SubCommandExecutor<V extends unknown = void>
-  = (parentCommand: Command, args: string[]) => Promise<V>
-
+export type SubCommandExecutor<V extends unknown = void> = (
+  parentCommand: Command,
+  args: string[],
+) => Promise<V>
 
 /**
  * Create sub-command mounter
@@ -202,7 +208,6 @@ export function createSubCommandMounter<
     program.addCommand(command, opts)
   }
 }
-
 
 /**
  * Create sub-command executor
@@ -236,26 +241,21 @@ export function createSubCommandExecutor<
   }
 }
 
-
 /**
  * Process main command
  */
 export type MainCommandProcessor<
   O extends CommandConfigurationOptions,
-  V extends unknown = void,
-  > = (options: O) => V | Promise<V>
-
+  V extends unknown = void
+> = (options: O) => V | Promise<V>
 
 /**
  * Create main command
  */
 export type MainCommandCreator<
   O extends CommandConfigurationOptions,
-  V extends unknown = void,
-  > = (
-    handle?: MainCommandProcessor<O, V>,
-  ) => Command
-
+  V extends unknown = void
+> = (handle?: MainCommandProcessor<O, V>) => Command
 
 /**
  * Mount main command
@@ -266,9 +266,8 @@ export type MainCommandCreator<
  */
 export type MainCommandMounter = (
   parentCommand: Command,
-  opts?: commander.CommandOptions
+  opts?: commander.CommandOptions,
 ) => void
-
 
 /**
  * Execute main command
@@ -276,9 +275,9 @@ export type MainCommandMounter = (
  * @param {string[]}  args
  * @returns {Promise}
  */
-export type MainCommandExecutor<V extends unknown = void>
-  = (args: string[]) => Promise<V>
-
+export type MainCommandExecutor<V extends unknown = void> = (
+  args: string[],
+) => Promise<V>
 
 /**
  * Create main command mounter
@@ -301,7 +300,6 @@ export function createMainCommandMounter<
     program.addCommand(command, { ...opts, isDefault: true })
   }
 }
-
 
 /**
  * Create main command executor

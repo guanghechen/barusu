@@ -4,6 +4,7 @@
     "CASELABEL",
     "Encryptor",
     "Lerna",
+    "Parens",
     "Subcommand",
     "autoprefixer",
     "autorestart",
@@ -68,5 +69,8 @@
     "typeof",
     "verbo",
     "ymal"
-  ]
+  ],
+  "files.associations": {
+    ".prettierrc": "yaml"
+  }
 }

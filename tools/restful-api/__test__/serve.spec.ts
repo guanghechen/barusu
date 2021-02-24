@@ -16,7 +16,6 @@ import {
   execSubCommandGenerate,
 } from '../src'
 
-
 describe('serve', function () {
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'mock-workspaces')
   const kases = fs.readdirSync(caseRootDirectory)
@@ -51,13 +50,16 @@ describe('serve', function () {
       ])
 
       const promise = new Promise<RestfulApiServeContext>(resolve => {
-        program.addCommand(createSubCommandServe(
-          async (options: SubCommandServeOptions): Promise<void> => {
-            const context: RestfulApiServeContext =
-              await createRestfulApiServeContextFromOptions(options)
-            resolve(context)
-          }
-        ))
+        program.addCommand(
+          createSubCommandServe(
+            async (options: SubCommandServeOptions): Promise<void> => {
+              const context: RestfulApiServeContext = await createRestfulApiServeContextFromOptions(
+                options,
+              )
+              resolve(context)
+            },
+          ),
+        )
       })
 
       const args = [
@@ -119,12 +121,12 @@ describe('serve', function () {
       }
 
       // test request with resource file response
-      const resourceRequestCases = [
-        ...caseData.resourceRequestCases,
-      ].map(item => {
-        if (item.absolutePath) return item
-        return { ...item, url: context.prefixUrl + item.url }
-      })
+      const resourceRequestCases = [...caseData.resourceRequestCases].map(
+        item => {
+          if (item.absolutePath) return item
+          return { ...item, url: context.prefixUrl + item.url }
+        },
+      )
       expect(resourceRequestCases).toMatchSnapshot('resourceRequestCases')
       for (const item of resourceRequestCases) {
         const response = await request.get(item.url)
@@ -138,13 +140,12 @@ describe('serve', function () {
   }
 })
 
-
 /**
  * Extracted interesting data from ResSE Headers
  * @param response
  */
 function extractFromSupertestResponse(response: supertest.Response): any {
-  const headers = { ...response.headers}
+  const headers = { ...response.headers }
   delete headers.date
   delete headers['last-modified']
   delete headers['content-length']

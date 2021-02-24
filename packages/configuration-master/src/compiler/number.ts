@@ -11,12 +11,15 @@ import {
   RawNumberDataSchema as RDS,
 } from '../schema/number'
 
-
 /**
  * NumberDataSchema 编译结果的数据类型
  */
-export type NumberDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
-
+export type NumberDataSchemaCompileResult = DataSchemaCompileResult<
+  T,
+  V,
+  RDS,
+  DS
+>
 
 /**
  * 数字类型的模式的编译器
@@ -26,7 +29,6 @@ export type NumberDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, D
 export class NumberDataSchemaCompiler
   extends BaseDataSchemaCompiler<T, V, RDS, DS>
   implements DataSchemaCompiler<T, V, RDS, DS> {
-
   public readonly type: T = T
 
   /**
@@ -40,17 +42,29 @@ export class NumberDataSchemaCompiler
 
     // required 的默认值为 false
     const defaultValueResult = result.compileConstraint<V>(
-      'default', coverNumber)
+      'default',
+      coverNumber,
+    )
     const minimumResult = result.compileConstraint<number>(
-      'minimum', coverNumber)
+      'minimum',
+      coverNumber,
+    )
     const maximumResult = result.compileConstraint<number>(
-      'maximum', coverNumber)
+      'maximum',
+      coverNumber,
+    )
     const exclusiveMinimumResult = result.compileConstraint<number>(
-      'exclusiveMinimum', coverNumber)
+      'exclusiveMinimum',
+      coverNumber,
+    )
     const exclusiveMaximumResult = result.compileConstraint<number>(
-      'exclusiveMaximum', coverNumber)
+      'exclusiveMaximum',
+      coverNumber,
+    )
     const enumValueResult = result.compileConstraint<number[]>(
-      'enum', coverArray<number>(coverNumber))
+      'enum',
+      coverArray<number>(coverNumber),
+    )
 
     // NumberDataSchema
     const schema: DS = {

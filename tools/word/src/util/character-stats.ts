@@ -20,7 +20,6 @@ export interface CharacterDetail {
   punctuation: boolean
 }
 
-
 /**
  * Statistics of characters
  */
@@ -55,7 +54,6 @@ export interface CharacterStat {
   details?: CharacterDetail[]
 }
 
-
 /**
  * Perform character statistics on given string
  *
@@ -83,7 +81,6 @@ export function performCharacterStatistics(
   return detailMap
 }
 
-
 /**
  * Merge @detailMap into @result
  *
@@ -105,7 +102,6 @@ export function mergeCharacterStat(
   }
 }
 
-
 /**
  * Map Record<string, CharacterDetail> to CharacterStat
  *
@@ -118,8 +114,12 @@ export function calcCharacterStat(
   topOfDetails: number,
   pretty: boolean,
 ): CharacterStat {
-  let total = 0, blankTotal = 0, punctuationTotal = 0
-  let uniqueTotal = 0, uniqueBlankTotal = 0, uniquePunctuationTotal = 0
+  let total = 0,
+    blankTotal = 0,
+    punctuationTotal = 0,
+    uniqueTotal = 0,
+    uniqueBlankTotal = 0,
+    uniquePunctuationTotal = 0
   for (const detail of Object.values(detailMap)) {
     total += detail.count
     uniqueTotal += 1
@@ -143,13 +143,18 @@ export function calcCharacterStat(
   }
 
   if (topOfDetails > 0) {
-    const stableSortedDetails: CharacterDetail[] = Object.values(detailMap)
-      .sort((x, y) => {
-        if (x.count !== y.count) return y.count - x.count
-        return x < y ? -1 : 1
-      })
+    const stableSortedDetails: CharacterDetail[] = Object.values(
+      detailMap,
+    ).sort((x, y) => {
+      if (x.count !== y.count) return y.count - x.count
+      return x < y ? -1 : 1
+    })
     const details: CharacterDetail[] = []
-    for (let i = 0, k = 0; i < stableSortedDetails.length && k < topOfDetails; ++i) {
+    for (
+      let i = 0, k = 0;
+      i < stableSortedDetails.length && k < topOfDetails;
+      ++i
+    ) {
       const detail = stableSortedDetails[i]
       if (pretty && (detail.blank || detail.punctuation)) continue
       k += 1
@@ -161,7 +166,6 @@ export function calcCharacterStat(
   return result
 }
 
-
 /**
  * Format CharacterStat
  * @param stat
@@ -169,6 +173,8 @@ export function calcCharacterStat(
 export function formatCharacterStat(stat: CharacterStat): string {
   const length = stat.total.toString().length
   const format = (n: number) => n.toString().padStart(length)
+
+  // prettier-ignore
   let output: string = (
     '======================================================\n' +
     '                   total: ' + format(stat.total) + '\n' +
@@ -180,12 +186,17 @@ export function formatCharacterStat(stat: CharacterStat): string {
   )
 
   if (stat.details != null) {
-    output += (
+    output +=
       '                 details:\n' +
-      '                 ' + '-'.padStart(13 + length, '-') + '\n'
-    )
+      '                 ' +
+      '-'.padStart(13 + length, '-') +
+      '\n'
     for (const detail of stat.details) {
-      output += JSON.stringify(detail.char).padStart(24) + ': ' + format(detail.count) + '\n'
+      output +=
+        JSON.stringify(detail.char).padStart(24) +
+        ': ' +
+        format(detail.count) +
+        '\n'
     }
   }
   return output

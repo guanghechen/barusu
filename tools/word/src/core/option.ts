@@ -6,7 +6,6 @@ import {
 import { MergeStrategy, cover, isNotEmptyString } from '@barusu/util-option'
 import { logger } from '../env/logger'
 
-
 /**
  * Global command options
  */
@@ -18,14 +17,12 @@ export interface GlobalCommandOptions extends CommandConfigurationOptions {
   encoding: string
 }
 
-
 /**
  * Default value of global options
  */
 export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
   encoding: 'utf-8',
 }
-
 
 /**
  *
@@ -39,23 +36,30 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   defaultOptions: C,
   workspaceDir: string,
   options: C & GlobalCommandOptions,
-  strategies: Partial<Record<keyof (C & GlobalCommandOptions), MergeStrategy>> = {},
+  strategies: Partial<
+    Record<keyof (C & GlobalCommandOptions), MergeStrategy>
+  > = {},
 ): C & GlobalCommandOptions & CommandConfigurationFlatOpts {
   type R = C & GlobalCommandOptions & CommandConfigurationFlatOpts
   const resolvedDefaultOptions: R = resolveCommandConfigurationOptions<
-    C & GlobalCommandOptions, C & GlobalCommandOptions>(
-      logger,
-      commandName,
-      subCommandName,
-      { ...__defaultGlobalCommandOptions, ...defaultOptions },
-      workspaceDir,
-      options,
-      strategies
-    )
+    C & GlobalCommandOptions,
+    C & GlobalCommandOptions
+  >(
+    logger,
+    commandName,
+    subCommandName,
+    { ...__defaultGlobalCommandOptions, ...defaultOptions },
+    workspaceDir,
+    options,
+    strategies,
+  )
 
   // resolve encoding
   const encoding: string = cover<string>(
-    resolvedDefaultOptions.encoding, options.encoding, isNotEmptyString)
+    resolvedDefaultOptions.encoding,
+    options.encoding,
+    isNotEmptyString,
+  )
   logger.debug('encoding:', encoding)
 
   return {

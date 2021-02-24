@@ -5,7 +5,6 @@ import rimraf from 'rimraf'
 import { absoluteOfWorkspace } from '@barusu/util-cli'
 import { COMMAND_NAME, createProgram, execSubCommandGenerate } from '../src'
 
-
 describe('generate', function () {
   const caseRootDirectory = path.resolve(__dirname, 'cases', 'mock-workspaces')
   const kases = fs.readdirSync(caseRootDirectory)
@@ -32,15 +31,20 @@ describe('generate', function () {
       ])
 
       // write the outputs to snapshots
-      const files = (await globby(['*', '**/*'], {
-        cwd: absoluteSchemaRootDir,
-        onlyFiles: true,
-        expandDirectories: false,
-      })).sort()
+      const files = (
+        await globby(['*', '**/*'], {
+          cwd: absoluteSchemaRootDir,
+          onlyFiles: true,
+          expandDirectories: false,
+        })
+      ).sort()
 
       expect(files).toMatchSnapshot('schema files')
       for (const filepath of files) {
-        const absoluteFilepath = absoluteOfWorkspace(absoluteSchemaRootDir, filepath)
+        const absoluteFilepath = absoluteOfWorkspace(
+          absoluteSchemaRootDir,
+          filepath,
+        )
         const content: string = await fs.readJSON(absoluteFilepath)
         expect(content).toMatchSnapshot(filepath)
       }

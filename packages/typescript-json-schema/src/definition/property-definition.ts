@@ -4,7 +4,6 @@ import { JsonSchemaContext } from '../schema-context'
 import { Definition } from '../types'
 import { getTypeDefinition } from './type-definition'
 
-
 /**
  *
  * @param context
@@ -14,7 +13,7 @@ import { getTypeDefinition } from './type-definition'
 export function getDefinitionForProperty(
   context: Readonly<JsonSchemaContext>,
   prop: ts.Symbol,
-  node: ts.Node
+  node: ts.Node,
 ): Definition | null {
   if (prop.flags & ts.SymbolFlags.Method) return null
 
@@ -22,7 +21,13 @@ export function getDefinitionForProperty(
   const propertyType = context.checker.getTypeOfSymbolAtLocation(prop, node)
   const reffedType = context.getReferencedTypeSymbol(prop)
   const definition = getTypeDefinition(
-    context, propertyType, undefined, undefined, prop, reffedType)
+    context,
+    propertyType,
+    undefined,
+    undefined,
+    prop,
+    reffedType,
+  )
 
   if (context.args.titles) definition.title = propertyName
 
@@ -38,17 +43,16 @@ export function getDefinitionForProperty(
 
     if ((initial as any).expression) {
       // node
-      console.warn(`initializer is expression for property ${ propertyName }`)
+      console.warn(`initializer is expression for property ${propertyName}`)
     } else if (
       (initial as any).kind &&
       (initial as any).kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
     ) {
       definition.default = initial.getText()
-    }
-    else {
+    } else {
       try {
         const sandbox = { sandboxvar: null as any }
-        vm.runInNewContext(`sandboxvar=${ initial.getText() }`, sandbox)
+        vm.runInNewContext(`sandboxvar=${initial.getText()}`, sandbox)
         const val = sandbox.sandboxvar
         if (
           val === null ||
@@ -59,11 +63,14 @@ export function getDefinitionForProperty(
         ) {
           definition.default = val
         } else if (val) {
-          console.warn(`unknown initializer for property ${ propertyName }: ${ val }`)
+          console.warn(
+            `unknown initializer for property ${propertyName}: ${val}`,
+          )
         }
-      }
-      catch (e) {
-        console.warn(`exception evaluating initializer for property ${ propertyName }`)
+      } catch (e) {
+        console.warn(
+          `exception evaluating initializer for property ${propertyName}`,
+        )
       }
     }
   }

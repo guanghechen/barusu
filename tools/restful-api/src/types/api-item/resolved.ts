@@ -1,6 +1,5 @@
 import { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
 
-
 /**
  * 格式化后的 API 条目
  * @description Formatted API item

@@ -1,6 +1,5 @@
 import { DDSchema, RDDSchema, TDSchema } from './types'
 
-
 /**
  * Maintain the DefinitionDataSchema mapping relationship;
  * Used to compile RefDataSchema to determine whether the reference is valid,
@@ -68,12 +67,16 @@ export class DefinitionDataSchemaMaster {
   public addRawSchema($path: string, rawSchema: RDDSchema, $id?: string): void {
     // check if $id is duplicate
     if ($id != null && this.rawSchemaIdMap.has($id)) {
-      throw new Error(`[DefinitionDataSchemaMaster.addRawSchema] $id(${ $id }) has existed`)
+      throw new Error(
+        `[DefinitionDataSchemaMaster.addRawSchema] $id(${$id}) has existed`,
+      )
     }
 
     // check if $path is duplicate
     if (this.rawSchemaPathMap.has($path)) {
-      throw new Error(`[DefinitionDataSchemaMaster.addRawSchema] $path(${ $path }) has existed`)
+      throw new Error(
+        `[DefinitionDataSchemaMaster.addRawSchema] $path(${$path}) has existed`,
+      )
     }
 
     // add rawSchema
@@ -110,7 +113,6 @@ export class DefinitionDataSchemaMaster {
     return this.getRawSchema(idOrPath) != null
   }
 }
-
 
 /**
  * A wrapper class for TopDataSchema, making it capable of

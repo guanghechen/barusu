@@ -17,7 +17,6 @@ import {
   createGitCipherDecryptContext,
 } from './context'
 
-
 interface SubCommandOptions extends GlobalCommandOptions {
   /**
    * root dir of outputs
@@ -26,60 +25,66 @@ interface SubCommandOptions extends GlobalCommandOptions {
   readonly outDir: string | null
 }
 
-
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,
   outDir: null,
 }
 
-
-export type SubCommandDecryptOptions = SubCommandOptions & CommandConfigurationFlatOpts
-
+export type SubCommandDecryptOptions = SubCommandOptions &
+  CommandConfigurationFlatOpts
 
 /**
  * create Sub-command: decrypt (e)
  */
-export const createSubCommandDecrypt =
-  function (
-    handle?: SubCommandProcessor<SubCommandDecryptOptions>,
-    commandName = 'decrypt',
-    aliases: string[] = ['d'],
-  ): Command {
-    const command = new Command()
+export const createSubCommandDecrypt = function (
+  handle?: SubCommandProcessor<SubCommandDecryptOptions>,
+  commandName = 'decrypt',
+  aliases: string[] = ['d'],
+): Command {
+  const command = new Command()
 
-    command
-      .name(commandName)
-      .aliases(aliases)
-      .arguments('<workspace>')
-      .option('--out-dir <outDir>', 'root dir of outputs (decrypted files)')
-      .action(async function ([_workspaceDir], options: SubCommandDecryptOptions) {
-        logger.setName(commandName)
+  command
+    .name(commandName)
+    .aliases(aliases)
+    .arguments('<workspace>')
+    .option('--out-dir <outDir>', 'root dir of outputs (decrypted files)')
+    .action(async function (
+      [_workspaceDir],
+      options: SubCommandDecryptOptions,
+    ) {
+      logger.setName(commandName)
 
-        const defaultOptions: SubCommandDecryptOptions = resolveGlobalCommandOptions(
-          packageName, commandName, __defaultCommandOptions, _workspaceDir, options)
+      const defaultOptions: SubCommandDecryptOptions = resolveGlobalCommandOptions(
+        packageName,
+        commandName,
+        __defaultCommandOptions,
+        _workspaceDir,
+        options,
+      )
 
-        // resolve outDir
-        const outDir: string | null = (() => {
-          const _rawOutDir = cover<string | null>(defaultOptions.outDir, options.outDir)
-          if (_rawOutDir == null) return null
-          return absoluteOfWorkspace(defaultOptions.workspace, _rawOutDir)
-        })()
-        logger.debug('outDir:', outDir)
+      // resolve outDir
+      const outDir: string | null = (() => {
+        const _rawOutDir = cover<string | null>(
+          defaultOptions.outDir,
+          options.outDir,
+        )
+        if (_rawOutDir == null) return null
+        return absoluteOfWorkspace(defaultOptions.workspace, _rawOutDir)
+      })()
+      logger.debug('outDir:', outDir)
 
+      const resolvedOptions: SubCommandDecryptOptions = {
+        ...defaultOptions,
+        outDir,
+      }
 
-        const resolvedOptions: SubCommandDecryptOptions = {
-          ...defaultOptions,
-          outDir,
-        }
+      if (handle != null) {
+        await handle(resolvedOptions)
+      }
+    })
 
-        if (handle != null) {
-          await handle(resolvedOptions)
-        }
-      })
-
-    return command
-  }
-
+  return command
+}
 
 /**
  * Create GitCipherDecryptContext

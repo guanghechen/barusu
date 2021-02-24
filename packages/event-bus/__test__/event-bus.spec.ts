@@ -1,11 +1,9 @@
 import { SimpleEvent, SimpleEventBus, SimpleEventHandler, delay } from '../src'
 
-
 export enum EventTypes {
   INIT = 'INIT',
   EXIT = 'EXIT',
 }
-
 
 describe('simple-bus', function () {
   describe('listener', function () {
@@ -34,9 +32,7 @@ describe('simple-bus', function () {
       eventBus.dispatch({ type: EventTypes.INIT, payload: { id: 2 } })
 
       expect(messages.length === 1).toBeTruthy()
-      expect(messages).toEqual([
-        { type: EventTypes.INIT, payload: { id: 1 } }
-      ])
+      expect(messages).toEqual([{ type: EventTypes.INIT, payload: { id: 1 } }])
     })
 
     test('Only listened events will trigger listener', function () {
@@ -161,9 +157,7 @@ describe('simple-bus', function () {
       eventBus.dispatch({ type: EventTypes.INIT, payload: { id: 2 } })
 
       expect(messages.length === 1).toBeTruthy()
-      expect(messages).toEqual([
-        { type: EventTypes.INIT, payload: { id: 1 } }
-      ])
+      expect(messages).toEqual([{ type: EventTypes.INIT, payload: { id: 1 } }])
     })
 
     test('No matter what event will trigger the subscriber', function () {
@@ -244,7 +238,6 @@ describe('simple-bus', function () {
     })
   })
 })
-
 
 function createEventHandler(): [
   SimpleEvent<EventTypes>[],
