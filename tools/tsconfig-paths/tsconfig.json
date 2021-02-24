@@ -4,9 +4,5 @@
     "module": "commonjs",
     "target": "es2015"
   },
-  "include": [
-    "src",
-    "script",
-    "__test__/*.ts"
-  ]
+  "include": ["src", "script", "__test__/*.ts"]
 }

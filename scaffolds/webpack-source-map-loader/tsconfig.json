@@ -5,9 +5,5 @@
     "noImplicitThis": false,
     "target": "es2015"
   },
-  "include": [
-    "src",
-    "script",
-    "test"
-  ]
+  "include": ["src", "script", "test"]
 }

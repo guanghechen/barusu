@@ -30,7 +30,7 @@
     "postinstall:main": "yarn update:lock",
     "postinstall:dev": "is-ci || husky install",
     "rebuild": "yarn clean && yarn build",
-    "test": "lerna exec --concurrency 1 'echo && pwd && yarn test'",
+    "test": "lerna run test --concurrency 1",
     "update:changelog": "gitmoji-changelog update",
     "update:lock": "yarn-deduplicate"
   },

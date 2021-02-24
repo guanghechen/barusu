@@ -3,6 +3,10 @@
 !**/*.jsx
 !**/*.ts
 !**/*.tsx
+!package.json
+!tsconfig.json
+!tsconfig.src.json
+!tsconfig.settings.json
 
 
 **/.vscode/**
