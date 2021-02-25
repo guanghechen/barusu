@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="0.0.47"></a>
+## 0.0.47 (2021-02-25)
+
+### Miscellaneous
+
+- 🔀 Merge branch &#x27;develop&#x27; [[fe831c8](https://github.com/guanghechen/barusu/commit/fe831c86b42c23445d199eb3ff47b45827e8ac19)]
+- 📝 [tool-sort-imports] doc: update README [[28846bf](https://github.com/guanghechen/barusu/commit/28846bf6fabad5e57daf988a9541166b813d29c4)]
+- 🚧 [rollup-config] improve: upgrade dependencies &amp; remove rollup-plugin-peer-deps-external [[5e32318](https://github.com/guanghechen/barusu/commit/5e32318c9547c8565af2977da450cd79b9c14e84)]
+- 🔨 [rollup-config] chore: update output path &amp; fix &#x27;no delcaration types found&#x27; in ts [[caf1e9e](https://github.com/guanghechen/barusu/commit/caf1e9e7f18f08b2a9d47c2381518b8ded29d21e)]
+- 📝 docs: update CHANGELOG and README [[1c7bea8](https://github.com/guanghechen/barusu/commit/1c7bea800c1df1c6695993c2416cd53054c72a59)]
+
+
 <a name="0.0.46"></a>
 ## 0.0.46 (2021-02-24)
 
