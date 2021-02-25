@@ -76,6 +76,6 @@
   "devDependencies": {
     "@barusu/rollup-config": "^0.0.46",
     "@barusu/rollup-plugin-copy": "^0.0.46",
-    "rollup": "2.37.0"
+    "rollup": "2.39.1"
   }
 }

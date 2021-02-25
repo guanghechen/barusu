@@ -2,17 +2,128 @@ import type {
   CommonJSOptions,
   JsonOptions,
   NodeResolveOptions,
-  PeerDepsExternalOptions,
   TypescriptOptions,
 } from './options'
 import rollup from 'rollup'
-import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import typescript from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import { convertToBoolean, coverBoolean } from './util/option'
 import { collectAllDependencies } from './util/package'
+
+const builtinExternals: string[] = [
+  'glob',
+  'sync',
+  ...require('builtin-modules'),
+]
+
+export const createRollupConfig = (
+  props: ProdConfigParams,
+): rollup.RollupOptions => {
+  const DEFAULT_USE_SOURCE_MAP = coverBoolean(
+    true,
+    convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP),
+  )
+  const DEFAULT_EXTERNAL_ALL_DEPENDENCIES = coverBoolean(
+    true,
+    convertToBoolean(process.env.ROLLUP_EXTERNAL_ALL_DEPENDENCIES),
+  )
+
+  // process task
+  const {
+    useSourceMap = DEFAULT_USE_SOURCE_MAP,
+    externalAllDependencies = DEFAULT_EXTERNAL_ALL_DEPENDENCIES,
+    manifest,
+    pluginOptions = {},
+    ...resetInputOptions
+  } = props
+  const {
+    jsonOptions = {},
+    nodeResolveOptions = {},
+    typescriptOptions = {},
+    commonjsOptions = {},
+  } = pluginOptions
+
+  const externalSet: Set<string> = new Set([
+    ...builtinExternals,
+    ...Object.keys(manifest.dependencies || {}),
+  ])
+
+  if (externalAllDependencies) {
+    const dependencies = collectAllDependencies(
+      undefined,
+      Object.keys(manifest.dependencies || {}),
+      undefined,
+      /[\s\S]*/,
+    )
+    for (const dependency of dependencies) {
+      externalSet.add(dependency)
+    }
+  }
+
+  const config: rollup.RollupOptions = {
+    input: manifest.source,
+    output: [
+      manifest.main && {
+        file: manifest.main,
+        format: 'cjs',
+        exports: 'named',
+        sourcemap: useSourceMap,
+      },
+      manifest.module && {
+        file: manifest.module,
+        format: 'es',
+        exports: 'named',
+        sourcemap: useSourceMap,
+      },
+    ].filter(Boolean) as rollup.OutputOptions[],
+    external: function (id: string): boolean {
+      const m = /^([.][\s\S]*|@[^/\s]+[/][^/\s]+|[^/\s]+)/.exec(id)
+      if (m == null) return false
+      return externalSet.has(m[1])
+    },
+    plugins: [
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+        ...nodeResolveOptions,
+      }),
+      json({
+        indent: '  ',
+        namedExports: true,
+        ...jsonOptions,
+      }),
+      typescript({
+        clean: true,
+        typescript: require('typescript'),
+        useTsconfigDeclarationDir: true,
+        include: ['**/*.tsx', '**/*.ts'],
+        tsconfigDefaults: {
+          compilerOptions: {
+            declaration: true,
+            declarationMap: true,
+            declarationDir: 'lib/types',
+            outDir: 'lib',
+          },
+        },
+        tsconfigOverride: {
+          compilerOptions: {
+            declarationMap: useSourceMap,
+          },
+        },
+        ...typescriptOptions,
+      }),
+      commonjs({
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        ...commonjsOptions,
+      }),
+    ] as rollup.Plugin[],
+    ...resetInputOptions,
+  }
+
+  return config
+}
 
 export interface ProdConfigParams extends rollup.InputOptions {
   /**
@@ -66,124 +177,5 @@ export interface ProdConfigParams extends rollup.InputOptions {
      * options for @rollup/plugin-commonjs
      */
     commonjsOptions?: CommonJSOptions
-    /**
-     * options for rollup-plugin-peer-deps-external
-     */
-    peerDepsExternalOptions?: PeerDepsExternalOptions
   }
-}
-
-const builtinExternals: string[] = [
-  'glob',
-  'sync',
-  ...require('builtin-modules'),
-]
-
-export const createRollupConfig = (
-  props: ProdConfigParams,
-): rollup.RollupOptions => {
-  const DEFAULT_USE_SOURCE_MAP = coverBoolean(
-    true,
-    convertToBoolean(process.env.ROLLUP_USE_SOURCE_MAP),
-  )
-  const DEFAULT_EXTERNAL_ALL_DEPENDENCIES = coverBoolean(
-    true,
-    convertToBoolean(process.env.ROLLUP_EXTERNAL_ALL_DEPENDENCIES),
-  )
-
-  // process task
-  const {
-    useSourceMap = DEFAULT_USE_SOURCE_MAP,
-    externalAllDependencies = DEFAULT_EXTERNAL_ALL_DEPENDENCIES,
-    manifest,
-    pluginOptions = {},
-    ...resetInputOptions
-  } = props
-  const {
-    jsonOptions = {},
-    nodeResolveOptions = {},
-    typescriptOptions = {},
-    commonjsOptions = {},
-    peerDepsExternalOptions = {},
-  } = pluginOptions
-
-  const externalSet: Set<string> = new Set([
-    ...builtinExternals,
-    ...Object.keys(manifest.dependencies || {}),
-  ])
-
-  if (externalAllDependencies) {
-    const dependencies = collectAllDependencies(
-      undefined,
-      Object.keys(manifest.dependencies || {}),
-      undefined,
-      /[\s\S]*/,
-    )
-    for (const dependency of dependencies) {
-      externalSet.add(dependency)
-    }
-  }
-
-  const config: rollup.RollupOptions = {
-    input: manifest.source,
-    output: [
-      manifest.main && {
-        file: manifest.main,
-        format: 'cjs',
-        exports: 'named',
-        sourcemap: useSourceMap,
-      },
-      manifest.module && {
-        file: manifest.module,
-        format: 'es',
-        exports: 'named',
-        sourcemap: useSourceMap,
-      },
-    ].filter(Boolean) as rollup.OutputOptions[],
-    external: function (id: string): boolean {
-      const m = /^([.][\s\S]*|@[^/\s]+[/][^/\s]+|[^/\s]+)/.exec(id)
-      if (m == null) return false
-      return externalSet.has(m[1])
-    },
-    plugins: [
-      peerDepsExternal(peerDepsExternalOptions),
-      nodeResolve({
-        browser: true,
-        preferBuiltins: false,
-        ...nodeResolveOptions,
-      }),
-      json({
-        indent: '  ',
-        namedExports: true,
-        ...jsonOptions,
-      }),
-      typescript({
-        clean: true,
-        typescript: require('typescript'),
-        useTsconfigDeclarationDir: true,
-        include: ['src/**/*{.ts,.tsx}'],
-        tsconfigDefaults: {
-          compilerOptions: {
-            declaration: true,
-            declarationMap: true,
-            declarationDir: 'lib/types',
-            outDir: 'lib',
-          },
-        },
-        tsconfigOverride: {
-          compilerOptions: {
-            declarationMap: useSourceMap,
-          },
-        },
-        ...typescriptOptions,
-      }),
-      commonjs({
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        ...commonjsOptions,
-      }),
-    ] as rollup.Plugin[],
-    ...resetInputOptions,
-  }
-
-  return config
 }
