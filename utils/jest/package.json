@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-jest",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Jest utility functions",
   "author": {
     "name": "guanghechen",
@@ -41,7 +41,7 @@
     "jest": "^26.6.3"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.46",
+    "@barusu/rollup-config": "^0.0.47",
     "rollup": "2.39.1"
   }
 }

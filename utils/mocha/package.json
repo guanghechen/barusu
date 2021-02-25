@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-mocha",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -41,7 +41,7 @@
     "mocha": "^8.1.1"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.46",
+    "@barusu/rollup-config": "^0.0.47",
     "rollup": "2.39.1"
   }
 }

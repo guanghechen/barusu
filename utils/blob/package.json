@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-blob",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Util funcs for handling Blob object such as download or create a blob from dataUrl",
   "author": {
     "name": "guanghechen",
@@ -36,7 +36,7 @@
     "test": "echo 'no test yet.'"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.46",
+    "@barusu/rollup-config": "^0.0.47",
     "rollup": "2.39.1"
   }
 }

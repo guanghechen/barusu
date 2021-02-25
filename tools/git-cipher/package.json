@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-git-cipher",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "A cli tool to cipher git repository",
   "author": {
     "name": "guanghechen",
@@ -41,10 +41,10 @@
     "test": "echo 'no test yet.'"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.46",
-    "@barusu/event-bus": "^0.0.46",
-    "@barusu/util-cli": "^0.0.46",
-    "@barusu/util-option": "^0.0.46",
+    "@barusu/chalk-logger": "^0.0.47",
+    "@barusu/event-bus": "^0.0.47",
+    "@barusu/util-cli": "^0.0.47",
+    "@barusu/util-option": "^0.0.47",
     "@types/fs-extra": "^9.0.6",
     "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",
@@ -55,8 +55,8 @@
     "node-plop": "~0.26.0"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.46",
-    "@barusu/rollup-plugin-copy": "^0.0.46",
+    "@barusu/rollup-config": "^0.0.47",
+    "@barusu/rollup-plugin-copy": "^0.0.47",
     "rollup": "2.39.1"
   }
 }

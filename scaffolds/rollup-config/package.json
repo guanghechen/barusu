@@ -1,6 +1,6 @@
 {
   "name": "@barusu/rollup-config",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Rollup configs for bundle typescript project",
   "author": {
     "name": "guanghechen",
@@ -45,6 +45,6 @@
     "rollup-plugin-typescript2": "0.30.0"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.46"
+    "@barusu/eslint-config": "^0.0.47"
   }
 }

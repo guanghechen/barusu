@@ -1,6 +1,6 @@
 {
   "name": "@barusu/template-simple-html",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Boilerplates to create a simple traditional html project",
   "author": {
     "name": "guanghechen",
@@ -29,7 +29,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@barusu/rollup-plugin-copy": "^0.0.46",
+    "@barusu/rollup-plugin-copy": "^0.0.47",
     "fs-extra": "^9.0.1",
     "plop": "^2.7.0",
     "semver-regex": "^3.1.1",
