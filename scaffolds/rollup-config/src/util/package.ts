@@ -20,7 +20,7 @@ export function findPackageJsonPath(p: string): string | null {
 export function collectAllDependencies(
   packageJsonPath?: string,
   additionalDependencies?: string[],
-  dependenciesFields: string[] = ['dependencies'],
+  dependenciesFields: string[] = ['dependencies', 'peerDependencies'],
   ignoredModuleRegex = /^@types\//,
 ): string[] {
   const result: string[] = []

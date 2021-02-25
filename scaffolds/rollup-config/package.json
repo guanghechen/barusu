@@ -15,8 +15,8 @@
     "rollup",
     "typescript"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
   "license": "MIT",
   "engines": {
     "node": ">= 12.16.0"
@@ -37,14 +37,12 @@
     "prepublishOnly": "yarn prebuild && tsc -p tsconfig.src.json"
   },
   "dependencies": {
-    "@rollup/plugin-commonjs": "17.0.0",
+    "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-json": "4.1.0",
-    "@rollup/plugin-node-resolve": "11.0.1",
-    "@types/rollup-plugin-peer-deps-external": "2.2.0",
+    "@rollup/plugin-node-resolve": "11.2.0",
     "builtin-modules": "3.2.0",
-    "rollup": "2.37.0",
-    "rollup-plugin-peer-deps-external": "2.2.4",
-    "rollup-plugin-typescript2": "0.28.0"
+    "rollup": "2.39.1",
+    "rollup-plugin-typescript2": "0.30.0"
   },
   "devDependencies": {
     "@barusu/eslint-config": "^0.0.46"

@@ -24,36 +24,66 @@
   Usage: barusu-sort-imports <cwd> [options]
 
   Options:
-    -V, --version                  output the version number
-    --log-level <level>            specify logger's level.
-    --log-name <name>              specify logger's name.
-    --log-flag <option>            specify logger' option. [[no-]<date|colorful|inline>] (default: [])
-    --log-output <filepath>        specify logger' output path.
-    --log-encoding <encoding>      specify output file encoding.
-    -P, --pattern <pattern>        glob pattern of source file (default: [])
-    -e, --encoding <encoding>      encoding of source file
-    --max-column <maxColumn>       maximum column width
-    --indent <indent>              indent of source codes
-    --quote <quote>                quotation marker surround the module path
-    ----semicolon                  whether to add a semicolon at the end of import/export statement
-    -h, --help                     display help for command
+Options:
+  -V, --version                                     output the version number
+  --log-level <level>                               specify logger level.
+  --log-name <name>                                 specify logger name.
+  --log-mode <'normal' | 'loose'>                   specify logger name.
+  --log-flag <option>                               specify logger option. [[no-]<date|title|colorful|inline>] (default: [])
+  --log-filepath <filepath>                         specify logger output path.
+  --log-encoding <encoding>                         specify output file encoding.
+  -c, --config-path <configFilepath>                config filepaths (default: [])
+  --parastic-config-path <parasticConfigFilepath>   parastic config filepath
+  --parastic-config-entry <parasticConfigFilepath>  parastic config filepath
+  -P, --pattern <pattern>                           glob pattern of source file (default: [])
+  -e, --encoding <encoding>                         encoding of source file
+  --max-column <maxColumn>                          maximum column width
+  --indent <indent>                                 indent of source codes
+  --quote <quote>                                   quotation marker surround the module path
+  --semicolon                                       whether to add a semicolon at the end of import/export statement
+  --type-first                                      whether the type import/export statements rank ahead
+  --blank-line-after-statement                      blank lines after import/export statement
+  -h, --help                                        display help for command
   ```
 
 
 ## Details
   * `--log-*`: see [cli-options | @barusu-logger](https://github.com/guanghechen/barusu/tree/master/packages/chalk-logger#cli-options)
 
-  * `-e, --encoding <encoding>`: Specify the encoding of the source files. Default value is `utf-8`
+  * `-e, --encoding <encoding>`: Specify the encoding of the source files.
 
-  * `-p, --pattern <pattern>`: Specify the glob pattern of source files, see [patterns option | globby](https://github.com/sindresorhus/globby#patterns). Default value is empty array `[]`
+    - Default: `utf-8`
 
-  * `--max-column <maxColumn>`: Specify the maximum column width, if the number of characters in one `import/export` statement exceeds this limit, line breaks will be performed. Default value is `1000`
+  * `-p, --pattern <pattern>`: Specify the glob pattern of source files, see
+    [patterns option | globby](https://github.com/sindresorhus/globby#patterns).
 
-  * `--indent <indent>`: Specify indent of source codes. Default value is two spaces `  `.
+    - Default: `[]`
 
-  * `--quote <quote>`: Specify the quotation marker surround the module path. Default value is single quotes `'`
+  * `--max-column <maxColumn>`: Specify the maximum column width, if the number
+    of characters in one `import/export` statement exceeds this limit, line
+    breaks will be performed.
 
-  * `--semicolon`: Specify whether to add a semicolon at the end of `import/export` statement. Default value is `false`
+    - Default: `1000`
+
+  * `--indent <indent>`: Specify indent of source codes.
+
+    - Default: `  `
+
+  * `--quote <quote>`: Specify the quotation marker surround the module path.
+
+    - Default: `'`
+
+  * `--semicolon`: Specify whether to add a semicolon at the end of `import/export` statement.
+
+    - Default: `false`
+
+  * `--type-first`: Whether should make the *type `import/export`* statements printed first.
+
+    - Default: `true`
+
+  * `--blank-line-after-statement`: Blank lines after `import/export` statement.
+
+    - Default: 2
 
 ## Options in <cwd>/package.json
 
@@ -102,9 +132,12 @@
       "indent": "  ",
       "quote": "'",
       "semicolon": false,
-      "maxColumn": 100
+      "maxColumn": 100,
+      "typeFirst": true,
+      "blankLinesAfterStatement": 1
     }
   }
   ```
 
-  * `moduleRanks` specified module rank when sort `import/export` statements. If a module path matches multiple items, only the first matched item is taken.
+  * `moduleRanks` specified module rank when sort `import/export` statements.
+    If a module path matches multiple items, only the first matched item is taken.

@@ -105,7 +105,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> = functio
     )
     .option(
       '--type-first',
-      'whether the the type import/export statements rank ahead',
+      'whether should make the type import/export statements printed first',
     )
     .option(
       '--blank-line-after-statement',
