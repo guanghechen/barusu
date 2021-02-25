@@ -7,7 +7,7 @@
     "rootDir": "src",
     "sourceMap": false,
     "target": "es2015",
-    "outDir": "lib"
+    "outDir": "lib/cjs"
   },
   "include": ["src"]
 }

@@ -4,15 +4,15 @@ import type {
   NodeResolveOptions,
   PeerDepsExternalOptions,
   TypescriptOptions,
-} from './types/options'
+} from './options'
 import rollup from 'rollup'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import typescript from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
-import { convertToBoolean, coverBoolean } from './util/option-util'
-import { collectAllDependencies } from './util/package-util'
+import { convertToBoolean, coverBoolean } from './util/option'
+import { collectAllDependencies } from './util/package'
 
 export interface ProdConfigParams extends rollup.InputOptions {
   /**

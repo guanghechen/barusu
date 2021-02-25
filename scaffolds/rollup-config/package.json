@@ -15,8 +15,8 @@
     "rollup",
     "typescript"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
   "license": "MIT",
   "engines": {
     "node": ">= 12.16.0"
