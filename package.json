@@ -24,7 +24,6 @@
     "format:find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js .",
     "format:lint:fix": "eslint . --fix",
     "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
-    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "prepublishOnly": "pinst --disable",
     "postinstall": "run-p postinstall:**",
     "postinstall:main": "yarn update:lock",
