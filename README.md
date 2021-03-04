@@ -24,11 +24,9 @@ Scaffolds are some development scripts.
 
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/rollup-config][]              | Active        | Rollup configs for bundle typescript project.
    [@barusu/rollup-plugin-copy][]         | Active        | Rollup plugins to copy files and folds.
    [@barusu/webpack-source-map-loader][]  | Not Recommend | Webpack plugin for loading source map.
 
-[@barusu/rollup-config]: https://github.com/guanghechen/barusu/tree/master/scaffolds/rollup-config#readme
 [@barusu/rollup-plugin-copy]: https://github.com/guanghechen/barusu/tree/master/scaffolds/rollup-plugin-copy#readme
 [@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme
 
