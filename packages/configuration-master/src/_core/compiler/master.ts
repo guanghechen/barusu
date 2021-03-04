@@ -1,4 +1,4 @@
-import { isArray, isString } from '@barusu/util-option'
+import { isArray, isString } from '@guanghechen/option-helper'
 import { coverString } from '../../_util/cover-util'
 import { stringify } from '../../_util/string-util'
 import {

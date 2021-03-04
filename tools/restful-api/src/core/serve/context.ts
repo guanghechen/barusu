@@ -1,7 +1,7 @@
+import { coverString } from '@guanghechen/option-helper'
 import globby from 'globby'
-import { coverString } from '@barusu/util-option'
 import { logger } from '../../env/logger'
-import { ResolvedApiItem } from '../../types/api-item/resolved'
+import type { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 
 /**

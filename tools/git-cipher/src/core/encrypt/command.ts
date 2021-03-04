@@ -1,16 +1,15 @@
-import { Command, CommandConfigurationFlatOpts } from '@barusu/util-cli'
-import { coverBoolean } from '@barusu/util-option'
+import type { CommandConfigurationFlatOpts } from '@barusu/util-cli'
+import { Command } from '@barusu/util-cli'
+import { coverBoolean } from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import {
-  GitCipherEncryptContext,
-  createGitCipherEncryptContext,
-} from './context'
+import type { GitCipherEncryptContext } from './context'
+import { createGitCipherEncryptContext } from './context'
 
 interface SubCommandOptions extends GlobalCommandOptions {
   /**

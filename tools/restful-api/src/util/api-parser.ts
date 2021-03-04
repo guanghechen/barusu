@@ -3,11 +3,11 @@ import { ConfigurationMaster, TDSchema } from '@barusu/configuration-master'
 import {
   coverBoolean,
   coverString,
-  isNotEmptyString,
+  isNonBlankString,
   isObject,
   toKebabCase,
   toPascalCase,
-} from '@barusu/util-option'
+} from '@guanghechen/option-helper'
 import { logger } from '../env/logger'
 import { loadConfigSchema, loadContextConfig } from '../env/util'
 import { ApiConfig, ApiConfigContext, RawApiConfig } from '../types/api-config'
@@ -194,13 +194,13 @@ export class ApiItemParser {
         parent != null ? parent.fullName + '/' + data.name : data.name,
       ),
       active: coverBoolean(true, data.active),
-      title: coverString(data.name, data.title, isNotEmptyString),
-      desc: coverString(data.desc || '', data.description, isNotEmptyString),
+      title: coverString(data.name, data.title, isNonBlankString),
+      desc: coverString(data.desc || '', data.description, isNonBlankString),
       path: (parent != null ? parent.path : '') + data.path,
       method: coverString(
         defaultMethod as any,
         data.method,
-        isNotEmptyString,
+        isNonBlankString,
       ) as HttpVerb,
       request: {
         voNamePrefix: requestModelNamePrefix,
@@ -328,7 +328,7 @@ export class ApiItemParser {
     const requestModelNameMiddle: string = coverString(
       group != null ? fullGroupName + '-' + data.name : data.name,
       rawRequest.voName,
-      isNotEmptyString,
+      isNonBlankString,
     )
     const defaultRequestModelName: string =
       group != null
@@ -342,7 +342,7 @@ export class ApiItemParser {
       coverString(
         defaultRequestModelName,
         rawRequest.voFullName,
-        isNotEmptyString,
+        isNonBlankString,
       ),
     )
     const requestSchemaPath = resolveSchemaPath(requestModelName)
@@ -351,7 +351,7 @@ export class ApiItemParser {
     const responseModelNameMiddle: string = coverString(
       group != null ? fullGroupName + '-' + data.name : data.name,
       rawResponse.voName,
-      isNotEmptyString,
+      isNonBlankString,
     )
     const defaultResponseModelName: string =
       group != null
@@ -365,7 +365,7 @@ export class ApiItemParser {
       coverString(
         defaultResponseModelName,
         rawResponse.voFullName,
-        isNotEmptyString,
+        isNonBlankString,
       ),
     )
     const responseSchemaPath = resolveSchemaPath(responseModelName)
@@ -393,13 +393,13 @@ export class ApiItemParser {
     const ResolvedApiItem: ResolvedApiItem = {
       name: data.name,
       active: coverBoolean(true, data.active),
-      title: coverString(data.name, data.title, isNotEmptyString),
-      desc: coverString(data.desc || '', data.description, isNotEmptyString),
-      path: coverString(defaultPath, data.fullPath, isNotEmptyString),
+      title: coverString(data.name, data.title, isNonBlankString),
+      desc: coverString(data.desc || '', data.description, isNonBlankString),
+      path: coverString(defaultPath, data.fullPath, isNonBlankString),
       method: coverString(
         defaultMethod || HttpVerb.GET,
         data.method,
-        isNotEmptyString,
+        isNonBlankString,
       ) as HttpVerb,
       request:
         isObject(rawRequest) &&

@@ -1,16 +1,18 @@
-import {
+import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
+  MergeStrategy,
+} from '@barusu/util-cli'
+import {
   absoluteOfWorkspace,
   resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
 import {
-  MergeStrategy,
   convertToBoolean,
   convertToNumber,
   cover,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
 import { logger } from '../env/logger'
 
 /**
@@ -119,7 +121,7 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const encoding: string = cover<string>(
     resolvedDefaultOptions.encoding,
     options.encoding,
-    isNotEmptyString,
+    isNonBlankString,
   )
   logger.debug('encoding:', encoding)
 
@@ -129,8 +131,8 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     cover<string>(
       resolvedDefaultOptions.secretFilepath,
       options.secretFilepath,
-      isNotEmptyString,
-    ),
+      isNonBlankString,
+    ) as string,
   )
   logger.debug('secretFilepath:', secretFilepath)
 
@@ -138,7 +140,7 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const secretFileEncoding: string = cover<string>(
     resolvedDefaultOptions.secretFileEncoding,
     options.secretFileEncoding,
-    isNotEmptyString,
+    isNonBlankString,
   )
   logger.debug('secretFileEncoding:', secretFileEncoding)
 
@@ -148,8 +150,8 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     cover<string>(
       resolvedDefaultOptions.indexFilepath,
       options.indexFilepath,
-      isNotEmptyString,
-    ),
+      isNonBlankString,
+    ) as string,
   )
   logger.debug('indexFilepath:', indexFilepath)
 
@@ -157,7 +159,7 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const indexFileEncoding: string = cover<string>(
     resolvedDefaultOptions.indexFileEncoding,
     options.indexFileEncoding,
-    isNotEmptyString,
+    isNonBlankString,
   )
   logger.debug('indexFileEncoding:', indexFileEncoding)
 
@@ -167,8 +169,8 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     cover<string>(
       resolvedDefaultOptions.ciphertextRootDir,
       options.ciphertextRootDir,
-      isNotEmptyString,
-    ),
+      isNonBlankString,
+    ) as string,
   )
   logger.debug('ciphertextRootDir:', ciphertextRootDir)
 
@@ -178,8 +180,8 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     cover<string>(
       resolvedDefaultOptions.plaintextRootDir,
       options.plaintextRootDir,
-      isNotEmptyString,
-    ),
+      isNonBlankString,
+    ) as string,
   )
   logger.debug('plaintextRootDir:', plaintextRootDir)
 

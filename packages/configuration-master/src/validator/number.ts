@@ -1,4 +1,4 @@
-import { isNumber } from '@barusu/util-option'
+import { isNumber } from '@guanghechen/option-helper'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,

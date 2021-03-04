@@ -1,4 +1,4 @@
-import { isBoolean } from '@barusu/util-option'
+import { isBoolean } from '@guanghechen/option-helper'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,

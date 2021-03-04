@@ -1,17 +1,18 @@
-import commandExists from 'command-exists'
 import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
-import { coverString } from '@barusu/util-option'
+import { coverString } from '@guanghechen/option-helper'
+import commandExists from 'command-exists'
 import { logger } from '../../env/logger'
 import { WorkspaceCatalog } from '../../util/catalog'
-import { AESCipher, Cipher } from '../../util/cipher'
+import type { Cipher } from '../../util/cipher'
+import { AESCipher } from '../../util/cipher'
 import { SecretMaster } from '../../util/secret'
-import { GitCipherDecryptContext } from './context'
+import type { GitCipherDecryptContext } from './context'
 
 export class GitCipherDecryptProcessor {
   protected readonly context: GitCipherDecryptContext
   protected readonly secretMaster: SecretMaster
 
-  public constructor(context: GitCipherDecryptContext) {
+  constructor(context: GitCipherDecryptContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
       cipherFactory: { create: () => new AESCipher() },
@@ -61,7 +62,7 @@ export class GitCipherDecryptProcessor {
   ): Promise<void> {
     const { context } = this
 
-    const tasks: Promise<void>[] = []
+    const tasks: Array<Promise<void>> = []
     for (const item of catalog.items) {
       const absoluteCiphertextFilepath = catalog.resolveAbsoluteCiphertextFilepath(
         item.ciphertextFilepath,

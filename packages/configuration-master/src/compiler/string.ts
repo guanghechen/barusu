@@ -1,4 +1,4 @@
-import { isString } from '@barusu/util-option'
+import { isString } from '@guanghechen/option-helper'
 import {
   BaseDataSchemaCompiler,
   DataSchemaCompileResult,

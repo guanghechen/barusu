@@ -12,8 +12,8 @@ import {
   coverBoolean,
   coverString,
   isNotEmptyArray,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
 import {
@@ -130,8 +130,8 @@ export const createSubCommandGenerate: SubCommandCreator<SubCommandGenerateOptio
         coverString(
           defaultOptions.schemaRootPath,
           options.schemaRootPath,
-          isNotEmptyString,
-        ),
+          isNonBlankString,
+        ) as string,
       )
       logger.debug('schemaRootPath:', schemaRootPath)
 

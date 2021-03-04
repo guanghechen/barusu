@@ -42,7 +42,7 @@
     "@barusu/chalk-logger": "^0.0.47",
     "@barusu/event-bus": "^0.0.47",
     "@barusu/util-cli": "^0.0.47",
-    "@barusu/util-option": "^0.0.47",
+    "@guanghechen/option-helper": "^1.0.2",
     "@types/fs-extra": "^9.0.6",
     "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",

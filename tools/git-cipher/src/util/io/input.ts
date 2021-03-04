@@ -1,4 +1,4 @@
-import { isNotEmptyString } from '@barusu/util-option'
+import { isNonBlankString } from '@guanghechen/option-helper'
 import { destroyBuffer } from '../buffer'
 import { EventTypes, eventBus } from '../events'
 
@@ -91,7 +91,7 @@ export function inputOneLine(
 
     stdin.resume()
     stdin.setRawMode(true)
-    if (isNotEmptyString(question)) {
+    if (isNonBlankString(question)) {
       stdout.write(question)
     }
 
@@ -122,7 +122,7 @@ export async function input(
     let questionWithHint: string = question
     if (i > 0 && hintOnInvalidAnswer != null) {
       const hint = hintOnInvalidAnswer(answer)
-      if (isNotEmptyString(hint)) {
+      if (isNonBlankString(hint)) {
         questionWithHint = hint
       }
     }

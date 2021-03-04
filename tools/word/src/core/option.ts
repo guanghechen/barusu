@@ -1,9 +1,10 @@
-import {
+import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
-  resolveCommandConfigurationOptions,
+  MergeStrategy,
 } from '@barusu/util-cli'
-import { MergeStrategy, cover, isNotEmptyString } from '@barusu/util-option'
+import { resolveCommandConfigurationOptions } from '@barusu/util-cli'
+import { cover, isNonBlankString } from '@guanghechen/option-helper'
 import { logger } from '../env/logger'
 
 /**
@@ -58,7 +59,7 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const encoding: string = cover<string>(
     resolvedDefaultOptions.encoding,
     options.encoding,
-    isNotEmptyString,
+    isNonBlankString,
   )
   logger.debug('encoding:', encoding)
 

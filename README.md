@@ -72,13 +72,11 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/util-cli][]                   | Active        | Helpers for creating Node.js cli program.
    [@barusu/util-jest][]                  | Active        | Jest utility functions.
    [@barusu/util-mocha][]                 | Not Recommend | Mocha utility functions.
-   [@barusu/util-option][]                | Active        | Utility functions for handling options.
 
 [@barusu/util-blob]: https://github.com/guanghechen/barusu/tree/master/utils/blob#readme
 [@barusu/util-cli]: https://github.com/guanghechen/barusu/tree/master/utils/cli#readme
 [@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/master/utils/jest#readme
 [@barusu/util-mocha]: https://github.com/guanghechen/barusu/tree/master/utils/mocha#readme
-[@barusu/util-option]: https://github.com/guanghechen/barusu/tree/master/utils/option#readme
 
 
 ## Other projects

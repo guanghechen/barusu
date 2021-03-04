@@ -1,21 +1,23 @@
-import {
+import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
+} from '@barusu/util-cli'
+import {
   createTopCommand,
-  findPackageJsonPath,
   resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
+import { locateNearestFilepath } from '@guanghechen/locate-helper'
 import {
   COMMAND_NAME,
   PackageManager,
   logger,
   packageName,
   packageVersion,
-} from './index'
+} from '.'
 
 const program = createTopCommand(COMMAND_NAME, packageVersion)
 
-interface CommandOptions extends CommandConfigurationOptions {}
+type CommandOptions = CommandConfigurationOptions
 
 const defaultCommandOptions: CommandOptions = {}
 
@@ -31,8 +33,9 @@ program
       CommandOptions
     >(logger, packageName, false, defaultCommandOptions, _workspaceDir, options)
 
-    const rootPackageJsonPath: string | null = findPackageJsonPath(
+    const rootPackageJsonPath: string | null = locateNearestFilepath(
       defaultOptions.workspace,
+      'package.json',
     )
     logger.debug('rootPackageJsonPath:', rootPackageJsonPath)
 

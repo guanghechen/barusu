@@ -41,7 +41,7 @@
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
   },
   "dependencies": {
-    "@barusu/util-option": "^0.0.47"
+    "@guanghechen/option-helper": "^1.0.2"
   },
   "devDependencies": {
     "@barusu/util-mocha": "^0.0.47"

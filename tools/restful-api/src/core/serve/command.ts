@@ -11,9 +11,9 @@ import {
   coverNumber,
   coverString,
   isNotEmptyArray,
-  isNotEmptyString,
+  isNonBlankString,
   isString,
-} from '@barusu/util-option'
+} from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
 import {
@@ -189,7 +189,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
         coverString(
           defaultOptions.schemaRootPath,
           options.schemaRootPath,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('schemaRootPath:', schemaRootPath)
@@ -198,7 +198,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
       const host: string = coverString(
         defaultOptions.host,
         options.host,
-        isNotEmptyString,
+        isNonBlankString,
       )
       logger.debug('host:', host)
 
@@ -210,7 +210,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
       const prefixUrl: string = coverString(
         defaultOptions.prefixUrl,
         options.prefixUrl,
-        isNotEmptyString,
+        isNonBlankString,
       )
       logger.debug('prefixUrl:', prefixUrl)
 
@@ -249,7 +249,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
         cover<string | undefined>(
           defaultOptions.mockDataRootDir,
           options.mockDataRootDir,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('mockDataRootDir:', mockDataRootDir)
@@ -270,7 +270,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
         cover<string | undefined>(
           defaultOptions.mockResourceRootDir,
           options.mockResourceRootDir,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('mockResourceRootDir:', mockResourceRootDir)

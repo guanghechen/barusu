@@ -1,12 +1,10 @@
+import { absoluteOfWorkspace } from '@barusu/util-cli'
+import { coverString } from '@guanghechen/option-helper'
 import path from 'path'
 import * as TsconfigUtil from 'tsconfig'
-import { absoluteOfWorkspace } from '@barusu/util-cli'
-import { coverString } from '@barusu/util-option'
 import { logger } from '../../env/logger'
 
-export interface Paths {
-  readonly [key: string]: string[]
-}
+export type Paths = Readonly<Record<string, string[]>>
 
 export interface TsconfigPathsContext {
   /**

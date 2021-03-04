@@ -1,15 +1,15 @@
-import {
+import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
-  resolveCommandConfigurationOptions,
+  MergeStrategy,
 } from '@barusu/util-cli'
-import { MergeStrategy } from '@barusu/util-option'
+import { resolveCommandConfigurationOptions } from '@barusu/util-cli'
 import { logger } from '../env/logger'
 
 /**
  * Global command options
  */
-export interface GlobalCommandOptions extends CommandConfigurationOptions {}
+export type GlobalCommandOptions = CommandConfigurationOptions
 
 /**
  * Default value of global options

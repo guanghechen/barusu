@@ -1,15 +1,15 @@
-import globby from 'globby'
-import ts from 'typescript'
 import * as TJS from '@barusu/typescript-json-schema'
 import {
   cover,
   coverBoolean,
   coverString,
   isNotEmptyArray,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
+import globby from 'globby'
+import type ts from 'typescript'
 import { logger } from '../../env/logger'
-import { ResolvedApiItem } from '../../types/api-item/resolved'
+import type { ResolvedApiItem } from '../../types/api-item/resolved'
 import { ApiItemParser } from '../../util/api-parser'
 
 /**
@@ -159,7 +159,7 @@ export async function createRestfulApiGenerateContext(
     workspace: params.workspace,
     tsconfigPath: params.workspace,
     schemaRootPath: params.schemaRootPath,
-    encoding: coverString('utf-8', params.encoding, isNotEmptyString),
+    encoding: coverString('utf-8', params.encoding, isNonBlankString),
     muteMissingModel: coverBoolean(false, params.muteMissingModel),
     clean: coverBoolean(false, params.clean),
     ignoredDataTypes: cover<string[]>(

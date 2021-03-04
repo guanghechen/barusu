@@ -38,7 +38,7 @@
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.47",
     "@barusu/util-cli": "^0.0.47",
-    "@barusu/util-option": "^0.0.47",
+    "@guanghechen/locate-helper": "^1.0.2",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1"
   }
