@@ -56,14 +56,12 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/tool-find-inconsistent][]     | Active        | Find inconsistent package versions in monorepo.
    [@barusu/tool-git-cipher][]            | Active        | Cipher git repository.
    [@barusu/tool-restful-api][]           | Active        | Quickly create restful style mock server.
-   [@barusu/tool-sort-imports][]          | Active        | Sort import/export statement.
    [@barusu/tool-tsconfig-paths][]        | Not Recommend | Expand path alias to full path of declaration files which bundled by tsc.
    [@barusu/tool-word][]                  | Not Recommend | Count the frequency of characters in the file(s).
 
 [@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/master/tools/find-inconsistent#readme
 [@barusu/tool-git-cipher]: https://github.com/guanghechen/barusu/tree/master/tools/git-cipher#readme
 [@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/master/tools/restful-api#readme
-[@barusu/tool-sort-imports]: https://github.com/guanghechen/barusu/tree/master/tools/sort-imports#readme
 [@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/master/tools/tsconfig-paths#readme
 [@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/master/tools/word#readme
 

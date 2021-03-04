@@ -19,7 +19,6 @@
       "@barusu/rollup-plugin-copy": ["./scaffolds/rollup-plugin-copy/src"],
       "@barusu/tool-find-inconsistent": ["./tools/find-inconsistent/src"],
       "@barusu/tool-git-cipher": ["./tools/git-cipher/src"],
-      "@barusu/tool-sort-imports": ["./tools/sort-imports/src"],
       "@barusu/tool-tsconfig-paths": ["./tools/tsconfig-paths/src"],
       "@barusu/tool-word": ["./tools/word/src"],
       "@barusu/util-blob": ["./utils/blob/src"],
