@@ -1,5 +1,5 @@
 import path from 'path'
-import { createRollupConfig } from '@barusu/rollup-config'
+import createRollupConfig from '@guanghechen/rollup-config'
 import manifest from './package.json'
 
 const resolvePath = p => path.resolve(__dirname, p)

@@ -31,11 +31,9 @@
     "barusu-find-inconsistent": "./lib/cjs/cli.js"
   },
   "scripts": {
-    "start": "rollup -w -c rollup.config.js",
-    "prebuild": "rimraf lib/",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "test": "echo 'no test yet.'"
+    "prebuild": "rimraf lib/",
+    "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.47",
@@ -43,9 +41,5 @@
     "@barusu/util-option": "^0.0.47",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1"
-  },
-  "devDependencies": {
-    "@barusu/rollup-config": "^0.0.47",
-    "rollup": "2.39.1"
   }
 }

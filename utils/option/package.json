@@ -29,10 +29,9 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "start": "rollup -w -c rollup.config.js",
+    "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.js",
     "prebuild": "rimraf lib/",
-    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
+    "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build",
     "test": "cross-env TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts"
   },
   "dependencies": {
@@ -40,9 +39,5 @@
     "lower-case": "^2.0.1",
     "title-case": "^3.0.2",
     "upper-case": "^2.0.1"
-  },
-  "devDependencies": {
-    "@barusu/rollup-config": "^0.0.47",
-    "rollup": "2.39.1"
   }
 }

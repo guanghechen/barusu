@@ -33,10 +33,9 @@
   ],
   "scripts": {
     "clean": "rimraf test/**/*.output.json test/**/*.outputs.json",
-    "start": "rollup -w -c rollup.config.js",
+    "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.js",
     "prebuild": "rimraf lib/",
-    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
+    "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build",
     "answer": "cross-env node -r ts-node/register test/answer.ts",
     "test": "cross-env TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register test/**/*.test.ts",
     "test:file": "TS_NODE_FILES=true mocha -r ts-node/register -r tsconfig-paths/register"
@@ -45,10 +44,6 @@
     "@barusu/util-option": "^0.0.47"
   },
   "devDependencies": {
-    "@barusu/rollup-config": "^0.0.47",
-    "@barusu/util-mocha": "^0.0.47",
-    "@types/fs-extra": "^9.0.6",
-    "fs-extra": "^9.0.1",
-    "rollup": "2.39.1"
+    "@barusu/util-mocha": "^0.0.47"
   }
 }

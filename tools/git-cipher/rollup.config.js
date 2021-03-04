@@ -1,5 +1,5 @@
 import path from 'path'
-import { createRollupConfig } from '@barusu/rollup-config'
+import createRollupConfig from '@guanghechen/rollup-config'
 import { copy } from '@barusu/rollup-plugin-copy'
 import manifest from './package.json'
 
