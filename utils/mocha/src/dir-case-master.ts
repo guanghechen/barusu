@@ -157,8 +157,14 @@ export abstract class DirTestCaseMaster extends TestCaseMaster<
         continue
       }
       if (stat.isFile()) {
-        const outputContent = fs.readFileSync(absoluteOutputFilePath, encoding)
-        const answerContent = fs.readFileSync(absoluteAnswerFilePath, encoding)
+        const outputContent = fs.readFileSync(
+          absoluteOutputFilePath,
+          encoding as BufferEncoding,
+        )
+        const answerContent = fs.readFileSync(
+          absoluteAnswerFilePath,
+          encoding as BufferEncoding,
+        )
         expect(outputContent).to.equal(answerContent)
       }
     }

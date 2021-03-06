@@ -145,7 +145,7 @@ export async function loadJsonOrYaml(
     if (!(await isFile(filepath))) {
       throw new Error(`${filepath} is an invalid file path`)
     }
-    __content = fs.readFileSync(filepath, encoding)
+    __content = fs.readFileSync(filepath, encoding as BufferEncoding)
     return __content
   }
 
@@ -190,7 +190,7 @@ export function loadJsonOrYamlSync(
     if (!isFileSync(filepath)) {
       throw new Error(`${filepath} is an invalid file path`)
     }
-    __content = fs.readFileSync(filepath, encoding)
+    __content = fs.readFileSync(filepath, encoding as BufferEncoding)
     return __content
   }
 

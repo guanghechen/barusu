@@ -54,7 +54,10 @@ export function loadContextConfig<R, T>(params: {
   }
 
   if (params.fallbackData == null || fs.existsSync(params.configPath)) {
-    const content: string = fs.readFileSync(params.configPath, params.encoding)
+    const content: string = fs.readFileSync(
+      params.configPath,
+      params.encoding as BufferEncoding,
+    )
 
     // parse data
     switch (path.extname(params.configPath)) {
