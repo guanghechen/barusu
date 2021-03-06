@@ -36,10 +36,8 @@ Templates are some boilerplates for fast creating various projects.
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/template-simple-html][]       | Not Recommend | Boilerplates to create a simple traditional html project.
-   [@barusu/template-ts-package][]        | Not Recommend | Boilerplates to create a simple typescript project.
 
 [@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme
-[@barusu/template-ts-package]: https://github.com/guanghechen/barusu/tree/master/templates/ts-package#readme
 
 ## Tools
 
