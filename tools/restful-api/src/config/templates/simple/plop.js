@@ -81,11 +81,6 @@ module.exports = function (plop) {
         },
         {
           type: 'add',
-          path: resolveTargetPath('.eslintrc.js'),
-          templateFile: resolveSourcePath('.eslintrc.js.hbs'),
-        },
-        {
-          type: 'add',
           path: resolveTargetPath('.gitignore'),
           templateFile: resolveSourcePath('.gitignore.hbs'),
         },

@@ -41,9 +41,9 @@
     "utils/*"
   ],
   "devDependencies": {
-    "@guanghechen/rollup-config": "^1.0.2",
-    "@guanghechen/eslint-config": "^1.0.2",
-    "@guanghechen/eslint-config-ts": "^1.0.2",
+    "@guanghechen/rollup-config": "^1.0.4",
+    "@guanghechen/eslint-config": "^1.0.4",
+    "@guanghechen/eslint-config-ts": "^1.0.4",
     "@types/chai": "^4.2.11",
     "@types/fs-extra": "^9.0.6",
     "@types/jest": "^26.0.19",
@@ -68,7 +68,7 @@
     "pinst": "^2.1.6",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "2.39.1",
+    "rollup": "^2.40.0",
     "supertest": "^4.0.2",
     "ts-jest": "^26.4.4",
     "ts-node": "~9.1.1",
