@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 import { assert } from 'chai'
-import { readFileSync } from 'fs'
+import { readFileSync } from 'fs-extra'
 import { resolve } from 'path'
 import { versionMajorMinor as typescriptVersionMajorMinor } from 'typescript'
 import * as TJS from '../src'

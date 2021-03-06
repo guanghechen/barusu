@@ -30,7 +30,7 @@
   "scripts": {},
   "dependencies": {
     "@guanghechen/rollup-plugin-copy": "^1.0.4",
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^9.1.0",
     "minimist": "^1.2.5",
     "plop": "^2.7.0",
     "semver-regex": "^3.1.1",
