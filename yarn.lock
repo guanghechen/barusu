@@ -273,6 +273,17 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@barusu/rollup-plugin-copy@^0.0.47":
+  version "0.0.47"
+  resolved "https://registry.npmjs.org/@barusu/rollup-plugin-copy/-/rollup-plugin-copy-0.0.47.tgz#91d06a563ed258ae8fd73b3741e8714ce5d57f10"
+  integrity sha512-BVjBHRie2zP5b0/AHE9Slzq+ihGUt+Q6zOSsHM5cSVyROWlHMG+w3ezq9ywH/IHCENkkGb3oAjjbJOqq29wcNw==
+  dependencies:
+    "@types/fs-extra" "^9.0.6"
+    chalk "^4.1.0"
+    fs-extra "^9.0.1"
+    globby "^11.0.1"
+    is-plain-object "^5.0.0"
+
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"

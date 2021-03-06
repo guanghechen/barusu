@@ -14,7 +14,6 @@
       "@barusu/webpack-source-map-loader": [
         "./scaffolds/webpack-source-map-loader/src"
       ],
-      "@barusu/rollup-plugin-copy": ["./scaffolds/rollup-plugin-copy/src"],
       "@barusu/util-blob": ["./utils/blob/src"],
       "@barusu/util-cli": ["./utils/cli/src"],
       "@barusu/util-jest": ["./utils/jest/src"],
