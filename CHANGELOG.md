@@ -1,5 +1,31 @@
 # Changelog
 
+<a name="0.0.48"></a>
+## 0.0.48 (2021-03-06)
+
+### Changed
+
+- 🎨 style: fix lint errors [[c7562db](https://github.com/guanghechen/barusu/commit/c7562dbce63d6c262a22e8af3b5e6350c0d23492)]
+- ⬆️ chore: upgrade fs-extra and @types/node [[a6c7346](https://github.com/guanghechen/barusu/commit/a6c7346df54ad76f5be84020ca57aa0144365ba2)]
+- 🔧 chore: skip lint before publish [[9e8b708](https://github.com/guanghechen/barusu/commit/9e8b7088aface629bf1851dbc3f9d67aee9c5c00)]
+- 🎨 style: update lint configs &amp; lint codes [[cccb4d9](https://github.com/guanghechen/barusu/commit/cccb4d9989ff46d1859650096cfa71eafe24c546)]
+- 🔧 chore: upgrade @guanghechen/* to v1.0.4 and update rollup configs [[088a6c1](https://github.com/guanghechen/barusu/commit/088a6c101ca722b62a2db39454fd0550eae6f601)]
+- 🔧 chore: use @guanghechen/eslint-config* &amp; update configs &amp; format codes [[c64e54e](https://github.com/guanghechen/barusu/commit/c64e54e3c43d8f0878596356b1de027b01290eb3)]
+- 🔧 chore: update rollup configs (use @guanghechen/rollup-config) [[837639e](https://github.com/guanghechen/barusu/commit/837639e42f01d0c5854e184dac74ee26b1380a23)]
+
+### Removed
+
+- 🔥 improve: delete sub-package @baurusu/rollup-plugin-copy (migrated to @guanghechen/rollup-plugin-copy) [[11a8c17](https://github.com/guanghechen/barusu/commit/11a8c173f26402b1f1f6cec7689c47e381e12931)]
+- 🔥 improve: delete sub-package @barusu/util-option (migrated to the @guanghechen/option-helper) [[b34ba5a](https://github.com/guanghechen/barusu/commit/b34ba5a64302c4ff6e455f6f52b4cbdad3d80195)]
+- 🔥 improve: delete sub-package @barusu/template-ts-package (migrated to the @guanghechen/template-ts-package) [[210b9f1](https://github.com/guanghechen/barusu/commit/210b9f19ab496f64a35c5b43736df77edf5e56e6)]
+- 🔥 improve: delete sub-package @barusu/rollup-config (migrated to the @guanghechen/rollup-config) [[e7dccdf](https://github.com/guanghechen/barusu/commit/e7dccdfc869f9b0922a66877b956952dbe24bb8a)]
+- 🔥 improve: delete sub-package @barusu/eslint-config (use @guanghechen/eslint-config* instead) [[c4e09d4](https://github.com/guanghechen/barusu/commit/c4e09d470fa3a96c5e4d6f6df3c24106bf2acb4f)]
+- 🔥 improve: delete sub-package @barusu/tool-sort-imports (use eslint-config-import instead) [[ee038c0](https://github.com/guanghechen/barusu/commit/ee038c0e3b5cca30d91b3445c6ec92fcef18bff0)]
+
+### Miscellaneous
+
+- 🔀 Merge branch &#x27;develop&#x27; [[1fd4721](https://github.com/guanghechen/barusu/commit/1fd4721bdcf3b179678d9ce38d0e912ce22073dd)]
+
 <a name="0.0.47"></a>
 ## 0.0.47 (2021-02-25)
 
