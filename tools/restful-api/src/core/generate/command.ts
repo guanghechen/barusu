@@ -1,30 +1,27 @@
-import ts from 'typescript'
-import * as TJS from '@barusu/typescript-json-schema'
-import {
-  Command,
+import type * as TJS from '@barusu/typescript-json-schema'
+import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
-  absoluteOfWorkspace,
 } from '@barusu/util-cli'
+import { Command, absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
   coverString,
   isNotEmptyArray,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
+import type ts from 'typescript'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import {
-  RestfulApiGenerateContext,
-  createRestfulApiGenerateContext,
-} from './context'
+import type { RestfulApiGenerateContext } from './context'
+import { createRestfulApiGenerateContext } from './context'
 
 interface SubCommandOptions extends GlobalCommandOptions {
   /**
@@ -130,8 +127,8 @@ export const createSubCommandGenerate: SubCommandCreator<SubCommandGenerateOptio
         coverString(
           defaultOptions.schemaRootPath,
           options.schemaRootPath,
-          isNotEmptyString,
-        ),
+          isNonBlankString,
+        ) as string,
       )
       logger.debug('schemaRootPath:', schemaRootPath)
 

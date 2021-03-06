@@ -3,29 +3,24 @@
 !**/*.jsx
 !**/*.ts
 !**/*.tsx
+!.eslintrc
+!.rollup.config.js
 !package.json
 !tsconfig.json
-!tsconfig.src.json
 !tsconfig.settings.json
+!tsconfig.src.json
 
-
-**/.vscode/**
+**/__test__/cases/**
 **/__tmp__/**
-**/build/**
+**/.vscode/**
 **/coverage/**
 **/demo/**
-**/dist/**
 **/doc/**
 **/example/**
 **/lib/**
 **/node_modules/**
-**/target/**
-**/release/**
-**/vendor/**
 **/*.styl.d.ts
 *.tsbuildinfo
 
 
-.prettierrc
-**/__test__/cases/**
-**/typescript-json-schema/test/programs/**
+packages/typescript-json-schema/test/programs/

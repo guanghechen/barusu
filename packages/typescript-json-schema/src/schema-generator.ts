@@ -1,4 +1,4 @@
-import ts from 'typescript'
+import type ts from 'typescript'
 import { defaultValidationKeywords, getDefaultArgs } from './config'
 import { getClassDefinition } from './definition/class-definition'
 import { parseCommentsIntoDefinition } from './definition/comment-definition'
@@ -11,12 +11,12 @@ import {
 } from './definition/type-definition'
 import { getUnionDefinition } from './definition/union-definition'
 import { JsonSchemaContext } from './schema-context'
-import { Definition, ObjectMap, SchemaArgs, SymbolRef } from './types'
+import type { Definition, ObjectMap, SchemaArgs, SymbolRef } from './types'
 
 export class JsonSchemaGenerator {
   private readonly context: JsonSchemaContext
 
-  public constructor(
+  constructor(
     symbols: Readonly<SymbolRef[]>,
     allSymbols: Readonly<ObjectMap<ts.Type>>,
     userSymbols: Readonly<ObjectMap<ts.Symbol>>,

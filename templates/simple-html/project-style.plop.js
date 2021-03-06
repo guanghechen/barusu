@@ -21,7 +21,7 @@ module.exports = function (plop) {
         type: 'input',
         name: 'packageAuthor',
         message: 'author',
-        default: answers => {
+        default: () => {
           // detect package.json
           const packageJsonPath = path.resolve(cwd, 'package.json')
           if (fs.existsSync(packageJsonPath)) {

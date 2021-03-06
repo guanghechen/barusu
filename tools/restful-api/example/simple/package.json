@@ -13,8 +13,6 @@
     "@barusu/tool-restful-api": "^0.0.28"
   },
   "devDependencies": {
-    "@barusu/eslint-config": "^0.0.28",
-    "@barusu/rollup-config": "^0.0.28",
     "@barusu/tool-sort-imports": "^0.0.28",
     "nodemon": "^2.0.4",
     "ts-node": "~9.0.0",

@@ -1,4 +1,4 @@
-import { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
+import type { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
 
 /**
  * 未经处理的，用户直接在配置文件中指定的 API 条目

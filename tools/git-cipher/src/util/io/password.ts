@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import { destroyBuffer } from '../buffer'
-import { CustomError, ErrorCode } from '../events'
+import type { CustomError } from '../events'
+import { ErrorCode } from '../events'
 import { input } from './input'
 
 /**

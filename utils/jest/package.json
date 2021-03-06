@@ -28,20 +28,14 @@
     "!lib/**/*.d.ts.map"
   ],
   "scripts": {
-    "start": "rollup -w -c rollup.config.js",
+    "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.js",
     "prebuild": "rimraf lib/",
-    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "prepublishOnly": "cross-env ROLLUP_USE_SOURCE_MAP=false yarn build",
-    "test": "echo 'no test yet.'"
+    "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build"
   },
   "dependencies": {
     "@types/fs-extra": "^9.0.6",
     "@types/jest": "^26.0.19",
     "fs-extra": "^9.0.1",
     "jest": "^26.6.3"
-  },
-  "devDependencies": {
-    "@barusu/rollup-config": "^0.0.47",
-    "rollup": "2.39.1"
   }
 }

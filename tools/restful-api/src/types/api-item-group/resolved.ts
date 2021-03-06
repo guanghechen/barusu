@@ -1,5 +1,5 @@
-import { ResolvedApiItem } from '../api-item/resolved'
-import { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
+import type { ResolvedApiItem } from '../api-item/resolved'
+import type { HttpRequestHeaders, HttpResponseHeaders, HttpVerb } from '../http'
 
 /**
  * 格式化后的 API 条目组

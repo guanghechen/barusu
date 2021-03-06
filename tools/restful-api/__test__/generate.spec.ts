@@ -1,8 +1,8 @@
+import { absoluteOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
 import rimraf from 'rimraf'
-import { absoluteOfWorkspace } from '@barusu/util-cli'
 import { COMMAND_NAME, createProgram, execSubCommandGenerate } from '../src'
 
 describe('generate', function () {
@@ -18,6 +18,7 @@ describe('generate', function () {
     const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
     rimraf.sync(absoluteSchemaRootDir)
 
+    // eslint-disable-next-line jest/valid-title
     test(title, async function () {
       const program = createProgram()
       await execSubCommandGenerate(program, [

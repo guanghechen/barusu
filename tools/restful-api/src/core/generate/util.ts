@@ -1,5 +1,5 @@
+import { isArray, isObject } from '@guanghechen/option-helper'
 import fs from 'fs-extra'
-import { isArray, isObject } from '@barusu/util-option'
 import { logger } from '../../env/logger'
 
 /**
@@ -18,7 +18,7 @@ export function removeIgnoredDataTypes<T extends unknown>(
   }
   if (isObject(json)) {
     if (ignoredDataTypes.includes(json['type'] as string)) return undefined
-    const result: T = {} as T
+    const result: T = ({} as unknown) as T
     for (const key of Object.getOwnPropertyNames(json)) {
       const value = removeIgnoredDataTypes(json[key], ignoredDataTypes)
       if (value === undefined) continue

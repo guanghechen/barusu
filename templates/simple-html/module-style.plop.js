@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { titleCase } = require('title-case')
 const semverRegex = require('semver-regex')
+const { titleCase } = require('title-case')
 const manifest = require('./package.json')
 
 module.exports = function (plop) {
@@ -48,7 +48,7 @@ module.exports = function (plop) {
         type: 'input',
         name: 'packageAuthor',
         message: 'author',
-        default: answers => {
+        default: () => {
           // detect package.json
           const packageJsonPath = path.resolve(cwd, 'package.json')
           if (fs.existsSync(packageJsonPath)) {

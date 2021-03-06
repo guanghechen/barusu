@@ -1,6 +1,6 @@
-import ts from 'typescript'
-import { JsonSchemaContext } from '../schema-context'
-import { Definition, PrimitiveType } from '../types'
+import type ts from 'typescript'
+import type { JsonSchemaContext } from '../schema-context'
+import type { Definition, PrimitiveType } from '../types'
 import { extractLiteralValue } from '../util'
 import { getTypeDefinition } from './type-definition'
 
@@ -24,11 +24,11 @@ export function getUnionDefinition(
   const simpleTypes: string[] = []
   const schemas: Definition[] = []
 
-  const addEnumValue = (value: PrimitiveType) => {
+  const addEnumValue = (value: PrimitiveType): void => {
     if (!enumValues.includes(value)) enumValues.push(value)
   }
 
-  const addSimpleType = (type: string) => {
+  const addSimpleType = (type: string): void => {
     if (!simpleTypes.includes(type)) simpleTypes.push(type)
   }
 

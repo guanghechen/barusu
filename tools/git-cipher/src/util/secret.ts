@@ -1,13 +1,13 @@
-import fs from 'fs-extra'
 import {
   coverBoolean,
   coverNumber,
   coverString,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
+import fs from 'fs-extra'
 import { logger } from '../env/logger'
 import { calcMac, destroyBuffer } from './buffer'
-import { Cipher, CipherFactory } from './cipher'
+import type { Cipher, CipherFactory } from './cipher'
 import { ErrorCode, EventTypes, eventBus } from './events'
 import * as io from './io'
 
@@ -77,18 +77,18 @@ export class SecretMaster {
   protected encryptedSecret: Buffer | null = null
   protected encryptedSecretMac: Buffer | null = null
 
-  public constructor(params: SecretMasterParams) {
+  constructor(params: SecretMasterParams) {
     this.secretCipher = params.cipherFactory.create()
     this.cipherFactory = params.cipherFactory
     this.secretFileEncoding = coverString(
       'utf-8',
       params.secretFileEncoding,
-      isNotEmptyString,
+      isNonBlankString,
     )
     this.secretContentEncoding = coverString(
       'hex',
       params.secretContentEncoding,
-      isNotEmptyString,
+      isNonBlankString,
     ) as BufferEncoding
     this.showAsterisk = coverBoolean(true, params.showAsterisk)
     this.maxRetryTimes = coverNumber(2, params.maxRetryTimes)

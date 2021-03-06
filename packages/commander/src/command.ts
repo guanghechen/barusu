@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events'
 import path from 'path'
-import { Argument, parseArgument } from './util/argument'
+import type { Argument } from './util/argument'
+import { parseArgument } from './util/argument'
 import { CommandError } from './util/error'
 import { Option } from './util/option'
 
@@ -32,7 +33,7 @@ export class Command extends EventEmitter implements Command {
   protected _exitCallback: CommandExitEventCallback | null = null
   protected _actionHandler: ((args: string[]) => void) | null = null
 
-  public constructor(parent?: Command) {
+  constructor(parent?: Command) {
     super()
     if (parent != null) {
       this.parent = parent
@@ -461,7 +462,7 @@ export class Command extends EventEmitter implements Command {
   /**
    * Return prepared commands details.
    */
-  protected _preparedCommandsDetails(): [string, string][] {
+  protected _preparedCommandsDetails(): Array<[string, string]> {
     const commandDetails = this.commands
       .filter(cmd => cmd._visible)
       .map((cmd): [string, string] => {
@@ -587,7 +588,7 @@ export class Command extends EventEmitter implements Command {
   protected _unknownCommand(): never {
     const partCommands = [this.name()]
     for (let parentCmd = this.parent; parentCmd; parentCmd = parentCmd.parent) {
-      partCommands.unshift(parentCmd.name())
+      partCommands.unshift(parentCmd.name() as string)
     }
     const fullCommand = partCommands.join(' ')
     const message =

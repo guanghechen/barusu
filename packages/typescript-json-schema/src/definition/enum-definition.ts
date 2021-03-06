@@ -1,6 +1,6 @@
 import ts from 'typescript'
-import { JsonSchemaContext } from '../schema-context'
-import { Definition, PrimitiveType } from '../types'
+import type { JsonSchemaContext } from '../schema-context'
+import type { Definition, PrimitiveType } from '../types'
 
 /**
  * Get definition of enum type
@@ -27,7 +27,7 @@ export function getEnumDefinition(
 
   const enumTypes: string[] = []
   const enumValues: PrimitiveType[] = []
-  const addEnum = (type: string, value: PrimitiveType) => {
+  const addEnum = (type: string, value: PrimitiveType): void => {
     enumValues.push(value)
     if (!enumTypes.includes(type)) {
       enumTypes.push(type)

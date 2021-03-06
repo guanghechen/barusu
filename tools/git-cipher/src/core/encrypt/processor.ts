@@ -1,24 +1,25 @@
-import commandExists from 'command-exists'
-import execa from 'execa'
-import fs from 'fs-extra'
-import path from 'path'
 import {
   absoluteOfWorkspace,
   collectAllFilesSync,
   createCommitAll,
   relativeOfWorkspace,
 } from '@barusu/util-cli'
+import commandExists from 'command-exists'
+import execa from 'execa'
+import fs from 'fs-extra'
+import path from 'path'
 import { logger } from '../../env/logger'
 import { WorkspaceCatalog } from '../../util/catalog'
-import { AESCipher, Cipher } from '../../util/cipher'
+import type { Cipher } from '../../util/cipher'
+import { AESCipher } from '../../util/cipher'
 import { SecretMaster } from '../../util/secret'
-import { GitCipherEncryptContext } from './context'
+import type { GitCipherEncryptContext } from './context'
 
 export class GitCipherEncryptProcessor {
   protected readonly context: GitCipherEncryptContext
   protected readonly secretMaster: SecretMaster
 
-  public constructor(context: GitCipherEncryptContext) {
+  constructor(context: GitCipherEncryptContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
       cipherFactory: { create: () => new AESCipher() },
@@ -156,7 +157,7 @@ export class GitCipherEncryptProcessor {
     if (plaintextFilepaths.length <= 0) return
 
     const { context } = this
-    const tasks: Promise<void>[] = []
+    const tasks: Array<Promise<void>> = []
     for (const plaintextFilepath of plaintextFilepaths) {
       const absolutePlaintextFilepath = absoluteOfWorkspace(
         context.workspace,

@@ -29,8 +29,9 @@
   },
   "scripts": {},
   "dependencies": {
-    "@barusu/rollup-plugin-copy": "^0.0.47",
+    "@guanghechen/rollup-plugin-copy": "^1.0.4",
     "fs-extra": "^9.0.1",
+    "minimist": "^1.2.5",
     "plop": "^2.7.0",
     "semver-regex": "^3.1.1",
     "title-case": "^3.0.2"

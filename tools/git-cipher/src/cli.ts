@@ -3,7 +3,7 @@ import {
   mountSubCommandDecrypt,
   mountSubCommandEncrypt,
   mountSubCommandInit,
-} from './index'
+} from '.'
 
 const program = createProgram()
 

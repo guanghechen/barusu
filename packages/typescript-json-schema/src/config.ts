@@ -1,4 +1,4 @@
-import { SchemaArgs } from './types'
+import type { SchemaArgs } from './types'
 
 /**
  * default schema args

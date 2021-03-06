@@ -1,4 +1,4 @@
-import { isArray, isObject } from '@barusu/util-option'
+import { isArray, isObject } from '@guanghechen/option-helper'
 import {
   BaseDataSchemaCompiler,
   DataSchemaCompileResult,

@@ -1,27 +1,25 @@
-import path from 'path'
-import * as TsconfigUtil from 'tsconfig'
-import {
+import type {
   Command,
   CommandConfigurationFlatOpts,
   MainCommandCreator,
   MainCommandProcessor,
-  absoluteOfWorkspace,
 } from '@barusu/util-cli'
+import { absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverString,
   isNotEmptyArray,
-  isNotEmptyString,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
+import path from 'path'
+import * as TsconfigUtil from 'tsconfig'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
 import { createProgram } from '../command'
+import type { TsconfigPathsContext } from '../main/context'
+import { createTsconfigPathsContext } from '../main/context'
+import type { GlobalCommandOptions } from '../option'
 import {
-  TsconfigPathsContext,
-  createTsconfigPathsContext,
-} from '../main/context'
-import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
@@ -100,7 +98,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> = functio
       const encoding: string = cover<string>(
         defaultOptions.encoding,
         options.encoding,
-        isNotEmptyString,
+        isNonBlankString,
       )
       logger.debug('encoding:', encoding)
 
@@ -118,7 +116,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> = functio
         cover<string>(
           defaultOptions.tsconfigPath,
           options.tsconfigPath,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('tsconfigPath:', tsconfigPath)
@@ -143,7 +141,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> = functio
         coverString(
           defaultOptions.srcRootDir,
           options.srcRootDir,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('srcRootDir:', srcRootDir)
@@ -154,7 +152,7 @@ export const createMainCommand: MainCommandCreator<MainCommandOptions> = functio
         coverString(
           defaultOptions.dstRootDir,
           options.dstRootDir,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('dstRootDir:', dstRootDir)

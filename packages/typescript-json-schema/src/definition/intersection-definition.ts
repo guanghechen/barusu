@@ -1,6 +1,6 @@
-import ts from 'typescript'
-import { JsonSchemaContext } from '../schema-context'
-import { Definition } from '../types'
+import type ts from 'typescript'
+import type { JsonSchemaContext } from '../schema-context'
+import type { Definition } from '../types'
 import { getTypeDefinition } from './type-definition'
 
 /**
@@ -18,7 +18,7 @@ export function getIntersectionDefinition(
   const schemas: Definition[] = []
   const simpleTypes: string[] = []
 
-  const addSimpleType = (type: string) => {
+  const addSimpleType = (type: string): void => {
     if (!simpleTypes.includes(type)) {
       simpleTypes.push(type)
     }

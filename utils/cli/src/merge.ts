@@ -1,4 +1,4 @@
-import { isNotEmptyArray, isNotEmptyObject } from './is'
+import { isNotEmptyArray, isNotEmptyObject } from '@guanghechen/option-helper'
 
 /**
  * The strategy for merging options
@@ -22,14 +22,14 @@ export const defaultMergeStrategies = {
    */
   replace: function (prevOption: unknown, nextOption: unknown | null): unknown {
     return nextOption == null ? prevOption : nextOption
-  } as MergeStrategy<unknown>,
+  } as MergeStrategy,
   /**
    * Retain the previous item and ignore the new one if the previous one is
    * neither null nor undefined, otherwise, use the new one instead
    */
   retain: function (prevOption: unknown): unknown {
     return prevOption
-  } as MergeStrategy<unknown>,
+  } as MergeStrategy,
   /**
    * Merge arrays, like Array.prototype.concat
    */
@@ -66,7 +66,7 @@ export function merge<O extends Record<string, unknown>>(
   strategies: Partial<Record<keyof O, MergeStrategy<any>>> = {},
   defaultStrategy: MergeStrategy = defaultMergeStrategies.replace,
 ): O {
-  const result = {} as O
+  const result = ({} as unknown) as O
   for (const option of options) {
     for (const key of Object.keys(option)) {
       const strategy: MergeStrategy = strategies[key] || defaultStrategy

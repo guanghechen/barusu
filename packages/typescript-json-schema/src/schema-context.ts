@@ -1,6 +1,6 @@
 import ts from 'typescript'
 import { getTypeDefinition } from './definition/type-definition'
-import {
+import type {
   Definition,
   ObjectMap,
   SchemaArgs,
@@ -60,7 +60,7 @@ export class JsonSchemaContext {
   public readonly REGEX_LINE_BREAK = /\r\n/
   public readonly NUMERIC_INDEX_PATTERN = '^[0-9]+$'
 
-  public constructor(
+  constructor(
     validationKeywords: Readonly<ValidationKeywords>,
     symbols: Readonly<SymbolRef[]>,
     allSymbols: Readonly<ObjectMap<ts.Type>>,

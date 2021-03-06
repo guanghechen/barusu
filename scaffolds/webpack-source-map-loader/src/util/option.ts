@@ -1,9 +1,10 @@
 import * as loaderUtils from 'loader-utils'
-import webpack from 'webpack'
+import type webpack from 'webpack'
 
 /**
  * options for @barusu/webpack-source-map-loader
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SourceMapLoaderOptions {}
 
 /**

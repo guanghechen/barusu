@@ -1,14 +1,14 @@
-import fs from 'fs-extra'
-import * as TJS from '@barusu/typescript-json-schema'
+import type * as TJS from '@barusu/typescript-json-schema'
 import { mkdirsIfNotExists } from '@barusu/util-cli'
+import fs from 'fs-extra'
 import { logger } from '../../env/logger'
-import { RestfulApiGenerateContext } from './context'
+import type { RestfulApiGenerateContext } from './context'
 import { clearSchemaRootPath, removeIgnoredDataTypes } from './util'
 
 export class RestfulApiGenerateProcessor {
   protected readonly context: RestfulApiGenerateContext
 
-  public constructor(context: RestfulApiGenerateContext) {
+  constructor(context: RestfulApiGenerateContext) {
     this.context = context
   }
 
@@ -24,7 +24,7 @@ export class RestfulApiGenerateProcessor {
       await clearSchemaRootPath(context.schemaRootPath)
     }
 
-    const tasks: Promise<void>[] = []
+    const tasks: Array<Promise<void>> = []
     for (const item of context.apiItems) {
       // RequestData
       if (item.request.voName != null && item.request.schemaPath != null) {

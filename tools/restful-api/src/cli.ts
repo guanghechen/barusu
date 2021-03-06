@@ -3,7 +3,7 @@ import {
   mountSubCommandGenerate,
   mountSubCommandInit,
   mountSubCommandServe,
-} from './index'
+} from '.'
 
 const program = createProgram()
 

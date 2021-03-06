@@ -1,11 +1,11 @@
+import { runPlop } from '@barusu/util-cli'
+import { toLowerCase } from '@guanghechen/option-helper'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import path from 'path'
-import { runPlop } from '@barusu/util-cli'
-import { toLowerCase } from '@barusu/util-option'
 import { templateRootDir } from '../../env/constant'
 import { logger } from '../../env/logger'
-import { RestfulApiInitContext } from './context'
+import type { RestfulApiInitContext } from './context'
 
 /**
  * Render handlebar boilerplates

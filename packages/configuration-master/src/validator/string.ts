@@ -8,7 +8,7 @@ import {
   toPascalCase,
   toSnakeCase,
   toUpperCase,
-} from '@barusu/util-option'
+} from '@guanghechen/option-helper'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,

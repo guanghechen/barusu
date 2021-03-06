@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import fs from 'fs-extra'
 import path from 'path'
-import { toKebabCase } from '@barusu/util-option'
+import { toKebabCase } from '@guanghechen/option-helper'
 
 /**
  * 测试案例

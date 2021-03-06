@@ -1,17 +1,17 @@
-import path from 'path'
-import { ChalkLogger, Level } from '@barusu/chalk-logger'
+import type { ChalkLogger } from '@barusu/chalk-logger'
+import { Level } from '@barusu/chalk-logger'
+import { locateNearestFilepath } from '@guanghechen/locate-helper'
 import {
-  MergeStrategy,
   cover,
   coverString,
-  defaultMergeStrategies,
   isNotEmptyArray,
   isNotEmptyObject,
-  isNotEmptyString,
-  merge,
-} from '@barusu/util-option'
+  isNonBlankString,
+} from '@guanghechen/option-helper'
+import path from 'path'
 import { loadJsonOrYamlSync } from './fs'
-import { findPackageJsonPath } from './manifest'
+import type { MergeStrategy } from './merge'
+import { defaultMergeStrategies, merge } from './merge'
 import { absoluteOfWorkspace } from './path'
 
 export interface CommandConfigurationFlatOpts {
@@ -85,11 +85,11 @@ export function flatOptionsFromConfiguration<
   subCommandName: string | false,
   strategies: Partial<Record<keyof C, MergeStrategy>> = {},
 ): C {
-  let resolvedConfig = {} as CommandConfiguration<C>
+  let resolvedConfig = ({} as unknown) as CommandConfiguration<C>
 
   // load configs
   if (isNotEmptyArray(flatOpts.configPath)) {
-    const configs: CommandConfiguration<C>[] = []
+    const configs: Array<CommandConfiguration<C>> = []
     for (const filepath of flatOpts.configPath) {
       const config = loadJsonOrYamlSync(filepath) as CommandConfiguration<C>
       configs.push(config)
@@ -102,8 +102,8 @@ export function flatOptionsFromConfiguration<
   } else {
     // otherwise, load from parastic config
     if (
-      isNotEmptyString(flatOpts.parasticConfigPath) &&
-      isNotEmptyString(flatOpts.parasticConfigEntry)
+      isNonBlankString(flatOpts.parasticConfigPath) &&
+      isNonBlankString(flatOpts.parasticConfigEntry)
     ) {
       const config = loadJsonOrYamlSync(flatOpts.parasticConfigPath) as any
       resolvedConfig =
@@ -131,7 +131,7 @@ export function flatOptionsFromConfiguration<
 
     // merge specified sub-command option
     if (
-      isNotEmptyString(subCommandName) &&
+      isNonBlankString(subCommandName) &&
       typeof resolvedConfig[subCommandName] == 'object'
     ) {
       result = merge<C>(
@@ -174,7 +174,7 @@ export function resolveCommandConfigurationOptions<
     absoluteOfWorkspace(workspace, p),
   )
   const parasticConfigPath: string | null | undefined = cover<string | null>(
-    (): string | null => findPackageJsonPath(workspace),
+    () => locateNearestFilepath(workspace, 'package.json'),
     options.parasticConfigPath,
   )
   const parasticConfigEntry: string = coverString(

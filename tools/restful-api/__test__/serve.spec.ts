@@ -1,15 +1,14 @@
+import { absoluteOfWorkspace } from '@barusu/util-cli'
+import { isObject } from '@guanghechen/option-helper'
+import Router from '@koa/router'
 import fs from 'fs-extra'
 import path from 'path'
 import rimraf from 'rimraf'
 import supertest from 'supertest'
-import { absoluteOfWorkspace } from '@barusu/util-cli'
-import { isObject } from '@barusu/util-option'
-import Router from '@koa/router'
+import type { RestfulApiServeContext, SubCommandServeOptions } from '../src'
 import {
   COMMAND_NAME,
-  RestfulApiServeContext,
   RestfulApiServeProcessor,
-  SubCommandServeOptions,
   createProgram,
   createRestfulApiServeContextFromOptions,
   createSubCommandServe,
@@ -35,6 +34,7 @@ describe('serve', function () {
     const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
     rimraf.sync(absoluteSchemaRootDir)
 
+    // eslint-disable-next-line jest/valid-title
     test(title, async function () {
       const program = createProgram()
 

@@ -1,26 +1,26 @@
-import fs from 'fs-extra'
-import path from 'path'
-import {
-  Command,
+import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
-  absoluteOfWorkspace,
 } from '@barusu/util-cli'
+import { Command, absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
   coverNumber,
   isNotEmptyArray,
-} from '@barusu/util-option'
+} from '@guanghechen/option-helper'
+import fs from 'fs-extra'
+import path from 'path'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import { WordStatContext, createWordStatContext } from './context'
+import type { WordStatContext } from './context'
+import { createWordStatContext } from './context'
 
 interface SubCommandOptions extends GlobalCommandOptions {
   /**

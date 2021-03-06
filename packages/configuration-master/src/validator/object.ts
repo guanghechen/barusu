@@ -1,4 +1,4 @@
-import { isObject } from '@barusu/util-option'
+import { isObject } from '@guanghechen/option-helper'
 import {
   BaseDataValidator,
   BaseDataValidatorFactory,

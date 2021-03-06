@@ -1,10 +1,13 @@
-import {
+import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
+  MergeStrategy,
+} from '@barusu/util-cli'
+import {
   absoluteOfWorkspace,
   resolveCommandConfigurationOptions,
 } from '@barusu/util-cli'
-import { MergeStrategy, cover, isNotEmptyString } from '@barusu/util-option'
+import { cover, isNonBlankString } from '@guanghechen/option-helper'
 import { logger } from '../env/logger'
 
 /**
@@ -67,7 +70,7 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     cover<string>(
       resolvedDefaultOptions.tsconfigPath,
       options.tsconfigPath,
-      isNotEmptyString,
+      isNonBlankString,
     ),
   )
   logger.debug('tsconfigPath:', tsconfigPath)
@@ -76,7 +79,7 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   const encoding: string = cover<string>(
     resolvedDefaultOptions.encoding,
     options.encoding,
-    isNotEmptyString,
+    isNonBlankString,
   )
   logger.debug('encoding:', encoding)
 

@@ -1,8 +1,8 @@
 import path from 'path'
 import ts from 'typescript'
 import { annotationKeywords } from '../config'
-import { JsonSchemaContext } from '../schema-context'
-import { Definition } from '../types'
+import type { JsonSchemaContext } from '../schema-context'
+import type { Definition } from '../types'
 import {
   extend,
   extractLiteralValue,

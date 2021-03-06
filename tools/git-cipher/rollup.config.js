@@ -1,57 +1,29 @@
-import path from 'path'
-import { createRollupConfig } from '@barusu/rollup-config'
-import { copy } from '@barusu/rollup-plugin-copy'
+import createRollupConfig from '@guanghechen/rollup-config-cli'
 import manifest from './package.json'
 
-const resolvePath = p => path.resolve(__dirname, p)
-const paths = {
-  tsconfig: resolvePath('tsconfig.src.json'),
-}
-
-const baseConfig = createRollupConfig({
+const config = createRollupConfig({
   manifest,
   pluginOptions: {
     typescriptOptions: {
-      tsconfig: paths.tsconfig,
+      tsconfig: 'tsconfig.src.json',
     },
   },
-})
-
-const { external, plugins } = baseConfig
-const config = [
-  {
-    ...baseConfig,
-    plugins: [
-      ...plugins,
-      copy({
-        copyOnce: true,
-        verbose: true,
-        targets: [
-          {
-            src: resolvePath('src/config/*'),
-            dest: resolvePath('lib/config'),
-          },
-        ],
-      }),
-    ],
-  },
-  {
-    input: resolvePath('src/cli.ts'),
-    output: [
+  resources: {
+    copyOnce: true,
+    verbose: true,
+    targets: [
       {
-        file: resolvePath('lib/cjs/cli.js'),
-        format: 'cjs',
-        exports: 'named',
-        sourcemap: true,
-        banner: '#! /usr/bin/env node',
+        src: 'src/config/*',
+        dest: 'lib/config',
       },
     ],
-    external: id => {
-      if (external(id)) return true
-      return id === './index'
-    },
-    plugins,
   },
-]
+  targets: [
+    {
+      src: 'src/cli.ts',
+      target: 'lib/cjs/cli.js',
+    },
+  ],
+})
 
 export default config

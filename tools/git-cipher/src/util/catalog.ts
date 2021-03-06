@@ -1,11 +1,11 @@
+import { collectAllFilesSync, relativeOfWorkspace } from '@barusu/util-cli'
+import { coverString, isNonBlankString } from '@guanghechen/option-helper'
 import crypto from 'crypto'
 import fs from 'fs-extra'
 import path from 'path'
-import { collectAllFilesSync, relativeOfWorkspace } from '@barusu/util-cli'
-import { coverString, isNotEmptyString } from '@barusu/util-option'
 import { logger } from '../env/logger'
 import { destroyBuffer } from './buffer'
-import { Cipher } from './cipher'
+import type { Cipher } from './cipher'
 import { ErrorCode } from './events'
 
 /**
@@ -87,19 +87,19 @@ export class WorkspaceCatalog {
     Readonly<WorkspaceCatalogItem>
   >
   protected mtime: string | null
-  public readonly items: Readonly<WorkspaceCatalogItem>[]
+  public readonly items: Array<Readonly<WorkspaceCatalogItem>>
 
-  public constructor(params: WorkspaceCatalogParams) {
+  constructor(params: WorkspaceCatalogParams) {
     this.cipher = params.cipher
     this.indexFileEncoding = coverString(
       'utf-8',
       params.indexFileEncoding,
-      isNotEmptyString,
+      isNonBlankString,
     )
     this.indexContentEncoding = coverString(
       'base64',
       params.indexContentEncoding,
-      isNotEmptyString,
+      isNonBlankString,
     ) as BufferEncoding
     this.plaintextRootDir = params.plaintextRootDir
     this.ciphertextRootDir = params.ciphertextRootDir

@@ -1,16 +1,18 @@
-import {
+import type {
   SubCommandExecutor,
   SubCommandMounter,
   SubCommandProcessor,
+} from '@barusu/util-cli'
+import {
   createSubCommandExecutor,
   createSubCommandMounter,
 } from '@barusu/util-cli'
+import type { SubCommandServeOptions } from '../core/serve/command'
 import {
-  SubCommandServeOptions,
   createRestfulApiServeContextFromOptions,
   createSubCommandServe,
 } from '../core/serve/command'
-import { RestfulApiServeContext } from '../core/serve/context'
+import type { RestfulApiServeContext } from '../core/serve/context'
 import { RestfulApiServeProcessor } from '../core/serve/processor'
 import { handleError } from './_util'
 
@@ -20,10 +22,9 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandServe: SubCommandProcessor<
-  SubCommandServeOptions,
-  void
-> = async function (options: SubCommandServeOptions): Promise<void> {
+export const processSubCommandServe: SubCommandProcessor<SubCommandServeOptions> = async function (
+  options: SubCommandServeOptions,
+): Promise<void> {
   try {
     const context: RestfulApiServeContext = await createRestfulApiServeContextFromOptions(
       options,
@@ -38,10 +39,10 @@ export const processSubCommandServe: SubCommandProcessor<
 /**
  * Mount Sub-command: serve
  */
-export const mountSubCommandServe: SubCommandMounter = createSubCommandMounter<
-  SubCommandServeOptions,
-  void
->(createSubCommandServe, processSubCommandServe)
+export const mountSubCommandServe: SubCommandMounter = createSubCommandMounter<SubCommandServeOptions>(
+  createSubCommandServe,
+  processSubCommandServe,
+)
 
 /**
  * Execute sub-command: 'serve'
@@ -50,7 +51,7 @@ export const mountSubCommandServe: SubCommandMounter = createSubCommandMounter<
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandServe: SubCommandExecutor<void> = createSubCommandExecutor<
-  SubCommandServeOptions,
-  void
->(createSubCommandServe, processSubCommandServe)
+export const execSubCommandServe: SubCommandExecutor = createSubCommandExecutor<SubCommandServeOptions>(
+  createSubCommandServe,
+  processSubCommandServe,
+)

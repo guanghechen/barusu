@@ -4,7 +4,7 @@ import { desensitize } from './util'
 export type LoggerMocker = Mocker<string[][]>
 
 interface Logger {
-  write: (text: string) => void
+  write(text: string): void
 }
 
 interface CreateLoggerMockParams {
@@ -23,7 +23,7 @@ interface CreateLoggerMockParams {
   /**
    * Custom formatter for formatting log content
    */
-  formatter?: (text: string) => string
+  formatter?(text: string): string
 }
 
 /**
@@ -38,7 +38,7 @@ export function createLoggerMocker({
   formatter,
 }: CreateLoggerMockParams): LoggerMocker {
   let cliInfos: string[][] = []
-  const collectLog = (...args: any[]) => {
+  const collectLog = (...args: any[]): void => {
     cliInfos.push(
       args.map(x => {
         const text = typeof x === 'string' ? x : JSON.stringify(x)
@@ -72,6 +72,6 @@ export function createLoggerMocker({
     cliInfos = data || []
   }
 
-  const data = () => cliInfos
+  const data = (): string[][] => cliInfos
   return { mock, restore, reset, data }
 }

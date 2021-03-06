@@ -19,12 +19,11 @@
     ":publish": "yarn format && yarn test && lerna publish",
     "build": "lerna run --concurrency 1 build",
     "clean": "lerna clean --yes && yarn install",
-    "format": "run-s format:find-inconsistent format:sort-imports format:lint:fix format:prettier",
+    "format": "run-s format:find-inconsistent format:lint:fix format:prettier",
     "format:prettier": "prettier --write .",
     "format:find-inconsistent": "node ./node_modules/@barusu/tool-find-inconsistent/lib/cjs/cli.js .",
     "format:lint:fix": "eslint . --fix",
     "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
-    "new:ts-package": "node ./node_modules/@barusu/template-ts-package/cli.js",
     "prepublishOnly": "pinst --disable",
     "postinstall": "run-p postinstall:**",
     "postinstall:main": "yarn update:lock",
@@ -42,13 +41,22 @@
     "utils/*"
   ],
   "devDependencies": {
+    "@guanghechen/rollup-config": "^1.0.4",
+    "@guanghechen/eslint-config": "^1.0.4",
+    "@guanghechen/eslint-config-ts": "^1.0.4",
     "@types/chai": "^4.2.11",
+    "@types/fs-extra": "^9.0.6",
     "@types/jest": "^26.0.19",
     "@types/rimraf": "^3.0.0",
     "@types/supertest": "^2.0.10",
     "chai": "^4.2.0",
     "chai-exclude": "^2.0.2",
     "cross-env": "^7.0.3",
+    "fs-extra": "^9.0.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-jest": "^24.1.5",
+    "eslint-plugin-prettier": "^3.3.1",
     "gitmoji-changelog": "^2.2.0",
     "husky": "^5.0.9",
     "is-ci": "^3.0.0",
@@ -58,7 +66,9 @@
     "mocha": "^8.1.1",
     "npm-run-all": "^4.1.5",
     "pinst": "^2.1.6",
+    "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
+    "rollup": "^2.40.0",
     "supertest": "^4.0.2",
     "ts-jest": "^26.4.4",
     "ts-node": "~9.1.1",
@@ -66,55 +76,12 @@
     "typescript": "~4.1.5",
     "yarn-deduplicate": "^3.1.0"
   },
-  "@barusu/tool-sort-imports": {
-    "logLevel": "verbose",
-    "pattern": [
-      "{packages,scaffolds,templates,tools,utils}/*/{src,test,__test__}/*.{ts,tsx}",
-      "{packages,scaffolds,templates,tools,utils}/*/src/**/*.{ts,tsx}"
-    ],
-    "moduleRanks": [
-      {
-        "regex": "^(react|vue|angular)(?:[/\\-][\\w\\-./]*)?$",
-        "rank": 1.1
-      },
-      {
-        "regex": "^mocha|chai(?:[/][\\w\\-./]*)?$",
-        "rank": 1.2
-      },
-      {
-        "regex": "^[a-zA-Z\\d][\\w\\-.]*",
-        "rank": 1.3
-      },
-      {
-        "regex": "^@[a-zA-Z\\d][\\w\\-.]*\\/[a-zA-Z\\d][\\w\\-.]*",
-        "rank": 1.4
-      },
-      {
-        "regex": "^@\\/",
-        "rank": 2.1
-      },
-      {
-        "regex": "^(?:\\/|[a-zA-Z]:)",
-        "rank": 3.1
-      },
-      {
-        "regex": "^[.]{2}[\\/\\\\][^\\n]*",
-        "rank": 3.2
-      },
-      {
-        "regex": "^[.][\\/\\\\][^\\n]*",
-        "rank": 3.3
-      }
-    ],
-    "indent": "  ",
-    "quote": "'",
-    "semicolon": false,
-    "maxColumn": 80,
-    "blankLinesAfterStatement": 1
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,eslintrc}": [
       "prettier --write"
     ]
   }

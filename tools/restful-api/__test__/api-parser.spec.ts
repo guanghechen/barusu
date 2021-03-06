@@ -1,11 +1,12 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { ApiItemParser, ResolvedApiItemGroup } from '../src'
+import type { ResolvedApiItemGroup } from '../src'
+import { ApiItemParser } from '../src'
 
 // override
 function formatApiItemGroup(data: ResolvedApiItemGroup[]): any {
   const projectDir = path.resolve()
-  const stringifyFilter = (key: string, value: any) => {
+  const stringifyFilter = (key: string, value: any): unknown => {
     // RegExp to string
     if (value instanceof RegExp) {
       return value.source
@@ -30,6 +31,7 @@ describe('api-parser', function () {
   const parser = new ApiItemParser()
   for (const apiConfigFilePath of kases) {
     const title = path.parse(apiConfigFilePath).name
+    // eslint-disable-next-line jest/valid-title
     test(title, async function () {
       const apiConfigFilepath = path.resolve(
         caseRootDirectory,

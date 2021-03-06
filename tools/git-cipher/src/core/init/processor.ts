@@ -1,7 +1,3 @@
-import commandExists from 'command-exists'
-import execa from 'execa'
-import inquirer from 'inquirer'
-import nodePlop from 'node-plop'
 import {
   absoluteOfWorkspace,
   createInitialCommit,
@@ -10,20 +6,25 @@ import {
   relativeOfWorkspace,
   runPlop,
 } from '@barusu/util-cli'
-import { isNotEmptyString, toLowerCase } from '@barusu/util-option'
+import { isNonBlankString, toLowerCase } from '@guanghechen/option-helper'
+import commandExists from 'command-exists'
+import execa from 'execa'
+import inquirer from 'inquirer'
+import nodePlop from 'node-plop'
 import { packageVersion } from '../../env/constant'
 import { logger } from '../../env/logger'
 import { resolveTemplateFilepath } from '../../env/util'
 import { WorkspaceCatalog } from '../../util/catalog'
-import { AESCipher, Cipher } from '../../util/cipher'
+import type { Cipher } from '../../util/cipher'
+import { AESCipher } from '../../util/cipher'
 import { SecretMaster } from '../../util/secret'
-import { GitCipherInitContext } from './context'
+import type { GitCipherInitContext } from './context'
 
 export class GitCipherInitProcessor {
   protected readonly context: GitCipherInitContext
   protected secretMaster: SecretMaster
 
-  public constructor(context: GitCipherInitContext) {
+  constructor(context: GitCipherInitContext) {
     this.context = context
     this.secretMaster = new SecretMaster({
       cipherFactory: { create: () => new AESCipher() },
@@ -90,7 +91,7 @@ export class GitCipherInitProcessor {
     ])
 
     // resolve plaintextRepositoryUrl
-    if (isNotEmptyString(plaintextRepositoryUrl)) {
+    if (isNonBlankString(plaintextRepositoryUrl)) {
       if (/^[.]/.test(plaintextRepositoryUrl)) {
         plaintextRepositoryUrl = absoluteOfWorkspace(
           context.workspace,
@@ -101,7 +102,7 @@ export class GitCipherInitProcessor {
     logger.debug('plaintextRepositoryUrl:', plaintextRepositoryUrl)
 
     // clone plaintext repository
-    if (isNotEmptyString(plaintextRepositoryUrl)) {
+    if (isNonBlankString(plaintextRepositoryUrl)) {
       await this.cloneFromRemote(plaintextRepositoryUrl)
     }
 

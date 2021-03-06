@@ -1,4 +1,4 @@
-import { convertToNumber, isArray, isString } from '@barusu/util-option'
+import { convertToNumber, isArray, isString } from '@guanghechen/option-helper'
 import { StringExceptionHandleResult } from './handle-result'
 import { stringify } from './string-util'
 

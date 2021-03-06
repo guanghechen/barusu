@@ -5,17 +5,17 @@ export interface Mocker<D> {
   /**
    * Start mock logger
    */
-  mock: () => void
+  mock(): void
   /**
    * Restore mock
    */
-  restore: () => void
+  restore(): void
   /**
    * Discard the previously collected data
    */
-  reset: (data?: D) => void
+  reset(data?: D): void
   /**
    * Get collected data
    */
-  data: () => D
+  data(): D
 }

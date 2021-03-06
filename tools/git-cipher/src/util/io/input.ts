@@ -1,4 +1,4 @@
-import { isNotEmptyString } from '@barusu/util-option'
+import { isNonBlankString } from '@guanghechen/option-helper'
 import { destroyBuffer } from '../buffer'
 import { EventTypes, eventBus } from '../events'
 
@@ -18,7 +18,7 @@ export function inputOneLine(
     let chunkAcc: Buffer | null = null
 
     // on fulfilled
-    const onResolved = () => {
+    const onResolved = (): void => {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       stdin.removeListener('data', onData)
       stdin.removeListener('end', onResolved)
@@ -28,7 +28,7 @@ export function inputOneLine(
     }
 
     // on rejected
-    const onRejected = (error: any) => {
+    const onRejected = (error: unknown): void => {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       stdin.removeListener('data', onData)
       stdin.removeListener('end', onResolved)
@@ -38,7 +38,7 @@ export function inputOneLine(
     }
 
     // on data
-    const onData = (chunk: Buffer) => {
+    const onData = (chunk: Buffer): void => {
       let pieceTot: number = chunkAcc == null ? 0 : chunkAcc.length
       const piece: Buffer =
         chunkAcc == null ? chunk : Buffer.concat([chunkAcc, chunk])
@@ -91,7 +91,7 @@ export function inputOneLine(
 
     stdin.resume()
     stdin.setRawMode(true)
-    if (isNotEmptyString(question)) {
+    if (isNonBlankString(question)) {
       stdout.write(question)
     }
 
@@ -122,7 +122,7 @@ export async function input(
     let questionWithHint: string = question
     if (i > 0 && hintOnInvalidAnswer != null) {
       const hint = hintOnInvalidAnswer(answer)
-      if (isNotEmptyString(hint)) {
+      if (isNonBlankString(hint)) {
         questionWithHint = hint
       }
     }

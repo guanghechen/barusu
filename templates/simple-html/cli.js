@@ -1,10 +1,12 @@
 #! /usr/bin/env node
 
+const minimist = require('minimist')
 const path = require('path')
 const { Plop, run } = require('plop')
 
 const args = process.argv.slice(2)
-const argv = require('minimist')(args)
+const argv = minimist(args)
+
 argv.plopfile = argv.plopfile || path.resolve(__dirname, 'plop.js')
 
 Plop.launch(

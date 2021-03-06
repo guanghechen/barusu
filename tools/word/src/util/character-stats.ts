@@ -172,7 +172,7 @@ export function calcCharacterStat(
  */
 export function formatCharacterStat(stat: CharacterStat): string {
   const length = stat.total.toString().length
-  const format = (n: number) => n.toString().padStart(length)
+  const format = (n: number): string => n.toString().padStart(length)
 
   // prettier-ignore
   let output: string = (

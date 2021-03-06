@@ -1,8 +1,9 @@
-import path from 'path'
 import { createLoggerMocker } from '@barusu/util-jest'
+import path from 'path'
 import { colorToChalk } from '../src/color'
 import { DEBUG, Level, VERBOSE } from '../src/level'
-import { Logger, LoggerOptions } from '../src/logger'
+import type { LoggerOptions } from '../src/logger'
+import { Logger } from '../src/logger'
 
 describe('Logger', function () {
   const levels: string[] = [
@@ -45,7 +46,7 @@ describe('Logger', function () {
                 if (shouldDate) title += ' +date'
                 if (shouldTitle) title += ' +title'
 
-                // eslint-disable-next-line no-loop-func
+                // eslint-disable-next-line jest/valid-title
                 test(title, function (): void {
                   const logger = new Logger({ ...options, name: level })
                   const loggerMock = createLoggerMocker({

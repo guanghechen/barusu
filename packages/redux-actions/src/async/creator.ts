@@ -1,4 +1,5 @@
-import { AsyncActionStatus, AsyncActions } from './action'
+import type { AsyncActions } from './action'
+import { AsyncActionStatus } from './action'
 
 /**
  * Creators of async actions
@@ -10,15 +11,15 @@ export interface AsyncActionCreators<
   /**
    * Requested action creator
    */
-  request: (payload?: As['request']['payload']) => As['request']
+  request(payload?: As['request']['payload']): As['request']
   /**
    * Succeed action creator
    */
-  success: (payload: As['success']['payload']) => As['success']
+  success(payload: As['success']['payload']): As['success']
   /**
    * Failed action creator
    */
-  failure: (payload: As['failure']['payload']) => As['failure']
+  failure(payload: As['failure']['payload']): As['failure']
 }
 
 /**

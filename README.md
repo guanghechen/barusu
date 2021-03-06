@@ -24,14 +24,8 @@ Scaffolds are some development scripts.
 
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/eslint-config][]              | Active        | Eslintconfig for typescript project.
-   [@barusu/rollup-config][]              | Active        | Rollup configs for bundle typescript project.
-   [@barusu/rollup-plugin-copy][]         | Active        | Rollup plugins to copy files and folds.
    [@barusu/webpack-source-map-loader][]  | Not Recommend | Webpack plugin for loading source map.
 
-[@barusu/eslint-config]: https://github.com/guanghechen/barusu/tree/master/scaffolds/eslint-config#readme
-[@barusu/rollup-config]: https://github.com/guanghechen/barusu/tree/master/scaffolds/rollup-config#readme
-[@barusu/rollup-plugin-copy]: https://github.com/guanghechen/barusu/tree/master/scaffolds/rollup-plugin-copy#readme
 [@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme
 
 
@@ -56,14 +50,12 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/tool-find-inconsistent][]     | Active        | Find inconsistent package versions in monorepo.
    [@barusu/tool-git-cipher][]            | Active        | Cipher git repository.
    [@barusu/tool-restful-api][]           | Active        | Quickly create restful style mock server.
-   [@barusu/tool-sort-imports][]          | Active        | Sort import/export statement.
    [@barusu/tool-tsconfig-paths][]        | Not Recommend | Expand path alias to full path of declaration files which bundled by tsc.
    [@barusu/tool-word][]                  | Not Recommend | Count the frequency of characters in the file(s).
 
 [@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/master/tools/find-inconsistent#readme
 [@barusu/tool-git-cipher]: https://github.com/guanghechen/barusu/tree/master/tools/git-cipher#readme
 [@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/master/tools/restful-api#readme
-[@barusu/tool-sort-imports]: https://github.com/guanghechen/barusu/tree/master/tools/sort-imports#readme
 [@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/master/tools/tsconfig-paths#readme
 [@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/master/tools/word#readme
 
@@ -78,13 +70,11 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/util-cli][]                   | Active        | Helpers for creating Node.js cli program.
    [@barusu/util-jest][]                  | Active        | Jest utility functions.
    [@barusu/util-mocha][]                 | Not Recommend | Mocha utility functions.
-   [@barusu/util-option][]                | Active        | Utility functions for handling options.
 
 [@barusu/util-blob]: https://github.com/guanghechen/barusu/tree/master/utils/blob#readme
 [@barusu/util-cli]: https://github.com/guanghechen/barusu/tree/master/utils/cli#readme
 [@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/master/utils/jest#readme
 [@barusu/util-mocha]: https://github.com/guanghechen/barusu/tree/master/utils/mocha#readme
-[@barusu/util-option]: https://github.com/guanghechen/barusu/tree/master/utils/option#readme
 
 
 ## Other projects

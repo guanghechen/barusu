@@ -1,6 +1,6 @@
-import type { CommandConfigurationOptions } from './option'
-import commander from 'commander'
 import { registerCommanderOptions } from '@barusu/chalk-logger'
+import commander from 'commander'
+import type { CommandConfigurationOptions } from './option'
 
 /**
  * Callback for handling the command
@@ -228,7 +228,7 @@ export function createSubCommandExecutor<
 ): SubCommandExecutor<V> {
   return (parentCommand: Command, args: string[]): Promise<V> => {
     return new Promise(resolve => {
-      const wrappedHandler = async (options: O) => {
+      const wrappedHandler = async (options: O): Promise<V> => {
         const result = await handle(options)
         resolve(result)
         return result
@@ -316,7 +316,7 @@ export function createMainCommandExecutor<
 ): MainCommandExecutor<V> {
   return (args: string[]): Promise<V> => {
     return new Promise(resolve => {
-      const wrappedHandler = async (options: O) => {
+      const wrappedHandler = async (options: O): Promise<V> => {
         const result = await handle(options)
         resolve(result)
         return result

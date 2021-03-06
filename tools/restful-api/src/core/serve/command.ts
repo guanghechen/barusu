@@ -1,27 +1,27 @@
-import {
-  Command,
+import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
-  absoluteOfWorkspace,
 } from '@barusu/util-cli'
+import { Command, absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
   coverNumber,
   coverString,
   isNotEmptyArray,
-  isNotEmptyString,
+  isNonBlankString,
   isString,
-} from '@barusu/util-option'
+} from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import { RestfulApiServeContext, createRestfulApiServeContext } from './context'
+import type { RestfulApiServeContext } from './context'
+import { createRestfulApiServeContext } from './context'
 
 interface SubCommandOptions extends GlobalCommandOptions {
   /**
@@ -189,7 +189,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
         coverString(
           defaultOptions.schemaRootPath,
           options.schemaRootPath,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('schemaRootPath:', schemaRootPath)
@@ -198,7 +198,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
       const host: string = coverString(
         defaultOptions.host,
         options.host,
-        isNotEmptyString,
+        isNonBlankString,
       )
       logger.debug('host:', host)
 
@@ -210,7 +210,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
       const prefixUrl: string = coverString(
         defaultOptions.prefixUrl,
         options.prefixUrl,
-        isNotEmptyString,
+        isNonBlankString,
       )
       logger.debug('prefixUrl:', prefixUrl)
 
@@ -249,7 +249,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
         cover<string | undefined>(
           defaultOptions.mockDataRootDir,
           options.mockDataRootDir,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('mockDataRootDir:', mockDataRootDir)
@@ -270,7 +270,7 @@ export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = 
         cover<string | undefined>(
           defaultOptions.mockResourceRootDir,
           options.mockResourceRootDir,
-          isNotEmptyString,
+          isNonBlankString,
         ),
       )
       logger.debug('mockResourceRootDir:', mockResourceRootDir)

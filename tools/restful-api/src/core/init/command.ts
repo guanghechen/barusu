@@ -1,18 +1,19 @@
-import {
-  Command,
+import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
 } from '@barusu/util-cli'
-import { cover, isNotEmptyArray } from '@barusu/util-option'
+import { Command } from '@barusu/util-cli'
+import { cover, isNotEmptyArray } from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import { RestfulApiInitContext, createRestfulApiInitContext } from './context'
+import type { RestfulApiInitContext } from './context'
+import { createRestfulApiInitContext } from './context'
 
 interface SubCommandOptions extends GlobalCommandOptions {
   /**

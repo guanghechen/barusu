@@ -38,7 +38,7 @@ export class Option<T = unknown> implements Option<T> {
   public readonly defaultValue?: T
   public value?: T
 
-  public constructor(
+  constructor(
     flags: string,
     mandatory: boolean,
     description?: string,

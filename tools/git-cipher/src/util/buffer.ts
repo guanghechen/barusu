@@ -13,7 +13,7 @@ export function destroyBuffer(buffer: Buffer | null): void {
 /**
  * Destroy buffers
  */
-export function destroyBuffers(buffers: (Buffer | null)[] | null): void {
+export function destroyBuffers(buffers: Array<Buffer | null> | null): void {
   if (buffers == null) return
   for (const buffer of buffers) {
     destroyBuffer(buffer)
@@ -38,7 +38,7 @@ export function createRandomKey(size = 32): Buffer {
  * calc Message Authentication Code
  * @param pieces
  */
-export function calcMac(...pieces: Readonly<Buffer>[]): Buffer {
+export function calcMac(...pieces: Array<Readonly<Buffer>>): Buffer {
   const sha1 = crypto.createHash('sha1')
   for (const piece of pieces) {
     sha1.update(piece as Buffer)

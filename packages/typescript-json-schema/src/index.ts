@@ -5,8 +5,9 @@ import path from 'path'
 import ts from 'typescript'
 import { getDefaultArgs } from './config'
 import { JsonSchemaGenerator } from './schema-generator'
-import { Definition, PartialArgs, SymbolRef } from './types'
+import type { Definition, PartialArgs, SymbolRef } from './types'
 import { generateHashOfNode, normalizeFileName } from './util'
+
 export { CompilerOptions, Program, Symbol } from 'typescript'
 export { getDefaultArgs } from './config'
 export { JsonSchemaGenerator } from './schema-generator'
@@ -64,15 +65,15 @@ export function buildGenerator(
     const typeChecker = program.getTypeChecker()
 
     const symbols: SymbolRef[] = []
-    const allSymbols: { [name: string]: ts.Type } = {}
-    const userSymbols: { [name: string]: ts.Symbol } = {}
-    const inheritingTypes: { [baseName: string]: string[] } = {}
+    const allSymbols: Record<string, ts.Type> = {}
+    const userSymbols: Record<string, ts.Symbol> = {}
+    const inheritingTypes: Record<string, string[]> = {}
     const workingDir = program.getCurrentDirectory()
 
     program.getSourceFiles().forEach(sourceFile => {
       const relativePath = path.relative(workingDir, sourceFile.fileName)
 
-      function inspect(node: ts.Node, checker: ts.TypeChecker) {
+      function inspect(node: ts.Node, checker: ts.TypeChecker): void {
         if (
           node.kind === ts.SyntaxKind.ClassDeclaration ||
           node.kind === ts.SyntaxKind.InterfaceDeclaration ||

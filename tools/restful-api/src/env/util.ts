@@ -1,12 +1,9 @@
+import type { ConfigurationMaster, DSchema } from '@barusu/configuration-master'
+import { configurationMaster } from '@barusu/configuration-master'
+import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import yaml from 'js-yaml'
 import path from 'path'
-import {
-  ConfigurationMaster,
-  DSchema,
-  configurationMaster,
-} from '@barusu/configuration-master'
-import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
 import { configRootDir } from './constant'
 import { logger } from './logger'
 
@@ -48,7 +45,7 @@ export function loadContextConfig<R, T>(params: {
   schema: DSchema
   configPath: string
   encoding: string
-  preprocess?: (json: any) => R
+  preprocess?(json: any): R
   fallbackData?: any
 }): T | never {
   let json: R
