@@ -1,10 +1,14 @@
 **/*.*
 !**/*.js
+!**/*.jsx
 !**/*.ts
-!**/package.json
-!**/tsconfig.json
-!**/tsconfig.src.json
+!**/*.tsx
 !.eslintrc
+!.rollup.config.js
+!package.json
+!tsconfig.json
+!tsconfig.settings.json
+!tsconfig.src.json
 
 **/__test__/cases/**
 **/__tmp__/**
@@ -19,4 +23,4 @@
 *.tsbuildinfo
 
 
-packages/typescript-json-schema/test/programs/**
+packages/typescript-json-schema/test/programs/

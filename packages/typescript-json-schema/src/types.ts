@@ -1,7 +1,7 @@
-import { JSONSchema7 } from 'json-schema'
-import ts from 'typescript'
+import type { JSONSchema7 } from 'json-schema'
+import type ts from 'typescript'
 
-export type ObjectMap<T> = { [key: string]: T }
+export type ObjectMap<T> = Record<string, T>;
 
 export interface SymbolRef {
   name: string
@@ -48,16 +48,10 @@ export interface Definition extends Omit<JSONSchema7, RedefinedFields> {
   items?: DefinitionOrBoolean | DefinitionOrBoolean[]
   additionalItems?: DefinitionOrBoolean
   contains?: JSONSchema7
-  properties?: {
-    [key: string]: DefinitionOrBoolean
-  }
-  patternProperties?: {
-    [key: string]: DefinitionOrBoolean
-  }
+  properties?: Record<string, DefinitionOrBoolean>
+  patternProperties?: Record<string, DefinitionOrBoolean>
   additionalProperties?: DefinitionOrBoolean
-  dependencies?: {
-    [key: string]: DefinitionOrBoolean | string[]
-  }
+  dependencies?: Record<string, DefinitionOrBoolean | string[]>
   propertyNames?: DefinitionOrBoolean
   if?: DefinitionOrBoolean
   then?: DefinitionOrBoolean
@@ -66,9 +60,7 @@ export interface Definition extends Omit<JSONSchema7, RedefinedFields> {
   anyOf?: DefinitionOrBoolean[]
   oneOf?: DefinitionOrBoolean[]
   not?: DefinitionOrBoolean
-  definitions?: {
-    [key: string]: DefinitionOrBoolean
-  }
+  definitions?: Record<string, DefinitionOrBoolean>
 }
 
 export interface SchemaArgs {
@@ -98,6 +90,4 @@ export type PartialArgs = Partial<SchemaArgs>
 /**
  *
  */
-export interface ValidationKeywords {
-  [prop: string]: boolean
-}
+export type ValidationKeywords = Record<string, boolean>;

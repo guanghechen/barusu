@@ -9,13 +9,15 @@
     "jest": true,
     "node": true
   },
-  "rules": {},
+  "rules": {
+    "no-prototype-builtins": 0
+  },
   "overrides": [
     {
       "files": ["**/*.ts"],
       "extends": ["@guanghechen/ts", "plugin:jest/recommended", "prettier"],
       "rules": {
-        "@typescript-eslint/method-signature-style": [2, "method"]
+        "no-prototype-builtins": 0
       }
     }
   ]

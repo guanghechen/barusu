@@ -1,5 +1,5 @@
-import { assert } from 'chai'
 import Ajv from 'ajv'
+import { assert } from 'chai'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import { versionMajorMinor as typescriptVersionMajorMinor } from 'typescript'

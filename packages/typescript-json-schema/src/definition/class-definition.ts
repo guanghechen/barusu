@@ -1,6 +1,6 @@
 import ts from 'typescript'
-import { JsonSchemaContext } from '../schema-context'
-import { Definition } from '../types'
+import type { JsonSchemaContext } from '../schema-context'
+import type { Definition } from '../types'
 import { unique } from '../util'
 import { parseCommentsIntoDefinition } from './comment-definition'
 import { getDefinitionForProperty } from './property-definition'

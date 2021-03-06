@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import ts from 'typescript'
-import { Definition, PrimitiveType } from './types'
+import type { Definition, PrimitiveType } from './types'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function extend(target: any, ...args: any[]): any {
@@ -67,7 +67,7 @@ export function extractLiteralValue(type: ts.Type): PrimitiveType | undefined {
  * convert map to object
  * @param m
  */
-export function convertMapToObject<T>(m: Map<string, T>): { [key: string]: T } {
+export function convertMapToObject<T>(m: Map<string, T>): Record<string, T> {
   return [...m.entries()].reduce((acc, [k, v]) => {
     // eslint-disable-next-line no-param-reassign
     acc[k] = v
@@ -104,7 +104,7 @@ const simpleTypesAllowedProperties = {
   description: true,
 }
 
-function addSimpleType(def: Definition, type: string) {
+function addSimpleType(def: Definition, type: string): boolean {
   for (const k in def) {
     if (!simpleTypesAllowedProperties[k]) return false
   }
@@ -140,7 +140,7 @@ export function makeNullable(def: Definition): Definition {
       for (const k in def) {
         if (def.hasOwnProperty(k)) {
           subDef[k] = def[k]
-          // eslint-disable-next-line no-param-reassign
+          // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-dynamic-delete
           delete def[k]
         }
       }

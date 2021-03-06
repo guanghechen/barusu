@@ -1,9 +1,9 @@
 **/*.*
 !**/*.js
+!**/*.jsx
 !**/*.ts
-!**/package.json
-!**/tsconfig.json
-!**/tsconfig.src.json
+!**/*.tsx
+!.rollup.config.js
 
 **/__test__/cases/**
 **/__tmp__/**
@@ -17,6 +17,6 @@
 **/*.styl.d.ts
 *.tsbuildinfo
 
-utils/mocha/**
-packages/configuration-master
-packages/typescript-json-schema/test/programs/**
+utils/mocha/
+packages/configuration-master/
+packages/typescript-json-schema/test/
