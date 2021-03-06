@@ -1,16 +1,16 @@
+import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
 import { createMatchPath } from 'tsconfig-paths'
-import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import { logger } from '../../env/logger'
 import { correctModulePath } from '../../util/module-path'
-import { TsconfigPathsContext } from './context'
+import type { TsconfigPathsContext } from './context'
 
 export class TsconfigPathsProcessor {
   protected readonly context: TsconfigPathsContext
 
-  public constructor(context: TsconfigPathsContext) {
+  constructor(context: TsconfigPathsContext) {
     this.context = context
   }
 

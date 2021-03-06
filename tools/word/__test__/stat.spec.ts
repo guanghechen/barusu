@@ -1,6 +1,6 @@
+import { createLoggerMocker } from '@barusu/util-jest'
 import fs from 'fs-extra'
 import path from 'path'
-import { createLoggerMocker } from '@barusu/util-jest'
 import { COMMAND_NAME, createProgram, execSubCommandStat, logger } from '../src'
 
 describe('stat', function () {
@@ -13,6 +13,7 @@ describe('stat', function () {
     const projectDir = caseRootDirectory
     const filepath = kase
 
+    // eslint-disable-next-line jest/valid-title
     test(title, async function () {
       const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
       loggerMock.mock()

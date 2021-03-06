@@ -1,4 +1,4 @@
-import nodePlop from 'node-plop'
+import type nodePlop from 'node-plop'
 
 export type NodePlopAPI = ReturnType<typeof nodePlop>
 

@@ -1,5 +1,5 @@
-import fs from 'fs-extra'
 import { configurationMaster } from '@barusu/configuration-master'
+import fs from 'fs-extra'
 import { calcConfigFilePath } from '../src'
 
 function generate(rawSchemaPath: string, schemaPath: string): void {

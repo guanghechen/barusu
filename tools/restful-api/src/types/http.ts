@@ -27,19 +27,14 @@ export enum HttpVerb {
 /**
  * HTTP Headers
  */
-export interface HttpHeaders {
-  /**
-   *
-   */
-  [key: string]: string | number
-}
+export type HttpHeaders = Record<string, string | number>
 
 /**
  * HTTP Request Headers
  */
-export interface HttpRequestHeaders extends HttpHeaders {}
+export type HttpRequestHeaders = HttpHeaders
 
 /**
  * HTTP Response Headers
  */
-export interface HttpResponseHeaders extends HttpHeaders {}
+export type HttpResponseHeaders = HttpHeaders

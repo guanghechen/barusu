@@ -20,34 +20,34 @@ export type SimpleEventPayload = EventPayload
 /**
  * Simple event
  */
-export interface SimpleEvent<
+export type SimpleEvent<
   T extends SimpleEventType = SimpleEventType,
   P extends SimpleEventPayload = SimpleEventPayload
-> extends Event<T, P> {}
+> = Event<T, P>
 
 /**
  * SimpleEvent handler
  */
-export interface SimpleEventHandler<
+export type SimpleEventHandler<
   T extends SimpleEventType = SimpleEventType,
   P extends SimpleEventPayload = SimpleEventPayload,
   E extends SimpleEvent<T, P> = SimpleEvent<T, P>
-> extends EventHandler<T, P, E> {}
+> = EventHandler<T, P, E>
 
 /**
  * SimpleEvent subscriber
  */
-export interface SimpleEventSubscriber<
+export type SimpleEventSubscriber<
   T extends SimpleEventType = SimpleEventType,
   P extends SimpleEventPayload = SimpleEventPayload,
   E extends SimpleEvent<T, P> = SimpleEvent<T, P>
-> extends EventSubscriber<T, P, E> {}
+> = EventSubscriber<T, P, E>
 
 /**
  * SimpleEvent listener
  */
-export interface SimpleEventListener<
+export type SimpleEventListener<
   T extends SimpleEventType = SimpleEventType,
   P extends SimpleEventPayload = SimpleEventPayload,
   E extends SimpleEvent<T, P> = SimpleEvent<T, P>
-> extends EventListener<T, P, E> {}
+> = EventListener<T, P, E>

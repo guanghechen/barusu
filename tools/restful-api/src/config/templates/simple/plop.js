@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path')
+// eslint-disable-next-line import/no-extraneous-dependencies
 const manifest = require('@barusu/tool-restful-api/package.json')
+const path = require('path')
 
 module.exports = function (plop) {
   plop.setGenerator('mock-server', {

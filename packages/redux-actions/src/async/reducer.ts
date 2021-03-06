@@ -1,11 +1,11 @@
-import type { AsyncStateItem } from './state'
-import {
-  AsyncActionStatus,
+import type {
   AsyncActions,
   AsyncFailedAction,
   AsyncRequestedAction,
   AsyncSucceedAction,
 } from './action'
+import { AsyncActionStatus } from './action'
+import type { AsyncStateItem } from './state'
 
 type Reducer<
   S extends AsyncStateItem<unknown>,

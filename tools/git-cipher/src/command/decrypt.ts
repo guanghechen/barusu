@@ -1,16 +1,18 @@
-import {
+import type {
   SubCommandExecutor,
   SubCommandMounter,
   SubCommandProcessor,
+} from '@barusu/util-cli'
+import {
   createSubCommandExecutor,
   createSubCommandMounter,
 } from '@barusu/util-cli'
+import type { SubCommandDecryptOptions } from '../core/decrypt/command'
 import {
-  SubCommandDecryptOptions,
   createGitCipherDecryptContextFromOptions,
   createSubCommandDecrypt,
 } from '../core/decrypt/command'
-import { GitCipherDecryptContext } from '../core/decrypt/context'
+import type { GitCipherDecryptContext } from '../core/decrypt/context'
 import { GitCipherDecryptProcessor } from '../core/decrypt/processor'
 import { handleError } from './_util'
 
@@ -20,10 +22,9 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandDecrypt: SubCommandProcessor<
-  SubCommandDecryptOptions,
-  void
-> = async function (options: SubCommandDecryptOptions): Promise<void> {
+export const processSubCommandDecrypt: SubCommandProcessor<SubCommandDecryptOptions> = async function (
+  options: SubCommandDecryptOptions,
+): Promise<void> {
   try {
     const context: GitCipherDecryptContext = await createGitCipherDecryptContextFromOptions(
       options,
@@ -41,10 +42,10 @@ export const processSubCommandDecrypt: SubCommandProcessor<
  * @param {Command}   parentCommand
  * @returns {void}
  */
-export const mountSubCommandDecrypt: SubCommandMounter = createSubCommandMounter<
-  SubCommandDecryptOptions,
-  void
->(createSubCommandDecrypt, processSubCommandDecrypt)
+export const mountSubCommandDecrypt: SubCommandMounter = createSubCommandMounter<SubCommandDecryptOptions>(
+  createSubCommandDecrypt,
+  processSubCommandDecrypt,
+)
 
 /**
  * Execute sub-command: 'decrypt'
@@ -53,7 +54,7 @@ export const mountSubCommandDecrypt: SubCommandMounter = createSubCommandMounter
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandDecrypt: SubCommandExecutor<void> = createSubCommandExecutor<
-  SubCommandDecryptOptions,
-  void
->(createSubCommandDecrypt, processSubCommandDecrypt)
+export const execSubCommandDecrypt: SubCommandExecutor = createSubCommandExecutor<SubCommandDecryptOptions>(
+  createSubCommandDecrypt,
+  processSubCommandDecrypt,
+)

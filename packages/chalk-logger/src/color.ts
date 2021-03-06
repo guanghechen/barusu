@@ -1,4 +1,5 @@
-import chalk, { Chalk } from 'chalk'
+import type { Chalk } from 'chalk'
+import chalk from 'chalk'
 
 export type Color = string | [number, number, number]
 
@@ -48,7 +49,7 @@ export class ColorfulChalk {
   public readonly fg: Chalk
   public readonly bg: Chalk | null
 
-  public constructor(fg: Color, bg?: Color) {
+  constructor(fg: Color, bg?: Color) {
     this.fg = colorToChalk(fg, true)
     if (bg == null) this.bg = null
     else this.bg = colorToChalk(bg, false)

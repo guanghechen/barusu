@@ -1,14 +1,16 @@
-import { Command, CommandConfigurationFlatOpts } from '@barusu/util-cli'
+import type { CommandConfigurationFlatOpts } from '@barusu/util-cli'
+import { Command } from '@barusu/util-cli'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import { GitCipherInitContext, createGitCipherInitContext } from './context'
+import type { GitCipherInitContext } from './context'
+import { createGitCipherInitContext } from './context'
 
-interface SubCommandOptions extends GlobalCommandOptions {}
+type SubCommandOptions = GlobalCommandOptions
 
 const __defaultCommandOptions: SubCommandOptions = {
   ...__defaultGlobalCommandOptions,

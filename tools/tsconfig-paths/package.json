@@ -39,7 +39,6 @@
   "dependencies": {
     "@barusu/chalk-logger": "^0.0.47",
     "@barusu/event-bus": "^0.0.47",
-    "@barusu/tool-sort-imports": "^0.0.47",
     "@barusu/util-cli": "^0.0.47",
     "@guanghechen/option-helper": "^1.0.2",
     "@types/fs-extra": "^9.0.6",
@@ -49,6 +48,7 @@
     "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
-    "@barusu/util-jest": "^0.0.47"
+    "@barusu/util-jest": "^0.0.47",
+    "@guanghechen/rollup-config": "^1.0.2"
   }
 }

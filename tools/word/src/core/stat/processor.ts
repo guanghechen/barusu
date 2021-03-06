@@ -1,19 +1,19 @@
+import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import globby from 'globby'
-import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
+import type { CharacterDetail } from '../../util/character-stats'
 import {
-  CharacterDetail,
   calcCharacterStat,
   formatCharacterStat,
   mergeCharacterStat,
   performCharacterStatistics,
 } from '../../util/character-stats'
-import { WordStatContext } from './context'
+import type { WordStatContext } from './context'
 
 export class WordStatProcessor {
   protected readonly context: WordStatContext
 
-  public constructor(context: WordStatContext) {
+  constructor(context: WordStatContext) {
     this.context = context
   }
 

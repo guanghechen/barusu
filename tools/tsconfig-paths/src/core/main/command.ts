@@ -1,27 +1,25 @@
-import path from 'path'
-import * as TsconfigUtil from 'tsconfig'
-import {
+import type {
   Command,
   CommandConfigurationFlatOpts,
   MainCommandCreator,
   MainCommandProcessor,
-  absoluteOfWorkspace,
 } from '@barusu/util-cli'
+import { absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverString,
   isNotEmptyArray,
   isNonBlankString,
 } from '@guanghechen/option-helper'
+import path from 'path'
+import * as TsconfigUtil from 'tsconfig'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
 import { createProgram } from '../command'
+import type { TsconfigPathsContext } from '../main/context'
+import { createTsconfigPathsContext } from '../main/context'
+import type { GlobalCommandOptions } from '../option'
 import {
-  TsconfigPathsContext,
-  createTsconfigPathsContext,
-} from '../main/context'
-import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'

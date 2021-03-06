@@ -97,11 +97,11 @@ export interface RollupPluginCopyTargetOption
    * @param srcPath   source filepath
    * @param dstPath   target filepath
    */
-  transform?: (
+  transform?(
     content: string | ArrayBuffer,
     srcPath: string,
     dstPath: string,
-  ) => Promise<string | ArrayBuffer>
+  ): Promise<string | ArrayBuffer>
 }
 
 /**

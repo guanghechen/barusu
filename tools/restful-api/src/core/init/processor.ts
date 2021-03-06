@@ -1,25 +1,25 @@
-import execa from 'execa'
-import path from 'path'
 import {
   createInitialCommit,
   installDependencies,
   isNonExistentOrEmpty,
 } from '@barusu/util-cli'
+import type execa from 'execa'
+import path from 'path'
 import { logger } from '../../env/logger'
-import { RestfulApiInitContext } from './context'
+import type { RestfulApiInitContext } from './context'
 import { renderTemplates } from './util'
 
 export class RestfulApiInitProcessor {
   protected readonly context: RestfulApiInitContext
 
-  public constructor(context: RestfulApiInitContext) {
+  constructor(context: RestfulApiInitContext) {
     this.context = context
   }
 
   /**
    * Initialize a mock server project with templates
    */
-  async init(): Promise<void> {
+  public async init(): Promise<void> {
     const { context } = this
 
     // ensure target path is empty

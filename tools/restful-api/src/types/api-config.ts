@@ -1,4 +1,4 @@
-import { RawApiItemGroup } from './api-item-group/raw'
+import type { RawApiItemGroup } from './api-item-group/raw'
 
 /**
  * 未经处理的 API 配置内容
@@ -16,7 +16,7 @@ export interface RawApiConfig {
    *              either an array format or an object format;
    *              if it is an object format, the key is the name of the entry
    */
-  api: RawApiItemGroup[] | { [name: string]: Omit<RawApiItemGroup, 'name'> }
+  api: RawApiItemGroup[] | Record<string, Omit<RawApiItemGroup, 'name'>>
 }
 
 /**

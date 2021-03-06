@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-export */
 import fs from 'fs-extra'
 
 /**
@@ -29,7 +30,7 @@ export interface CaseParentNode {
   /**
    * sub cases
    */
-  cases: (CaseParentNode | CaseLeafNode)[]
+  cases: Array<CaseParentNode | CaseLeafNode>
 }
 
 export type CaseTree = CaseParentNode
@@ -53,9 +54,10 @@ export function runCaseTree<C extends CaseItem>(
   caseFilepath: string,
   doTest: (kase: C) => void | Promise<void>,
 ): void {
-  const createTest = function (caseNode: CaseNode) {
+  const createTest = function (caseNode: CaseNode): void {
     if ((caseNode as CaseParentNode).cases != null) {
       const u: CaseParentNode = caseNode as CaseParentNode
+      // eslint-disable-next-line jest/valid-title
       describe(u.title, function () {
         for (const v of u.cases) {
           createTest(v)
@@ -71,13 +73,14 @@ export function runCaseTree<C extends CaseItem>(
     if (input != null) mergedInputs.push(input)
     if (inputs != null) mergedInputs.push(...inputs)
 
-    it(title, async function () {
+    // eslint-disable-next-line jest/valid-title, jest/expect-expect
+    test(title, async function () {
       for (const item of mergedInputs) {
-        const kase = {
+        const kase = ({
           ...others,
           title,
           input: item,
-        } as C
+        } as unknown) as C
         await doTest(kase)
       }
     })

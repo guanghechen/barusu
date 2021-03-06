@@ -1,10 +1,10 @@
+import fs from 'fs-extra'
+import path from 'path'
+import util from 'util'
 import type {
   RollupPluginCopyTargetItem,
   RollupPluginCopyTargetOption,
 } from './types'
-import fs from 'fs-extra'
-import path from 'path'
-import util from 'util'
 
 /**
  * Stringify data

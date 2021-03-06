@@ -13,7 +13,7 @@ export class Level {
   public readonly headerChalk: ColorfulChalk
   public readonly contentChalk: ColorfulChalk
 
-  public constructor(
+  constructor(
     keys: string[],
     desc: string,
     headerChalk: ColorfulChalk,

@@ -1,7 +1,7 @@
-import type { Logger } from './types'
 import fs from 'fs-extra'
 import yaml from 'js-yaml'
 import path from 'path'
+import type { Logger } from './types'
 
 /**
  * Check whether if the filepath is a file path.

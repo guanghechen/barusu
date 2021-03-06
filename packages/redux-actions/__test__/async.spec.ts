@@ -1,10 +1,12 @@
-import {
+import type {
   AsyncActionCreators,
   AsyncActionReducer,
-  AsyncActionStatus,
   AsyncActions,
   AsyncFailureResponse,
   AsyncStateItem,
+} from '../src'
+import {
+  AsyncActionStatus,
   assembleActionReducers,
   createAsyncAction,
   createAsyncActionCreator,
@@ -38,12 +40,17 @@ describe('state', function () {
 describe('creator', function () {
   test('createAsyncActionCreator', function () {
     type T = 'fetch-user'
-    type RP = { username: string }
-    type SP = { username: string; age: number }
+    interface RP {
+      username: string
+    }
+    interface SP {
+      username: string
+      age: number
+    }
     type FP = AsyncFailureResponse
     type As = AsyncActions<T, RP, SP, FP>
 
-    const creatorsList: AsyncActionCreators<T, As>[] = [
+    const creatorsList: Array<AsyncActionCreators<T, As>> = [
       createAsyncActionCreator('fetch-user'),
       createAsyncAction<any, T, As>('fetch-user').creator,
     ]
@@ -100,7 +107,7 @@ describe('reducer', function () {
     type As = AsyncActions<T, RP, SP, FP>
 
     const creators = createAsyncActionCreator<T, As>(actionType)
-    const reducers: AsyncActionReducer<S, T, As>[] = [
+    const reducers: Array<AsyncActionReducer<S, T, As>> = [
       createAsyncActionReducer<S, T, As>(actionType),
       createAsyncAction<S, T, As>(actionType).reducer,
     ]

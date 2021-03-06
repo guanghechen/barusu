@@ -1,8 +1,8 @@
+import { relativeOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
-import Koa from 'koa'
+import type Koa from 'koa'
 import send from 'koa-send'
 import path from 'path'
-import { relativeOfWorkspace } from '@barusu/util-cli'
 import { logger } from '../../../env/logger'
 
 interface Params {

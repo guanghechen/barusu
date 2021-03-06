@@ -1,6 +1,6 @@
+import { mkdirsIfNotExists } from '@barusu/util-cli'
 import crypto from 'crypto'
 import fs from 'fs-extra'
-import { mkdirsIfNotExists } from '@barusu/util-cli'
 import { logger } from '../../env/logger'
 import {
   createRandomIv,
@@ -9,7 +9,8 @@ import {
   destroyBuffers,
 } from '../buffer'
 import { ErrorCode } from '../events'
-import { BaseCipher, Cipher } from './_base'
+import type { Cipher } from './_base'
+import { BaseCipher } from './_base'
 
 export class AESCipher extends BaseCipher implements Cipher {
   protected readonly ivSize = 32
@@ -18,7 +19,7 @@ export class AESCipher extends BaseCipher implements Cipher {
   protected iv: Buffer | null
   protected key: Buffer | null
 
-  public constructor(
+  constructor(
     options: {
       algorithm?: crypto.CipherGCMTypes
       iv?: Buffer

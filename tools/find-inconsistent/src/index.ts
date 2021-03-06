@@ -1,15 +1,17 @@
 import fs from 'fs-extra'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import glob from 'glob'
 import path from 'path'
 import './env/constant'
 import { logger } from './env/logger'
 import { checkFatalError } from './util'
+
 export * from './env/constant'
 export * from './env/logger'
 export * from './util'
 
-export type PackageDependencies = { [name: string]: string }
-export type DependencyItem = {
+export type PackageDependencies = Record<string, string>
+export interface DependencyItem {
   version: string
   dependents: string[]
 }
@@ -45,7 +47,7 @@ export class PackageManager {
       )
     }
 
-    const tasks: Promise<void>[] = []
+    const tasks: Array<Promise<void>> = []
     for (const workspace of manifest.workspaces) {
       const task = new Promise<void>((resolve, reject) => {
         glob(workspace, (err: any, files: string[]) => {
@@ -77,7 +79,7 @@ export class PackageManager {
   protected resolvePackageJSON(json: PackageJSON): void {
     const self = this
     self.packageMap.set(json.name, json.version)
-    const keys: (keyof PackageJSON)[] = [
+    const keys: Array<keyof PackageJSON> = [
       'bundledDependencies',
       'dependencies',
       'devDependencies',

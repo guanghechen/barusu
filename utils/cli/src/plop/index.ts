@@ -1,12 +1,12 @@
 import type { ChalkLogger } from '@barusu/chalk-logger'
+import type { PlopGenerator } from 'node-plop'
+import Ora from 'ora'
+import { choosePlopGenerator, typeMap } from './out'
 import type {
   NodePlopAPI,
   PlopActionHooksChanges,
   PlopActionHooksFailures,
 } from './types'
-import { PlopGenerator } from 'node-plop'
-import Ora from 'ora'
-import { choosePlopGenerator, typeMap } from './out'
 
 // eslint-disable-next-line new-cap
 const progressSpinner = Ora()
@@ -29,12 +29,12 @@ export async function doThePlop(
 
   const noMap = opts.showTypeNames
 
-  const onComment = (msg: string) => {
+  const onComment = (msg: string): void => {
     progressSpinner.info(msg)
     progressSpinner.start()
   }
 
-  const onSuccess = (change: PlopActionHooksChanges) => {
+  const onSuccess = (change: PlopActionHooksChanges): void => {
     let line = ''
     if (change.type) {
       line += ` ${typeMap(change.type, noMap)}`
@@ -46,7 +46,7 @@ export async function doThePlop(
     progressSpinner.start()
   }
 
-  const onFailure = (fail: PlopActionHooksFailures) => {
+  const onFailure = (fail: PlopActionHooksFailures): void => {
     let line = ''
     if (fail.type) {
       line += ` ${typeMap(fail.type, noMap)}`

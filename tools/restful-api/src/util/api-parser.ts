@@ -1,5 +1,5 @@
-import path from 'path'
-import { ConfigurationMaster, TDSchema } from '@barusu/configuration-master'
+import type { TDSchema } from '@barusu/configuration-master'
+import { ConfigurationMaster } from '@barusu/configuration-master'
 import {
   coverBoolean,
   coverString,
@@ -8,18 +8,20 @@ import {
   toKebabCase,
   toPascalCase,
 } from '@guanghechen/option-helper'
+import path from 'path'
 import { logger } from '../env/logger'
 import { loadConfigSchema, loadContextConfig } from '../env/util'
-import { ApiConfig, ApiConfigContext, RawApiConfig } from '../types/api-config'
-import { RawApiItemGroup } from '../types/api-item-group/raw'
-import { ResolvedApiItemGroup } from '../types/api-item-group/resolved'
-import { RawApiItem } from '../types/api-item/raw'
-import { ResolvedApiItem } from '../types/api-item/resolved'
-import {
-  HttpRequestHeaders,
-  HttpResponseHeaders,
-  HttpVerb,
-} from '../types/http'
+import type {
+  ApiConfig,
+  ApiConfigContext,
+  RawApiConfig,
+} from '../types/api-config'
+import type { RawApiItemGroup } from '../types/api-item-group/raw'
+import type { ResolvedApiItemGroup } from '../types/api-item-group/resolved'
+import type { RawApiItem } from '../types/api-item/raw'
+import type { ResolvedApiItem } from '../types/api-item/resolved'
+import type { HttpRequestHeaders, HttpResponseHeaders } from '../types/http'
+import { HttpVerb } from '../types/http'
 
 export class ApiItemParser {
   private readonly schemaRootDir: string
@@ -27,7 +29,7 @@ export class ApiItemParser {
   private readonly schema: TDSchema
   private groups: ResolvedApiItemGroup[]
 
-  public constructor(
+  constructor(
     schemaRootDir?: string,
     configurationMaster?: ConfigurationMaster,
   ) {
@@ -314,7 +316,7 @@ export class ApiItemParser {
       group != null && group.method != null ? group.method : HttpVerb.GET
 
     // calc schema path
-    const resolveSchemaPath = (modelName: string) => {
+    const resolveSchemaPath = (modelName: string): string => {
       // eslint-disable-next-line no-param-reassign
       modelName = toKebabCase(modelName)
       const p = path.join(
@@ -426,7 +428,7 @@ export class ApiItemParser {
    * @param rawGroups
    */
   private normalizeGroups<T extends RawApiItemGroup>(
-    rawGroups: T[] | { [name: string]: Omit<T, 'name'> },
+    rawGroups: T[] | Record<string, Omit<T, 'name'>>,
   ): T[] {
     const self = this
     // eslint-disable-next-line no-param-reassign
@@ -449,7 +451,7 @@ export class ApiItemParser {
    * @param rawItems
    */
   private normalizeItems<T extends RawApiItem | RawApiItemGroup>(
-    rawItems: T[] | { [name: string]: Omit<T, 'name'> },
+    rawItems: T[] | Record<string, Omit<T, 'name'>>,
   ): T[] {
     const items: T[] = []
     if (rawItems == null) return items

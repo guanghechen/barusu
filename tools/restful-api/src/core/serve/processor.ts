@@ -1,14 +1,14 @@
-import chalk from 'chalk'
-import fs from 'fs-extra'
-import http from 'http'
-import jsf from 'json-schema-faker'
-import Koa from 'koa'
-import koaJson from 'koa-json'
 import { isFile } from '@barusu/util-cli'
 import koaCors from '@koa/cors'
 import Router from '@koa/router'
+import chalk from 'chalk'
+import fs from 'fs-extra'
+import type http from 'http'
+import jsf from 'json-schema-faker'
+import Koa from 'koa'
+import koaJson from 'koa-json'
 import { logger } from '../../env/logger'
-import { RestfulApiServeContext } from './context'
+import type { RestfulApiServeContext } from './context'
 import { accessLog } from './middleware/access-log'
 import { serveDataFile } from './middleware/serve-data-file'
 import { serveResourceFile } from './middleware/serve-resource-file'
@@ -20,7 +20,7 @@ export class RestfulApiServeProcessor {
   protected readonly routers: Router[]
   protected running: boolean
 
-  public constructor(context: RestfulApiServeContext) {
+  constructor(context: RestfulApiServeContext) {
     this.context = context
     this.routers = []
     this.app = null

@@ -1,16 +1,18 @@
-import {
+import type {
   SubCommandExecutor,
   SubCommandMounter,
   SubCommandProcessor,
+} from '@barusu/util-cli'
+import {
   createSubCommandExecutor,
   createSubCommandMounter,
 } from '@barusu/util-cli'
+import type { SubCommandInitOptions } from '../core/init/command'
 import {
-  SubCommandInitOptions,
   createRestfulApiInitContextFromOptions,
   createSubCommandInit,
 } from '../core/init/command'
-import { RestfulApiInitContext } from '../core/init/context'
+import type { RestfulApiInitContext } from '../core/init/context'
 import { RestfulApiInitProcessor } from '../core/init/processor'
 import { handleError } from './_util'
 
@@ -20,10 +22,9 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandInit: SubCommandProcessor<
-  SubCommandInitOptions,
-  void
-> = async function (options: SubCommandInitOptions): Promise<void> {
+export const processSubCommandInit: SubCommandProcessor<SubCommandInitOptions> = async function (
+  options: SubCommandInitOptions,
+): Promise<void> {
   try {
     const context: RestfulApiInitContext = await createRestfulApiInitContextFromOptions(
       options,
@@ -41,10 +42,10 @@ export const processSubCommandInit: SubCommandProcessor<
  * @param {Command}   parentCommand
  * @returns {void}
  */
-export const mountSubCommandInit: SubCommandMounter = createSubCommandMounter<
-  SubCommandInitOptions,
-  void
->(createSubCommandInit, processSubCommandInit)
+export const mountSubCommandInit: SubCommandMounter = createSubCommandMounter<SubCommandInitOptions>(
+  createSubCommandInit,
+  processSubCommandInit,
+)
 
 /**
  * Execute sub-command: 'init'
@@ -53,7 +54,7 @@ export const mountSubCommandInit: SubCommandMounter = createSubCommandMounter<
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandInit: SubCommandExecutor<void> = createSubCommandExecutor<
-  SubCommandInitOptions,
-  void
->(createSubCommandInit, processSubCommandInit)
+export const execSubCommandInit: SubCommandExecutor = createSubCommandExecutor<SubCommandInitOptions>(
+  createSubCommandInit,
+  processSubCommandInit,
+)

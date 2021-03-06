@@ -44,5 +44,9 @@
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1"
+  },
+  "devDependencies": {
+    "@barusu/util-jest": "^0.0.47",
+    "@guanghechen/rollup-config": "^1.0.2"
   }
 }

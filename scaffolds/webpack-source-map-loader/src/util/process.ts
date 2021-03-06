@@ -1,8 +1,8 @@
-import type { RawSourceMap } from 'source-map'
 import * as fs from 'fs'
 import * as loaderUtils from 'loader-utils'
 import * as path from 'path'
-import webpack from 'webpack'
+import type { RawSourceMap } from 'source-map'
+import type webpack from 'webpack'
 import { resize } from './resize'
 
 interface SourceContentItem {
@@ -57,7 +57,7 @@ export function processSourceMap(
   const sourcePrefix = rawSourceMap.sourceRoot
     ? rawSourceMap.sourceRoot + '/'
     : ''
-  const tasks: Promise<SourceContentItem | null>[] = []
+  const tasks: Array<Promise<SourceContentItem | null>> = []
   for (const item of sourcesWithoutContent) {
     const source = sourcePrefix + item.source
     // eslint-disable-next-line no-param-reassign
@@ -72,13 +72,13 @@ export function processSourceMap(
         (err, result) => {
           if (err) {
             emitWarning("Cannot find source file '" + source + "': " + err)
-            return onFulfilled(null)
+            return void onFulfilled(null)
           }
           addDependency(result)
           fs.readFile(result, 'utf-8', function (err, content) {
             if (err) {
               emitWarning("Cannot open source file '" + result + "': " + err)
-              return onFulfilled(null)
+              return void onFulfilled(null)
             }
             onFulfilled({
               index: item.index,

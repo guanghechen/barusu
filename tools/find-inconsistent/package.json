@@ -41,5 +41,8 @@
     "@guanghechen/locate-helper": "^1.0.2",
     "@types/fs-extra": "^9.0.6",
     "fs-extra": "^9.0.1"
+  },
+  "devDependencies": {
+    "@guanghechen/rollup-config": "^1.0.2"
   }
 }

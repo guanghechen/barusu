@@ -1,6 +1,6 @@
+import { createLoggerMocker, desensitize } from '@barusu/util-jest'
 import fs from 'fs-extra'
 import path from 'path'
-import { createLoggerMocker, desensitize } from '@barusu/util-jest'
 import { COMMAND_NAME, execMainCommand, logger } from '../src'
 
 describe('main', function () {
@@ -16,8 +16,9 @@ describe('main', function () {
     const tsconfigFilepath = path.resolve(projectDir, 'tsconfig.json.txt')
 
     const workspaceRootDir: string = path.resolve(__dirname, '..')
+    // eslint-disable-next-line jest/valid-title
     test(title, async function () {
-      const desensitizeContent = (text: string) =>
+      const desensitizeContent = (text: string): string =>
         desensitize(text, workspaceRootDir)
 
       const loggerMock = createLoggerMocker({

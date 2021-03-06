@@ -1,5 +1,6 @@
 import chalk from 'chalk'
-import nodePlop, { PlopGenerator, PlopGeneratorConfig } from 'node-plop'
+import type { PlopGenerator, PlopGeneratorConfig } from 'node-plop'
+import nodePlop from 'node-plop'
 
 const typeDisplay = {
   function: chalk.yellow('->'),
@@ -27,7 +28,7 @@ export function typeMap(name: string, noMap: boolean): string {
  * @param message
  */
 export function choosePlopGenerator(
-  plopList: { name: string; description: string }[],
+  plopList: Array<{ name: string; description: string }>,
   message?: string,
 ): Promise<PlopGenerator> {
   const plop = nodePlop('')

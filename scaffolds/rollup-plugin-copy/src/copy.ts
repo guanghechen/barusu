@@ -1,12 +1,13 @@
+import chalk from 'chalk'
+import type { CopyOptions } from 'fs-extra'
+import fs from 'fs-extra'
+import globby from 'globby'
+import { isPlainObject } from 'is-plain-object'
+import path from 'path'
 import type {
   RollupPluginCopyOptions,
   RollupPluginCopyTargetItem,
 } from './types'
-import chalk from 'chalk'
-import fs, { CopyOptions } from 'fs-extra'
-import globby from 'globby'
-import { isPlainObject } from 'is-plain-object'
-import path from 'path'
 import { generateCopyTarget, stringify } from './util'
 
 /**
@@ -14,7 +15,7 @@ import { generateCopyTarget, stringify } from './util'
  * @param options
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function copy(options: RollupPluginCopyOptions = {}) {
+export function copy(options: RollupPluginCopyOptions = {}): any {
   const {
     targets = [],
     copyOnce = false,
@@ -44,7 +45,7 @@ export function copy(options: RollupPluginCopyOptions = {}) {
   let copyTargets: RollupPluginCopyTargetItem[] = []
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function collectAndWatchingTargets(...args: unknown[]) {
+  async function collectAndWatchingTargets(...args: unknown[]): Promise<void> {
     const self: any = this
     if (copyOnce && copied) {
       return
@@ -116,7 +117,7 @@ export function copy(options: RollupPluginCopyOptions = {}) {
    * Do copy operation
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function handleCopy(...args: unknown[]) {
+  async function handleCopy(...args: unknown[]): Promise<void> {
     if (copyOnce && copied) {
       return
     }

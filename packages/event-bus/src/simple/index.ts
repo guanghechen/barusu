@@ -5,6 +5,7 @@ import type {
   SimpleEventSubscriber,
   SimpleEventType,
 } from './types'
+
 export * from './types'
 
 /**
@@ -15,11 +16,11 @@ export * from './types'
  *  - 当某个订阅者的处理函数抛出一个 Error 时，将中断总线的消息传递；
  */
 export class SimpleEventBus<T extends SimpleEventType> {
-  protected listeners: Record<T, SimpleEventListener<T>[]>
-  protected subscribers: SimpleEventSubscriber<T>[]
+  protected listeners: Record<T, Array<SimpleEventListener<T>>>
+  protected subscribers: Array<SimpleEventSubscriber<T>>
 
-  public constructor() {
-    this.listeners = {} as Record<T, SimpleEventListener<T>[]>
+  constructor() {
+    this.listeners = ({} as unknown) as Record<T, Array<SimpleEventListener<T>>>
     this.subscribers = []
   }
 
@@ -135,7 +136,7 @@ export class SimpleEventBus<T extends SimpleEventType> {
   }
 
   public clear(): this {
-    this.listeners = {} as Record<T, SimpleEventListener<T>[]>
+    this.listeners = ({} as unknown) as Record<T, Array<SimpleEventListener<T>>>
     this.subscribers = []
     return this
   }

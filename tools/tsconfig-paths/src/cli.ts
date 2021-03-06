@@ -1,4 +1,4 @@
-import { createProgram, mountMainCommand } from './index'
+import { createProgram, mountMainCommand } from '.'
 
 const program = createProgram()
 

@@ -1,10 +1,9 @@
-import {
-  Command,
+import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
-  absoluteOfWorkspace,
 } from '@barusu/util-cli'
+import { Command, absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverBoolean,
@@ -16,12 +15,13 @@ import {
 } from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
+import type { GlobalCommandOptions } from '../option'
 import {
-  GlobalCommandOptions,
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
-import { RestfulApiServeContext, createRestfulApiServeContext } from './context'
+import type { RestfulApiServeContext } from './context'
+import { createRestfulApiServeContext } from './context'
 
 interface SubCommandOptions extends GlobalCommandOptions {
   /**

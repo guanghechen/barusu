@@ -1,8 +1,8 @@
+import { absoluteOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
 import rimraf from 'rimraf'
-import { absoluteOfWorkspace } from '@barusu/util-cli'
 import { COMMAND_NAME, createProgram, execSubCommandInit } from '../src'
 
 describe('init', function () {

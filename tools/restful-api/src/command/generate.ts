@@ -1,16 +1,18 @@
-import {
+import type {
   SubCommandExecutor,
   SubCommandMounter,
   SubCommandProcessor,
+} from '@barusu/util-cli'
+import {
   createSubCommandExecutor,
   createSubCommandMounter,
 } from '@barusu/util-cli'
+import type { SubCommandGenerateOptions } from '../core/generate/command'
 import {
-  SubCommandGenerateOptions,
   createRestfulApiGenerateContextFromOptions,
   createSubCommandGenerate,
 } from '../core/generate/command'
-import { RestfulApiGenerateContext } from '../core/generate/context'
+import type { RestfulApiGenerateContext } from '../core/generate/context'
 import { RestfulApiGenerateProcessor } from '../core/generate/processor'
 import { handleError } from './_util'
 
@@ -20,10 +22,9 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandGenerate: SubCommandProcessor<
-  SubCommandGenerateOptions,
-  void
-> = async function (options: SubCommandGenerateOptions): Promise<void> {
+export const processSubCommandGenerate: SubCommandProcessor<SubCommandGenerateOptions> = async function (
+  options: SubCommandGenerateOptions,
+): Promise<void> {
   try {
     const context: RestfulApiGenerateContext = await createRestfulApiGenerateContextFromOptions(
       options,
@@ -41,10 +42,10 @@ export const processSubCommandGenerate: SubCommandProcessor<
  * @param {Command}   parentCommand
  * @returns {void}
  */
-export const mountSubCommandGenerate: SubCommandMounter = createSubCommandMounter<
-  SubCommandGenerateOptions,
-  void
->(createSubCommandGenerate, processSubCommandGenerate)
+export const mountSubCommandGenerate: SubCommandMounter = createSubCommandMounter<SubCommandGenerateOptions>(
+  createSubCommandGenerate,
+  processSubCommandGenerate,
+)
 
 /**
  * Execute sub-command: 'generate'
@@ -53,7 +54,7 @@ export const mountSubCommandGenerate: SubCommandMounter = createSubCommandMounte
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandGenerate: SubCommandExecutor<void> = createSubCommandExecutor<
-  SubCommandGenerateOptions,
-  void
->(createSubCommandGenerate, processSubCommandGenerate)
+export const execSubCommandGenerate: SubCommandExecutor = createSubCommandExecutor<SubCommandGenerateOptions>(
+  createSubCommandGenerate,
+  processSubCommandGenerate,
+)

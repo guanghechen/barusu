@@ -1,10 +1,10 @@
+import * as TJS from '@barusu/typescript-json-schema'
+import type { PartialArgs } from '@barusu/typescript-json-schema'
 import chalk from 'chalk'
 import fs from 'fs-extra'
 import path from 'path'
-import ts from 'typescript'
-import * as TJS from '@barusu/typescript-json-schema'
+import type ts from 'typescript'
 import { removeIgnoredDataTypes, calcConfigFilePath } from '../src'
-import { PartialArgs } from '@barusu/typescript-json-schema'
 
 const tsconfigPath = path.resolve(__dirname, '../tsconfig.json')
 const additionalCompilerOptions = {}

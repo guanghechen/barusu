@@ -1,6 +1,7 @@
-import { SimpleEvent, SimpleEventBus, SimpleEventHandler, delay } from '../src'
+import type { SimpleEvent, SimpleEventHandler } from '../src'
+import { SimpleEventBus, delay } from '../src'
 
-export enum EventTypes {
+enum EventTypes {
   INIT = 'INIT',
   EXIT = 'EXIT',
 }
@@ -240,10 +241,10 @@ describe('simple-bus', function () {
 })
 
 function createEventHandler(): [
-  SimpleEvent<EventTypes>[],
+  Array<SimpleEvent<EventTypes>>,
   SimpleEventHandler<EventTypes>,
 ] {
-  const messages: SimpleEvent<EventTypes>[] = []
-  const handle = (evt: SimpleEvent<EventTypes>) => messages.push(evt)
+  const messages: Array<SimpleEvent<EventTypes>> = []
+  const handle = (evt: SimpleEvent<EventTypes>): unknown => messages.push(evt)
   return [messages, handle]
 }

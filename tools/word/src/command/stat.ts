@@ -1,16 +1,18 @@
-import {
+import type {
   SubCommandExecutor,
   SubCommandMounter,
   SubCommandProcessor,
+} from '@barusu/util-cli'
+import {
   createSubCommandExecutor,
   createSubCommandMounter,
 } from '@barusu/util-cli'
+import type { SubCommandStatOptions } from '../core/stat/command'
 import {
-  SubCommandStatOptions,
   createSubCommandStat,
   createWordStatContextFromOptions,
 } from '../core/stat/command'
-import { WordStatContext } from '../core/stat/context'
+import type { WordStatContext } from '../core/stat/context'
 import { WordStatProcessor } from '../core/stat/processor'
 import { handleError } from './_util'
 
@@ -20,10 +22,9 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandStat: SubCommandProcessor<
-  SubCommandStatOptions,
-  void
-> = async function (options: SubCommandStatOptions): Promise<void> {
+export const processSubCommandStat: SubCommandProcessor<SubCommandStatOptions> = async function (
+  options: SubCommandStatOptions,
+): Promise<void> {
   try {
     const context: WordStatContext = await createWordStatContextFromOptions(
       options,
@@ -41,10 +42,10 @@ export const processSubCommandStat: SubCommandProcessor<
  * @param {Command}   parentCommand
  * @returns {void}
  */
-export const mountSubCommandStat: SubCommandMounter = createSubCommandMounter<
-  SubCommandStatOptions,
-  void
->(createSubCommandStat, processSubCommandStat)
+export const mountSubCommandStat: SubCommandMounter = createSubCommandMounter<SubCommandStatOptions>(
+  createSubCommandStat,
+  processSubCommandStat,
+)
 
 /**
  * Execute sub-command: 'stat'
@@ -53,7 +54,7 @@ export const mountSubCommandStat: SubCommandMounter = createSubCommandMounter<
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandStat: SubCommandExecutor<void> = createSubCommandExecutor<
-  SubCommandStatOptions,
-  void
->(createSubCommandStat, processSubCommandStat)
+export const execSubCommandStat: SubCommandExecutor = createSubCommandExecutor<SubCommandStatOptions>(
+  createSubCommandStat,
+  processSubCommandStat,
+)

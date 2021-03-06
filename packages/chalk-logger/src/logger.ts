@@ -1,10 +1,13 @@
-import type { Writeable } from './types'
-import chalk, { Chalk } from 'chalk'
+import type { Chalk } from 'chalk'
+import chalk from 'chalk'
 import dayjs from 'dayjs'
 import fs from 'fs-extra'
 import { inspect } from 'util'
-import { Color, colorToChalk } from './color'
-import { DEBUG, ERROR, FATAL, INFO, Level, VERBOSE, WARN } from './level'
+import type { Color } from './color'
+import { colorToChalk } from './color'
+import type { Level } from './level'
+import { DEBUG, ERROR, FATAL, INFO, VERBOSE, WARN } from './level'
+import type { Writeable } from './types'
 
 export interface LoggerOptions {
   mode?: 'normal' | 'loose'
@@ -17,19 +20,19 @@ export interface LoggerOptions {
   colorful?: boolean
   encoding?: string
   filepath?: string
-  write?: (text: string) => void
+  write?(text: string): void
   dateChalk?: Chalk | Color
   nameChalk?: Chalk | Color
 }
 
 export class Logger {
-  private static get defaultLevel() {
+  private static get defaultLevel(): Level {
     return INFO
   }
-  private static get defaultDateChalk() {
+  private static get defaultDateChalk(): Chalk {
     return chalk.gray.bind(chalk)
   }
-  private static get defaultNameChalk() {
+  private static get defaultNameChalk(): Chalk {
     return chalk.gray.bind(chalk)
   }
 
@@ -49,7 +52,7 @@ export class Logger {
     colorful: true,
   }
 
-  public constructor(options?: LoggerOptions) {
+  constructor(options?: LoggerOptions) {
     this.name = ''
     this.init(options)
   }
