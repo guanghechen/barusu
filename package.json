@@ -16,7 +16,7 @@
     "node": ">= 12.16.0"
   },
   "scripts": {
-    ":publish": "yarn format && yarn test && lerna publish",
+    ":publish": "yarn test && lerna publish",
     "build": "lerna run --concurrency 1 build",
     "clean": "lerna clean --yes && yarn install",
     "format": "run-s format:find-inconsistent format:lint:fix format:prettier",
