@@ -1,6 +1,6 @@
 {
   "name": "@barusu/chalk-logger",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "description": "A simple colorful logger",
   "author": {
     "name": "guanghechen",
@@ -41,6 +41,6 @@
     "fs-extra": "^9.1.0"
   },
   "devDependencies": {
-    "@barusu/util-jest": "^0.0.47"
+    "@barusu/util-jest": "^0.0.48"
   }
 }
