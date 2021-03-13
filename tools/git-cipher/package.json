@@ -46,13 +46,11 @@
     "@types/fs-extra": "^9.0.8",
     "@types/inquirer": "^6.5.0",
     "command-exists": "^1.2.9",
+    "commander": "^5.1.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.1.0",
     "globby": "^11.0.1",
     "inquirer": "^7.3.0",
     "node-plop": "~0.26.0"
-  },
-  "devDependencies": {
-    "@guanghechen/rollup-config-cli": "^1.0.12"
   }
 }

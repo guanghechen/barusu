@@ -42,13 +42,13 @@
     "@barusu/util-cli": "^0.0.48",
     "@guanghechen/option-helper": "^1.0.12",
     "@types/fs-extra": "^9.0.8",
+    "commander": "^5.1.0",
     "fs-extra": "^9.1.0",
     "globby": "^11.0.1",
     "tsconfig": "^7.0.0",
     "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
-    "@barusu/util-jest": "^0.0.48",
-    "@guanghechen/rollup-config-cli": "^1.0.12"
+    "@barusu/util-jest": "^0.0.48"
   }
 }

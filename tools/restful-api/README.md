@@ -1,6 +1,53 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/tool-restful-api.svg)](https://www.npmjs.com/package/@barusu/tool-restful-api)
-[![npm download](https://img.shields.io/npm/dm/@barusu/tool-restful-api.svg)](https://www.npmjs.com/package/@barusu/tool-restful-api)
-[![npm license](https://img.shields.io/npm/l/@barusu/tool-restful-api.svg)](https://www.npmjs.com/package/@barusu/tool-restful-api)
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/tools/restful-apil#readme">@barusu/tool-restful-api</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/tool-restful-api">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/tool-restful-api.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/tool-restful-api">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/tool-restful-api.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/tool-restful-api">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/tool-restful-api.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/tool-restful-api"
+      />
+    </a>
+    <a href="https://github.com/tj/commander.js/">
+      <img
+        alt="React version"
+        src="https://img.shields.io/npm/dependency-version/@barusu/tool-restful-api/commander"
+      />
+    </a>
+    <a href="https://github.com/facebook/jest">
+      <img
+        alt="Tested with Jest"
+        src="https://img.shields.io/badge/tested_with-jest-9c465e.svg"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
+</header>
+<br/>
 
 
 # Introduction
@@ -38,16 +85,20 @@
       - 你可以指定 mock data 文件的目录，使得优先代理此文件目录下的文件作为响应数据；
       - 此外，`serve` 还支持自定义路由，它基于 `koa` 和 `@koa/router`，如果你想要在生成 mock server 的同时还支持自定义路由的话，可参见下文
 
+## Install
 
-# Install
-
-  ```shell
-  # Global installation
-  $ yarn global add @barusu/tool-restful-api
-  # or use npm: npm install -g @barusu/tool-restful-api
+  ```bash
+  npm install -g @barusu/tool-restful-api
   ```
 
-# Cli Usage
+* yarn
+
+  ```bash
+  yarn global add @barusu/tool-restful-api
+  ```
+
+## Cli Usage
+
   ```shell
   # Init mock server project
   $ barusu-rapit init demo-mock-server --log-level verbose
@@ -59,7 +110,8 @@
   $ yarn serve:cli
   ```
 
-## Usage
+### help
+
   ```shell
   $ barusu-rapit --help
   Usage: barusu-rapit [options] [command]
@@ -83,7 +135,6 @@
     serve|s [options] <workspace>
     help [command]                                    display help for command
   ```
-
 ### init
   ```shell
   $ barusu-rapit init --help
@@ -133,13 +184,12 @@
     - `<httpPath>`
     - `<httpPath>.json`
 
-# Programming Usage
+## Programming Usage
   ```shell
   yarn add --dev @barusu/tool-restful-api
   # or use npm: npm install --save-dev @barusu/tool-restful-api
   ```
 
-## Usage
   * Omit files defined in [Demo][demo]...
 
   * create a script file named `script/server.ts`, and add content like this:
@@ -204,9 +254,12 @@
 
   * run the command `node -r ts-node/register script/serve.ts` to start the mock server, and the custom route `GET /mock/hello/world` also will be registered in the server
 
-# Demo
+## Examples
+
   * Create an empty ts project
+
   * Add a `tsconfig.json` file (you can specify other paths through `-p, --tsconfig-path <tsconfig-path>` in the sub-command `generate`), as follows
+
     ```json
     {
       "compilerOptions": {
@@ -246,6 +299,7 @@
     ```
 
   * Add a `package.json` file, like this:
+
     ```json
     {
       "name": "restful-api---demo",
@@ -269,6 +323,7 @@
     ```
 
   * Add a project configuration file named `app.yml` (other paths can be used, but the command-line option `-c, --config-path <config-path>` needs to be used to specify the path of the custom project configuration file), the content is as follows:
+
     ```yaml
     __globalOptions__:
       encoding: utf-8
@@ -304,6 +359,7 @@
     - For more configuration details, see the option interface: [SubCommandGenerateOptions][generate-command] and [SubCommandServeOptions][serve-command].
 
   * Add a configuration file `api.yml` that defines the API routes (you can specify other paths through the `-f, --api-config-path <api-config-path>`option), the content is like:
+
     ```yaml
     api:
       user:
@@ -335,8 +391,8 @@
 
   * Generate the schemas or start a mock server in the way mentioned above: [Cli Usage][usage-cli] and [Programming Usage][usage-programming]
 
-# More
-  * see [example][]
+## Related
+  * [Examples][example]
 
 <!-- 参考链接 -->
 [json-schema]: https://json-schema.org/

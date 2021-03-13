@@ -1,6 +1,47 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/tool-git-cipher.svg)](https://www.npmjs.com/package/@barusu/tool-git-cipher)
-[![npm download](https://img.shields.io/npm/dm/@barusu/tool-git-cipher.svg)](https://www.npmjs.com/package/@barusu/tool-git-cipher)
-[![npm license](https://img.shields.io/npm/l/@barusu/tool-git-cipher.svg)](https://www.npmjs.com/package/@barusu/tool-git-cipher)
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/tools/git-cipher#readme">@barusu/tool-git-cipher</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/tool-git-cipher">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/tool-git-cipher.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/tool-git-cipher">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/tool-git-cipher.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/tool-git-cipher">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/tool-git-cipher.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/tool-git-cipher"
+      />
+    </a>
+    <a href="https://github.com/tj/commander.js/">
+      <img
+        alt="React version"
+        src="https://img.shields.io/npm/dependency-version/@barusu/tool-git-cipher/commander"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
+</header>
+<br/>
 
 
 * Fully encrypt the git repository
@@ -12,12 +53,20 @@
 
   - Default algorithm `AES-256 gcm`.
 
-# Usage
 
-  * Install
-    ```shell
-    yarn add --dev @barusu/tool-git-cipher
-    ```
+## Install
+
+  ```bash
+  npm install -g @barusu/tool-git-cipher
+  ```
+
+* yarn
+
+  ```bash
+  yarn global add @barusu/tool-git-cipher
+  ```
+
+## Usage
 
   * init
     ```shell
@@ -34,8 +83,7 @@
     barusu-git-cipher decrypt <workspace dir>
     ```
 
-
-# Options
+### Options
 
 ## Overview
 
@@ -73,7 +121,7 @@
     help [command]                                      display help for command
   ```
 
-## init
+### init
 
   ```shell
   $ barusu-git-cipher init --help
@@ -84,7 +132,7 @@
     -h, --help  display help for command
   ```
 
-## encrypt
+### encrypt
 
   ```shell
   $ barusu-git-cipher encrypt --help
@@ -97,7 +145,7 @@
     -h, --help               display help for command
   ```
 
-## decrypt
+### decrypt
 
   ```shell
   $ barusu-git-cipher decrypt --help
@@ -110,7 +158,10 @@
   ```
 
 
-# Demo
+## Examples
+
+* Basic:
+
   You can specify configs into `package.json` like below:
 
   ```json

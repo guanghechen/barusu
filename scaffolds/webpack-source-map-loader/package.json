@@ -35,8 +35,5 @@
   "dependencies": {
     "@types/loader-utils": "^1.1.3",
     "loader-utils": "^2.0.0"
-  },
-  "devDependencies": {
-    "@types/webpack": "^4.41.6"
   }
 }

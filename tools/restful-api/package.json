@@ -61,6 +61,7 @@
     "@types/koa__cors": "^3.0.1",
     "@types/koa__router": "^8.0.2",
     "@types/mockjs": "^1.0.2",
+    "commander": "^5.1.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.1.0",
     "globby": "^11.0.1",
@@ -75,10 +76,8 @@
     "typescript": "~4.1.5"
   },
   "devDependencies": {
-    "@guanghechen/rollup-config-cli": "^1.0.12",
     "@types/supertest": "^2.0.10",
     "chalk": "^4.1.0",
-    "rimraf": "^3.0.2",
     "supertest": "^4.0.2"
   }
 }

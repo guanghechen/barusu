@@ -1,9 +1,39 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/configuration-master.svg)](https://www.npmjs.com/package/@barusu/configuration-master)
-[![npm download](https://img.shields.io/npm/dm/@barusu/configuration-master.svg)](https://www.npmjs.com/package/@barusu/configuration-master)
-[![npm license](https://img.shields.io/npm/l/@barusu/configuration-master.svg)](https://www.npmjs.com/package/@barusu/configuration-master)
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/packages/configuration-master#readme">@barusu/configuration-master</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/configuration-master">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/configuration-master.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/configuration-master">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/configuration-master.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/configuration-master">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/configuration-master.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/configuration-master"
+      />
+    </a>
+  </div>
+</header>
+<br/>
 
 
-# Introduction
+## Introduction
+
 * This package is to solve the verification problem of the configuration file. When developing a generic library or tool, there are usually the following steps in its use:
   - Developer writes the configuration file (let's call it DS) for "Defining Profile Data Mode"
   - User writes a configuration file (let's call it C)
@@ -36,16 +66,26 @@
     - errors: 编译过程中产生的错误（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
     - warnings: 编译过程中产生的警告信息（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
 
-# usage
+## Install
 
-## install
-  ```shell
-  yarn add @barusu/configuration-master
-  # or
-  # npm install --save @barusu/configuration-master
+* npm
+
+  ```bash
+  npm install --save @barusu/configuration-master
   ```
 
-## demo1
+* yarn
+
+  ```bash
+  yarn add @barusu/configuration-master
+  ```
+
+## Usage
+
+### Examples
+
+* Demo1:
+
   ```typescript
   import { configurationMaster } from '@barusu/configuration-master'
 
@@ -82,7 +122,8 @@
   validate([])          // undefined; and will print errors (`type` is not satisfied)
   ```
 
-## demo2
+* Demo2:
+
   ```typescript
   import { configurationMaster } from '../../src'
 
@@ -133,8 +174,8 @@
   validate({ name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' })        // { name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' }
   validate(false)                                                                   // undefined; and will print errors (`type` is not satisfied)
   ```
+* Demo3:
 
-## demo3
   ```typescript
   import { configurationMaster } from '../../src'
 
@@ -257,7 +298,8 @@
   })
   ```
 
-# Schema Docs
+## Related
+
 * [schema][schema]:
   - [ArrayDataSchema][]
   - [BooleanDataSchema][]

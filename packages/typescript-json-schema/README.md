@@ -1,3 +1,55 @@
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/packages/typescript-json-schema#readme">@barusu/typescript-json-schema</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/typescript-json-schema">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/typescript-json-schema.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/typescript-json-schema">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/typescript-json-schema.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/typescript-json-schema">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/typescript-json-schema.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/typescript-json-schema"
+      />
+    </a>
+    <a href="https://github.com/tj/commander.js/">
+      <img
+        alt="React version"
+        src="https://img.shields.io/npm/dependency-version/@barusu/typescript-json-schema/typescript"
+      />
+    </a>
+    <a href="https://github.com/facebook/jest">
+      <img
+        alt="Tested with Jest"
+        src="https://img.shields.io/badge/tested_with-jest-9c465e.svg"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
+</header>
+<br/>
+
+
 # typescript-json-schema
 
 [![npm version](https://img.shields.io/npm/v/@barusu/typescript-json-schema.svg)](https://www.npmjs.com/package/@barusu/typescript-json-schema)

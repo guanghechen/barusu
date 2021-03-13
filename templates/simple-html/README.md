@@ -1,14 +1,56 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/template-simple-html.svg)](https://www.npmjs.com/package/@barusu/template-simple-html)
-[![npm download](https://img.shields.io/npm/dm/@barusu/template-simple-html.svg)](https://www.npmjs.com/package/@barusu/template-simple-html)
-[![npm license](https://img.shields.io/npm/l/@barusu/template-simple-html.svg)](https://www.npmjs.com/package/@barusu/template-simple-html)
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme">@barusu/template-simple-html</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/template-simple-html">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/template-simple-html.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/template-simple-html">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/template-simple-html.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/template-simple-html">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/template-simple-html.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/template-simple-html"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
+</header>
+<br/>
 
 
-# Usage
+## Install
 
-  * Install
-    ```shell
-    yarn global add @barusu/template-simple-html
-    ```
+  ```bash
+  npm install -g @barusu/template-simple-html
+  ```
+
+* yarn
+
+  ```bash
+  yarn global add @barusu/template-simple-html
+  ```
+
+## Usage
 
   * Create new html project
     ```shell
@@ -33,7 +75,8 @@
     yarn build
     ```
 
-# Notice
+## Notice
+
   * Chrome should run in port 9222 to support debug
     - see https://github.com/Microsoft/vscode-chrome-debug#attach
 

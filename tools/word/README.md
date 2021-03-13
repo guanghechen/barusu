@@ -1,17 +1,71 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
-[![npm download](https://img.shields.io/npm/dm/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
-[![npm license](https://img.shields.io/npm/l/@barusu/tool-word.svg)](https://www.npmjs.com/package/@barusu/tool-word)
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/tools/word#readme">@barusu/tool-word</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/tool-word">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/tool-word.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/tool-word">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/tool-word.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/tool-word">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/tool-word.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/tool-word"
+      />
+    </a>
+    <a href="https://github.com/tj/commander.js/">
+      <img
+        alt="React version"
+        src="https://img.shields.io/npm/dependency-version/@barusu/tool-word/commander"
+      />
+    </a>
+    <a href="https://github.com/facebook/jest">
+      <img
+        alt="Tested with Jest"
+        src="https://img.shields.io/badge/tested_with-jest-9c465e.svg"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
+</header>
+<br/>
 
 
 Count the frequency of characters in the file(s).
 
 
-# Usage
+## Install
 
-  * Install
-    ```shell
-    yarn global add @barusu/tool-word
-    ```
+  ```bash
+  npm install -g @barusu/tool-word
+  ```
+
+* yarn
+
+  ```bash
+  yarn global add @barusu/tool-word
+  ```
+
+## Usage
 
   * Usage
     ```shell
@@ -24,7 +78,7 @@ Count the frequency of characters in the file(s).
     barusu-word stat . -f src/a.md -f src/b.ts --show-details-pretty
     ```
 
-# Options
+### Options
 
 ## Overview
 
@@ -51,7 +105,7 @@ Count the frequency of characters in the file(s).
     help [command]                                    display help for command
   ```
 
-## stat
+### stat
   ```shell
   $ barusu-word stat --help
   Usage: barusu-word stat|s [options] <workspace | filepath>
@@ -65,9 +119,9 @@ Count the frequency of characters in the file(s).
     -h, --help                        display help for command                                   display help for command
   ```
 
-# Example
+## Example
 
-## stat
+### stat
 
   * Stat file
     ```shell

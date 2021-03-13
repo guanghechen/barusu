@@ -1,21 +1,72 @@
-[![npm version](https://img.shields.io/npm/v/@barusu/redux-actions.svg)](https://www.npmjs.com/package/@barusu/redux-actions)
-[![npm download](https://img.shields.io/npm/dm/@barusu/redux-actions.svg)](https://www.npmjs.com/package/@barusu/redux-actions)
-[![npm license](https://img.shields.io/npm/l/@barusu/redux-actions.svg)](https://www.npmjs.com/package/@barusu/redux-actions)
+<header>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu/tree/master/packages/redux-actions#readme">@barusu/redux-actions</a>
+  </h1>
+  <div align="center">
+    <a href="https://www.npmjs.com/package/@barusu/redux-actions">
+      <img
+        alt="Npm Version"
+        src="https://img.shields.io/npm/v/@barusu/redux-actions.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/redux-actions">
+      <img
+        alt="Npm Download"
+        src="https://img.shields.io/npm/dm/@barusu/redux-actions.svg"
+      />
+    </a>
+    <a href="https://www.npmjs.com/package/@barusu/redux-actions">
+      <img
+        alt="Npm License"
+        src="https://img.shields.io/npm/l/@barusu/redux-actions.svg"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/redux-actions"
+      />
+    </a>
+    <a href="https://github.com/facebook/jest">
+      <img
+        alt="Tested with Jest"
+        src="https://img.shields.io/badge/tested_with-jest-9c465e.svg"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
+</header>
+<br/>
 
 
 `@barusu/redux-actions` is a util package for creating async actions, async state item and reducer.
 
 
-# Usage
-
 ## Install
-  ```shell
+
+* npm
+
+  ```bash
+  npm install --save @barusu/redux-actions
+  ```
+
+* yarn
+
+  ```bash
   yarn add @barusu/redux-actions
   ```
 
-## types
+## Usage
+
+### Types
 
   * `Action`
+
     ```typescript
     /**
      * Action passed in redux Flow
@@ -33,6 +84,7 @@
     ```
 
   * `AsyncActions`
+
     ```typescript
     /**
      * Async action passed in redux Flow
@@ -99,6 +151,7 @@
       </details>
 
   * `AsyncStateItem`
+
     ```typescript
     /**
     * State item with data fetch/updated through async funcs
@@ -119,7 +172,7 @@
     }
     ```
 
-## utils
+### Utils
 
   * `createActionCreator`
     - <details><summary>Function signature</summary>

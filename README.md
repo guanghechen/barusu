@@ -1,24 +1,55 @@
 <header>
-  <h1 align="center"><span>Barusu<span></h1>
+  <h1 align="center">
+    <a href="https://github.com/guanghechen/barusu#readme">Barusu</a>
+  </h1>
+  <div align="center">
+    <a href="#license">
+      <img
+        alt="License"
+        src="https://img.shields.io/github/license/guanghechen/barusu"
+      />
+    </a>
+    <a href="https://github.com/guanghechen/barusu/tags">
+      <img
+        alt="Package Version"
+        src="https://img.shields.io/github/v/tag/guanghechen/barusu?include_prereleases&sort=semver"
+      />
+    </a>
+    <a href="https://github.com/guanghechen/barusu/search?l=typescript">
+      <img
+        alt="Github Top Language"
+        src="https://img.shields.io/github/languages/top/guanghechen/barusu"
+      />
+    </a>
+    <a href="https://github.com/nodejs/node">
+      <img
+        alt="Node.js Version"
+        src="https://img.shields.io/node/v/@barusu/chalk-logger"
+      />
+    </a>
+    <a href="https://github.com/facebook/jest">
+      <img
+        alt="Tested with Jest"
+        src="https://img.shields.io/badge/tested_with-jest-9c465e.svg"
+      />
+    </a>
+    <a href="https://github.com/prettier/prettier">
+      <img
+        alt="Code Style: prettier"
+        src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"
+      />
+    </a>
+  </div>
 </header>
-
-
-[![License](https://img.shields.io/github/license/guanghechen/barusu)](#license)
-[![Tested With Jest](https://img.shields.io/badge/tested_with-jest-9c465e.svg)](https://github.com/facebook/jest)
-[![Code Style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Package version](https://img.shields.io/github/v/tag/guanghechen/barusu?include_prereleases&sort=semver)](https://github.com/guanghechen/barusu/tags)
-[![Github Top Language](https://img.shields.io/github/languages/top/guanghechen/barusu)](https://github.com/guanghechen/barusu/search?l=typescript)
-[![Node Version](https://img.shields.io/node/v/@barusu/chalk-logger)](https://github.com/guanghechen/barusu)
-
-# Introduction
+<br/>
 
 
 A monorepo for maintaining multiple typescript projects.
 
-# Overview
+## Overview
 
 
-## Scaffolds
+### Scaffolds
 
 Scaffolds are some development scripts.
 
@@ -29,7 +60,7 @@ Scaffolds are some development scripts.
 [@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme
 
 
-## Templates
+### Templates
 
 Templates are some boilerplates for fast creating various projects.
 
@@ -39,7 +70,7 @@ Templates are some boilerplates for fast creating various projects.
 
 [@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme
 
-## Tools
+### Tools
 
   Tools are some command line programs in node.js
 
@@ -57,8 +88,7 @@ Templates are some boilerplates for fast creating various projects.
 [@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/master/tools/tsconfig-paths#readme
 [@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/master/tools/word#readme
 
-
-## Utils
+### Utils
 
   Utils are some utility function collections.
 
@@ -74,8 +104,7 @@ Templates are some boilerplates for fast creating various projects.
 [@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/master/utils/jest#readme
 [@barusu/util-mocha]: https://github.com/guanghechen/barusu/tree/master/utils/mocha#readme
 
-
-## Other projects
+### Other projects
 
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
