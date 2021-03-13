@@ -9,9 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guanghechen/barusu.git",
-    "directory": "templates/simple-html"
+    "directory": "scaffolds/template-simple-hml"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/master/scaffolds/template-simple-hml#readme",
   "main": "lib/index.js",
   "license": "MIT",
   "engines": {

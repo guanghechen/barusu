@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme">@barusu/template-simple-html</a>
+    <a href="https://github.com/guanghechen/barusu/tree/master/scaffolds/template-simple-hml#readme">@barusu/template-simple-html</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/template-simple-html">

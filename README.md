@@ -68,7 +68,7 @@ Templates are some boilerplates for fast creating various projects.
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/template-simple-html][]       | Not Recommend | Boilerplates to create a simple traditional html project.
 
-[@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme
+[@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/master/scaffolds/template-simple-hml#readme
 
 ### Tools
 
