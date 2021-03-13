@@ -1,9 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitThis": false,
-    "target": "es2015"
+    "noImplicitThis": false
   },
-  "include": ["src", "script", "test"]
+  "include": ["src", "script", "test", "__test__"]
 }

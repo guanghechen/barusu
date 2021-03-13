@@ -2,11 +2,8 @@
   "extends": "../../tsconfig.settings",
   "compilerOptions": {
     "declarationDir": "lib/types",
-    "module": "es2015",
     "noImplicitThis": false,
-    "rootDir": "src",
-    "target": "es2015",
-    "outDir": "lib"
+    "rootDir": "src"
   },
   "include": ["src"]
 }
