@@ -1,5 +1,26 @@
 # Changelog
 
+<a name="0.1.0"></a>
+## 0.1.0 (2021-03-13)
+
+### Changed
+
+- 🚚 improve: move @barusu/template-simple-html from templates/simple-html to scaffolds/tmeplate-simple-html [[e33995b](https://github.com/guanghechen/barusu/commit/e33995b2c57f30dc81d28fd1479756ae11c22a36)]
+- 🎨 [template-simple-html] improve: use @guanghechen/plop-helper to simplify codes [[9929185](https://github.com/guanghechen/barusu/commit/992918563f71c4d2e93d52e65105702693cb7d39)]
+- 🔧 chore: add .nvmrc [[5fd3b87](https://github.com/guanghechen/barusu/commit/5fd3b876d3d43594614a0b52e0a02d282f51b304)]
+- 🔧 chore: upgrade @guanghechen/* &amp; update configs [[16b03b4](https://github.com/guanghechen/barusu/commit/16b03b439806ebb6aacf74c3b8fb8b3d170c3f7e)]
+- 🔧 chore: update tsconfigs [[32afa88](https://github.com/guanghechen/barusu/commit/32afa88965720fb6589b340a07530d7810580879)]
+- 🔧 chore: update eslint configs &amp; format codes [[327264d](https://github.com/guanghechen/barusu/commit/327264d30b94a738b7e12f4c524eb62b931d5d95)]
+- ⬆️ chore: upgrade @guanghechen/* [[f54700d](https://github.com/guanghechen/barusu/commit/f54700d6a2b108cd0af6ea9422d8db995268dbae)]
+
+### Miscellaneous
+
+- 📝 docs: update package.json [[7bf1b1e](https://github.com/guanghechen/barusu/commit/7bf1b1e70bd7fda77bd84205641a583e8d84ce76)]
+- 📝 docs: update READMEs [[de001cb](https://github.com/guanghechen/barusu/commit/de001cb71c0cfe23099ac9636b1215f5d07b8a87)]
+- 📝 docs: update CHANGELOG and README [[55e5e49](https://github.com/guanghechen/barusu/commit/55e5e49f3b567ba96b8f7e8d8022be0a7810705a)]
+- 📝 docs: update CHANGELOG [[3f80619](https://github.com/guanghechen/barusu/commit/3f80619dabe007a6f83a9f782589f47d883abe14)]
+
+
 <a name="0.0.48"></a>
 ## 0.0.48 (2021-03-06)
 
