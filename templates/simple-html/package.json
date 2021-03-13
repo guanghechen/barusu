@@ -8,13 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/guanghechen/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git",
+    "directory": "templates/simple-html"
   },
   "homepage": "https://github.com/guanghechen/barusu/tree/master/templates/simple-html#readme",
   "main": "lib/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">= 12.16.0"
+    "node": ">=14.15.0"
   },
   "files": [
     "boilerplate/",

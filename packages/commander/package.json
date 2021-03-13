@@ -7,7 +7,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/guanghechen/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git",
+    "directory": "packages/commander"
   },
   "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/commander#readme",
   "main": "lib/cjs/index.js",
@@ -16,16 +17,16 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">= 12.16.0"
+    "node": ">=14.15.0"
   },
   "files": [
     "lib/",
+    "!lib/**/*.js.map",
+    "!lib/**/*.d.ts.map",
+    "package.json",
     "CHANGELOG.md",
     "LICENSE",
-    "README.md",
-    "package.json",
-    "!lib/**/*.js.map",
-    "!lib/**/*.d.ts.map"
+    "README.md"
   ],
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.js",

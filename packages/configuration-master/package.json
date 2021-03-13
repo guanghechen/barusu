@@ -7,7 +7,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/guanghechen/barusu.git"
+    "url": "https://github.com/guanghechen/barusu.git",
+    "directory": "packages/configuration-master"
   },
   "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/configuration-master#readme",
   "keywords": [
@@ -20,16 +21,16 @@
   "source": "src/index.ts",
   "license": "MIT",
   "engines": {
-    "node": ">= 12.16.0"
+    "node": ">=14.15.0"
   },
   "files": [
     "lib/",
+    "!lib/**/*.js.map",
+    "!lib/**/*.d.ts.map",
+    "package.json",
     "CHANGELOG.md",
     "LICENSE",
-    "README.md",
-    "package.json",
-    "!lib/**/*.js.map",
-    "!lib/**/*.d.ts.map"
+    "README.md"
   ],
   "scripts": {
     "clean": "rimraf test/**/*.output.json test/**/*.outputs.json",
