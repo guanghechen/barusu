@@ -40,7 +40,7 @@
     "@barusu/chalk-logger": "^0.0.48",
     "@barusu/event-bus": "^0.0.48",
     "@barusu/util-cli": "^0.0.48",
-    "@guanghechen/option-helper": "^1.0.4",
+    "@guanghechen/option-helper": "^1.0.12",
     "@types/fs-extra": "^9.0.8",
     "fs-extra": "^9.1.0",
     "globby": "^11.0.1",
@@ -49,6 +49,6 @@
   },
   "devDependencies": {
     "@barusu/util-jest": "^0.0.48",
-    "@guanghechen/rollup-config-cli": "^1.0.4"
+    "@guanghechen/rollup-config-cli": "^1.0.12"
   }
 }
