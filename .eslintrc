@@ -1,7 +1,6 @@
 {
   "root": true,
   "extends": ["@guanghechen", "plugin:jest/recommended", "prettier"],
-  "plugins": ["import"],
   "env": {
     "browser": true,
     "commonjs": true,

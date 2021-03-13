@@ -8,8 +8,8 @@ import { absoluteOfWorkspace } from '@barusu/util-cli'
 import {
   cover,
   coverString,
-  isNotEmptyArray,
   isNonBlankString,
+  isNotEmptyArray,
 } from '@guanghechen/option-helper'
 import path from 'path'
 import * as TsconfigUtil from 'tsconfig'

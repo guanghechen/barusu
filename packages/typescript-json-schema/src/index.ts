@@ -1,4 +1,5 @@
 import fs from 'fs'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import glob from 'glob'
 import stringify from 'json-stable-stringify'
 import path from 'path'
