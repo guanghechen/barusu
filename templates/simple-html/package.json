@@ -33,7 +33,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@guanghechen/rollup-plugin-copy": "^1.0.12",
+    "@guanghechen/rollup-plugin-copy": "^1.0.13",
     "fs-extra": "^9.1.0",
     "minimist": "^1.2.5",
     "plop": "^2.7.0",
