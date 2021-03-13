@@ -1,6 +1,6 @@
 {
   "name": "@barusu/webpack-source-map-loader",
-  "version": "0.0.48",
+  "version": "0.1.0",
   "description": "Webpack plugin for loading source map",
   "author": {
     "name": "guanghechen",

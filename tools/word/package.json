@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-word",
-  "version": "0.0.48",
+  "version": "0.1.0",
   "description": "Count the frequency of characters in the file(s)",
   "author": {
     "name": "guanghechen",
@@ -38,9 +38,9 @@
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir ."
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.48",
-    "@barusu/event-bus": "^0.0.48",
-    "@barusu/util-cli": "^0.0.48",
+    "@barusu/chalk-logger": "^0.1.0",
+    "@barusu/event-bus": "^0.1.0",
+    "@barusu/util-cli": "^0.1.0",
     "@guanghechen/option-helper": "^1.0.13",
     "@types/fs-extra": "^9.0.8",
     "commander": "^5.1.0",
@@ -48,6 +48,6 @@
     "globby": "^11.0.1"
   },
   "devDependencies": {
-    "@barusu/util-jest": "^0.0.48"
+    "@barusu/util-jest": "^0.1.0"
   }
 }

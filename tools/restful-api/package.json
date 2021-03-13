@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-restful-api",
-  "version": "0.0.48",
+  "version": "0.1.0",
   "description": "Quickly create restful style mock server.",
   "author": {
     "name": "guanghechen",
@@ -44,11 +44,11 @@
     "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.0.48",
-    "@barusu/configuration-master": "^0.0.48",
-    "@barusu/event-bus": "^0.0.48",
-    "@barusu/typescript-json-schema": "^0.0.48",
-    "@barusu/util-cli": "^0.0.48",
+    "@barusu/chalk-logger": "^0.1.0",
+    "@barusu/configuration-master": "^0.1.0",
+    "@barusu/event-bus": "^0.1.0",
+    "@barusu/typescript-json-schema": "^0.1.0",
+    "@barusu/util-cli": "^0.1.0",
     "@guanghechen/option-helper": "^1.0.13",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^9.3.1",

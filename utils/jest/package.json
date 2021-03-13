@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-jest",
-  "version": "0.0.48",
+  "version": "0.1.0",
   "description": "Jest utility functions",
   "author": {
     "name": "guanghechen",

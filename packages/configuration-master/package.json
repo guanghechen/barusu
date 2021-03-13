@@ -1,6 +1,6 @@
 {
   "name": "@barusu/configuration-master",
-  "version": "0.0.48",
+  "version": "0.1.0",
   "author": {
     "name": "guanghechen",
     "url": "https://github.com/guanghechen/"
@@ -45,6 +45,6 @@
     "@guanghechen/option-helper": "^1.0.13"
   },
   "devDependencies": {
-    "@barusu/util-mocha": "^0.0.48"
+    "@barusu/util-mocha": "^0.1.0"
   }
 }
