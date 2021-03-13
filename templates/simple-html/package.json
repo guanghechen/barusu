@@ -33,11 +33,9 @@
   },
   "scripts": {},
   "dependencies": {
-    "@guanghechen/rollup-plugin-copy": "^1.0.13",
+    "@guanghechen/option-helper": "^1.0.13",
+    "@guanghechen/plop-helper": "^1.0.13",
     "fs-extra": "^9.1.0",
-    "minimist": "^1.2.5",
-    "plop": "^2.7.0",
-    "semver-regex": "^3.1.1",
-    "title-case": "^3.0.2"
+    "plop": "^2.7.4"
   }
 }

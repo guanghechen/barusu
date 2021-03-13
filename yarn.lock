@@ -401,6 +401,17 @@
     title-case "^3.0.2"
     upper-case "^2.0.1"
 
+"@guanghechen/plop-helper@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.npmjs.org/@guanghechen/plop-helper/-/plop-helper-1.0.13.tgz#325c72abb2fd1c3df7d5b14ab39723689bd7b9f7"
+  integrity sha512-eGNYjtgj4GIDq6KU/2DNl165XMFwe6CW8iJJhIo4mXacjC89TQPOPRDlRujS4OTpmQCRsPZpyunqvhKM4nc5dQ==
+  dependencies:
+    "@guanghechen/option-helper" "^1.0.13"
+    "@types/fs-extra" "^9.0.8"
+    fs-extra "^9.1.0"
+    minimist "^1.2.5"
+    semver-regex "^3.1.2"
+
 "@guanghechen/rollup-config-cli@^1.0.13":
   version "1.0.13"
   resolved "https://registry.npmjs.org/@guanghechen/rollup-config-cli/-/rollup-config-cli-1.0.13.tgz#19dc1c7bd7ee3aebea1421c4e4aec92abc638ffd"
@@ -7991,10 +8002,10 @@ node-notifier@^8.0.0:
     uuid "^8.3.0"
     which "^2.0.2"
 
-node-plop@~0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.26.0.tgz#9666b22cd46c7240fec2387e6000d43df8f2104d"
-  integrity sha512-jVFKfAIwHcURjk1Gl6wVZ0Csqo5irlOKhdCQppn/yoSUSkHFP4LomMjpO3tUj2ADMlguKbqTEg7LKCi59vDsxg==
+node-plop@~0.26.0, node-plop@~0.26.2:
+  version "0.26.2"
+  resolved "https://registry.npmjs.org/node-plop/-/node-plop-0.26.2.tgz#c2523596dab4e28360e615b768b11b4d60d5b1b9"
+  integrity sha512-q444beWkMvZwAiYC3BRGJUHgRlpOItQHy+xdy6egXg8KjxDY/Ro309spQTNvH01qK9A8XF6pc0xLKbrHDpxW7w==
   dependencies:
     "@babel/runtime-corejs3" "^7.9.2"
     "@types/inquirer" "^6.5.0"
@@ -9023,17 +9034,17 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
-plop@^2.7.0:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/plop/-/plop-2.7.1.tgz#b48af861f19cb4d5ce141852e4385180419b4b83"
-  integrity sha512-2c1CDgi/88AmDNWyQcHILvjFxiyG/nS7CbDUUvzuWdrunW5QUWtQRKJRoITkGNze3ZcpUO9OOGCdh6BxHI+viA==
+plop@^2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/plop/-/plop-2.7.4.tgz#835280aef3541102063b758f5116cce899e1c72b"
+  integrity sha512-SaqN3mwug/Ur2RE/ryo05oLTLy+8qZGwosNt9JnrFWca+dLCsPJR1j2ZXwjrccmNu6LA7eB56lRyk/G0fKf9HA==
   dependencies:
     "@types/liftoff" "^2.5.0"
     chalk "^1.1.3"
     interpret "^1.2.0"
     liftoff "^2.5.0"
     minimist "^1.2.0"
-    node-plop "~0.26.0"
+    node-plop "~0.26.2"
     ora "^3.4.0"
     v8flags "^2.0.10"
 
@@ -9798,10 +9809,10 @@ semver-diff@^2.0.0:
   dependencies:
     semver "^5.0.3"
 
-semver-regex@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/semver-regex/-/semver-regex-3.1.1.tgz#9a13c93a9ecf2ac7415c0785acc1c7a19199bfd0"
-  integrity sha512-3dPcmFqxblWB/cppQ2qXWqlp9b6GLgAS032+Ec5E0waDVHTkwYIL+7BFI9UqEe0tkoHle2f3pBgvT/Xl95+Dig==
+semver-regex@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/semver-regex/-/semver-regex-3.1.2.tgz#34b4c0d361eef262e07199dbef316d0f2ab11807"
+  integrity sha512-bXWyL6EAKOJa81XG1OZ/Yyuq+oT0b2YLlxx7c+mrdYPaPbnj6WgVULXhinMIeZGufuUBu/eVRqXEhiv4imfwxA==
 
 "semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.1.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0, semver@^5.7.1:
   version "5.7.1"

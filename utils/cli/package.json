@@ -52,8 +52,5 @@
   },
   "peerDependencies": {
     "commander": "^5.1.0"
-  },
-  "devDependencies": {
-    "commander": "^5.1.0"
   }
 }

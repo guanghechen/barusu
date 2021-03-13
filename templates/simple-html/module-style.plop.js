@@ -1,7 +1,10 @@
+const {
+  resolveNpmPackageAnswers,
+  createNpmPackagePrompts,
+} = require('@guanghechen/plop-helper')
+const { toTitleCase } = require('@guanghechen/option-helper')
 const fs = require('fs-extra')
 const path = require('path')
-const semverRegex = require('semver-regex')
-const { titleCase } = require('title-case')
 const manifest = require('./package.json')
 
 module.exports = function (plop) {
@@ -38,78 +41,23 @@ module.exports = function (plop) {
   plop.setGenerator('new-module-style-project', {
     description: 'create simple template html project (module style)',
     prompts: [
-      {
-        type: 'input',
-        name: 'packageName',
-        message: 'name',
-        transform: text => text.trim(),
-      },
-      {
-        type: 'input',
-        name: 'packageAuthor',
-        message: 'author',
-        default: () => {
-          // detect package.json
-          const packageJsonPath = path.resolve(cwd, 'package.json')
-          if (fs.existsSync(packageJsonPath)) {
-            const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf-8')
-            const packageJson = JSON.parse(packageJsonContent)
-            if (packageJson.author == null) return undefined
-            if (typeof packageJson.author === 'string')
-              return packageJson.author
-            if (typeof packageJson.author.name === 'string')
-              return packageJson.author.name
-          }
-          return undefined
-        },
-        transform: text => text.trim(),
-      },
-      {
-        type: 'input',
-        name: 'packageVersion',
-        message: 'version',
-        default: '0.0.0',
-        transform: text => text.trim(),
-        validate: text => semverRegex().test(text),
-      },
-      {
-        type: 'input',
-        name: 'packageLocation',
-        message: ({ packageName }) => 'location of ' + packageName,
-        default: answers => {
-          // detect lerna
-          if (fs.existsSync(path.resolve(cwd, 'lerna.json'))) {
-            // eslint-disable-next-line no-param-reassign
-            answers.isLernaProject = true
-            // eslint-disable-next-line no-param-reassign
-            answers.projectName = answers.packageName.startsWith('@')
-              ? /^@([^\\/]+)/.exec(answers.packageName)[1]
-              : /^([^-]+)/.exec(answers.packageName)[1]
-            return (
-              'packages/' + answers.packageName.replace(/^[^\\/]+[\\/]/, '')
-            )
-          }
-          // eslint-disable-next-line no-param-reassign
-          answers.projectName = answers.packageName
-            .replace(/^@/, '')
-            .replace('[\\/]+', '-')
-          return answers.packageName.replace(/^@/, '')
-        },
-        transform: text => text.trim(),
-      },
+      ...createNpmPackagePrompts(cwd, { packageVersion: '0.0.0' }),
       {
         type: 'number',
         name: 'serverPort',
         default: 3030,
       },
     ],
-    actions: function (answers) {
-      // eslint-disable-next-line no-param-reassign
+    actions: function (_answers) {
+      const answers = resolveNpmPackageAnswers(_answers)
       answers.templateVersion = manifest.version
-      // eslint-disable-next-line no-param-reassign
       answers.defaultPage = { name: 'Home', path: 'home' }
+
       const resolveTargetPath = p =>
         path.normalize(path.resolve(answers.packageLocation, p))
+
+      // Assign resolved data into plop templates.
+      Object.assign(_answers, answers)
 
       return [
         {
@@ -240,7 +188,7 @@ module.exports = function (plop) {
             }
 
             const item = {
-              name: titleCase(answers.pageName),
+              name: toTitleCase(answers.pageName),
               srcPath: answers.pagePath,
               dstPath: answers.pagePath,
             }

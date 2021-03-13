@@ -1,4 +1,4 @@
-const { isBlank } = require('./option-util')
+const { isNonBlankString } = require('@guanghechen/option-helper')
 
 
 function empty() {
@@ -7,14 +7,11 @@ function empty() {
   return {
     name: 'rollup-plugin-empty',
     options(inputOptions) {
-      if (isBlank(inputOptions.input)) {
-        // eslint-disable-next-line no-param-reassign
-        inputOptions = {
-          ...inputOptions,
-          input: symbol,
-        }
+      if (isNonBlankString(inputOptions.input)) return inputOptions
+      return {
+        ...inputOptions,
+        input: symbol,
       }
-      return inputOptions
     },
     resolveId(source) {
       if (source === symbol) return symbol
