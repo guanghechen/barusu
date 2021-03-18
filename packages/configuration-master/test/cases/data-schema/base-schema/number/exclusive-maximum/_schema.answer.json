@@ -1,9 +1,0 @@
-{
-  "value": {
-    "type": "number",
-    "required": true,
-    "exclusiveMaximum": 20.4
-  },
-  "errors": [],
-  "warnings": []
-}

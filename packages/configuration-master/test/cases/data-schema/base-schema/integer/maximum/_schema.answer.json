@@ -1,9 +1,0 @@
-{
-  "value": {
-    "type": "integer",
-    "required": true,
-    "maximum": 20
-  },
-  "errors": [],
-  "warnings": []
-}

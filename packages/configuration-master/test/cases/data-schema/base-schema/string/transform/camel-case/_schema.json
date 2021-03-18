@@ -1,5 +1,0 @@
-{
-  "type": "string",
-  "transform": "pascal-case",
-  "required": true
-}

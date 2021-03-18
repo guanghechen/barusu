@@ -1,5 +1,0 @@
-{
-  "type": "string",
-  "format": "email",
-  "required": true
-}

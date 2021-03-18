@@ -1,9 +1,0 @@
-{
-  "value": {
-    "type": "string",
-    "required": false,
-    "maxLength": 12
-  },
-  "errors": [],
-  "warnings": []
-}

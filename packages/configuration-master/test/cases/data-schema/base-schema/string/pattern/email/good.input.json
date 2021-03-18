@@ -1,7 +1,0 @@
-{
-  "schema": "./_schema.json",
-  "cases": [
-    "bar@foo.dd",
-    "foo@bar.com"
-  ]
-}

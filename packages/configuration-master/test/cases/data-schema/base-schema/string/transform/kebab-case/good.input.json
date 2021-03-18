@@ -1,9 +1,0 @@
-{
-  "schema": "./_schema.json",
-  "cases": [
-    "babel alice",
-    "babel-alice",
-    "BabelAlice",
-    "Babel d-Alice"
-  ]
-}

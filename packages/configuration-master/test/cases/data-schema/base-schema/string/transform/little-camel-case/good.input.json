@@ -1,8 +1,0 @@
-{
-  "schema": "./_schema.json",
-  "cases": [
-    "alice bob",
-    "alice-bob",
-    "Alice - BOB"
-  ]
-}

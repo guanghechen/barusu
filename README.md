@@ -109,13 +109,11 @@ Templates are some boilerplates for fast creating various projects.
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/chalk-logger][]               | Active        | A simple colorful logger.
-   [@barusu/configuration-master][]       | Deprecated    | -
    [@barusu/event-bus][]                  | Not Recommend | Simple event bus.
    [@barusu/redux-actions][]              | Active        | Helpers for redux actions.
    [@barusu/typescript-json-schema][]     | Active        | Convert typescript interfaces to JSON-Schema.
 
 [@barusu/chalk-logger]: https://github.com/guanghechen/barusu/tree/master/packages/chalk-logger#readme
-[@barusu/configuration-master]: https://github.com/guanghechen/barusu/tree/master/packages/configuration-master#readme
 [@barusu/event-bus]: https://github.com/guanghechen/barusu/tree/master/packages/event-bus#readme
 [@barusu/redux-actions]: https://github.com/guanghechen/barusu/tree/master/packages/redux-actions#readme
 [@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/tree/master/packages/typescript-json-schema#readme

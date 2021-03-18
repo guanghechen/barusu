@@ -1,9 +1,0 @@
-{
-  "schema": "./_schema.json",
-  "cases": [
-    "nothing",
-    "null",
-    null,
-    123
-  ]
-}
