@@ -14,8 +14,7 @@
       ],
       "@barusu/util-blob": ["./utils/blob/src"],
       "@barusu/util-cli": ["./utils/cli/src"],
-      "@barusu/util-jest": ["./utils/jest/src"],
-      "@barusu/util-mocha": ["./utils/mocha/src"]
+      "@barusu/util-jest": ["./utils/jest/src"]
     }
   },
   "exclude": [

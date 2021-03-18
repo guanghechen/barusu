@@ -26,6 +26,4 @@
 !**/plop.js
 !**/rollup.config.js
 
-utils/mocha/
-packages/configuration-master/
 packages/typescript-json-schema/test/
