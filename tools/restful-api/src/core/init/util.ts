@@ -1,5 +1,5 @@
-import { runPlop } from '@barusu/util-cli'
 import { toLowerCase } from '@guanghechen/option-helper'
+import { runPlop } from '@guanghechen/plop-helper'
 import inquirer from 'inquirer'
 import nodePlop from 'node-plop'
 import path from 'path'
@@ -63,7 +63,8 @@ export async function renderTemplates(
   const bypassForPlopConfig = plopBypass.splice(0, bypassForPlopConfigCount)
   logger.debug('bypassForPlopConfig:', bypassForPlopConfig)
 
-  await runPlop(plop, logger, bypassForPlopConfig, {
+  const error = await runPlop(plop, bypassForPlopConfig, {
     workspace: context.workspace,
   })
+  if (error != null) logger.error(error)
 }

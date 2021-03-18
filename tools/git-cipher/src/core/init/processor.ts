@@ -4,9 +4,9 @@ import {
   installDependencies,
   mkdirsIfNotExists,
   relativeOfWorkspace,
-  runPlop,
 } from '@barusu/util-cli'
 import { isNonBlankString, toLowerCase } from '@guanghechen/option-helper'
+import { runPlop } from '@guanghechen/plop-helper'
 import commandExists from 'command-exists'
 import execa from 'execa'
 import inquirer from 'inquirer'
@@ -111,7 +111,8 @@ export class GitCipherInitProcessor {
       force: false,
       destBasePath: context.workspace,
     })
-    await runPlop(plop, logger, undefined, {
+
+    const error = await runPlop(plop, undefined, {
       workspace: context.workspace,
       templateVersion: packageVersion,
       encoding: context.encoding,
@@ -138,6 +139,8 @@ export class GitCipherInitProcessor {
       minPasswordLength: context.minPasswordLength,
       maxPasswordLength: context.maxPasswordLength,
     })
+
+    if (error != null) logger.error(error)
   }
 
   /**
