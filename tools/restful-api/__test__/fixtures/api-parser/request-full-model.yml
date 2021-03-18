@@ -1,7 +1,7 @@
 schemaDir: test/cases/schemas
-api:
+apis:
   user:
-    path: /api/user
+    prefix: /api/user
     response:
       headers:
         Content-Type: application/json; UTF-8
@@ -18,4 +18,5 @@ api:
         name: UserInfo
         method: GET
         title: 获取指定用户信息
+        response: 'UserInfoResponseVo'
 

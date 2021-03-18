@@ -2,11 +2,14 @@ import { absoluteOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
-import rimraf from 'rimraf'
 import { COMMAND_NAME, createProgram, execSubCommandGenerate } from '../src'
 
 describe('generate', function () {
-  const caseRootDirectory = path.resolve(__dirname, 'cases', 'mock-workspaces')
+  const caseRootDirectory = path.resolve(
+    __dirname,
+    'fixtures',
+    'mock-workspaces',
+  )
   const kases = fs.readdirSync(caseRootDirectory)
 
   for (const kase of kases) {
@@ -16,7 +19,9 @@ describe('generate', function () {
     // clear output directory before run test
     const schemaRootDir = 'mock/schemas'
     const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
-    rimraf.sync(absoluteSchemaRootDir)
+    const clean = (): void => {
+      fs.removeSync(absoluteSchemaRootDir)
+    }
 
     // eslint-disable-next-line jest/valid-title
     test(title, async function () {
@@ -49,6 +54,8 @@ describe('generate', function () {
         const content: string = await fs.readJSON(absoluteFilepath)
         expect(content).toMatchSnapshot(filepath)
       }
+
+      clean()
     })
   }
 })

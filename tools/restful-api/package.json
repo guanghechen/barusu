@@ -40,12 +40,10 @@
     "prebuild": "rimraf lib/",
     "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build",
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir .",
-    "generate:schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.schema.ts",
-    "generate:raw-schema": "TS_NODE_FILES=true cross-env node -r ts-node/register script/generate.raw-schema.ts"
+    "generate:schema": "cross-env node -r ts-node/register script/generate.schema.ts"
   },
   "dependencies": {
     "@barusu/chalk-logger": "^0.1.0",
-    "@barusu/configuration-master": "^0.1.0",
     "@barusu/event-bus": "^0.1.0",
     "@barusu/typescript-json-schema": "^0.1.0",
     "@barusu/util-cli": "^0.1.0",
@@ -63,6 +61,7 @@
     "@types/koa__cors": "^3.0.1",
     "@types/koa__router": "^8.0.2",
     "@types/mockjs": "^1.0.2",
+    "ajv": "^7.2.1",
     "commander": "^5.1.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.1.0",

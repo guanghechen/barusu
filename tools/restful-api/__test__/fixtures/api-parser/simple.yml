@@ -1,7 +1,7 @@
 schemaDir: test/cases/schemas
-api:
+apis:
   user:
-    path: /api/user
+    prefix: /api/user
     response:
       headers:
         Content-Type: application/json; UTF-8
@@ -10,10 +10,12 @@ api:
         path: /login
         method: POST
         title: 登录
+        response: UserVo
       logout:
         path: /logout
         method: POST
         title: 退出登录
+        response: EmptyVo
     subGroups:
       info:
         response:
@@ -26,12 +28,13 @@ api:
             method: GET
             title: 获取当前用户信息
             request:
-              voFullName: CurrentUserInfoRequestModel
+              model: CurrentUserInfoRequestModel
             response:
-              voFullName: CurrentUserInfoResponseModel
+              model: CurrentUserInfoResponseModel
           u:
             path: /:id
             name: UserInfo
             method: GET
             title: 获取指定用户信息
+            response: CurrentUserInfoResponseVo
 

@@ -9,7 +9,7 @@ import {
 import globby from 'globby'
 import type ts from 'typescript'
 import { logger } from '../../env/logger'
-import type { ResolvedApiItem } from '../../types/api-item/resolved'
+import type { ApiItemConfig } from '../../types/api-item'
 import { ApiItemParser } from '../../util/api-parser'
 
 /**
@@ -51,7 +51,7 @@ export interface RestfulApiGenerateContext {
   /**
    * Api items
    */
-  readonly apiItems: ResolvedApiItem[]
+  readonly apiItems: ApiItemConfig[]
   /**
    * ts.Program: A Program is an immutable collection of 'SourceFile's and a
    * 'CompilerOptions' that represent a compilation unit.
@@ -133,7 +133,7 @@ export async function createRestfulApiGenerateContext(
     apiItemParser.scan(apiConfigPath)
   }
 
-  const apiItems: ResolvedApiItem[] = apiItemParser.collectAndFlat()
+  const apiItems: ApiItemConfig[] = apiItemParser.collectAndFlat()
   if (apiItems.length <= 0) {
     logger.debug('createGenerateCommandContext params: {}', params)
     throw new Error('no valid api item found.')

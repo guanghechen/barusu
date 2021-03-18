@@ -2,13 +2,12 @@ import { absoluteOfWorkspace } from '@barusu/util-cli'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'
-import rimraf from 'rimraf'
 import { COMMAND_NAME, createProgram, execSubCommandInit } from '../src'
 
 describe('init', function () {
   // clear output directory before run test
   const projectDir = absoluteOfWorkspace(__dirname, '__tmp__/simple')
-  rimraf.sync(projectDir)
+  fs.removeSync(projectDir)
 
   test(
     'simple',

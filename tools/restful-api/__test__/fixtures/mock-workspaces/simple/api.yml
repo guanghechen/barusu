@@ -1,7 +1,7 @@
 schemaDir: xx-schemas
-api:
+apis:
   user:
-    path: /api/user
+    prefix: /api/user
     response:
       headers:
         Content-Type: application/json; UTF-8
@@ -10,14 +10,16 @@ api:
         path: /login
         method: POST
         title: 登录
+        response: UserLoginResponseVo
       logout:
         path: /logout
         method: POST
         title: 退出登录
+        response: UserLogoutResponseVo
     subGroups:
       info:
         response:
-          voNamePrefix: Xx
+          modelNamePrefix: Xx
           headers:
             Authorize: <token>
         items:
@@ -25,13 +27,15 @@ api:
             path: /me
             method: GET
             title: 获取当前用户信息
-            request:
-              voFullName: CurrentUserInfoRequestModel
+            request: CurrentUserInfoRequestModel
             response:
-              voFullName: CurrentUserInfoResponseModel
+              model: CurrentUserInfoResponseModel
           u:
             path: /:id
             name: OO
             method: GET
             title: 获取指定用户信息
+            request:
+              model: UserInfoOoRequestVo
+            response: XxUserInfoOoResponseVo
 

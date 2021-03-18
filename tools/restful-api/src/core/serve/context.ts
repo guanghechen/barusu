@@ -1,7 +1,7 @@
 import { coverString } from '@guanghechen/option-helper'
 import globby from 'globby'
 import { logger } from '../../env/logger'
-import type { ResolvedApiItem } from '../../types/api-item/resolved'
+import type { ApiItemConfig } from '../../types/api-item'
 import { ApiItemParser } from '../../util/api-parser'
 
 /**
@@ -71,7 +71,7 @@ export interface RestfulApiServeContext {
   /**
    * Api items
    */
-  readonly apiItems: ResolvedApiItem[]
+  readonly apiItems: ApiItemConfig[]
 }
 
 interface Params {
@@ -160,7 +160,7 @@ export async function createRestfulApiServeContext(
     apiItemParser.scan(apiConfigPath)
   }
 
-  const apiItems: ResolvedApiItem[] = apiItemParser.collectAndFlat()
+  const apiItems: ApiItemConfig[] = apiItemParser.collectAndFlat()
   if (apiItems.length <= 0) {
     logger.debug('createServeCommandContext params: {}', params)
     throw new Error('no valid api item found.')

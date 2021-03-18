@@ -139,31 +139,24 @@ export class RestfulApiServeProcessor {
     for (const item of apiItems) {
       logger.info(
         'load router: {} {}{}  {}',
-        item.method.padEnd(6),
+        '[' + item.methods.join(',') + ']',
         prefixUrl,
         item.path,
-        chalk.gray('(' + (item.response.voName || '') + ')'),
+        chalk.gray('(' + (item.response.model || '') + ')'),
       )
-      router.register(
-        item.path,
-        [item.method],
-        [
-          async (ctx: Router.RouterContext) => {
-            const schemaPath = item.response.schemaPath
-            if (!(await isFile(schemaPath))) {
-              throw new Error(`bad schema: ${schemaPath} is not found.`)
-            }
-            const schemaContent: string = await fs.readFile(
-              schemaPath,
-              encoding,
-            )
-            const schema = JSON.parse(schemaContent)
-            const data = jsf.generate(schema)
-            // eslint-disable-next-line no-param-reassign
-            ctx.body = data
-          },
-        ],
-      )
+      router.register(item.path, item.methods, [
+        async (ctx: Router.RouterContext) => {
+          const schemaPath = item.response.schemaPath
+          if (!(await isFile(schemaPath))) {
+            throw new Error(`bad schema: ${schemaPath} is not found.`)
+          }
+          const schemaContent: string = await fs.readFile(schemaPath, encoding)
+          const schema = JSON.parse(schemaContent)
+          const data = jsf.generate(schema)
+          // eslint-disable-next-line no-param-reassign
+          ctx.body = data
+        },
+      ])
     }
     return router
   }

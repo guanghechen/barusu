@@ -1,6 +1,6 @@
-api:
+apis:
   user:
-    path: /api/user
+    prefix: /api/user
     description: basic api
     items:
       query:
@@ -8,49 +8,54 @@ api:
         method: GET
         title: get current user information
         response:
-          voFullName: QueryCurrentUserResponseVo
+          model: QueryCurrentUserResponseVo
       update:
         path: /me
         method: POST
         title: update current user information
         request:
-          voFullName: UpdateCurrentUserRequestVo
+          model: UpdateCurrentUserRequestVo
         response:
-          voFullName: UpdateCurrentUserResponseVo
+          model: UpdateCurrentUserResponseVo
       login:
         path: /login
         method: POST
+        response: EmptyVo
 
   # demo for sub-group
   blog:
-    path: /api/blog
+    prefix: /api/blog
     description: the user's blog
     response:
-      voNameSuffix: PaginationResponseVo
+      modelNameSuffix: PaginationResponseVo
     items:
       query-articles:
         path: /articles
         title: query articles under the blog
         method: GET
+        response: QueryArticlesVo
       create-article:
         path: /articles
         method: POST
         title: create an article
         response:
-          voFullName: BlogCreateArticleResponseVo
+          model: BlogCreateArticleResponseVo
     subGroups:
       article:
-        path: /article/:articleId
+        prefix: /article/:articleId
         description: blog articles
         response:
-          voNameSuffix: ResponseVo
+          modelNameSuffix: ResponseVo
         items:
           query:
             method: GET
             title: get article with specified `articleId`
+            response: ArticleQueryVo
           update:
             method: POST
             title: update article with specified `articleId`
+            response: ArticleUpdateVo
           delete:
             method: DELETE
             title: delete an article with specified `articleId`
+            response: ArticleDeleteVo

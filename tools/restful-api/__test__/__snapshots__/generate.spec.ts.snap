@@ -4,6 +4,7 @@ exports[`generate simple: schema files 1`] = `
 Array [
   "xx-schemas/user-info/current-user-info-request-model.json",
   "xx-schemas/user-info/current-user-info-response-model.json",
+  "xx-schemas/user-info/user-info-oo-request-vo.json",
   "xx-schemas/user-info/xx-user-info-oo-response-vo.json",
   "xx-schemas/user/user-login-response-vo.json",
   "xx-schemas/user/user-logout-response-vo.json",
@@ -148,6 +149,24 @@ Object {
     "message",
   ],
   "title": "CurrentUserInfoResponseModel",
+  "type": "object",
+}
+`;
+
+exports[`generate simple: xx-schemas/user-info/user-info-oo-request-vo.json 1`] = `
+Object {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "获取指定用户信息的请求对象",
+  "properties": Object {
+    "uid": Object {
+      "description": "用户 id",
+      "type": "string",
+    },
+  },
+  "required": Array [
+    "uid",
+  ],
+  "title": "UserInfoOoRequestVo",
   "type": "object",
 }
 `;

@@ -61,6 +61,7 @@
     "rimraf",
     "rollup",
     "sandboxvar",
+    "sourcecodes",
     "sourcemap",
     "styl",
     "subcommands",

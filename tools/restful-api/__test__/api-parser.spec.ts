@@ -1,10 +1,10 @@
 import fs from 'fs-extra'
 import path from 'path'
-import type { ResolvedApiItemGroup } from '../src'
+import type { ApiItemGroupConfig } from '../src'
 import { ApiItemParser } from '../src'
 
 // override
-function formatApiItemGroup(data: ResolvedApiItemGroup[]): any {
+function formatApiItemGroup(data: ApiItemGroupConfig[]): any {
   const projectDir = path.resolve()
   const stringifyFilter = (key: string, value: any): unknown => {
     // RegExp to string
@@ -25,7 +25,7 @@ function formatApiItemGroup(data: ResolvedApiItemGroup[]): any {
 }
 
 describe('api-parser', function () {
-  const caseRootDirectory = path.resolve(__dirname, 'cases', 'api-parser')
+  const caseRootDirectory = path.resolve(__dirname, 'fixtures', 'api-parser')
   const kases = fs.readdirSync(caseRootDirectory)
 
   const parser = new ApiItemParser()

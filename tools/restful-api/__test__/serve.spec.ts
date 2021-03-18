@@ -3,7 +3,6 @@ import { isObject } from '@guanghechen/option-helper'
 import Router from '@koa/router'
 import fs from 'fs-extra'
 import path from 'path'
-import rimraf from 'rimraf'
 import supertest from 'supertest'
 import type { RestfulApiServeContext, SubCommandServeOptions } from '../src'
 import {
@@ -16,7 +15,11 @@ import {
 } from '../src'
 
 describe('serve', function () {
-  const caseRootDirectory = path.resolve(__dirname, 'cases', 'mock-workspaces')
+  const caseRootDirectory = path.resolve(
+    __dirname,
+    'fixtures',
+    'mock-workspaces',
+  )
   const kases = fs.readdirSync(caseRootDirectory)
 
   for (const kase of kases) {
@@ -27,12 +30,11 @@ describe('serve', function () {
     // clean
     const logRootDir = '__tmp__/logs/serve'
     const absoluteLogRootDir = absoluteOfWorkspace(projectDir, logRootDir)
-    rimraf.sync(absoluteLogRootDir)
+    fs.removeSync(absoluteLogRootDir)
 
     // clear output directory before run test
     const schemaRootDir = 'mock/schemas'
     const absoluteSchemaRootDir = absoluteOfWorkspace(projectDir, schemaRootDir)
-    rimraf.sync(absoluteSchemaRootDir)
 
     // eslint-disable-next-line jest/valid-title
     test(title, async function () {
@@ -136,6 +138,8 @@ describe('serve', function () {
 
       // close server
       await server.stop()
+
+      fs.removeSync(absoluteSchemaRootDir)
     })
   }
 })
