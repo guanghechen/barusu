@@ -41,7 +41,7 @@
     "@barusu/chalk-logger": "^0.1.0",
     "@barusu/event-bus": "^0.1.0",
     "@barusu/util-cli": "^0.1.0",
-    "@guanghechen/option-helper": "^1.0.13",
+    "@guanghechen/option-helper": "^1.2.0",
     "@types/fs-extra": "^9.0.8",
     "commander": "^5.1.0",
     "fs-extra": "^9.1.0",
