@@ -24,6 +24,7 @@ export function getDefaultArgs(): SchemaArgs {
     rejectDateType: false,
     id: '',
     defaultNumberType: 'number',
+    tsNodeRegister: false,
   }
 }
 
@@ -70,6 +71,8 @@ export const defaultValidationKeywords = Object.freeze({
   default: true,
   $ref: true,
   id: true,
+  $id: true,
+  title: true,
 })
 
 /**
@@ -93,3 +96,24 @@ export const subDefinitions = {
   additionalProperties: true,
   contains: true,
 }
+
+/**
+ * Resolve required file, his path and a property name,
+ *      pattern: require([file_path]).[property_name]
+ *
+ * the part ".[property_name]" is optional in the regex
+ *
+ * will match:
+ *
+ *      require('./path.ts')
+ *      require('./path.ts').objectName
+ *      require("./path.ts")
+ *      require("./path.ts").objectName
+ *      require('@module-name')
+ *
+ *      match[2] = file_path (a path to the file with quotes)
+ *      match[3] = (optional) property_name (a property name, exported in the file)
+ *
+ * for more details, see tests/require.test.ts
+ */
+export const REGEX_REQUIRE = /^(\s+)?require\(('@?[a-zA-Z0-9./_-]+'|"@?[a-zA-Z0-9./_-]+")\)(\.([a-zA-Z0-9_$]+))?(\s+|$)/

@@ -1,5 +1,5 @@
 /**
- * @$id filled#
+ * @title filled#
  */
 interface MySubObject {
     a: boolean;
@@ -7,7 +7,7 @@ interface MySubObject {
 
 interface MyObject {
     /**
-     * @$id empty#
+     * @title empty#
      */
     empty;
 

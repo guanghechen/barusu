@@ -1,7 +1,7 @@
 import type { JSONSchema7 } from 'json-schema'
 import type ts from 'typescript'
 
-export type ObjectMap<T> = Record<string, T>;
+export type ObjectMap<T> = Record<string, T>
 
 export interface SymbolRef {
   name: string
@@ -83,6 +83,7 @@ export interface SchemaArgs {
   rejectDateType: boolean
   id: string
   defaultNumberType: 'number' | 'integer'
+  tsNodeRegister: boolean
 }
 
 export type PartialArgs = Partial<SchemaArgs>
@@ -90,4 +91,4 @@ export type PartialArgs = Partial<SchemaArgs>
 /**
  *
  */
-export type ValidationKeywords = Record<string, boolean>;
+export type ValidationKeywords = Record<string, boolean>

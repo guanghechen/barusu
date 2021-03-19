@@ -1,4 +1,7 @@
-# 0.0.34
+# 0.50.0
+* Based on the commit Id `9203bed4b22913e1a2b34a16b1f73a33faccdaad` of the [original repository](https://github.com/YousefED/typescript-json-schema)
+
+# 0.46.0
 * Based on the commit Id `d8877e227b9f03f1fc25c85037bd0e3a5029e2e5` of the [original repository](https://github.com/YousefED/typescript-json-schema)
 
 # 0.42.4 (2020-01-08)

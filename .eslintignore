@@ -26,4 +26,4 @@
 !**/plop.js
 !**/rollup.config.js
 
-packages/typescript-json-schema/test/
+packages/typescript-json-schema/test/programs

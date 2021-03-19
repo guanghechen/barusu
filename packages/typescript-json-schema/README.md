@@ -58,7 +58,7 @@ Generate json-schemas from your Typescript sources.
 
 I sincerely suggest you use [the original repository](https://github.com/YousefED/typescript-json-schema), as this repository/package is forked for demanding of myself (study and customization).
 
-Peer Commit Id: https://github.com/YousefED/typescript-json-schema/commit/ddeabea7958975ab50de5a54cb8184399ec17031
+Peer Commit Id: https://github.com/YousefED/typescript-json-schema/commit/9203bed4b22913e1a2b34a16b1f73a33faccdaad
 
 ## Features
 
@@ -178,6 +178,144 @@ will be translated to
 
 Note that we needed to use `@TJS-type` instead of just `@type` because of an [issue with the typescript compiler](https://github.com/Microsoft/TypeScript/issues/13498).
 
-## Background
+You can also override the type of array items, either listing each field in its own annotation or one
+annotation with the full JSON of the spec (for special cases). This replaces the item types that would
+have been inferred from the TypeScript type of the array elements.
 
-Inspired and builds upon [Typson](https://github.com/lbovet/typson/), but typescript-json-schema is compatible with more recent Typescript versions. Also, since it uses the Typescript compiler internally, more advanced scenarios are possible. If you are looking for a library that uses the AST instead of the type hierarchy and therefore better support for type aliases, have a look at [vega/ts-json-schema-generator](https://github.com/vega/ts-json-schema-generator).
+Example:
+
+```ts
+export interface ShapesData {
+    /**
+     * Specify individual fields in items.
+     *
+     * @items.type integer
+     * @items.minimum 0
+     */
+    sizes: number[];
+
+    /**
+     * Or specify a JSON spec:
+     *
+     * @items {"type":"string","format":"email"}
+     */
+    emails: string[];
+}
+```
+
+Translation:
+
+```json
+{
+    "$ref": "#/definitions/ShapesData",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Shape": {
+            "properties": {
+                "sizes": {
+                    "description": "Specify individual fields in items.",
+                    "items": {
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "emails": {
+                    "description": "Or specify a JSON spec:",
+                    "items": {
+                        "format": "email",
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
+```
+
+This same syntax can be used for `contains` and `additionalProperties`.
+
+### `integer` type alias
+
+If you create a type alias `integer` for `number` it will be mapped to the `integer` type in the generated JSON schema.
+
+Example:
+
+```typescript
+type integer = number;
+interface MyObject {
+    n: integer;
+}
+```
+
+Note: this feature doesn't work for generic types & array types, it mainly works in very simple cases.
+
+### `require` a variable from a file
+
+(for requiring typescript files is needed to set argument `tsNodeRegister` to true)
+
+When you want to import for example an object or an array into your property defined in annotation, you can use `require`.
+
+Example:
+
+```ts
+export interface InnerData {
+    age: number;
+    name: string;
+    free: boolean;
+}
+
+export interface UserData {
+    /**
+     * Specify required object
+     *
+     * @examples require("./example.ts").example
+     */
+    data: InnerData;
+}
+```
+
+file `example.ts`
+
+```ts
+export const example: InnerData[] = [{
+  age: 30,
+  name: "Ben",
+  free: false
+}]
+```
+
+Translation:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "data": {
+            "description": "Specify required object",
+            "examples": [
+                {
+                    "age": 30,
+                    "name": "Ben",
+                    "free": false
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "age": { "type": "number" },
+                "name": { "type": "string" },
+                "free": { "type": "boolean" }
+            },
+            "required": ["age", "free", "name"]
+        }
+    },
+    "required": ["data"],
+    "type": "object"
+}
+```
+
+Also you can use `require(".").example`, which will try to find exported variable with name 'example' in current file. Or you can use `require("./someFile.ts")`, which will try to use default exported variable from 'someFile.ts'.
+
+Note: For `examples` a required variable must be an array.

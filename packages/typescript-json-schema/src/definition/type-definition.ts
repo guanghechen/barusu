@@ -357,9 +357,7 @@ export function getDefinitionForRootType(
       fixedTypes.splice(fixedTypes.length - 1, 1)
     } else {
       // eslint-disable-next-line no-param-reassign
-      definition.additionalItems = {
-        anyOf: fixedTypes,
-      }
+      definition.maxItems = targetTupleType.fixedLength
     }
   } else {
     const { flags } = propertyType

@@ -57,6 +57,16 @@ export function buildGenerator(
   // Use defaults unless otherwise specified
   const settings = { ...getDefaultArgs(), ...args }
 
+  for (const pref in args) {
+    if (args.hasOwnProperty(pref)) {
+      settings[pref] = args[pref]
+    }
+  }
+
+  if (args.tsNodeRegister) {
+    require('ts-node/register')
+  }
+
   let diagnostics: ReadonlyArray<ts.Diagnostic> = []
   if (!args.ignoreErrors) {
     diagnostics = ts.getPreEmitDiagnostics(program)
@@ -225,12 +235,12 @@ export function programFromConfig(
 }
 
 const REGEX_TSCONFIG_NAME = /^.*\.json$/
-export function exec(
+export async function exec(
   filePattern: string,
   fullTypeName: string,
   args = getDefaultArgs(),
   stringifyOptions: stringify.Options = { space: 2 },
-): void {
+): Promise<void> {
   let program: ts.Program
   let onlyIncludeFiles: string[] | undefined = undefined
   if (REGEX_TSCONFIG_NAME.test(path.basename(filePattern))) {
@@ -263,12 +273,36 @@ export function exec(
 
   const json = stringify(definition, stringifyOptions) + '\n\n'
   if (args.out) {
-    fs.writeFile(args.out, json, err => {
-      if (err) {
-        throw new Error('Unable to write output file: ' + err.message)
-      }
+    return new Promise((resolve, reject): void => {
+      fs.mkdir(
+        path.dirname(args.out),
+        { recursive: true },
+        function (mkErr: Error | null) {
+          if (mkErr) {
+            reject(
+              new Error(
+                'Unable to create parent directory for output file: ' +
+                  mkErr.message,
+              ),
+            )
+            return
+          }
+          fs.writeFile(args.out, json, (wrErr: Error | null) => {
+            if (wrErr) {
+              reject(
+                new Error('Unable to write output file: ' + wrErr.message),
+              )
+              return
+            }
+            resolve()
+          })
+        },
+      )
     })
   } else {
-    process.stdout.write(json)
+    const hasBeenBuffered = process.stdout.write(json)
+    if (hasBeenBuffered) {
+      return new Promise(resolve => process.stdout.on('drain', () => resolve()))
+    }
   }
 }

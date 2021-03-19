@@ -1,7 +1,7 @@
 import type ts from 'typescript'
 import { subDefinitions } from '../config'
 import type { JsonSchemaContext } from '../schema-context'
-import { parseJson } from '../util'
+import { isFromDefaultLib, parseValue } from '../util'
 
 /**
  * Parse the comments of a symbol into the definition and other annotations.
@@ -21,18 +21,20 @@ export function parseCommentsIntoDefinition(
   if (symbol == null) return
 
   // the comments for a symbol
-  const comments = symbol.getDocumentationComment(context.checker)
-  if (comments.length > 0) {
-    // eslint-disable-next-line no-param-reassign
-    definition.description = comments
-      .map(comment =>
-        comment.kind === 'lineBreak'
-          ? comment.text
-          : comment.text
-              .trim()
-              .replace(new RegExp(context.REGEX_LINE_BREAK, 'g'), '\n'),
-      )
-      .join('')
+  if (!isFromDefaultLib(symbol)) {
+    const comments = symbol.getDocumentationComment(context.checker)
+    if (comments.length > 0) {
+      // eslint-disable-next-line no-param-reassign
+      definition.description = comments
+        .map(comment =>
+          comment.kind === 'lineBreak'
+            ? comment.text
+            : comment.text
+                .trim()
+                .replace(new RegExp(context.REGEX_LINE_BREAK, 'g'), '\n'),
+        )
+        .join('')
+    }
   }
 
   // jsdocs are separate from comments
@@ -75,7 +77,10 @@ export function parseCommentsIntoDefinition(
         const k = match[1]
         const v = match[2]
         // eslint-disable-next-line no-param-reassign
-        definition[name] = { ...definition[name], [k]: v ? parseJson(v) : true }
+        definition[name] = {
+          ...definition[name],
+          [k]: v ? parseValue(symbol, k, v) : true,
+        }
         continue
       }
     }
@@ -87,7 +92,7 @@ export function parseCommentsIntoDefinition(
         // eslint-disable-next-line no-param-reassign
         definition[parts[0]] = {
           ...definition[parts[0]],
-          [parts[1]]: text ? parseJson(text) : true,
+          [parts[1]]: text ? parseValue(symbol, name, text) : true,
         }
       }
     }
@@ -97,7 +102,8 @@ export function parseCommentsIntoDefinition(
       context.userValidationKeywords[name]
     ) {
       // eslint-disable-next-line no-param-reassign
-      definition[name] = text === undefined ? '' : parseJson(text)
+      definition[name] =
+        text === undefined ? '' : parseValue(symbol, name, text)
     } else {
       // special annotations
       // eslint-disable-next-line no-param-reassign

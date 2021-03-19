@@ -1,5 +1,7 @@
 import crypto from 'crypto'
+import path from 'path'
 import ts from 'typescript'
+import { REGEX_REQUIRE } from './config'
 import type { Definition, PrimitiveType } from './types'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -38,7 +40,17 @@ export function unique<T>(arr: T[]): T[] {
  * 尝试将 value 作为 JSON 字符串解析；若解析失败，返回原字符串
  * @param value
  */
-export function parseJson(value: string): any | string {
+export function parseValue(
+  symbol: ts.Symbol,
+  key: string,
+  value: string,
+): any | string {
+  const match = regexRequire(value)
+  if (match) {
+    const fileName = match[2].substr(1, match[2].length - 2).trim()
+    const objectName = match[4]
+    return resolveRequiredFile(symbol, key, fileName, objectName)
+  }
   try {
     return JSON.parse(value)
   } catch (error) {
@@ -216,4 +228,59 @@ export function getSourceFile(sym: ts.Symbol): ts.SourceFile {
   }
 
   return currentDecl as ts.SourceFile
+}
+
+/**
+ *
+ * @param symbol
+ * @returns
+ */
+export function isFromDefaultLib(symbol: ts.Symbol) {
+  const declarations = symbol.getDeclarations()
+  if (declarations && declarations.length > 0) {
+    return declarations[0].parent.getSourceFile().hasNoDefaultLib
+  }
+  return false
+}
+
+/**
+ * Resolve required file
+ */
+export function resolveRequiredFile(
+  symbol: ts.Symbol,
+  key: string,
+  fileName: string,
+  objectName: string,
+): any {
+  const sourceFile = getSourceFile(symbol)
+  const requiredFilePath = /^[.\/]+/.test(fileName)
+    ? fileName === '.'
+      ? path.resolve(sourceFile.fileName)
+      : path.resolve(path.dirname(sourceFile.fileName), fileName)
+    : fileName
+  const requiredFile = require(requiredFilePath)
+  if (!requiredFile) {
+    throw Error("Required: File couldn't be loaded")
+  }
+  const requiredObject = objectName
+    ? requiredFile[objectName]
+    : requiredFile.default
+  if (requiredObject === undefined) {
+    throw Error('Required: Variable is undefined')
+  }
+  if (typeof requiredObject === 'function') {
+    throw Error("Required: Can't use function as a variable")
+  }
+  if (key === 'examples' && !Array.isArray(requiredObject)) {
+    throw Error("Required: Variable isn't an array")
+  }
+  return requiredObject
+}
+
+/**
+ * @param value
+ * @returns
+ */
+export function regexRequire(value: string): RegExpExecArray | null {
+  return REGEX_REQUIRE.exec(value)
 }
