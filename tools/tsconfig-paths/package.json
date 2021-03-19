@@ -32,7 +32,7 @@
     "barusu-tsconfig-paths": "./lib/cjs/cli.js"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.cli.js",
     "prebuild": "rimraf lib/",
     "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build",
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir ."
@@ -41,7 +41,7 @@
     "@barusu/chalk-logger": "^0.1.0",
     "@barusu/event-bus": "^0.1.0",
     "@barusu/util-cli": "^0.1.0",
-    "@guanghechen/option-helper": "^1.2.0",
+    "@guanghechen/option-helper": "^1.2.1",
     "@types/fs-extra": "^9.0.8",
     "commander": "^5.1.0",
     "fs-extra": "^9.1.0",

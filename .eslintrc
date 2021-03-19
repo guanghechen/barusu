@@ -16,6 +16,7 @@
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "jest/expect-expect": 0,
     "no-prototype-builtins": 0
   },
   "overrides": [
@@ -23,6 +24,7 @@
       "files": ["**/*.ts"],
       "extends": ["@guanghechen/ts", "plugin:jest/recommended", "prettier"],
       "rules": {
+        "jest/expect-expect": 0,
         "no-prototype-builtins": 0
       }
     }

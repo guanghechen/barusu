@@ -1,8 +1,8 @@
+const { toTitleCase } = require('@guanghechen/option-helper')
 const {
   resolveNpmPackageAnswers,
   createNpmPackagePrompts,
 } = require('@guanghechen/plop-helper')
-const { toTitleCase } = require('@guanghechen/option-helper')
 const fs = require('fs-extra')
 const path = require('path')
 const manifest = require('./package.json')

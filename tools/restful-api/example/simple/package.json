@@ -15,8 +15,8 @@
   "devDependencies": {
     "@barusu/tool-sort-imports": "^0.0.28",
     "nodemon": "^2.0.4",
-    "ts-node": "~9.0.0",
-    "typescript": "~4.1.5"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
   },
   "@barusu/tool-sort-imports": {
     "pattern": [

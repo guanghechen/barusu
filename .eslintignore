@@ -1,5 +1,7 @@
 **/.vscode/
 **/__tmp__/
+**/__test__/cases/
+**/__test__/fixtures/
 **/coverage/
 **/demo/
 **/dist/
@@ -9,21 +11,15 @@
 **/node_modules/
 **/resource/
 **/resources/
+**/test/
 **/*.styl.d.ts
-*.tsbuildinfo
 
-**/__test__/**
-!**/__test__/*.spec.ts
 
 **/*.*
-!**/__test__/*.spec.ts
-!**/src/**/*.js
-!**/src/**/*.jsx
-!**/src/**/*.ts
-!**/src/**/*.tsx
-!**/cli.js
-!**/index.js
-!**/plop.js
-!**/rollup.config.js
-
-packages/typescript-json-schema/test/programs
+!**/*.ts
+!**/*.tsx
+!**/*.js
+!**/*.jsx
+!**/*.json
+!.eslintignore
+!.eslintrc

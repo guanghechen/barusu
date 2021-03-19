@@ -24,10 +24,7 @@
       "title": "apis"
     }
   },
-  "required": [
-    "apis",
-    "schemaDir"
-  ],
+  "required": ["apis", "schemaDir"],
   "definitions": {
     "RawApiItemGroupConfig": {
       "description": "Type of API item group configuration that written by the user.",
@@ -71,24 +68,12 @@
               "type": "array",
               "items": {
                 "description": "HTTP methods",
-                "enum": [
-                  "DELETE",
-                  "GET",
-                  "PATCH",
-                  "POST",
-                  "PUT"
-                ],
+                "enum": ["DELETE", "GET", "PATCH", "POST", "PUT"],
                 "type": "string"
               }
             },
             {
-              "enum": [
-                "DELETE",
-                "GET",
-                "PATCH",
-                "POST",
-                "PUT"
-              ],
+              "enum": ["DELETE", "GET", "PATCH", "POST", "PUT"],
               "type": "string"
             }
           ],
@@ -173,9 +158,7 @@
           "title": "items"
         }
       },
-      "required": [
-        "name"
-      ]
+      "required": ["name"]
     },
     "HttpRequestHeaders": {
       "description": "HTTP Request Headers",
@@ -243,24 +226,12 @@
               "type": "array",
               "items": {
                 "description": "HTTP methods",
-                "enum": [
-                  "DELETE",
-                  "GET",
-                  "PATCH",
-                  "POST",
-                  "PUT"
-                ],
+                "enum": ["DELETE", "GET", "PATCH", "POST", "PUT"],
                 "type": "string"
               }
             },
             {
-              "enum": [
-                "DELETE",
-                "GET",
-                "PATCH",
-                "POST",
-                "PUT"
-              ],
+              "enum": ["DELETE", "GET", "PATCH", "POST", "PUT"],
               "type": "string"
             }
           ],
@@ -291,10 +262,7 @@
           "title": "response"
         }
       },
-      "required": [
-        "name",
-        "response"
-      ]
+      "required": ["name", "response"]
     },
     "RawApiItemRequestConfig": {
       "description": "Type of API response configuration that written by the user.",
@@ -339,9 +307,7 @@
           "title": "headers"
         }
       },
-      "required": [
-        "model"
-      ]
+      "required": ["model"]
     },
     "Record<string,Pick<RawApiItemConfig,\"path\"|\"title\"|\"active\"|\"description\"|\"method\"|\"request\"|\"response\"|\"withoutPrefix\">>": {
       "description": "Construct a type with a set of properties K of type T",
