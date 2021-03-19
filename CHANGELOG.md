@@ -1,5 +1,31 @@
 # Changelog
 
+<a name="0.1.1"></a>
+## 0.1.1 (2021-03-19)
+
+### Changed
+
+- 🔧 chore: upgrade dependencies and configs &amp; fix lint errors [[d8875aa](https://github.com/guanghechen/barusu/commit/d8875aa02ea1d4765aa747c7fa966b92b1f95cce)]
+- 🚚 refactor(typescript-json-schema): move test to __test__ [[8fcc108](https://github.com/guanghechen/barusu/commit/8fcc1085bec31c200b2a3addb6442a0a619b74d6)]
+- 🎨 improve: simplify codes with @guanghechen/plop-helper [[0e4d9ef](https://github.com/guanghechen/barusu/commit/0e4d9ef60a656115a3157ad5939821cd56adf3d6)]
+- ⬆️ chore: upgrade &#x60;@guanghechen/*&#x60; to v1.2.0 [[a5a78f0](https://github.com/guanghechen/barusu/commit/a5a78f0a3df694215d4a2d47ff76f8c29a39dc0b)]
+
+### Breaking changes
+
+- 💥 feat(tool-restful-api): rewrite with ajv instead of @barusu/configuration-master &amp; change config options [[d5637b1](https://github.com/guanghechen/barusu/commit/d5637b103f158c25a0aea831fe821d7ced28f96a)]
+
+### Removed
+
+- 🔥 improve: delete sub-package @guanghechen/util-mocha [[845c2ca](https://github.com/guanghechen/barusu/commit/845c2ca7e194cbb939a1a45502e93b534b86a47a)]
+- 🔥 improve: delete sub-package @guanghechen/configuration-master [[4604b88](https://github.com/guanghechen/barusu/commit/4604b885aede5833ff6d040a6a1067e669171b44)]
+- 🔥 improve: delete private sub-package @guanghechen/commander [[b860214](https://github.com/guanghechen/barusu/commit/b8602145bcc57f3213dbd1ad1392d8a8a7332de8)]
+
+### Miscellaneous
+
+- 🚧 feat(typescript-json-schema): update to consistent with the original repository at commit 9203bed4b22913e1a2b34a16b1f73a33faccdaad [[904ea78](https://github.com/guanghechen/barusu/commit/904ea78525977ff1de010e7cd1df03bbc78abbaf)]
+- 📝 docs: update CHANGELOG [[1a78b6a](https://github.com/guanghechen/barusu/commit/1a78b6ae4ace2ca30e2725d0af8ec10f9a049ded)]
+
+
 <a name="0.1.0"></a>
 ## 0.1.0 (2021-03-13)
 
