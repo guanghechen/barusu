@@ -4,8 +4,5 @@
     "rootDir": ".",
     "module": "commonjs"
   },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ]
+  "include": ["src/**/*.ts", "__test__/**/*.ts"]
 }

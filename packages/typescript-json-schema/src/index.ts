@@ -289,9 +289,7 @@ export async function exec(
           }
           fs.writeFile(args.out, json, (wrErr: Error | null) => {
             if (wrErr) {
-              reject(
-                new Error('Unable to write output file: ' + wrErr.message),
-              )
+              reject(new Error('Unable to write output file: ' + wrErr.message))
               return
             }
             resolve()

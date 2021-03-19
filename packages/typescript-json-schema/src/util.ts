@@ -235,7 +235,7 @@ export function getSourceFile(sym: ts.Symbol): ts.SourceFile {
  * @param symbol
  * @returns
  */
-export function isFromDefaultLib(symbol: ts.Symbol) {
+export function isFromDefaultLib(symbol: ts.Symbol): boolean {
   const declarations = symbol.getDeclarations()
   if (declarations && declarations.length > 0) {
     return declarations[0].parent.getSourceFile().hasNoDefaultLib
@@ -253,11 +253,12 @@ export function resolveRequiredFile(
   objectName: string,
 ): any {
   const sourceFile = getSourceFile(symbol)
-  const requiredFilePath = /^[.\/]+/.test(fileName)
+  const requiredFilePath = /^[.\\/]+/.test(fileName)
     ? fileName === '.'
       ? path.resolve(sourceFile.fileName)
       : path.resolve(path.dirname(sourceFile.fileName), fileName)
     : fileName
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const requiredFile = require(requiredFilePath)
   if (!requiredFile) {
     throw Error("Required: File couldn't be loaded")

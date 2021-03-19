@@ -18,18 +18,18 @@ const ajv = new Ajv({
     },
   },
   // TODO: enable strict mode
-  strict: false
+  strict: false,
 })
 
 addFormats(ajv)
-const BASE = 'test/programs/'
+const BASE = '__test__/fixtures/'
 
 interface AjvTestOptions {
   skipCompile: boolean
   expectedWarnings: string[]
 }
 
-export function assertSchema(
+function assertSchema(
   group: string,
   type: string,
   settings: TJS.PartialArgs = {},
@@ -81,7 +81,7 @@ export function assertSchema(
   })
 }
 
-export function assertSchemas(
+function assertSchemas(
   group: string,
   type: string,
   settings: TJS.PartialArgs = {},
@@ -125,7 +125,7 @@ export function assertSchemas(
   })
 }
 
-export function assertRejection(
+function assertRejection(
   group: string,
   type: string,
   settings: TJS.PartialArgs = {},
@@ -290,22 +290,22 @@ describe('schema', () => {
   })
 
   describe('annotations', () => {
-    assertSchema("annotation-default", "MyObject");
-    assertSchema("annotation-ref", "MyObject", {}, undefined, undefined, {
-        skipCompile: true,
-    });
-    assertSchema("annotation-tjs", "MyObject", {
-        validationKeywords: ["hide"],
-    });
-    assertSchema("annotation-id", "MyObject", {}, undefined, undefined);
-    assertSchema("annotation-title", "MyObject");
-    assertSchema("annotation-items", "MyObject");
+    assertSchema('annotation-default', 'MyObject')
+    assertSchema('annotation-ref', 'MyObject', {}, undefined, undefined, {
+      skipCompile: true,
+    })
+    assertSchema('annotation-tjs', 'MyObject', {
+      validationKeywords: ['hide'],
+    })
+    assertSchema('annotation-id', 'MyObject', {}, undefined, undefined)
+    assertSchema('annotation-title', 'MyObject')
+    assertSchema('annotation-items', 'MyObject')
 
-    assertSchema("typeof-keyword", "MyObject", { typeOfKeyword: true });
+    assertSchema('typeof-keyword', 'MyObject', { typeOfKeyword: true })
 
-    assertSchema("user-validation-keywords", "MyObject", {
-        validationKeywords: ["chance", "important"],
-    });
+    assertSchema('user-validation-keywords', 'MyObject', {
+      validationKeywords: ['chance', 'important'],
+    })
   })
 
   describe('generics', () => {
@@ -328,7 +328,7 @@ describe('schema', () => {
     assertSchema('comments-imports', 'MyObject', {
       aliasRef: true,
     })
-    assertSchema("comments-from-lib", "MyObject");
+    assertSchema('comments-from-lib', 'MyObject')
   })
 
   describe('types', () => {
