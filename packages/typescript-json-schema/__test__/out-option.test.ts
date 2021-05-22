@@ -3,15 +3,8 @@ import fs from 'fs-extra'
 import { exec, getDefaultArgs } from '../src'
 
 describe('out option', () => {
-  beforeEach(
-    () =>
-      new Promise((resolve, reject) => {
-        fs.rm(
-          './dist/test/doesnotexist',
-          { recursive: true, force: true },
-          (err: Error | null) => (err ? reject(err) : resolve(null)),
-        )
-      }),
+  beforeEach(() =>
+    fs.rmSync('./dist/test/doesnotexist', { recursive: true, force: true }),
   )
   it('should create parent directory when necessary', async () => {
     try {

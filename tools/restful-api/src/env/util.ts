@@ -62,7 +62,7 @@ export function loadContextConfig<R, T>(params: {
         break
       case '.yml':
       case '.yaml':
-        json = yaml.safeLoad(content) as any
+        json = yaml.load(content) as any
         break
       default:
         throw new Error(
@@ -89,5 +89,5 @@ export function loadContextConfig<R, T>(params: {
       JSON.stringify(params.validate.errors, null, 2)
     throw new Error(message)
   }
-  return (json as unknown) as T
+  return json as unknown as T
 }

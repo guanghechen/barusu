@@ -161,7 +161,7 @@ export async function loadJsonOrYaml(
     case '.yaml':
       {
         const content: string = await loadContent()
-        result = yaml.safeLoad(content, { filename: filepath, json: true })
+        result = yaml.load(content, { filename: filepath, json: true })
       }
       break
     default:
@@ -206,7 +206,7 @@ export function loadJsonOrYamlSync(
     case '.yaml':
       {
         const content: string = loadContent()
-        result = yaml.safeLoad(content, { filename: filepath, json: true })
+        result = yaml.load(content, { filename: filepath, json: true })
       }
       break
     default:

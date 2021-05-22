@@ -37,11 +37,8 @@
   },
   "dependencies": {
     "@types/fs-extra": "^9.0.8",
-    "chalk": "^4.1.0",
-    "dayjs": "^1.10.3",
-    "fs-extra": "^9.1.0"
-  },
-  "devDependencies": {
-    "@barusu/util-jest": "^0.1.1"
+    "chalk": "^4.1.1",
+    "dayjs": "^1.10.4",
+    "fs-extra": "^10.0.0"
   }
 }

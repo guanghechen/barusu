@@ -37,20 +37,20 @@
   "dependencies": {
     "@barusu/chalk-logger": "^0.1.1",
     "@guanghechen/locate-helper": "^1.2.1",
-    "@guanghechen/option-helper": "^1.2.1",
+    "@guanghechen/option-helper": "^1.5.1",
     "@types/command-exists": "^1.2.0",
-    "@types/fs-extra": "^9.0.8",
-    "@types/js-yaml": "^3.12.5",
+    "@types/fs-extra": "^9.0.11",
+    "@types/js-yaml": "^4.0.1",
     "chalk": "^4.1.0",
     "command-exists": "^1.2.9",
-    "execa": "^4.0.3",
-    "fs-extra": "^9.1.0",
-    "inquirer": "^7.3.0",
-    "js-yaml": "^3.14.0",
+    "execa": "^5.0.0",
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.1.0",
+    "js-yaml": "^4.1.0",
     "node-plop": "~0.26.0",
-    "ora": "^4.0.4"
+    "ora": "^5.4.0"
   },
   "peerDependencies": {
-    "commander": "^5.1.0"
+    "commander": "^7.2.0"
   }
 }

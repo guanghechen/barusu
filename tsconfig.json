@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.settings.json",
   "compilerOptions": {
+    "sourceMap": true,
     "baseUrl": ".",
     "paths": {
       "@barusu/chalk-logger": ["./packages/chalk-logger/src"],

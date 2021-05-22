@@ -1,4 +1,5 @@
 import { registerCommanderOptions } from '@barusu/chalk-logger'
+import type { Option } from 'commander'
 import commander from 'commander'
 import type { CommandConfigurationOptions } from './option'
 
@@ -16,6 +17,15 @@ export type CommandActionCallback<T extends CommandConfigurationOptions> = (
 ) => void | Promise<void> | never
 
 export class Command extends commander.Command {
+  // add missing type declarations
+  public options: Option[] | undefined
+  protected _actionResults: unknown[] | undefined
+  protected _storeOptionsAsProperties: boolean | undefined
+  protected _optionValues: Record<string, unknown> | undefined
+  protected _actionHandler: ((args: string[]) => void) | null | undefined
+  protected _versionOptionName: string | undefined
+  protected _version: string | undefined
+
   /**
    * Register callback `fn` for the command.
    *
@@ -40,7 +50,7 @@ export class Command extends commander.Command {
     const listener = (args: string[]): void => {
       // eslint-disable-next-line max-len
       // The .action callback takes an extra parameter which is the command or options.
-      const expectedArgsCount = self._args.length
+      const expectedArgsCount = self.args.length
 
       // const actionArgs: (string | Record<string, unknown> | string[])[] = [
       const actionArgs: [string[], T, string[]] = [
@@ -60,9 +70,9 @@ export class Command extends commander.Command {
       // Assume parseAsync getting called on root.
       let rootCommand: Command = self
       while (rootCommand.parent != null) {
-        rootCommand = rootCommand.parent
+        rootCommand = rootCommand.parent as Command
       }
-      rootCommand._actionResults.push(actionResult)
+      rootCommand._actionResults!.push(actionResult)
     }
 
     self._actionHandler = listener
@@ -74,20 +84,20 @@ export class Command extends commander.Command {
     const self = this
     const nodes: Command[] = [self]
     for (let parent = self.parent; parent != null; parent = parent.parent) {
-      nodes.push(parent)
+      nodes.push(parent as Command)
     }
 
     const options: Record<string, unknown> = {}
     for (let i = nodes.length - 1; i >= 0; --i) {
       const o = nodes[i]
       if (o._storeOptionsAsProperties) {
-        for (const option of o.options) {
+        for (const option of o.options!) {
           const key = option.attributeName()
           options[key] = key === o._versionOptionName ? o._version : o[key]
         }
       } else {
         for (const key of Object.getOwnPropertyNames(o._optionValues)) {
-          options[key] = o._optionValues[key]
+          options[key] = o._optionValues![key]
         }
       }
     }
@@ -116,11 +126,7 @@ export function createTopCommand(
 ): Command {
   const program = new Command()
 
-  program
-    .storeOptionsAsProperties(false)
-    .passCommandToAction(false)
-    .version(version)
-    .name(commandName)
+  program.storeOptionsAsProperties(false).version(version).name(commandName)
 
   registerCommanderOptions(program)
 
@@ -151,7 +157,7 @@ export function createTopCommand(
  */
 export type SubCommandProcessor<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 > = (options: O) => V | Promise<V>
 
 /**
@@ -159,7 +165,7 @@ export type SubCommandProcessor<
  */
 export type SubCommandCreator<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 > = (
   handle?: SubCommandProcessor<O, V>,
   commandName?: string,
@@ -198,7 +204,7 @@ export type SubCommandExecutor<V extends unknown = void> = (
  */
 export function createSubCommandMounter<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 >(
   create: SubCommandCreator<O, V>,
   handle: SubCommandProcessor<O, V>,
@@ -219,7 +225,7 @@ export function createSubCommandMounter<
  */
 export function createSubCommandExecutor<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 >(
   create: SubCommandCreator<O, V>,
   handle: SubCommandProcessor<O, V>,
@@ -246,7 +252,7 @@ export function createSubCommandExecutor<
  */
 export type MainCommandProcessor<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 > = (options: O) => V | Promise<V>
 
 /**
@@ -254,7 +260,7 @@ export type MainCommandProcessor<
  */
 export type MainCommandCreator<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 > = (handle?: MainCommandProcessor<O, V>) => Command
 
 /**
@@ -287,7 +293,7 @@ export type MainCommandExecutor<V extends unknown = void> = (
  */
 export function createMainCommandMounter<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 >(
   create: MainCommandCreator<O, V>,
   handle: MainCommandProcessor<O, V>,
@@ -309,7 +315,7 @@ export function createMainCommandMounter<
  */
 export function createMainCommandExecutor<
   O extends CommandConfigurationOptions,
-  V extends unknown = void
+  V extends unknown = void,
 >(
   create: MainCommandCreator<O, V>,
   handle: MainCommandProcessor<O, V>,

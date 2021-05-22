@@ -42,12 +42,9 @@
     "@barusu/event-bus": "^0.1.1",
     "@barusu/util-cli": "^0.1.1",
     "@guanghechen/option-helper": "^1.2.1",
-    "@types/fs-extra": "^9.0.8",
-    "commander": "^5.1.0",
-    "fs-extra": "^9.1.0",
-    "globby": "^11.0.1"
-  },
-  "devDependencies": {
-    "@barusu/util-jest": "^0.1.1"
+    "@types/fs-extra": "^9.0.11",
+    "commander": "^7.2.0",
+    "fs-extra": "^10.0.0",
+    "globby": "^11.0.3"
   }
 }
