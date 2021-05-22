@@ -1,5 +1,20 @@
 # Changelog
 
+<a name="0.2.0"></a>
+## 0.2.0 (2021-05-22)
+
+### Changed
+
+- 🔧 chore: add ci [[2834c3e](https://github.com/guanghechen/barusu/commit/2834c3e84e4ab76b09e739b9c1f5ba99319eb0c3)]
+- ⬆️ chore: ugprade dependencies &amp; fix breaking changes [[babffa9](https://github.com/guanghechen/barusu/commit/babffa9fab027e831d77ad490ae134039512aebb)]
+- 🔧 chore: use @guanghechen/jest-config to simplify jest.config.js [[f9a2572](https://github.com/guanghechen/barusu/commit/f9a257271a6ee47b8e4119fb8302e7d80c902c29)]
+
+### Miscellaneous
+
+- 📝 docs: rename default branch to &#x27;main&#x27; instead of &#x27;master&#x27; [[ef7856d](https://github.com/guanghechen/barusu/commit/ef7856dab40e28c364218e4b958e33513a1847b0)]
+- 📝 wrench: update CHANGELOG [[19ef891](https://github.com/guanghechen/barusu/commit/19ef8916f7064a70cafbfc8e8d2416f053b1a160)]
+
+
 <a name="0.1.1"></a>
 ## 0.1.1 (2021-03-19)
 
