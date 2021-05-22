@@ -1,6 +1,6 @@
 {
   "name": "@barusu/util-cli",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "utils for creating node.js command line program",
   "author": {
     "name": "guanghechen",
@@ -35,7 +35,7 @@
     "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.1.1",
+    "@barusu/chalk-logger": "^0.2.0",
     "@guanghechen/locate-helper": "^1.2.1",
     "@guanghechen/option-helper": "^1.5.1",
     "@types/command-exists": "^1.2.0",
