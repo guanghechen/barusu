@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/packages/redux-actions#readme">@barusu/redux-actions</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/redux-actions#readme">@barusu/redux-actions</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/redux-actions">

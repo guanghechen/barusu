@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "tools/tsconfig-paths"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/tools/tsconfig-paths#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/tools/tsconfig-paths#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

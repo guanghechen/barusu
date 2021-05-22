@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme">@barusu/webpack-source-map-loader</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/scaffolds/webpack-source-map-loader#readme">@barusu/webpack-source-map-loader</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/webpack-source-map-loader">

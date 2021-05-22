@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/packages/typescript-json-schema#readme">@barusu/typescript-json-schema</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/typescript-json-schema#readme">@barusu/typescript-json-schema</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/typescript-json-schema">

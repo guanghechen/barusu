@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "packages/event-bus"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/event-bus#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/event-bus#readme",
   "keywords": [
     "event bus"
   ],

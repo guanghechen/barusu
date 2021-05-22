@@ -57,7 +57,7 @@ Scaffolds are some development scripts.
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/webpack-source-map-loader][]  | Not Recommend | Webpack plugin for loading source map.
 
-[@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme
+[@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/main/scaffolds/webpack-source-map-loader#readme
 
 
 ### Templates
@@ -68,7 +68,7 @@ Templates are some boilerplates for fast creating various projects.
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/template-simple-html][]       | Not Recommend | Boilerplates to create a simple traditional html project.
 
-[@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/master/scaffolds/template-simple-hml#readme
+[@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/main/scaffolds/template-simple-hml#readme
 
 ### Tools
 
@@ -82,11 +82,11 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/tool-tsconfig-paths][]        | Not Recommend | Expand path alias to full path of declaration files which bundled by tsc.
    [@barusu/tool-word][]                  | Not Recommend | Count the frequency of characters in the file(s).
 
-[@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/master/tools/find-inconsistent#readme
-[@barusu/tool-git-cipher]: https://github.com/guanghechen/barusu/tree/master/tools/git-cipher#readme
-[@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/master/tools/restful-api#readme
-[@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/master/tools/tsconfig-paths#readme
-[@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/master/tools/word#readme
+[@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/tools/find-inconsistent#readme
+[@barusu/tool-git-cipher]: https://github.com/guanghechen/barusu/tree/main/tools/git-cipher#readme
+[@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/main/tools/restful-api#readme
+[@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/main/tools/tsconfig-paths#readme
+[@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/tools/word#readme
 
 ### Utils
 
@@ -98,9 +98,9 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/util-cli][]                   | Active        | Helpers for creating Node.js cli program.
    [@barusu/util-jest][]                  | Active        | Jest utility functions.
 
-[@barusu/util-blob]: https://github.com/guanghechen/barusu/tree/master/utils/blob#readme
-[@barusu/util-cli]: https://github.com/guanghechen/barusu/tree/master/utils/cli#readme
-[@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/master/utils/jest#readme
+[@barusu/util-blob]: https://github.com/guanghechen/barusu/tree/main/utils/blob#readme
+[@barusu/util-cli]: https://github.com/guanghechen/barusu/tree/main/utils/cli#readme
+[@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/main/utils/jest#readme
 
 ### Other projects
 
@@ -111,7 +111,7 @@ Templates are some boilerplates for fast creating various projects.
    [@barusu/redux-actions][]              | Active        | Helpers for redux actions.
    [@barusu/typescript-json-schema][]     | Active        | Convert typescript interfaces to JSON-Schema.
 
-[@barusu/chalk-logger]: https://github.com/guanghechen/barusu/tree/master/packages/chalk-logger#readme
-[@barusu/event-bus]: https://github.com/guanghechen/barusu/tree/master/packages/event-bus#readme
-[@barusu/redux-actions]: https://github.com/guanghechen/barusu/tree/master/packages/redux-actions#readme
-[@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/tree/master/packages/typescript-json-schema#readme
+[@barusu/chalk-logger]: https://github.com/guanghechen/barusu/tree/main/packages/chalk-logger#readme
+[@barusu/event-bus]: https://github.com/guanghechen/barusu/tree/main/packages/event-bus#readme
+[@barusu/redux-actions]: https://github.com/guanghechen/barusu/tree/main/packages/redux-actions#readme
+[@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/tree/main/packages/typescript-json-schema#readme

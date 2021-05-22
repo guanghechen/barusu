@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/utils/blob#readme">@barusu/util-blob</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/utils/blob#readme">@barusu/util-blob</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/util-blob">
@@ -59,4 +59,4 @@
   * `downloadBlob(blob: Blob, filename: string): void`: emit a download task in browser
 
 
-[homepage]: https://github.com/guanghechen/barusu/tree/master/utils/blob#readme
+[homepage]: https://github.com/guanghechen/barusu/tree/main/utils/blob#readme

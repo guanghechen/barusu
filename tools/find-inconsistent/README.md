@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/tools/find-inconsistentl#readme">@barusu/tool-find-inconsistent</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/tools/find-inconsistentl#readme">@barusu/tool-find-inconsistent</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/tool-find-inconsistent">

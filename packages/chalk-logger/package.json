@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "packages/chalk-logger"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/chalk-logger#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/chalk-logger#readme",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",

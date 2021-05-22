@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/tools/git-cipher#readme">@barusu/tool-git-cipher</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/tools/git-cipher#readme">@barusu/tool-git-cipher</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/tool-git-cipher">

@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/packages/event-bus#readme">@barusu/event-bus</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/event-bus#readme">@barusu/event-bus</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/event-bus">

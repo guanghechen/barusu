@@ -10,7 +10,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "packages/redux-actions"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/packages/redux-actions#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/redux-actions#readme",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types/index.d.ts",

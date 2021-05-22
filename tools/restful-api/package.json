@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "tools/restful-api"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/tools/restful-api#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/tools/restful-api#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

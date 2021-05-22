@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "tools/find-inconsistent"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/tools/find-inconsistent#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/tools/find-inconsistent#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

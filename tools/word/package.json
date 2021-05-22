@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "tools/word"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/tools/word#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/tools/word#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

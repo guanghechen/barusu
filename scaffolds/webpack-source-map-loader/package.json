@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "scaffolds/webpack-source-map-loader"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/scaffolds/webpack-source-map-loader#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/scaffolds/webpack-source-map-loader#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

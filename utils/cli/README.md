@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/utils/cli#readme">@barusu/util-cli</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/utils/cli#readme">@barusu/util-cli</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/util-cli">
@@ -61,4 +61,4 @@
 ## Usage
 
 
-[homepage]: https://github.com/guanghechen/barusu/tree/master/utils/cli#readme
+[homepage]: https://github.com/guanghechen/barusu/tree/main/utils/cli#readme

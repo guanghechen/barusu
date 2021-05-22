@@ -11,7 +11,7 @@
     "url": "https://github.com/guanghechen/barusu.git",
     "directory": "scaffolds/template-simple-hml"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/master/scaffolds/template-simple-hml#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/scaffolds/template-simple-hml#readme",
   "main": "lib/index.js",
   "license": "MIT",
   "engines": {

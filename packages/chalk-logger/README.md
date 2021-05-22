@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/master/packages/chalk-logger#readme">@barusu/chalk-logger</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/chalk-logger#readme">@barusu/chalk-logger</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/chalk-logger">
@@ -134,7 +134,7 @@
   logger.fatal('1', '2', '3')
   ```
 
-  ![demo1.1.png](https://raw.githubusercontent.com/guanghechen/barusu/master/packages/chalk-logger/screenshots/demo1.1.png)
+  ![demo1.1.png](https://raw.githubusercontent.com/guanghechen/barusu/main/packages/chalk-logger/screenshots/demo1.1.png)
 
 * Custom output format:
 
@@ -174,7 +174,7 @@
   logger.fatal('1', '2', '3')
   ```
 
-  ![demo2.1.png](https://raw.githubusercontent.com/guanghechen/barusu/master/packages/chalk-logger/screenshots/demo2.1.png)
+  ![demo2.1.png](https://raw.githubusercontent.com/guanghechen/barusu/main/packages/chalk-logger/screenshots/demo2.1.png)
 
 
 * Custom output format (2):
@@ -201,7 +201,7 @@
   logger.fatal('1', '2', '3')
   ```
 
-  ![demo3.1.png](https://raw.githubusercontent.com/guanghechen/barusu/master/packages/chalk-logger/screenshots/demo3.1.png)
+  ![demo3.1.png](https://raw.githubusercontent.com/guanghechen/barusu/main/packages/chalk-logger/screenshots/demo3.1.png)
 
 * Output to file
 
@@ -231,7 +231,7 @@
   logger.fatal('1', '2', '3')
   ```
 
-  ![demo4.1.png](https://raw.githubusercontent.com/guanghechen/barusu/master/packages/chalk-logger/screenshots/demo4.1.png)
+  ![demo4.1.png](https://raw.githubusercontent.com/guanghechen/barusu/main/packages/chalk-logger/screenshots/demo4.1.png)
 
 * Register to commander:
 
@@ -270,7 +270,7 @@
   logger.fatal('1', '2', '3')
   ```
 
-  ![demo5.1.png](https://raw.githubusercontent.com/guanghechen/barusu/master/packages/chalk-logger/screenshots/demo5.1.png)
+  ![demo5.1.png](https://raw.githubusercontent.com/guanghechen/barusu/main/packages/chalk-logger/screenshots/demo5.1.png)
 
 * String format:
 
@@ -302,4 +302,4 @@
   logger2.error('bad argument (<>). error({})', { username: 123 }, new Error('username is invalid'))
   ```
 
-  ![demo6.1.png](https://raw.githubusercontent.com/guanghechen/barusu/master/packages/chalk-logger/screenshots/demo6.1.png)
+  ![demo6.1.png](https://raw.githubusercontent.com/guanghechen/barusu/main/packages/chalk-logger/screenshots/demo6.1.png)
