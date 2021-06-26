@@ -1,5 +1,5 @@
 import { registerCommanderOptions } from '@barusu/chalk-logger'
-import type { Option } from 'commander'
+import type { Option, OptionValues } from 'commander'
 import commander from 'commander'
 import type { CommandConfigurationOptions } from './option'
 
@@ -79,8 +79,7 @@ export class Command extends commander.Command {
     return self
   }
 
-  // override
-  public opts(): Record<string, unknown> {
+  public override opts<T extends OptionValues>(): T {
     const self = this
     const nodes: Command[] = [self]
     for (let parent = self.parent; parent != null; parent = parent.parent) {
@@ -102,11 +101,14 @@ export class Command extends commander.Command {
       }
     }
 
-    return options
+    return options as unknown as T
   }
 
   // override
-  public addCommand(command: Command, opts?: commander.CommandOptions): this {
+  public override addCommand(
+    command: Command,
+    opts?: commander.CommandOptions,
+  ): this {
     super.addCommand(command, opts)
     return this
   }

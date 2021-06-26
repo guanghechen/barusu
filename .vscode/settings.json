@@ -69,10 +69,12 @@
     "tsbuildinfo",
     "typedefs",
     "typeof",
+    "usecase",
     "verbo",
     "ymal"
   ],
   "files.associations": {
     ".prettierrc": "yaml"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
