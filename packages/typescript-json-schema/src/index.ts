@@ -163,8 +163,10 @@ export function generateSchema(
   fullTypeName: string,
   args: PartialArgs = {},
   onlyIncludeFiles?: string[],
+  externalGenerator?: JsonSchemaGenerator,
 ): Definition | null {
-  const generator = buildGenerator(program, args, onlyIncludeFiles)
+  const generator =
+    externalGenerator ?? buildGenerator(program, args, onlyIncludeFiles)
   if (generator === null) return null
 
   // All types in file(s)

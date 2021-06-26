@@ -58,7 +58,7 @@ Generate json-schemas from your Typescript sources.
 
 I sincerely suggest you use [the original repository](https://github.com/YousefED/typescript-json-schema), as this repository/package is forked for demanding of myself (study and customization).
 
-Peer Commit Id: https://github.com/YousefED/typescript-json-schema/commit/9203bed4b22913e1a2b34a16b1f73a33faccdaad
+Peer Commit Id: https://github.com/YousefED/typescript-json-schema/commit/20a03a2d2fe81bea56a895cee7975f87fbf480f8
 
 ## Features
 
@@ -96,6 +96,9 @@ const schema = TJS.generateSchema(program, 'MyType', settings)
 // ... or a generator that lets us incrementally get more schemas
 
 const generator = TJS.buildGenerator(program, settings)
+
+// generator can be also reused to speed up generating the schema if usecase allows:
+const schemaWithReusedGenerator = TJS.generateSchema(program, 'MyType', settings, [], generator)
 
 // all symbols
 const symbols = generator.getUserSymbols()

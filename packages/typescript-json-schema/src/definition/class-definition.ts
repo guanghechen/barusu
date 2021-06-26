@@ -40,8 +40,10 @@ export function getClassDefinition(
     if (!context.args.excludePrivate) return true
 
     const decls = prop.declarations
+    if (decls == null) return false
+
     return (
-      decls?.filter(decl => {
+      decls.filter(decl => {
         const mods = decl.modifiers
         return (
           mods &&
@@ -76,7 +78,8 @@ export function getClassDefinition(
           : clazz.members.filter(x => x.kind === ts.SyntaxKind.IndexSignature)
       if (indexSignatures.length === 1) {
         // for case 'array-types'
-        const indexSignature = indexSignatures[0] as ts.IndexSignatureDeclaration
+        const indexSignature =
+          indexSignatures[0] as ts.IndexSignatureDeclaration
         if (indexSignature.parameters.length !== 1) {
           throw new Error(
             'Not supported: IndexSignatureDeclaration parameters.length != 1',

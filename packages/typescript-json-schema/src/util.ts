@@ -202,12 +202,12 @@ export function normalizeFileName(filename: string): string {
 export function getCanonicalDeclaration(sym: ts.Symbol): ts.Declaration {
   if (sym.valueDeclaration !== undefined) {
     return sym.valueDeclaration
-  } else if (sym.declarations.length === 1) {
+  } else if (sym.declarations?.length === 1) {
     return sym.declarations[0]
   }
 
   throw new Error(
-    `Symbol "${sym.name}" has no valueDeclaration and ${sym.declarations.length} declarations.`,
+    `Symbol "${sym.name}" has no valueDeclaration and ${sym.declarations?.length} declarations.`,
   )
 }
 

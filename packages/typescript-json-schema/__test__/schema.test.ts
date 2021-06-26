@@ -63,20 +63,20 @@ function assertSchema(
 
     // test against the meta schema
     if (actual !== null) {
-      ajv.validateSchema(actual)
+      void Promise.resolve(ajv.validateSchema(actual)).then(() => {
+        assert.equal(ajv.errors, null, 'The schema is not valid')
 
-      assert.equal(ajv.errors, null, 'The schema is not valid')
-
-      // Compiling the schema can reveal warnings that validateSchema doesn't.
-      if (!ajvOptions.skipCompile) {
-        ajvWarnings = []
-        ajv.compile(actual)
-        assert.deepEqual(
-          ajvWarnings,
-          ajvOptions.expectedWarnings || [],
-          'Got unexpected AJV warnings',
-        )
-      }
+        // Compiling the schema can reveal warnings that validateSchema doesn't.
+        if (!ajvOptions.skipCompile) {
+          ajvWarnings = []
+          ajv.compile(actual)
+          assert.deepEqual(
+            ajvWarnings,
+            ajvOptions.expectedWarnings || [],
+            'Got unexpected AJV warnings',
+          )
+        }
+      })
     }
   })
 }
@@ -87,7 +87,7 @@ function assertSchemas(
   settings: TJS.PartialArgs = {},
   compilerOptions?: TJS.CompilerOptions,
 ): void {
-  it(group + ' should create correct schema', () => {
+  it(group + ' should create correct schema', async () => {
     if (!('required' in settings)) {
       // eslint-disable-next-line no-param-reassign
       settings.required = true
@@ -118,7 +118,7 @@ function assertSchemas(
 
       // test against the meta schema
       if (actual !== null) {
-        ajv.validateSchema(actual)
+        await ajv.validateSchema(actual)
         assert.equal(ajv.errors, null, 'The schema is not valid')
       }
     }

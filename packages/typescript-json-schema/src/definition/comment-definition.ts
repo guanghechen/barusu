@@ -42,7 +42,16 @@ export function parseCommentsIntoDefinition(
   const tjsDocRegex = new RegExp(context.REGEX_TJS_JSDOC)
   const groupJsDocRegex = new RegExp(context.REGEX_GROUP_JSDOC)
   for (const doc of jsDocs) {
-    let [name, text]: [string, string] = [doc.name, doc.text || '']
+    let [name, text]: [string, string] = [doc.name, '']
+
+    // FIXME the typeof doc.text has changed in the latest typescript
+    if (doc.text != null) {
+      text = doc.text
+        .filter(item => item.kind === 'text')
+        .map(item => item.text)
+        .join('')
+    }
+
     // In TypeScript versions prior to 3.7, it stops parsing the annotation
     // at the first non-alphanumeric character and puts the rest of the line as
     // the "text" of the annotation, so we have a little hack to check for the
@@ -54,9 +63,7 @@ export function parseCommentsIntoDefinition(
         text = 'true'
       }
     } else if (name === 'TJS' && text.startsWith('-')) {
-      const match: string[] | RegExpExecArray | null = tjsDocRegex.exec(
-        doc.text!,
-      )
+      const match: string[] | RegExpExecArray | null = tjsDocRegex.exec(text)
       if (match) {
         name = match[1]
         text = match[2]
@@ -70,9 +77,8 @@ export function parseCommentsIntoDefinition(
     // In TypeScript ~3.5, the annotation name splits at the dot character
     // so we have to process the "." and beyond from the value
     if (subDefinitions[name]) {
-      const match: string[] | RegExpExecArray | null = groupJsDocRegex.exec(
-        text,
-      )
+      const match: string[] | RegExpExecArray | null =
+        groupJsDocRegex.exec(text)
       if (match) {
         const k = match[1]
         const v = match[2]
