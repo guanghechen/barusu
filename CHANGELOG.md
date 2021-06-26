@@ -1,5 +1,30 @@
 # Changelog
 
+<a name="0.2.1"></a>
+## 0.2.1 (2021-06-26)
+
+### Changed
+
+- ⬇️ chore: downgrade commander from v8.0.0 to v7.2.0 [[e23fcfb](https://github.com/guanghechen/barusu/commit/e23fcfb30df650b0f2a23e70987881f54eed190d)]
+- 🔧 chore: update npm scripts [[81b494d](https://github.com/guanghechen/barusu/commit/81b494d7fe667f42b408263f88aa180156544005)]
+- ⬆️ chore: ugprade dependencies [[96a4240](https://github.com/guanghechen/barusu/commit/96a4240ffad43fc4d0cf9f770b96f5ed42645323)]
+- 🔧 chore: update editconfig [[2993ca8](https://github.com/guanghechen/barusu/commit/2993ca8dda358182df169d0629b0b5efe982d464)]
+
+### Miscellaneous
+
+-  feat(typescript-json-schema): support typescript@4.3.4 [[c922946](https://github.com/guanghechen/barusu/commit/c92294613056c290a6ee0ec2df1e3813210f257f)]
+-  improve: fix lint errors [[366e730](https://github.com/guanghechen/barusu/commit/366e73033ae501a963c6c0ca274ef8360daf10e2)]
+- 📝 docs: update CHANGELOG [[feebcbd](https://github.com/guanghechen/barusu/commit/feebcbd9c8262ef30de4a7908de0f2f0ba14991a)]
+
+
+<a name="0.0.0"></a>
+## 0.0.0 (2021-06-26)
+
+### Changed
+
+- 🔧 chore: don&#x27;t update yarn.lock on ci [[1fea59a](https://github.com/guanghechen/barusu/commit/1fea59a5155753029018295d91eb82a630d1671b)]
+
+
 <a name="0.2.0"></a>
 ## 0.2.0 (2021-05-22)
 
