@@ -1,6 +1,6 @@
 {
   "name": "@barusu/event-bus",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "simple event bus",
   "author": {
     "name": "guanghechen",
