@@ -72,7 +72,9 @@ export class Command extends commander.Command {
       while (rootCommand.parent != null) {
         rootCommand = rootCommand.parent as Command
       }
-      rootCommand._actionResults!.push(actionResult)
+      if (rootCommand._actionResults != null) {
+        rootCommand._actionResults.push(actionResult)
+      }
     }
 
     self._actionHandler = listener
