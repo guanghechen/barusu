@@ -27,7 +27,7 @@
     "format:sort-imports": "node ./node_modules/@barusu/tool-sort-imports/lib/cjs/cli.js .",
     "prepublishOnly": "pinst --disable",
     "postinstall": "run-p postinstall:**",
-    "postinstall:main": "yarn update:lock",
+    "postinstall:main": "is-ci || yarn update:lock",
     "postinstall:dev": "is-ci || husky install",
     "rebuild": "yarn clean && yarn build",
     "test": "lerna exec --concurrency 1 'npm run test --if-present'",
