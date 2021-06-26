@@ -55,9 +55,8 @@ describe('serve', function () {
         program.addCommand(
           createSubCommandServe(
             async (options: SubCommandServeOptions): Promise<void> => {
-              const context: RestfulApiServeContext = await createRestfulApiServeContextFromOptions(
-                options,
-              )
+              const context: RestfulApiServeContext =
+                await createRestfulApiServeContextFromOptions(options)
               resolve(context)
             },
           ),

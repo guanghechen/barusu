@@ -22,27 +22,26 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processSubCommandServe: SubCommandProcessor<SubCommandServeOptions> = async function (
-  options: SubCommandServeOptions,
-): Promise<void> {
-  try {
-    const context: RestfulApiServeContext = await createRestfulApiServeContextFromOptions(
-      options,
-    )
-    const processor = new RestfulApiServeProcessor(context)
-    processor.start()
-  } catch (error) {
-    handleError(error)
+export const processSubCommandServe: SubCommandProcessor<SubCommandServeOptions> =
+  async function (options: SubCommandServeOptions): Promise<void> {
+    try {
+      const context: RestfulApiServeContext =
+        await createRestfulApiServeContextFromOptions(options)
+      const processor = new RestfulApiServeProcessor(context)
+      void processor.start()
+    } catch (error) {
+      handleError(error)
+    }
   }
-}
 
 /**
  * Mount Sub-command: serve
  */
-export const mountSubCommandServe: SubCommandMounter = createSubCommandMounter<SubCommandServeOptions>(
-  createSubCommandServe,
-  processSubCommandServe,
-)
+export const mountSubCommandServe: SubCommandMounter =
+  createSubCommandMounter<SubCommandServeOptions>(
+    createSubCommandServe,
+    processSubCommandServe,
+  )
 
 /**
  * Execute sub-command: 'serve'
@@ -51,7 +50,8 @@ export const mountSubCommandServe: SubCommandMounter = createSubCommandMounter<S
  * @param {string[]}  args
  * @returns {Promise}
  */
-export const execSubCommandServe: SubCommandExecutor = createSubCommandExecutor<SubCommandServeOptions>(
-  createSubCommandServe,
-  processSubCommandServe,
-)
+export const execSubCommandServe: SubCommandExecutor =
+  createSubCommandExecutor<SubCommandServeOptions>(
+    createSubCommandServe,
+    processSubCommandServe,
+  )

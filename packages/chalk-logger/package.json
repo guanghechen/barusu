@@ -31,14 +31,14 @@
   ],
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.js",
-    "prebuild": "rimraf lib/",
+    "prebuild": "rimraf lib/ && tsc -p tsconfig.src.json --emitDeclarationOnly",
     "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build",
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir ."
   },
   "dependencies": {
     "@types/fs-extra": "^9.0.8",
     "chalk": "^4.1.1",
-    "dayjs": "^1.10.4",
+    "dayjs": "^1.10.5",
     "fs-extra": "^10.0.0"
   }
 }

@@ -92,7 +92,7 @@ export function processSourceMap(
     tasks.push(task)
   }
 
-  Promise.all(tasks) // waiting all tasks are completed
+  void Promise.all(tasks) // waiting all tasks are completed
     .then(results => {
       // get results in defined ordered
       for (const result of results) {
