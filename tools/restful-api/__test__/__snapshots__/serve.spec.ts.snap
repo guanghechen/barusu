@@ -56,8 +56,8 @@ Object {
   ],
   "dataResultKeys": Array [
     "username",
-    "gender",
     "age",
+    "gender",
   ],
   "headers": Object {
     "connection": "close",
