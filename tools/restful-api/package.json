@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-restful-api",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Quickly create restful style mock server.",
   "author": {
     "name": "guanghechen",
@@ -43,7 +43,7 @@
     "generate:schema": "cross-env node -r ts-node/register script/generate.schema.ts"
   },
   "dependencies": {
-    "@barusu/typescript-json-schema": "^0.2.1",
+    "@barusu/typescript-json-schema": "^0.3.0",
     "@guanghechen/chalk-logger": "^1.7.0",
     "@guanghechen/commander-helper": "^1.7.0",
     "@guanghechen/event-bus": "^1.7.0",

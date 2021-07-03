@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-word",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Count the frequency of characters in the file(s)",
   "author": {
     "name": "guanghechen",
@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "@guanghechen/chalk-logger": "^1.7.0",
-    "@guanghechen/event-bus": "^1.7.0",
     "@guanghechen/commander-helper": "^1.7.0",
+    "@guanghechen/event-bus": "^1.7.0",
     "@guanghechen/file-helper": "^1.7.0",
     "@guanghechen/option-helper": "^1.7.0",
     "@types/fs-extra": "^9.0.11",
