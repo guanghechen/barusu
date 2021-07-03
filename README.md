@@ -77,13 +77,11 @@ Templates are some boilerplates for fast creating various projects.
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/tool-find-inconsistent][]     | Active        | Find inconsistent package versions in monorepo.
-   [@barusu/tool-git-cipher][]            | Active        | Cipher git repository.
    [@barusu/tool-restful-api][]           | Active        | Quickly create restful style mock server.
    [@barusu/tool-tsconfig-paths][]        | Not Recommend | Expand path alias to full path of declaration files which bundled by tsc.
    [@barusu/tool-word][]                  | Not Recommend | Count the frequency of characters in the file(s).
 
 [@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/tools/find-inconsistent#readme
-[@barusu/tool-git-cipher]: https://github.com/guanghechen/barusu/tree/main/tools/git-cipher#readme
 [@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/main/tools/restful-api#readme
 [@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/main/tools/tsconfig-paths#readme
 [@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/tools/word#readme
@@ -95,23 +93,17 @@ Templates are some boilerplates for fast creating various projects.
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
    [@barusu/util-blob][]                  | Active        | Blob object helpers.
-   [@barusu/util-cli][]                   | Active        | Helpers for creating Node.js cli program.
    [@barusu/util-jest][]                  | Active        | Jest utility functions.
 
 [@barusu/util-blob]: https://github.com/guanghechen/barusu/tree/main/utils/blob#readme
-[@barusu/util-cli]: https://github.com/guanghechen/barusu/tree/main/utils/cli#readme
 [@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/main/utils/jest#readme
 
 ### Other projects
 
    Package                                | Status        | Description
   :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/chalk-logger][]               | Active        | A simple colorful logger.
-   [@barusu/event-bus][]                  | Not Recommend | Simple event bus.
    [@barusu/redux-actions][]              | Active        | Helpers for redux actions.
    [@barusu/typescript-json-schema][]     | Active        | Convert typescript interfaces to JSON-Schema.
 
-[@barusu/chalk-logger]: https://github.com/guanghechen/barusu/tree/main/packages/chalk-logger#readme
-[@barusu/event-bus]: https://github.com/guanghechen/barusu/tree/main/packages/event-bus#readme
 [@barusu/redux-actions]: https://github.com/guanghechen/barusu/tree/main/packages/redux-actions#readme
 [@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/tree/main/packages/typescript-json-schema#readme
