@@ -4,7 +4,6 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@barusu/chalk-logger": ["./packages/chalk-logger/src"],
       "@barusu/event-bus": ["./packages/event-bus/src"],
       "@barusu/redux-actions": ["./packages/redux-actions/src"],
       "@barusu/typescript-json-schema": [

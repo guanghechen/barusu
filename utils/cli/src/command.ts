@@ -1,4 +1,4 @@
-import { registerCommanderOptions } from '@barusu/chalk-logger'
+import { registerCommanderOptions } from '@guanghechen/chalk-logger'
 import type { Option, OptionValues } from 'commander'
 import commander from 'commander'
 import type { CommandConfigurationOptions } from './option'

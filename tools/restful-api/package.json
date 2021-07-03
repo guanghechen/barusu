@@ -43,12 +43,12 @@
     "generate:schema": "cross-env node -r ts-node/register script/generate.schema.ts"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.2.1",
+    "@guanghechen/chalk-logger": "^1.7.0",
     "@barusu/event-bus": "^0.2.1",
     "@barusu/typescript-json-schema": "^0.2.1",
     "@barusu/util-cli": "^0.2.1",
-    "@guanghechen/option-helper": "^1.6.1",
-    "@guanghechen/plop-helper": "^1.6.1",
+    "@guanghechen/option-helper": "^1.7.0",
+    "@guanghechen/plop-helper": "^1.7.0",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "@types/fs-extra": "^9.0.11",

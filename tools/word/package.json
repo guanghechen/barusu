@@ -38,10 +38,10 @@
     "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir ."
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.2.1",
+    "@guanghechen/chalk-logger": "^1.7.0",
     "@barusu/event-bus": "^0.2.1",
     "@barusu/util-cli": "^0.2.1",
-    "@guanghechen/option-helper": "^1.6.1",
+    "@guanghechen/option-helper": "^1.7.0",
     "@types/fs-extra": "^9.0.11",
     "commander": "^7.2.0",
     "fs-extra": "^10.0.0",

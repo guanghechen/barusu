@@ -1,9 +1,7 @@
-const esStaticImportOrExportRegexList: RegExp[] = createStaticImportRegexList(
-  '',
-)
-const esStaticImportOrExportPatternList: RegExp[] = createStaticImportRegexList(
-  'g',
-)
+const esStaticImportOrExportRegexList: RegExp[] =
+  createStaticImportRegexList('')
+const esStaticImportOrExportPatternList: RegExp[] =
+  createStaticImportRegexList('g')
 
 /**
  *
@@ -33,13 +31,16 @@ export function createStaticImportRegexList(flags: string): RegExp[] {
   const requiredSpacesRegex = /\s+/
   const remainOfLineRegex = /(?<remainOfLine>[^\n]*)/
   const fromRegex = /(?:(?<keywordFrom>from)\s+)/
-  const moduleNameRegex = /(?:(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>(?:\s*;+)?)/
+  const moduleNameRegex =
+    /(?:(?<quote>['"])(?<moduleName>[^'"]+)\k<quote>(?:\s*;+)?)/
   const typeRegex = /(?:\b(?<type>import|export))/
   const importTypeRegex = /(?:\b(?<type>import))/
   const exportTypeRegex = /(?:\b(?<type>export))/
-  const importDefaultRegex = /(?:(?<defaultExport>(?:\w+\s*,\s*)?(?:\w+|\w\s+as\s+\w+|\*\s*as\s+\w+)))/
+  const importDefaultRegex =
+    /(?:(?<defaultExport>(?:\w+\s*,\s*)?(?:\w+|\w\s+as\s+\w+|\*\s*as\s+\w+)))/
   const exportDefaultRegex = /(?:(?<defaultExport>(?:\*|\*\s*as\s+\w+)))/
-  const importOrExportNRegex = /(?:(?<keywordType>type)?\s*?\{\s*(?<exportN>(?:[\w]+(?:\s+as\s+[\w]+)?\s*,\s*)*[\w]+(?:\s+as\s+[\w]+)?(?:\s*,)?)\s*?\})/
+  const importOrExportNRegex =
+    /(?:(?<keywordType>type)?\s*?\{\s*(?<exportN>(?:[\w]+(?:\s+as\s+[\w]+)?\s*,\s*)*[\w]+(?:\s+as\s+[\w]+)?(?:\s*,)?)\s*?\})/
 
   const regexList = [
     /**
@@ -100,9 +101,9 @@ export function createStaticImportRegexList(flags: string): RegExp[] {
      *
      *  ```typescript
      *  import { a as b, c, d as e } from 'module'
-     *  import type { Logger } from '@barusu/chalk-logger'
+     *  import type { Logger } from '@guanghechen/chalk-logger'
      *  export { a as b, c, d as e } from 'module'
-     *  export type { Logger } from '@barusu/chalk-logger'
+     *  export type { Logger } from '@guanghechen/chalk-logger'
      *  ```
      */
     new RegExp(
@@ -119,8 +120,8 @@ export function createStaticImportRegexList(flags: string): RegExp[] {
      * Import default + ImportN
      *  ```typescript
      *  import x, { a as b, c, d as e } from 'module'
-     *  import a as b, type { Logger } from '@barusu/chalk-logger'
-     *  import * as e, type { Logger } from '@barusu/chalk-logger'
+     *  import a as b, type { Logger } from '@guanghechen/chalk-logger'
+     *  import * as e, type { Logger } from '@guanghechen/chalk-logger'
      *  ```
      */
     new RegExp(

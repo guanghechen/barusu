@@ -373,57 +373,66 @@
     lodash "^4.17.11"
     semver "^5.6.0"
 
-"@guanghechen/eslint-config-ts@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/eslint-config-ts/-/eslint-config-ts-1.6.1.tgz#4577827e1d558e136912f146fafcefa142aaec22"
-  integrity sha512-0GxQZP5YIjOn5eW1I5bEsb/ZIjTxIdMyOu2QORiqzCd4KAg5LRhFrO2tem6zGWednTcF4DsPgo0dRPY/MH4fLQ==
+"@guanghechen/chalk-logger@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/chalk-logger/-/chalk-logger-1.7.0.tgz#f662961625117d64451dbab89bf60ef7924351da"
+  integrity sha512-yKUqbKZAq2/+kY+FAPOACuJdHXriYSftZfK5s5fsLuWFIkzV0fd3IT01eI4JsQf8V0oTbFQSgVEtu0hxK6c6bg==
   dependencies:
-    "@guanghechen/eslint-config" "^1.6.1"
-    "@typescript-eslint/eslint-plugin" "^4.28.0"
-    "@typescript-eslint/parser" "^4.28.0"
+    chalk "^4.1.1"
+    dayjs "^1.10.5"
+    fs-extra "^10.0.0"
 
-"@guanghechen/eslint-config@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/eslint-config/-/eslint-config-1.6.1.tgz#1c1b9409ca67ed4f5351608c1f17fc21fae5508f"
-  integrity sha512-T/JpRIh3dskZzIO1GG4vQMqCLccIEzarC36g/Doryzts48N8qc5FAuQ2YjaUP3lYGArW0rJTznzJLW+QU6Sx9A==
+"@guanghechen/eslint-config-ts@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/eslint-config-ts/-/eslint-config-ts-1.7.0.tgz#4f696bbaf0bdf3f74625ce2e1cef44b01add97ae"
+  integrity sha512-U6ogB1bTuF+j4YRFGIQQ5goE7MQF1R8xJCHgNGMLgcPdl19Tah6tXBxb12VwKx/C7Sbq+q8z3t1Hy42y7amVrQ==
+  dependencies:
+    "@guanghechen/eslint-config" "^1.7.0"
+    "@typescript-eslint/eslint-plugin" "^4.28.1"
+    "@typescript-eslint/parser" "^4.28.1"
+
+"@guanghechen/eslint-config@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/eslint-config/-/eslint-config-1.7.0.tgz#a8bfb7f1d87c3df61226b087c9c52f9bbc295f63"
+  integrity sha512-yU7QshbIRRbUY3pLlEZtvD760gFVCF/jzJSfjKOOwFsXdet8OZjcg3N0LM81/WgkpgyoJmav6O4NmTor8k8SqA==
   dependencies:
     eslint-plugin-import "^2.23.4"
 
-"@guanghechen/jest-config@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/jest-config/-/jest-config-1.6.1.tgz#61678679756cf710e2971e949304f9a352aa67eb"
-  integrity sha512-SALKrQ92uWe3Rkx7YhjCgMga5wHHEeY2Unqvm/dTu+rgS3JCwGY3LxdbUqcv1et9+coeWNntGHr1dMWfXjhVNA==
+"@guanghechen/jest-config@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/jest-config/-/jest-config-1.7.0.tgz#fbbf357ab454145b54040cce7c147d0ccb06abba"
+  integrity sha512-Tb8EZzxi4+hkUr13zk698C90zFDEtFxz8Gwj0RGR0KhLgqJUAAR5sq4UcCgn5t4xlnatPd/NWu4GxSUTnuwopg==
 
-"@guanghechen/locate-helper@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/locate-helper/-/locate-helper-1.6.1.tgz#5693c72d5df149ef1b2229fff885f326bcdb12e2"
-  integrity sha512-9GoMWlpqrVgeqFtsW4kGBOE4/5vnmEgvSq8vwa07VmkD7iZ/8x/PWOjcXkfW3fI3S04jLlTpEyWDIUhxigZfvA==
+"@guanghechen/locate-helper@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/locate-helper/-/locate-helper-1.7.0.tgz#dea91d3101f483bb46322931d773060084f84d0a"
+  integrity sha512-EV3CgW6NGfSQZArS0xFftdP03LkWJF2M9mqA35qloOCuWgBk6c76sBBWGgs1ype2hSr4cxSBTKF1zxT+Q/wDow==
 
-"@guanghechen/npm-helper@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/npm-helper/-/npm-helper-1.6.1.tgz#9df4bf85f4fb3666ab5cd159c1b20941db40500e"
-  integrity sha512-vS5gRUgdsVWXsmBwNcE9bIOY2un0glaoerqEvhjf0Xd0rZ8EngK3IZwxRogpZN+TyQFDJ2ZdJWc9UMuuwkDjRw==
+"@guanghechen/npm-helper@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/npm-helper/-/npm-helper-1.7.0.tgz#a0c0d186a5703c272b239ba4a24aa389932fc9d2"
+  integrity sha512-up9TNxnSlr6MxYPELA4G9eNpAaTPh8hJSVu2OyawZFTWfKMKYhg142Y/BHNnpqoDAgxFypallKoZth0BSIF/nQ==
   dependencies:
-    "@guanghechen/locate-helper" "^1.6.1"
+    "@guanghechen/locate-helper" "^1.7.0"
     fs-extra "^10.0.0"
 
-"@guanghechen/option-helper@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/option-helper/-/option-helper-1.6.1.tgz#53cb3d0119f6d5adcb42fa5d2f0fa6327a1b3498"
-  integrity sha512-XYxmfahGxa4MR+DRgOIPRK8wCxJ16oZ+Zu8eTCcYKOfH3bRagChZEAoMCXhfpF42B4jmor13oYci1okKiH+iNg==
+"@guanghechen/option-helper@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/option-helper/-/option-helper-1.7.0.tgz#a05f5fbadab7cea4452c1df7193ed0bccb17f5f5"
+  integrity sha512-i3jI9+65wlXVzSApp/ibYgUAEy0yw7riPjI3cwuTT38RMy7Jk9JX7gnClMG9XGkzD6Zib0Y0AVDVlnBk9IUDag==
   dependencies:
     change-case "^4.1.1"
     lower-case "^2.0.1"
     title-case "^3.0.2"
     upper-case "^2.0.1"
 
-"@guanghechen/plop-helper@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/plop-helper/-/plop-helper-1.6.1.tgz#bd6cb174ddfef583a598c95d97c9d8fa4dc4ef2b"
-  integrity sha512-4d4WPKZE6uzhqWp8uK7DfU2SCERr/jhhJqi0R+XtwclxI6VpTu8k3JDdvwK+4lvnzlz/BDnFH/TAihI6TzT/QQ==
+"@guanghechen/plop-helper@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/plop-helper/-/plop-helper-1.7.0.tgz#fee9d36f4bb801bc35c4363380d05831fff4ac04"
+  integrity sha512-I1MtciWpo9xGfgrGA5qvBTtnfXOk400f9l1kY6dPz7PGRip/ApF9djxCuKg4wSHYcoTwJXtniwbuz3/AULDcmw==
   dependencies:
-    "@guanghechen/npm-helper" "^1.6.1"
-    "@guanghechen/option-helper" "^1.6.1"
+    "@guanghechen/npm-helper" "^1.7.0"
+    "@guanghechen/option-helper" "^1.7.0"
     chalk "^4.1.0"
     fs-extra "^10.0.0"
     minimist "^1.2.5"
@@ -432,36 +441,50 @@
     ora "^5.4.1"
     plop "^2.7.4"
 
-"@guanghechen/rollup-config-cli@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/rollup-config-cli/-/rollup-config-cli-1.6.1.tgz#f7fb0b344d678c160fd52d8aec42ed90d699aff2"
-  integrity sha512-gSf0brvBlh/mMlgWGeMayqqYFojVwiKHLMrgTq3u6TtzUjvGrdDRj5C+yqmk1slZHWHnYYJuasgFaQ6E/QWgkA==
+"@guanghechen/rollup-config-cli@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/rollup-config-cli/-/rollup-config-cli-1.7.0.tgz#618a2fcd4351c04f95f7fe2b9acb82af87f8c8bf"
+  integrity sha512-gIeBREBWboeGl5cethrHGgbGptUEzP3+IUtP1CXpUOT2DRA8UI+Ne1CHPpeP+sXziiJWwwnoub06pv5NSRNlEw==
   dependencies:
-    "@guanghechen/rollup-config" "^1.6.1"
-    "@guanghechen/rollup-plugin-copy" "^1.6.1"
+    "@guanghechen/rollup-config" "^1.7.0"
+    "@guanghechen/rollup-plugin-copy" "^1.7.0"
 
-"@guanghechen/rollup-config@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/rollup-config/-/rollup-config-1.6.1.tgz#7bf7c41d12094cb55780c82245958be9b8f9b43e"
-  integrity sha512-qxyotXKvVq8n9z8dPLOQQws7lW0JFvVdPUk6dajU4YkVOxlKwZcSbH2f4GzOKDw+XKiBDijCVdLRtM/AUE9VOg==
+"@guanghechen/rollup-config@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/rollup-config/-/rollup-config-1.7.0.tgz#6d2e1f7004eb48a714cf7aea3c182cdf645c6524"
+  integrity sha512-gdfbpe/W8kAgCwbOyDx4WYkcwwqtjdMwPgfAeLHjAIADSDlcXwGd06YsrqaiIzXsvAle/oYg3GW4pnBzJtFMbA==
   dependencies:
-    "@guanghechen/locate-helper" "^1.6.1"
-    "@guanghechen/npm-helper" "^1.6.1"
+    "@guanghechen/locate-helper" "^1.7.0"
+    "@guanghechen/npm-helper" "^1.7.0"
     "@rollup/plugin-commonjs" "19.0.0"
     "@rollup/plugin-json" "4.1.0"
     "@rollup/plugin-node-resolve" "13.0.0"
     "@rollup/plugin-typescript" "8.2.1"
     tslib "^2.3.0"
 
-"@guanghechen/rollup-plugin-copy@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/@guanghechen/rollup-plugin-copy/-/rollup-plugin-copy-1.6.1.tgz#34f543f3ee73812f60555b96e7c45498a0c4e00b"
-  integrity sha512-2BR4WHyvbJtIMOAHo2YoBJWX8SMPVBGTXcaFJGUNyVzk8+HWy3Q3GUSA736eNc1yuvegp42LY8bqVikIHLY9VA==
+"@guanghechen/rollup-plugin-copy@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/rollup-plugin-copy/-/rollup-plugin-copy-1.7.0.tgz#3433b2df3c769ffc42fef398b22597f2ed6d2491"
+  integrity sha512-BsefeTk1s9ki8oUhPPZXuCNeXp/k8cP5VFBtD0w5Gtw/cVF4GLWq4NAo6b/SydOjue9NcOqhM8x+9Bhe0vnAFQ==
   dependencies:
     chalk "^4.1.0"
     fs-extra "^10.0.0"
     globby "^11.0.4"
     is-plain-object "^5.0.0"
+
+"@humanwhocodes/config-array@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
+  integrity sha512-FagtKFz74XrTl7y6HCzQpwDfXP0yhxe9lHLD1UZxjvZIcbyRz8zTFF/yYNfSfzU414eDwZ1SrO0Qvtyf+wFMQg==
+  dependencies:
+    "@humanwhocodes/object-schema" "^1.2.0"
+    debug "^4.1.1"
+    minimatch "^3.0.4"
+
+"@humanwhocodes/object-schema@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
+  integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
 "@iarna/cli@^1.2.0":
   version "1.2.0"
@@ -2096,73 +2119,73 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^4.28.0":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.28.0.tgz#1a66f03b264844387beb7dc85e1f1d403bd1803f"
-  integrity sha512-KcF6p3zWhf1f8xO84tuBailV5cN92vhS+VT7UJsPzGBm9VnQqfI9AsiMUFUCYHTYPg1uCCo+HyiDnpDuvkAMfQ==
+"@typescript-eslint/eslint-plugin@^4.28.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.28.1.tgz#c045e440196ae45464e08e20c38aff5c3a825947"
+  integrity sha512-9yfcNpDaNGQ6/LQOX/KhUFTR1sCKH+PBr234k6hI9XJ0VP5UqGxap0AnNwBnWFk1MNyWBylJH9ZkzBXC+5akZQ==
   dependencies:
-    "@typescript-eslint/experimental-utils" "4.28.0"
-    "@typescript-eslint/scope-manager" "4.28.0"
+    "@typescript-eslint/experimental-utils" "4.28.1"
+    "@typescript-eslint/scope-manager" "4.28.1"
     debug "^4.3.1"
     functional-red-black-tree "^1.0.1"
     regexpp "^3.1.0"
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/experimental-utils@4.28.0", "@typescript-eslint/experimental-utils@^4.0.1":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-4.28.0.tgz#13167ed991320684bdc23588135ae62115b30ee0"
-  integrity sha512-9XD9s7mt3QWMk82GoyUpc/Ji03vz4T5AYlHF9DcoFNfJ/y3UAclRsfGiE2gLfXtyC+JRA3trR7cR296TEb1oiQ==
+"@typescript-eslint/experimental-utils@4.28.1", "@typescript-eslint/experimental-utils@^4.0.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-4.28.1.tgz#3869489dcca3c18523c46018b8996e15948dbadc"
+  integrity sha512-n8/ggadrZ+uyrfrSEchx3jgODdmcx7MzVM2sI3cTpI/YlfSm0+9HEUaWw3aQn2urL2KYlWYMDgn45iLfjDYB+Q==
   dependencies:
     "@types/json-schema" "^7.0.7"
-    "@typescript-eslint/scope-manager" "4.28.0"
-    "@typescript-eslint/types" "4.28.0"
-    "@typescript-eslint/typescript-estree" "4.28.0"
+    "@typescript-eslint/scope-manager" "4.28.1"
+    "@typescript-eslint/types" "4.28.1"
+    "@typescript-eslint/typescript-estree" "4.28.1"
     eslint-scope "^5.1.1"
     eslint-utils "^3.0.0"
 
-"@typescript-eslint/parser@^4.28.0":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-4.28.0.tgz#2404c16751a28616ef3abab77c8e51d680a12caa"
-  integrity sha512-7x4D22oPY8fDaOCvkuXtYYTQ6mTMmkivwEzS+7iml9F9VkHGbbZ3x4fHRwxAb5KeuSkLqfnYjs46tGx2Nour4A==
+"@typescript-eslint/parser@^4.28.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-4.28.1.tgz#5181b81658414f47291452c15bf6cd44a32f85bd"
+  integrity sha512-UjrMsgnhQIIK82hXGaD+MCN8IfORS1CbMdu7VlZbYa8LCZtbZjJA26De4IPQB7XYZbL8gJ99KWNj0l6WD0guJg==
   dependencies:
-    "@typescript-eslint/scope-manager" "4.28.0"
-    "@typescript-eslint/types" "4.28.0"
-    "@typescript-eslint/typescript-estree" "4.28.0"
+    "@typescript-eslint/scope-manager" "4.28.1"
+    "@typescript-eslint/types" "4.28.1"
+    "@typescript-eslint/typescript-estree" "4.28.1"
     debug "^4.3.1"
 
-"@typescript-eslint/scope-manager@4.28.0":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-4.28.0.tgz#6a3009d2ab64a30fc8a1e257a1a320067f36a0ce"
-  integrity sha512-eCALCeScs5P/EYjwo6se9bdjtrh8ByWjtHzOkC4Tia6QQWtQr3PHovxh3TdYTuFcurkYI4rmFsRFpucADIkseg==
+"@typescript-eslint/scope-manager@4.28.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-4.28.1.tgz#fd3c20627cdc12933f6d98b386940d8d0ce8a991"
+  integrity sha512-o95bvGKfss6705x7jFGDyS7trAORTy57lwJ+VsYwil/lOUxKQ9tA7Suuq+ciMhJc/1qPwB3XE2DKh9wubW8YYA==
   dependencies:
-    "@typescript-eslint/types" "4.28.0"
-    "@typescript-eslint/visitor-keys" "4.28.0"
+    "@typescript-eslint/types" "4.28.1"
+    "@typescript-eslint/visitor-keys" "4.28.1"
 
-"@typescript-eslint/types@4.28.0":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-4.28.0.tgz#a33504e1ce7ac51fc39035f5fe6f15079d4dafb0"
-  integrity sha512-p16xMNKKoiJCVZY5PW/AfILw2xe1LfruTcfAKBj3a+wgNYP5I9ZEKNDOItoRt53p4EiPV6iRSICy8EPanG9ZVA==
+"@typescript-eslint/types@4.28.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-4.28.1.tgz#d0f2ecbef3684634db357b9bbfc97b94b828f83f"
+  integrity sha512-4z+knEihcyX7blAGi7O3Fm3O6YRCP+r56NJFMNGsmtdw+NCdpG5SgNz427LS9nQkRVTswZLhz484hakQwB8RRg==
 
-"@typescript-eslint/typescript-estree@4.28.0":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-4.28.0.tgz#e66d4e5aa2ede66fec8af434898fe61af10c71cf"
-  integrity sha512-m19UQTRtxMzKAm8QxfKpvh6OwQSXaW1CdZPoCaQuLwAq7VZMNuhJmZR4g5281s2ECt658sldnJfdpSZZaxUGMQ==
+"@typescript-eslint/typescript-estree@4.28.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-4.28.1.tgz#af882ae41740d1f268e38b4d0fad21e7e8d86a81"
+  integrity sha512-GhKxmC4sHXxHGJv8e8egAZeTZ6HI4mLU6S7FUzvFOtsk7ZIDN1ksA9r9DyOgNqowA9yAtZXV0Uiap61bIO81FQ==
   dependencies:
-    "@typescript-eslint/types" "4.28.0"
-    "@typescript-eslint/visitor-keys" "4.28.0"
+    "@typescript-eslint/types" "4.28.1"
+    "@typescript-eslint/visitor-keys" "4.28.1"
     debug "^4.3.1"
     globby "^11.0.3"
     is-glob "^4.0.1"
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/visitor-keys@4.28.0":
-  version "4.28.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-4.28.0.tgz#255c67c966ec294104169a6939d96f91c8a89434"
-  integrity sha512-PjJyTWwrlrvM5jazxYF5ZPs/nl0kHDZMVbuIcbpawVXaDPelp3+S9zpOz5RmVUfS/fD5l5+ZXNKnWhNYjPzCvw==
+"@typescript-eslint/visitor-keys@4.28.1":
+  version "4.28.1"
+  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-4.28.1.tgz#162a515ee255f18a6068edc26df793cdc1ec9157"
+  integrity sha512-K4HMrdFqr9PFquPu178SaSb92CaWe2yErXyPumc8cYWxFmhgJsNY9eSePmO05j0JhBvf2Cdhptd6E6Yv9HVHcg==
   dependencies:
-    "@typescript-eslint/types" "4.28.0"
+    "@typescript-eslint/types" "4.28.1"
     eslint-visitor-keys "^2.0.0"
 
 "@ungap/promise-all-settled@1.1.2":
@@ -4288,13 +4311,14 @@ eslint-visitor-keys@^2.0.0, eslint-visitor-keys@^2.1.0:
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
-eslint@^7.29.0:
-  version "7.29.0"
-  resolved "https://registry.npmjs.org/eslint/-/eslint-7.29.0.tgz#ee2a7648f2e729485e4d0bd6383ec1deabc8b3c0"
-  integrity sha512-82G/JToB9qIy/ArBzIWG9xvvwL3R86AlCjtGw+A29OMZDqhTybz/MByORSukGxeI+YPCR4coYyITKk8BFH9nDA==
+eslint@^7.30.0:
+  version "7.30.0"
+  resolved "https://registry.npmjs.org/eslint/-/eslint-7.30.0.tgz#6d34ab51aaa56112fd97166226c9a97f505474f8"
+  integrity sha512-VLqz80i3as3NdloY44BQSJpFw534L9Oh+6zJOUaViV4JPd+DaHwutqP7tcpkW3YiXbK6s05RZl7yl7cQn+lijg==
   dependencies:
     "@babel/code-frame" "7.12.11"
     "@eslint/eslintrc" "^0.4.2"
+    "@humanwhocodes/config-array" "^0.5.0"
     ajv "^6.10.0"
     chalk "^4.0.0"
     cross-spawn "^7.0.2"
@@ -5074,10 +5098,10 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
-gitmoji-changelog@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/gitmoji-changelog/-/gitmoji-changelog-2.2.0.tgz#1cdc6ef69e96eaafdd310dbd0a3bbb882b2e4ba9"
-  integrity sha512-jr+YmOPihMNKv8w9BFCamaaf6MgekGuI2LXpg9VSUPbjI1zs14iy6fd+MX3ShK7+w0aQGUXW31Im+Zm7fYR4mQ==
+gitmoji-changelog@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/gitmoji-changelog/-/gitmoji-changelog-2.2.1.tgz#c1e6c7f3419c3a80aa8e09a1bf9b2eb222b2a8e4"
+  integrity sha512-cfSjiK3EaIAXuJvRzucYN9DljrRlkw+EPWxWCaW9Bhev8+3ssFXDhAK2uCsAXMcW3Lko98yKtwl+28GPkgPtzQ==
   dependencies:
     "@gitmoji-changelog/core" "^2.1.0"
     "@gitmoji-changelog/markdown" "^2.1.0"
@@ -5089,6 +5113,7 @@ gitmoji-changelog@^2.2.0:
     lodash "^4.17.11"
     pom-parser "^1.2.0"
     rc "^1.2.8"
+    read-pkg-up "^7.0.1"
     semver "^5.6.0"
     semver-compare "^1.0.0"
     simple-git "^1.113.0"
@@ -5474,10 +5499,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/husky/-/husky-6.0.0.tgz#810f11869adf51604c32ea577edbc377d7f9319e"
-  integrity sha512-SQS2gDTB7tBN486QSoKPKQItZw97BMOd+Kdb6ghfpBc0yXyzrddI0oDV5MkDAbuB4X2mO3/nj60TRMcYxwzZeQ==
+husky@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/husky/-/husky-7.0.0.tgz#3dbd5d28e76234689ee29bb41e048f28e3e46616"
+  integrity sha512-xK7lO0EtSzfFPiw+oQncQVy/XqV7UVVjxBByc+Iv5iK3yhW9boDoWgvZy3OGo48QKg/hUtZkzz0hi2HXa0kn7w==
 
 iconv-lite@0.4.24, iconv-lite@^0.4.24:
   version "0.4.24"
@@ -9147,10 +9172,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-2.3.1.tgz#76903c3f8c4449bc9ac597acefa24dc5ad4cbea6"
-  integrity sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==
+prettier@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 pretty-format@^26.0.0, pretty-format@^26.6.2:
   version "26.6.2"
@@ -9748,10 +9773,10 @@ rimraf@^3.0.0, rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rollup@^2.52.3:
-  version "2.52.3"
-  resolved "https://registry.npmjs.org/rollup/-/rollup-2.52.3.tgz#062fc3c85f67736d6758749310cfee64836c4e2a"
-  integrity sha512-QF3Sju8Kl2z0osI4unyOLyUudyhOMK6G0AeqJWgfiyigqLAlnNrfBcDWDx+f1cqn+JU2iIYVkDrgQ6/KtwEfrg==
+rollup@^2.52.7:
+  version "2.52.7"
+  resolved "https://registry.npmjs.org/rollup/-/rollup-2.52.7.tgz#e15a8bf734f6e4c204b7cdf33521151310250cb2"
+  integrity sha512-55cSH4CCU6MaPr9TAOyrIC+7qFCHscL7tkNsm1MBfIJRRqRbCEY0mmeFn4Wg8FKsHtEH8r389Fz38r/o+kgXLg==
   optionalDependencies:
     fsevents "~2.3.2"
 

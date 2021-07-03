@@ -1,5 +1,5 @@
-import type { ChalkLogger } from '@barusu/chalk-logger'
-import { Level } from '@barusu/chalk-logger'
+import type { ChalkLogger } from '@guanghechen/chalk-logger'
+import { Level } from '@guanghechen/chalk-logger'
 import { locateNearestFilepath } from '@guanghechen/locate-helper'
 import {
   cover,
@@ -78,14 +78,14 @@ export interface CommandConfiguration<C extends CommandConfigurationOptions> {
  * Flat defaultOptions with configs from package.json
  */
 export function flatOptionsFromConfiguration<
-  C extends CommandConfigurationOptions
+  C extends CommandConfigurationOptions,
 >(
   defaultOptions: C,
   flatOpts: CommandConfigurationFlatOpts,
   subCommandName: string | false,
   strategies: Partial<Record<keyof C, MergeStrategy>> = {},
 ): C {
-  let resolvedConfig = ({} as unknown) as CommandConfiguration<C>
+  let resolvedConfig = {} as unknown as CommandConfiguration<C>
 
   // load configs
   if (isNotEmptyArray(flatOpts.configPath)) {
@@ -115,7 +115,7 @@ export function flatOptionsFromConfiguration<
 
   if (subCommandName === false) {
     result = merge<C>(
-      [result, (resolvedConfig as unknown) as C],
+      [result, resolvedConfig as unknown as C],
       strategies,
       defaultMergeStrategies.replace,
     )
@@ -158,7 +158,7 @@ export function flatOptionsFromConfiguration<
  */
 export function resolveCommandConfigurationOptions<
   C extends Partial<CommandConfigurationOptions>,
-  D extends CommandConfigurationOptions
+  D extends CommandConfigurationOptions,
 >(
   logger: ChalkLogger,
   commandName: string,

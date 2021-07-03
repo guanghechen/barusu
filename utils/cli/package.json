@@ -35,9 +35,9 @@
     "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build"
   },
   "dependencies": {
-    "@barusu/chalk-logger": "^0.2.1",
-    "@guanghechen/locate-helper": "^1.6.1",
-    "@guanghechen/option-helper": "^1.6.1",
+    "@guanghechen/chalk-logger": "^1.7.0",
+    "@guanghechen/locate-helper": "^1.7.0",
+    "@guanghechen/option-helper": "^1.7.0",
     "@types/command-exists": "^1.2.0",
     "@types/fs-extra": "^9.0.11",
     "@types/js-yaml": "^4.0.1",
