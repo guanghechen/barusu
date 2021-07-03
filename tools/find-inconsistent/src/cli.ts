@@ -1,11 +1,11 @@
 import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
-} from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
 import {
   createTopCommand,
   resolveCommandConfigurationOptions,
-} from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
 import { locateNearestFilepath } from '@guanghechen/locate-helper'
 import {
   COMMAND_NAME,
@@ -31,7 +31,7 @@ program
     const defaultOptions: R = resolveCommandConfigurationOptions<
       CommandOptions,
       CommandOptions
-    >(logger, packageName, false, defaultCommandOptions, _workspaceDir, options)
+    >(logger, packageName, false, _workspaceDir, defaultCommandOptions, options)
 
     const rootPackageJsonPath: string | null = locateNearestFilepath(
       defaultOptions.workspace,
@@ -47,6 +47,6 @@ program
     }
 
     const manager = new PackageManager()
-    manager.resolve(rootPackageJsonPath)
+    void manager.resolve(rootPackageJsonPath)
   })
   .parse(process.argv)

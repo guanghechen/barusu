@@ -2,8 +2,9 @@ import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
-} from '@barusu/util-cli'
-import { Command, absoluteOfWorkspace } from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
+import { Command } from '@guanghechen/commander-helper'
+import { absoluteOfWorkspace } from '@guanghechen/file-helper'
 import {
   cover,
   coverBoolean,
@@ -108,196 +109,201 @@ export type SubCommandServeOptions = SubCommandOptions &
 /**
  * create Sub-command: serve
  */
-export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> = function (
-  handle?: SubCommandProcessor<SubCommandServeOptions>,
-  commandName = 'serve',
-  aliases: string[] = ['s'],
-): Command {
-  const command = new Command()
+export const createSubCommandServe: SubCommandCreator<SubCommandServeOptions> =
+  function (
+    handle?: SubCommandProcessor<SubCommandServeOptions>,
+    commandName = 'serve',
+    aliases: string[] = ['s'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .option(
-      '-C, --api-config-path <api-config-path>',
-      'filepath of api-item config (glob patterns / strings)',
-      (val, acc: string[]) => acc.concat(val),
-      [],
-    )
-    .option(
-      '-s, --schema-root-path <schemaRootPath>',
-      'root path of schema files',
-    )
-    .option(
-      '-h, --host <host>',
-      'specify the ip/domain address to which the mock-server listens.',
-    )
-    .option(
-      '-p, --port <port>',
-      'specify the port on which the mock-server listens.',
-    )
-    .option('--prefix-url <prefixUrl>', 'specify the prefix url of routes.')
-    .option('--mock-required-only', "json-schema-faker's option `requiredOnly`")
-    .option(
-      '--mock-optionals-always',
-      "json-schema-faker's option `alwaysFakeOptionals`",
-    )
-    .option(
-      '--mock-optionals-probability <optionalsProbability>',
-      "json-schema-faker's option `optionalsProbability`",
-    )
-    .option(
-      '--mock-data-prefix-url <mockDataPrefixUrl>',
-      'base url of mock data files',
-    )
-    .option(
-      '--mock-data-root-dir <mockDataRootDir>',
-      'specify the root dirpath of mock data files',
-    )
-    .option(
-      '--mock-resource-prefix-url <mockResourcePrefixUrl>',
-      'base url of resource files',
-    )
-    .option(
-      '--mock-resource-root-dir <mockResourceRootDir>',
-      'specify the root dirpath of resource files',
-    )
-    .action(async function ([_workspaceDir], options: SubCommandOptions) {
-      logger.setName(commandName)
-
-      const defaultOptions: SubCommandServeOptions = resolveGlobalCommandOptions(
-        packageName,
-        commandName,
-        __defaultCommandOptions,
-        _workspaceDir,
-        options,
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .option(
+        '-C, --api-config-path <api-config-path>',
+        'filepath of api-item config (glob patterns / strings)',
+        (val, acc: string[]) => acc.concat(val),
+        [],
       )
-      const { workspace } = defaultOptions
+      .option(
+        '-s, --schema-root-path <schemaRootPath>',
+        'root path of schema files',
+      )
+      .option(
+        '-h, --host <host>',
+        'specify the ip/domain address to which the mock-server listens.',
+      )
+      .option(
+        '-p, --port <port>',
+        'specify the port on which the mock-server listens.',
+      )
+      .option('--prefix-url <prefixUrl>', 'specify the prefix url of routes.')
+      .option(
+        '--mock-required-only',
+        "json-schema-faker's option `requiredOnly`",
+      )
+      .option(
+        '--mock-optionals-always',
+        "json-schema-faker's option `alwaysFakeOptionals`",
+      )
+      .option(
+        '--mock-optionals-probability <optionalsProbability>',
+        "json-schema-faker's option `optionalsProbability`",
+      )
+      .option(
+        '--mock-data-prefix-url <mockDataPrefixUrl>',
+        'base url of mock data files',
+      )
+      .option(
+        '--mock-data-root-dir <mockDataRootDir>',
+        'specify the root dirpath of mock data files',
+      )
+      .option(
+        '--mock-resource-prefix-url <mockResourcePrefixUrl>',
+        'base url of resource files',
+      )
+      .option(
+        '--mock-resource-root-dir <mockResourceRootDir>',
+        'specify the root dirpath of resource files',
+      )
+      .action(async function ([_workspaceDir], options: SubCommandOptions) {
+        logger.setName(commandName)
 
-      // resolve apConfigPath
-      const apiConfigPath: string[] = cover<string[]>(
-        defaultOptions.apiConfigPath,
-        options.apiConfigPath,
-        isNotEmptyArray,
-      ).map((p: string): string => absoluteOfWorkspace(workspace, p))
-      logger.debug('apiConfigPath:', apiConfigPath)
+        const defaultOptions: SubCommandServeOptions =
+          resolveGlobalCommandOptions(
+            packageName,
+            commandName,
+            _workspaceDir,
+            __defaultCommandOptions,
+            options,
+          )
+        const { workspace } = defaultOptions
 
-      // resolve schemaRootPath
-      const schemaRootPath: string = absoluteOfWorkspace(
-        workspace,
-        coverString(
-          defaultOptions.schemaRootPath,
-          options.schemaRootPath,
+        // resolve apConfigPath
+        const apiConfigPath: string[] = cover<string[]>(
+          defaultOptions.apiConfigPath,
+          options.apiConfigPath,
+          isNotEmptyArray,
+        ).map((p: string): string => absoluteOfWorkspace(workspace, p))
+        logger.debug('apiConfigPath:', apiConfigPath)
+
+        // resolve schemaRootPath
+        const schemaRootPath: string = absoluteOfWorkspace(
+          workspace,
+          coverString(
+            defaultOptions.schemaRootPath,
+            options.schemaRootPath,
+            isNonBlankString,
+          ),
+        )
+        logger.debug('schemaRootPath:', schemaRootPath)
+
+        // resolve host
+        const host: string = coverString(
+          defaultOptions.host,
+          options.host,
           isNonBlankString,
-        ),
-      )
-      logger.debug('schemaRootPath:', schemaRootPath)
+        )
+        logger.debug('host:', host)
 
-      // resolve host
-      const host: string = coverString(
-        defaultOptions.host,
-        options.host,
-        isNonBlankString,
-      )
-      logger.debug('host:', host)
+        // resolve port
+        const port: number = coverNumber(defaultOptions.port, options.port)
+        logger.debug('port:', port)
 
-      // resolve port
-      const port: number = coverNumber(defaultOptions.port, options.port)
-      logger.debug('port:', port)
-
-      // resolve prefixUrl
-      const prefixUrl: string = coverString(
-        defaultOptions.prefixUrl,
-        options.prefixUrl,
-        isNonBlankString,
-      )
-      logger.debug('prefixUrl:', prefixUrl)
-
-      // resolve mockRequiredOnly
-      const mockRequiredOnly: boolean = coverBoolean(
-        defaultOptions.mockRequiredOnly,
-        options.mockRequiredOnly,
-      )
-      logger.debug('mockRequiredOnly:', mockRequiredOnly)
-
-      // resolve mockOptionalsAlways
-      const mockOptionalsAlways: boolean = coverBoolean(
-        defaultOptions.mockOptionalsAlways,
-        options.mockOptionalsAlways,
-      )
-      logger.debug('mockOptionalsAlways:', mockOptionalsAlways)
-
-      // resolve mockOptionalsProbability
-      const mockOptionalsProbability: number = coverNumber(
-        defaultOptions.mockOptionalsProbability,
-        options.mockOptionalsProbability,
-      )
-      logger.debug('mockOptionalsProbability:', mockOptionalsProbability)
-
-      // resolve mockDataPrefixUrl
-      const mockDataPrefixUrl: string | undefined = cover<string | undefined>(
-        defaultOptions.mockDataPrefixUrl,
-        options.mockDataPrefixUrl,
-        isString,
-      )
-      logger.debug('mockDataPrefixUrl:', mockDataPrefixUrl)
-
-      // resolve mockDataRootDir
-      const mockDataRootDir: string | undefined = absoluteOfWorkspace(
-        workspace,
-        cover<string | undefined>(
-          defaultOptions.mockDataRootDir,
-          options.mockDataRootDir,
+        // resolve prefixUrl
+        const prefixUrl: string = coverString(
+          defaultOptions.prefixUrl,
+          options.prefixUrl,
           isNonBlankString,
-        ),
-      )
-      logger.debug('mockDataRootDir:', mockDataRootDir)
+        )
+        logger.debug('prefixUrl:', prefixUrl)
 
-      // resolve mockResourcePrefixUrl
-      const mockResourcePrefixUrl: string | undefined = cover<
-        string | undefined
-      >(
-        defaultOptions.mockResourcePrefixUrl,
-        options.mockResourcePrefixUrl,
-        isString,
-      )
-      logger.debug('mockResourcePrefixUrl:', mockResourcePrefixUrl)
+        // resolve mockRequiredOnly
+        const mockRequiredOnly: boolean = coverBoolean(
+          defaultOptions.mockRequiredOnly,
+          options.mockRequiredOnly,
+        )
+        logger.debug('mockRequiredOnly:', mockRequiredOnly)
 
-      // resolve mockResourceRootDir
-      const mockResourceRootDir: string | undefined = absoluteOfWorkspace(
-        workspace,
-        cover<string | undefined>(
-          defaultOptions.mockResourceRootDir,
-          options.mockResourceRootDir,
-          isNonBlankString,
-        ),
-      )
-      logger.debug('mockResourceRootDir:', mockResourceRootDir)
+        // resolve mockOptionalsAlways
+        const mockOptionalsAlways: boolean = coverBoolean(
+          defaultOptions.mockOptionalsAlways,
+          options.mockOptionalsAlways,
+        )
+        logger.debug('mockOptionalsAlways:', mockOptionalsAlways)
 
-      const resolvedOptions: SubCommandServeOptions = {
-        ...defaultOptions,
-        schemaRootPath,
-        apiConfigPath,
-        host,
-        port,
-        prefixUrl,
-        mockRequiredOnly,
-        mockOptionalsAlways,
-        mockOptionalsProbability,
-        mockDataPrefixUrl,
-        mockDataRootDir,
-        mockResourcePrefixUrl,
-        mockResourceRootDir,
-      }
+        // resolve mockOptionalsProbability
+        const mockOptionalsProbability: number = coverNumber(
+          defaultOptions.mockOptionalsProbability,
+          options.mockOptionalsProbability,
+        )
+        logger.debug('mockOptionalsProbability:', mockOptionalsProbability)
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        // resolve mockDataPrefixUrl
+        const mockDataPrefixUrl: string | undefined = cover<string | undefined>(
+          defaultOptions.mockDataPrefixUrl,
+          options.mockDataPrefixUrl,
+          isString,
+        )
+        logger.debug('mockDataPrefixUrl:', mockDataPrefixUrl)
 
-  return command
-}
+        // resolve mockDataRootDir
+        const mockDataRootDir: string | undefined = absoluteOfWorkspace(
+          workspace,
+          cover<string | undefined>(
+            defaultOptions.mockDataRootDir,
+            options.mockDataRootDir,
+            isNonBlankString,
+          ),
+        )
+        logger.debug('mockDataRootDir:', mockDataRootDir)
+
+        // resolve mockResourcePrefixUrl
+        const mockResourcePrefixUrl: string | undefined = cover<
+          string | undefined
+        >(
+          defaultOptions.mockResourcePrefixUrl,
+          options.mockResourcePrefixUrl,
+          isString,
+        )
+        logger.debug('mockResourcePrefixUrl:', mockResourcePrefixUrl)
+
+        // resolve mockResourceRootDir
+        const mockResourceRootDir: string | undefined = absoluteOfWorkspace(
+          workspace,
+          cover<string | undefined>(
+            defaultOptions.mockResourceRootDir,
+            options.mockResourceRootDir,
+            isNonBlankString,
+          ),
+        )
+        logger.debug('mockResourceRootDir:', mockResourceRootDir)
+
+        const resolvedOptions: SubCommandServeOptions = {
+          ...defaultOptions,
+          schemaRootPath,
+          apiConfigPath,
+          host,
+          port,
+          prefixUrl,
+          mockRequiredOnly,
+          mockOptionalsAlways,
+          mockOptionalsProbability,
+          mockDataPrefixUrl,
+          mockDataRootDir,
+          mockResourcePrefixUrl,
+          mockResourceRootDir,
+        }
+
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
+
+    return command
+  }
 
 /**
  * Create RestfulApiServeContext

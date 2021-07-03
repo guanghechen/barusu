@@ -1,4 +1,7 @@
-import { absoluteOfWorkspace, relativeOfWorkspace } from '@barusu/util-cli'
+import {
+  absoluteOfWorkspace,
+  relativeOfWorkspace,
+} from '@guanghechen/file-helper'
 import fs from 'fs-extra'
 import globby from 'globby'
 import type { CharacterDetail } from '../../util/character-stats'

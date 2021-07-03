@@ -1,5 +1,5 @@
 import type * as TJS from '@barusu/typescript-json-schema'
-import { mkdirsIfNotExists } from '@barusu/util-cli'
+import { mkdirsIfNotExists } from '@guanghechen/file-helper'
 import fs from 'fs-extra'
 import { logger } from '../../env/logger'
 import type { RestfulApiGenerateContext } from './context'
@@ -64,9 +64,8 @@ export class RestfulApiGenerateProcessor {
     }
 
     // If no title is specified, the model name is the title
-    const model: TJS.Definition = context.generator.getSchemaForSymbol(
-      modelName,
-    )
+    const model: TJS.Definition =
+      context.generator.getSchemaForSymbol(modelName)
     if (model.title == null) model.title = modelName
 
     // Make sure the folder on the output path has been created

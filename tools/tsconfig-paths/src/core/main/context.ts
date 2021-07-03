@@ -1,4 +1,4 @@
-import { absoluteOfWorkspace } from '@barusu/util-cli'
+import { absoluteOfWorkspace } from '@guanghechen/file-helper'
 import { coverString } from '@guanghechen/option-helper'
 import path from 'path'
 import * as TsconfigUtil from 'tsconfig'

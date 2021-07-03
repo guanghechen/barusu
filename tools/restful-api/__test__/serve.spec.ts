@@ -1,4 +1,4 @@
-import { absoluteOfWorkspace } from '@barusu/util-cli'
+import { absoluteOfWorkspace } from '@guanghechen/file-helper'
 import { isObject } from '@guanghechen/option-helper'
 import Router from '@koa/router'
 import fs from 'fs-extra'

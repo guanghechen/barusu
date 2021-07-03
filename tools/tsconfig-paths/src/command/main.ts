@@ -2,11 +2,11 @@ import type {
   MainCommandExecutor,
   MainCommandMounter,
   MainCommandProcessor,
-} from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
 import {
   createMainCommandExecutor,
   createMainCommandMounter,
-} from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
 import type { MainCommandOptions } from '../core/main/command'
 import {
   createMainCommand,
@@ -22,19 +22,17 @@ import { handleError } from './_util'
  * @param options
  * @returns {void|Promise<void>}
  */
-export const processMainCommand: MainCommandProcessor<MainCommandOptions> = async function (
-  options: MainCommandOptions,
-): Promise<void> {
-  try {
-    const context: TsconfigPathsContext = await createTsconfigPathsContextFromOptions(
-      options,
-    )
-    const processor = new TsconfigPathsProcessor(context)
-    await processor.process()
-  } catch (error) {
-    handleError(error)
+export const processMainCommand: MainCommandProcessor<MainCommandOptions> =
+  async function (options: MainCommandOptions): Promise<void> {
+    try {
+      const context: TsconfigPathsContext =
+        await createTsconfigPathsContextFromOptions(options)
+      const processor = new TsconfigPathsProcessor(context)
+      await processor.process()
+    } catch (error) {
+      handleError(error)
+    }
   }
-}
 
 /**
  * Mount main command
@@ -43,16 +41,18 @@ export const processMainCommand: MainCommandProcessor<MainCommandOptions> = asyn
  * @param {CommandOptions}  opts
  * @returns {void}
  */
-export const mountMainCommand: MainCommandMounter = createMainCommandMounter<MainCommandOptions>(
-  createMainCommand,
-  processMainCommand,
-)
+export const mountMainCommand: MainCommandMounter =
+  createMainCommandMounter<MainCommandOptions>(
+    createMainCommand,
+    processMainCommand,
+  )
 
 /**
  * Execute main command
  *
  */
-export const execMainCommand: MainCommandExecutor = createMainCommandExecutor<MainCommandOptions>(
-  createMainCommand,
-  processMainCommand,
-)
+export const execMainCommand: MainCommandExecutor =
+  createMainCommandExecutor<MainCommandOptions>(
+    createMainCommand,
+    processMainCommand,
+  )

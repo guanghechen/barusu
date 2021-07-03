@@ -1,9 +1,9 @@
+import { Command } from '@guanghechen/commander-helper'
 import type {
   CommandConfigurationFlatOpts,
   SubCommandCreator,
   SubCommandProcessor,
-} from '@barusu/util-cli'
-import { Command } from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
 import { cover, isNotEmptyArray } from '@guanghechen/option-helper'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
@@ -33,54 +33,56 @@ export type SubCommandInitOptions = SubCommandOptions &
 /**
  * create Sub-command: init
  */
-export const createSubCommandInit: SubCommandCreator<SubCommandInitOptions> = function (
-  handle?: SubCommandProcessor<SubCommandInitOptions>,
-  commandName = 'init',
-  aliases: string[] = ['i'],
-): Command {
-  const command = new Command()
+export const createSubCommandInit: SubCommandCreator<SubCommandInitOptions> =
+  function (
+    handle?: SubCommandProcessor<SubCommandInitOptions>,
+    commandName = 'init',
+    aliases: string[] = ['i'],
+  ): Command {
+    const command = new Command()
 
-  command
-    .name(commandName)
-    .aliases(aliases)
-    .arguments('<workspace>')
-    .option(
-      '--plop-bypass <plopBypass>',
-      'bypass array to plop',
-      (val, acc: string[]) => acc.concat(val),
-      [],
-    )
-    .action(async function ([_workspaceDir], options: SubCommandOptions) {
-      logger.setName(commandName)
-
-      const defaultOptions: SubCommandInitOptions = resolveGlobalCommandOptions(
-        packageName,
-        commandName,
-        __defaultCommandOptions,
-        _workspaceDir,
-        options,
+    command
+      .name(commandName)
+      .aliases(aliases)
+      .arguments('<workspace>')
+      .option(
+        '--plop-bypass <plopBypass>',
+        'bypass array to plop',
+        (val, acc: string[]) => acc.concat(val),
+        [],
       )
+      .action(async function ([_workspaceDir], options: SubCommandOptions) {
+        logger.setName(commandName)
 
-      // resolve plopBypass
-      const plopBypass: string[] = cover<string[]>(
-        defaultOptions.plopBypass,
-        options.plopBypass,
-        isNotEmptyArray,
-      )
-      logger.debug('plopBypass:', plopBypass)
+        const defaultOptions: SubCommandInitOptions =
+          resolveGlobalCommandOptions(
+            packageName,
+            commandName,
+            _workspaceDir,
+            __defaultCommandOptions,
+            options,
+          )
 
-      const resolvedOptions: SubCommandInitOptions = {
-        ...defaultOptions,
-        plopBypass,
-      }
+        // resolve plopBypass
+        const plopBypass: string[] = cover<string[]>(
+          defaultOptions.plopBypass,
+          options.plopBypass,
+          isNotEmptyArray,
+        )
+        logger.debug('plopBypass:', plopBypass)
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        const resolvedOptions: SubCommandInitOptions = {
+          ...defaultOptions,
+          plopBypass,
+        }
 
-  return command
-}
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
+
+    return command
+  }
 
 /**
  * Create RestfulApiInitContext

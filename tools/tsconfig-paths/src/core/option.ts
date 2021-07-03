@@ -2,8 +2,8 @@ import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
   MergeStrategy,
-} from '@barusu/util-cli'
-import { resolveCommandConfigurationOptions } from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
+import { resolveCommandConfigurationOptions } from '@guanghechen/commander-helper'
 import { logger } from '../env/logger'
 
 /**
@@ -40,8 +40,8 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     logger,
     commandName,
     subCommandName,
-    { ...__defaultGlobalCommandOptions, ...defaultOptions },
     workspaceDir,
+    { ...__defaultGlobalCommandOptions, ...defaultOptions },
     options,
     strategies,
   )

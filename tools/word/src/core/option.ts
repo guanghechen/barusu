@@ -2,8 +2,8 @@ import type {
   CommandConfigurationFlatOpts,
   CommandConfigurationOptions,
   MergeStrategy,
-} from '@barusu/util-cli'
-import { resolveCommandConfigurationOptions } from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
+import { resolveCommandConfigurationOptions } from '@guanghechen/commander-helper'
 import { cover, isNonBlankString } from '@guanghechen/option-helper'
 import { logger } from '../env/logger'
 
@@ -34,8 +34,8 @@ export const __defaultGlobalCommandOptions: GlobalCommandOptions = {
 export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
   commandName: string,
   subCommandName: string | false,
-  defaultOptions: C,
   workspaceDir: string,
+  defaultOptions: C,
   options: C & GlobalCommandOptions,
   strategies: Partial<
     Record<keyof (C & GlobalCommandOptions), MergeStrategy>
@@ -49,8 +49,8 @@ export function resolveGlobalCommandOptions<C extends Record<string, unknown>>(
     logger,
     commandName,
     subCommandName,
-    { ...__defaultGlobalCommandOptions, ...defaultOptions },
     workspaceDir,
+    { ...__defaultGlobalCommandOptions, ...defaultOptions },
     options,
     strategies,
   )

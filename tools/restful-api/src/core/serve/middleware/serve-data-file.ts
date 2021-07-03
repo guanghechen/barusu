@@ -1,4 +1,4 @@
-import { relativeOfWorkspace } from '@barusu/util-cli'
+import { relativeOfWorkspace } from '@guanghechen/file-helper'
 import fs from 'fs-extra'
 import type Koa from 'koa'
 import path from 'path'

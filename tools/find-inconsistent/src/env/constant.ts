@@ -1,8 +1,9 @@
 import path from 'path'
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 export {
   name as packageName,
-  version as packageVersion, // eslint-disable-next-line import/no-extraneous-dependencies
+  version as packageVersion,
 } from '@barusu/tool-find-inconsistent/package.json'
 
 // Command name

@@ -1,11 +1,10 @@
-import { ensureCriticalFilepathExistsSync } from '@barusu/util-cli'
+import { ensureCriticalFilepathExistsSync } from '@guanghechen/file-helper'
 import type { ValidateFunction } from 'ajv'
 import Ajv from 'ajv'
 import fs from 'fs-extra'
 import yaml from 'js-yaml'
 import path from 'path'
 import { configRootDir } from './constant'
-import { logger } from './logger'
 
 /**
  * Calc absolute path of configs
@@ -49,7 +48,7 @@ export function loadContextConfig<R, T>(params: {
 }): T | never {
   let json: R
   if (params.fallbackData == null) {
-    ensureCriticalFilepathExistsSync(params.configPath, logger)
+    ensureCriticalFilepathExistsSync(params.configPath)
   }
 
   if (params.fallbackData == null || fs.existsSync(params.configPath)) {

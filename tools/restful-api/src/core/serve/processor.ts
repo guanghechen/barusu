@@ -1,4 +1,4 @@
-import { isFile } from '@barusu/util-cli'
+import { isFileSync } from '@guanghechen/file-helper'
 import koaCors from '@koa/cors'
 import Router from '@koa/router'
 import chalk from 'chalk'
@@ -147,7 +147,7 @@ export class RestfulApiServeProcessor {
       router.register(item.path, item.methods, [
         async (ctx: Router.RouterContext) => {
           const schemaPath = item.response.schemaPath
-          if (!(await isFile(schemaPath))) {
+          if (!isFileSync(schemaPath)) {
             throw new Error(`bad schema: ${schemaPath} is not found.`)
           }
           const schemaContent: string = await fs.readFile(schemaPath, encoding)

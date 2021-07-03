@@ -3,8 +3,8 @@ import type {
   CommandConfigurationFlatOpts,
   MainCommandCreator,
   MainCommandProcessor,
-} from '@barusu/util-cli'
-import { absoluteOfWorkspace } from '@barusu/util-cli'
+} from '@guanghechen/commander-helper'
+import { absoluteOfWorkspace } from '@guanghechen/file-helper'
 import {
   cover,
   coverString,
@@ -62,118 +62,117 @@ export type MainCommandOptions = SubMainCommandOptions &
 /**
  * create main command
  */
-export const createMainCommand: MainCommandCreator<MainCommandOptions> = function (
-  handle?: MainCommandProcessor<MainCommandOptions>,
-): Command {
-  const command = createProgram()
+export const createMainCommand: MainCommandCreator<MainCommandOptions> =
+  function (handle?: MainCommandProcessor<MainCommandOptions>): Command {
+    const command = createProgram()
 
-  command
-    .usage('<workspace> [options]')
-    .arguments('<workspace>')
-    .requiredOption(
-      '--tsconfig-path <tsconfigPath>',
-      'path of tsconfig.json',
-      'tsconfig.json',
-    )
-    .option(
-      '-P, --pattern <pattern>',
-      'glob pattern of source file',
-      (val, acc: string[]) => acc.concat(val),
-      [],
-    )
-    .option('--src-root-dir <srcRootPath>', 'root path of source files')
-    .option('--dst-root-dir <dstRootPath>', 'root path of target files')
-    .action(async function ([_workspaceDir], options: MainCommandOptions) {
-      logger.setName('')
-
-      const defaultOptions: MainCommandOptions = resolveGlobalCommandOptions(
-        packageName,
-        false,
-        __defaultCommandOptions,
-        _workspaceDir,
-        options,
+    command
+      .usage('<workspace> [options]')
+      .arguments('<workspace>')
+      .requiredOption(
+        '--tsconfig-path <tsconfigPath>',
+        'path of tsconfig.json',
+        'tsconfig.json',
       )
-
-      // resolve encoding
-      const encoding: string = cover<string>(
-        defaultOptions.encoding,
-        options.encoding,
-        isNonBlankString,
+      .option(
+        '-P, --pattern <pattern>',
+        'glob pattern of source file',
+        (val, acc: string[]) => acc.concat(val),
+        [],
       )
-      logger.debug('encoding:', encoding)
+      .option('--src-root-dir <srcRootPath>', 'root path of source files')
+      .option('--dst-root-dir <dstRootPath>', 'root path of target files')
+      .action(async function ([_workspaceDir], options: MainCommandOptions) {
+        logger.setName('')
 
-      // resolve pattern
-      const pattern: string[] = cover<string[]>(
-        defaultOptions.pattern,
-        options.pattern,
-        isNotEmptyArray,
-      )
-      logger.debug('pattern:', pattern)
+        const defaultOptions: MainCommandOptions = resolveGlobalCommandOptions(
+          packageName,
+          false,
+          __defaultCommandOptions,
+          _workspaceDir,
+          options,
+        )
 
-      // resolve tsconfigPath
-      const tsconfigPath: string = absoluteOfWorkspace(
-        defaultOptions.workspace,
-        cover<string>(
-          defaultOptions.tsconfigPath,
-          options.tsconfigPath,
+        // resolve encoding
+        const encoding: string = cover<string>(
+          defaultOptions.encoding,
+          options.encoding,
           isNonBlankString,
-        ),
-      )
-      logger.debug('tsconfigPath:', tsconfigPath)
+        )
+        logger.debug('encoding:', encoding)
 
-      // resolve workspace
-      const { path: configPath } = TsconfigUtil.loadSync(
-        defaultOptions.workspace,
-        tsconfigPath,
-      )
-      const workspace = coverString(
-        defaultOptions.workspace,
-        absoluteOfWorkspace(
+        // resolve pattern
+        const pattern: string[] = cover<string[]>(
+          defaultOptions.pattern,
+          options.pattern,
+          isNotEmptyArray,
+        )
+        logger.debug('pattern:', pattern)
+
+        // resolve tsconfigPath
+        const tsconfigPath: string = absoluteOfWorkspace(
           defaultOptions.workspace,
-          path.dirname(configPath || ''),
-        ),
-      )
-      logger.debug('workspace:', workspace)
+          cover<string>(
+            defaultOptions.tsconfigPath,
+            options.tsconfigPath,
+            isNonBlankString,
+          ),
+        )
+        logger.debug('tsconfigPath:', tsconfigPath)
 
-      // resolve srcRootDir
-      const srcRootDir: string = absoluteOfWorkspace(
-        workspace,
-        coverString(
-          defaultOptions.srcRootDir,
-          options.srcRootDir,
-          isNonBlankString,
-        ),
-      )
-      logger.debug('srcRootDir:', srcRootDir)
+        // resolve workspace
+        const { path: configPath } = TsconfigUtil.loadSync(
+          defaultOptions.workspace,
+          tsconfigPath,
+        )
+        const workspace = coverString(
+          defaultOptions.workspace,
+          absoluteOfWorkspace(
+            defaultOptions.workspace,
+            path.dirname(configPath || ''),
+          ),
+        )
+        logger.debug('workspace:', workspace)
 
-      // resolve dstRootDir
-      const dstRootDir: string = absoluteOfWorkspace(
-        workspace,
-        coverString(
-          defaultOptions.dstRootDir,
-          options.dstRootDir,
-          isNonBlankString,
-        ),
-      )
-      logger.debug('dstRootDir:', dstRootDir)
+        // resolve srcRootDir
+        const srcRootDir: string = absoluteOfWorkspace(
+          workspace,
+          coverString(
+            defaultOptions.srcRootDir,
+            options.srcRootDir,
+            isNonBlankString,
+          ),
+        )
+        logger.debug('srcRootDir:', srcRootDir)
 
-      const resolvedOptions: MainCommandOptions = {
-        ...defaultOptions,
-        workspace,
-        encoding,
-        pattern,
-        tsconfigPath,
-        srcRootDir,
-        dstRootDir,
-      }
+        // resolve dstRootDir
+        const dstRootDir: string = absoluteOfWorkspace(
+          workspace,
+          coverString(
+            defaultOptions.dstRootDir,
+            options.dstRootDir,
+            isNonBlankString,
+          ),
+        )
+        logger.debug('dstRootDir:', dstRootDir)
 
-      if (handle != null) {
-        await handle(resolvedOptions)
-      }
-    })
+        const resolvedOptions: MainCommandOptions = {
+          ...defaultOptions,
+          workspace,
+          encoding,
+          pattern,
+          tsconfigPath,
+          srcRootDir,
+          dstRootDir,
+        }
 
-  return command
-}
+        if (handle != null) {
+          await handle(resolvedOptions)
+        }
+      })
+
+    return command
+  }
 
 /**
  * Create TsconfigPathsContext

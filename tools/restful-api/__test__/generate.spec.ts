@@ -1,4 +1,4 @@
-import { absoluteOfWorkspace } from '@barusu/util-cli'
+import { absoluteOfWorkspace } from '@guanghechen/file-helper'
 import fs from 'fs-extra'
 import globby from 'globby'
 import path from 'path'

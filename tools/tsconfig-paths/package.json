@@ -41,6 +41,7 @@
     "@guanghechen/chalk-logger": "^1.7.0",
     "@guanghechen/commander-helper": "^1.7.0",
     "@guanghechen/event-bus": "^1.7.0",
+    "@guanghechen/file-helper": "^1.7.0",
     "@guanghechen/option-helper": "^1.7.0",
     "@types/fs-extra": "^9.0.8",
     "commander": "^7.2.0",
