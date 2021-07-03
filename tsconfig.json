@@ -12,7 +12,6 @@
         "./scaffolds/webpack-source-map-loader/src"
       ],
       "@barusu/util-blob": ["./utils/blob/src"],
-      "@barusu/util-cli": ["./utils/cli/src"],
       "@barusu/util-jest": ["./utils/jest/src"]
     }
   },

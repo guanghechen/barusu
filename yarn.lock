@@ -382,6 +382,23 @@
     dayjs "^1.10.5"
     fs-extra "^10.0.0"
 
+"@guanghechen/commander-helper@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/commander-helper/-/commander-helper-1.7.0.tgz#dde0cf176add8efc0237af8ddb5b5c1a2129e6fd"
+  integrity sha512-8ayT+XP9vnfBlCL3PmsuCQDUbUpIsTFYeR2CDC9FpxjLNcqs1QijEM36l2SV/joED+zIDherYHV0ROoU82q2yQ==
+  dependencies:
+    "@guanghechen/chalk-logger" "^1.7.0"
+    "@guanghechen/file-helper" "^1.7.0"
+    "@guanghechen/invariant" "^1.7.0"
+    "@guanghechen/locate-helper" "^1.7.0"
+    "@guanghechen/option-helper" "^1.7.0"
+    command-exists "^1.2.9"
+    commander "^7.2.0"
+    execa "^5.1.1"
+    fs-extra "^10.0.0"
+    inquirer "^8.1.1"
+    js-yaml "^4.1.0"
+
 "@guanghechen/eslint-config-ts@^1.7.0":
   version "1.7.0"
   resolved "https://registry.npmjs.org/@guanghechen/eslint-config-ts/-/eslint-config-ts-1.7.0.tgz#4f696bbaf0bdf3f74625ce2e1cef44b01add97ae"
@@ -402,6 +419,19 @@
   version "1.7.0"
   resolved "https://registry.npmjs.org/@guanghechen/event-bus/-/event-bus-1.7.0.tgz#6784369ce2981282e0bef93463af170dc4bcca94"
   integrity sha512-qYsJCzea/CA4AKRTZq60A6H+wvE0Zc+4BVgAK4B4X8UoTKWoslrNQ4oWjYECXwKdJ/RrZM+yjX+9nDyzdXhQmQ==
+
+"@guanghechen/file-helper@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/file-helper/-/file-helper-1.7.0.tgz#a9d49f8b5b7c6f117447b47c3ad0a4952acce9b4"
+  integrity sha512-uGAcdHLa66cr9/cQAymNY5MpzU4fY65rbkj+uGp7Zy8OhkSD2eUf95u8cpzSyL3JEuGfnPHAAAZRZnxqlZkrbQ==
+  dependencies:
+    "@guanghechen/invariant" "^1.7.0"
+    fs-extra "^10.0.0"
+
+"@guanghechen/invariant@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/invariant/-/invariant-1.7.0.tgz#99dd11c8b892d3382cb6164722899cf468090a81"
+  integrity sha512-e9omqyX0j9K5o04Xhs8H5xmFNehysmVsrnh2nbYzHIeC1eU0/F4CkhzNNVpjn4ACvPQZ6EgdeIgCiqpswuzwvw==
 
 "@guanghechen/jest-config@^1.7.0":
   version "1.7.0"
@@ -1710,11 +1740,6 @@
   version "4.2.19"
   resolved "https://registry.npmjs.org/@types/chai/-/chai-4.2.19.tgz#80f286b515897413c7a35bdda069cc80f2344233"
   integrity sha512-jRJgpRBuY+7izT7/WNXP/LsMO9YonsstuL+xuvycDyESpoDoIAsMd7suwpB4h9oEWB+ZlPTqJJ8EHomzNhwTPQ==
-
-"@types/command-exists@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@types/command-exists/-/command-exists-1.2.0.tgz#d97e0ed10097090e4ab0367ed425b0312fad86f3"
-  integrity sha512-ugsxEJfsCuqMLSuCD4PIJkp5Uk2z6TCMRCgYVuhRo5cYQY3+1xXTQkSlPtkpGHuvWMjS2KTeVQXxkXRACMbM6A==
 
 "@types/connect@*":
   version "3.4.34"
