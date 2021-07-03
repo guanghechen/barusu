@@ -70,12 +70,12 @@
     "globby": "^11.0.4",
     "inquirer": "^8.1.1",
     "js-yaml": "^4.1.0",
-    "json-schema-faker": "^0.5.0-rcv.34",
+    "json-schema-faker": "^0.5.0-rcv.35",
     "koa": "^2.13.1",
     "koa-json": "^2.0.2",
     "koa-send": "^5.0.1",
     "mockjs": "^1.1.0",
     "node-plop": "~0.26.0",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   }
 }
