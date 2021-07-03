@@ -1,4 +1,4 @@
-import { SimpleEventBus } from '@barusu/event-bus'
+import { SimpleEventBus } from '@guanghechen/event-bus'
 import { logger } from '../env/logger'
 
 /**

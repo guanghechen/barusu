@@ -4,7 +4,6 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@barusu/event-bus": ["./packages/event-bus/src"],
       "@barusu/redux-actions": ["./packages/redux-actions/src"],
       "@barusu/typescript-json-schema": [
         "./packages/typescript-json-schema/src"

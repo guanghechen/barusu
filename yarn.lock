@@ -398,6 +398,11 @@
   dependencies:
     eslint-plugin-import "^2.23.4"
 
+"@guanghechen/event-bus@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@guanghechen/event-bus/-/event-bus-1.7.0.tgz#6784369ce2981282e0bef93463af170dc4bcca94"
+  integrity sha512-qYsJCzea/CA4AKRTZq60A6H+wvE0Zc+4BVgAK4B4X8UoTKWoslrNQ4oWjYECXwKdJ/RrZM+yjX+9nDyzdXhQmQ==
+
 "@guanghechen/jest-config@^1.7.0":
   version "1.7.0"
   resolved "https://registry.npmjs.org/@guanghechen/jest-config/-/jest-config-1.7.0.tgz#fbbf357ab454145b54040cce7c147d0ccb06abba"

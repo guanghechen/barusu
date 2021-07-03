@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@guanghechen/chalk-logger": "^1.7.0",
-    "@barusu/event-bus": "^0.2.1",
+    "@guanghechen/event-bus": "^1.7.0",
     "@barusu/util-cli": "^0.2.1",
     "@guanghechen/option-helper": "^1.7.0",
     "@types/fs-extra": "^9.0.11",
