@@ -1,5 +1,31 @@
 # Changelog
 
+<a name="0.3.0"></a>
+## 0.3.0 (2021-07-03)
+
+### Added
+
+- ✅ test: update snapshots [[d8ffa07](https://github.com/guanghechen/barusu/commit/d8ffa0736094fbead99b873e802bb917df490d7b)]
+
+### Changed
+
+- ⬆️ chore: upgrade dependencies [[798d399](https://github.com/guanghechen/barusu/commit/798d399c76dec0586c8e0acad75ad82037159ad9)]
+- 🔧 chore: don&#x27;t update yarn.lock on ci [[1fea59a](https://github.com/guanghechen/barusu/commit/1fea59a5155753029018295d91eb82a630d1671b)]
+
+### Removed
+
+- 🔥 refactor: remove @barusu/util-cli, please use @guanghechen/commander-helper instead [[b123548](https://github.com/guanghechen/barusu/commit/b1235483fa30610c7d9103e0dea3d919a80bcb67)]
+- 🔥 refactor: remove @barusu/util-cli, please use @guanghechen/commander-helper instead [[f43f1af](https://github.com/guanghechen/barusu/commit/f43f1af121901491388c4fffdaaa66841439bacb)]
+- 🔥 refactor: remove @barusu/tool-git-cipher, please use @guanghechen/tool-git-cipher instead [[666d07b](https://github.com/guanghechen/barusu/commit/666d07bc3118ab5b06d44412b3b5997c0d3a2086)]
+- 🔥 refactor: remove @barusu/event-bus, please use @guanghechen/event-bus instead [[10cd10e](https://github.com/guanghechen/barusu/commit/10cd10e2255d331f925f64227ce59b2545b8d793)]
+- 🔥 refactor: remove @barusu/chalk-logger, please use @guanghechen/chalk-logger instead [[b244ec8](https://github.com/guanghechen/barusu/commit/b244ec8ec902ca4f29b6606a88aeb11c5b41150b)]
+
+### Miscellaneous
+
+- 📝 docs: update docs [[2b023fb](https://github.com/guanghechen/barusu/commit/2b023fb574a00b76e42254a8a1c80b6e84f50b25)]
+- 📝 docs: update CHANGELOG [[a126a1d](https://github.com/guanghechen/barusu/commit/a126a1db4f29b7f21b03a1f3dd87c3a980292028)]
+
+
 <a name="0.2.1"></a>
 ## 0.2.1 (2021-06-26)
 
