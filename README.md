@@ -60,7 +60,7 @@ Package                               | Status        | Description
 
 
 [@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/main/packages/template-simple-hml#readme
-[@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/packages/find-inconsistent#readme
+[@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/packages/tool-find-inconsistent#readme
 [@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/main/packages/tool-restful-api#readme
 [@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/main/packages/tool--tsconfig-paths#readme
 [@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/packages/tool-word#readme

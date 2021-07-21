@@ -9,9 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guanghechen/barusu.git",
-    "directory": "packages/find-inconsistent"
+    "directory": "packages/tool-find-inconsistent"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/find-inconsistent#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/tool-find-inconsistent#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",
