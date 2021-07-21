@@ -11,7 +11,6 @@
       "@barusu/webpack-source-map-loader": [
         "./scaffolds/webpack-source-map-loader/src"
       ],
-      "@barusu/util-jest": ["./utils/jest/src"],
       "jest.setup": ["jest.setup.ts"]
     }
   },
