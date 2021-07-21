@@ -1,5 +1,6 @@
-import { createLoggerMocker } from '@barusu/util-jest'
+import { createLoggerMock } from '@guanghechen/jest-helper'
 import fs from 'fs-extra'
+import { desensitize } from 'jest.setup'
 import path from 'path'
 import { COMMAND_NAME, createProgram, execSubCommandStat, logger } from '../src'
 
@@ -15,8 +16,7 @@ describe('stat', function () {
 
     // eslint-disable-next-line jest/valid-title
     test(title, async function () {
-      const loggerMock = createLoggerMocker({ logger, workspaceRootDir })
-      loggerMock.mock()
+      const loggerMock = createLoggerMock({ logger, desensitize })
 
       const program = createProgram()
       const args = [
@@ -31,7 +31,7 @@ describe('stat', function () {
 
       await execSubCommandStat(program, args)
 
-      expect(loggerMock.data()).toMatchSnapshot('log info')
+      expect(loggerMock.getIndiscriminateAll()).toMatchSnapshot('log info')
       loggerMock.restore()
     })
   }

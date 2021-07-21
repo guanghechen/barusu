@@ -1,5 +1,6 @@
-import { createLoggerMocker, desensitize } from '@barusu/util-jest'
+import { createLoggerMock } from '@guanghechen/jest-helper'
 import fs from 'fs-extra'
+import { desensitize } from 'jest.setup'
 import path from 'path'
 import { COMMAND_NAME, execMainCommand, logger } from '../src'
 
@@ -15,18 +16,12 @@ describe('main', function () {
     const projectDir = path.resolve(caseRootDirectory, kase)
     const tsconfigFilepath = path.resolve(projectDir, 'tsconfig.json.txt')
 
-    const workspaceRootDir: string = path.resolve(__dirname, '..')
     // eslint-disable-next-line jest/valid-title
     test(title, async function () {
-      const desensitizeContent = (text: string): string =>
-        desensitize(text, workspaceRootDir)
-
-      const loggerMock = createLoggerMocker({
+      const loggerMock = createLoggerMock({
         logger,
-        workspaceRootDir,
-        formatter: desensitizeContent,
+        desensitize,
       })
-      loggerMock.mock()
 
       const fsWriteFileSyncMock = jest
         .spyOn(fs, 'writeFile')
@@ -36,8 +31,8 @@ describe('main', function () {
           encoding: string | any,
         ) {
           expect(encoding).toEqual('utf-8')
-          expect(desensitizeContent(resolveContent)).toMatchSnapshot(
-            `[${desensitizeContent(absolutePath)}] resolved content`,
+          expect(desensitize(resolveContent)).toMatchSnapshot(
+            `[${desensitize(absolutePath)}] resolved content`,
           )
         })
 
@@ -58,7 +53,7 @@ describe('main', function () {
 
       await execMainCommand(args)
 
-      expect(loggerMock.data()).toMatchSnapshot('log info')
+      expect(loggerMock.getIndiscriminateAll()).toMatchSnapshot('log info')
       fsWriteFileSyncMock.mockRestore()
       loggerMock.restore()
     })
