@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/main/packages/tsconfig-pathsl#readme">@barusu/tool-tsconfig-paths</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/tool--tsconfig-pathsl#readme">@barusu/tool-tsconfig-paths</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/tool-tsconfig-paths">

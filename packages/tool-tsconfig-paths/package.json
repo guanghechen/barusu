@@ -9,9 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guanghechen/barusu.git",
-    "directory": "packages/tsconfig-paths"
+    "directory": "packages/tool--tsconfig-paths"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/tsconfig-paths#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/tool--tsconfig-paths#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

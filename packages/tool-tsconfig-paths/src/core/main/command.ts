@@ -16,13 +16,13 @@ import * as TsconfigUtil from 'tsconfig'
 import { packageName } from '../../env/constant'
 import { logger } from '../../env/logger'
 import { createProgram } from '../command'
-import type { TsconfigPathsContext } from '../main/context'
-import { createTsconfigPathsContext } from '../main/context'
 import type { GlobalCommandOptions } from '../option'
 import {
   __defaultGlobalCommandOptions,
   resolveGlobalCommandOptions,
 } from '../option'
+import type { TsconfigPathsContext } from './context'
+import { createTsconfigPathsContext } from './context'
 
 interface SubMainCommandOptions extends GlobalCommandOptions {
   /**

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`main simple: [<$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple/src/a.ts] resolved content 1`] = `
+exports[`main simple: [<$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple/src/a.ts] resolved content 1`] = `
 "import { y } from './b'
 import { z } from './c'
 import yName from './b'
@@ -12,7 +12,7 @@ export default 'x'
 "
 `;
 
-exports[`main simple: [<$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple/src/b.ts] resolved content 1`] = `
+exports[`main simple: [<$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple/src/b.ts] resolved content 1`] = `
 "import { x } from './a'
 import { z } from './c'
 import xName from './a'
@@ -24,7 +24,7 @@ export default 'y'
 "
 `;
 
-exports[`main simple: [<$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple/src/c.ts] resolved content 1`] = `
+exports[`main simple: [<$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple/src/c.ts] resolved content 1`] = `
 "import { x } from './a'
 import { y } from './b'
 import xName from './a'
@@ -39,21 +39,21 @@ export default 'z'
 exports[`main simple: log info 1`] = `
 Array [
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mcwd: <$WORKSPACE$>/packages/tsconfig-paths[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mcwd: <$WORKSPACE$>/packages/tool-tsconfig-paths[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mworkspace: <$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mworkspace: <$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
     "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mconfigPath: [[39m
-[38;2;188;162;31m  \\"<$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/config.json\\"[39m
+[38;2;188;162;31m  \\"<$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/config.json\\"[39m
 [38;2;188;162;31m][39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mparasticConfigPath: <$WORKSPACE$>/packages/tsconfig-paths/package.json[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mparasticConfigPath: <$WORKSPACE$>/packages/tool-tsconfig-paths/package.json[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
@@ -71,23 +71,23 @@ Array [
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mtsconfigPath: <$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple/tsconfig.json.txt[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mtsconfigPath: <$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple/tsconfig.json.txt[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mworkspace: <$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mworkspace: <$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31msrcRootDir: <$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple/src[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31msrcRootDir: <$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple/src[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mdstRootDir: <$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple/src[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31mdstRootDir: <$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple/src[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
-    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31m[createTsconfigPathsContext] workspace: <$WORKSPACE$>/packages/tsconfig-paths/__test__/cases/main/simple[39m
+    "[90m<$Date$>[39m [[38;2;188;162;31mdebug[39m [90mbarusu-tsconfig-paths[39m] [38;2;188;162;31m[createTsconfigPathsContext] workspace: <$WORKSPACE$>/packages/tool-tsconfig-paths/__test__/cases/main/simple[39m
 [38;2;188;162;31m[39m",
   ],
   Array [
