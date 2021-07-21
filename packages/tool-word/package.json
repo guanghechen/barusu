@@ -9,9 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guanghechen/barusu.git",
-    "directory": "packages/word"
+    "directory": "packages/tool-word"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/word#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/tool-word#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

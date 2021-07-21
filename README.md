@@ -63,6 +63,6 @@ Package                               | Status        | Description
 [@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/packages/find-inconsistent#readme
 [@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/main/packages/tool-restful-api#readme
 [@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/main/packages/tsconfig-paths#readme
-[@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/packages/word#readme
+[@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/packages/tool-word#readme
 [@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/tree/main/packages/typescript-json-schema#readme
 [@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/main/packages/webpack-source-map-loader#readme

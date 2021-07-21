@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/main/packages/word#readme">@barusu/tool-word</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/tool-word#readme">@barusu/tool-word</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/tool-word">
