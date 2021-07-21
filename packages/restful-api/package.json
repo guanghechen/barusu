@@ -1,0 +1,81 @@
+{
+  "name": "@barusu/tool-restful-api",
+  "version": "0.3.0",
+  "description": "Quickly create restful style mock server.",
+  "author": {
+    "name": "guanghechen",
+    "url": "https://github.com/guanghechen/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guanghechen/barusu.git",
+    "directory": "packages/restful-api"
+  },
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/restful-api#readme",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "keywords": [
+    "restful mock server",
+    "typescript/json-schema to mock server"
+  ],
+  "files": [
+    "lib/",
+    "!lib/**/*.js.map",
+    "!lib/**/*.d.ts.map",
+    "package.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "barusu-rapit": "./lib/cjs/cli.js"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rollup -c ../../rollup.config.cli.js",
+    "prebuild": "rimraf lib/ && tsc -p tsconfig.src.json --emitDeclarationOnly",
+    "prepublishOnly": "cross-env ROLLUP_SHOULD_SOURCEMAP=false yarn build",
+    "test": "cross-env TS_NODE_FILES=true jest --config ../../jest.config.js --rootDir .",
+    "generate:schema": "cross-env node -r ts-node/register script/generate.schema.ts"
+  },
+  "dependencies": {
+    "@barusu/typescript-json-schema": "^0.3.0",
+    "@guanghechen/chalk-logger": "^1.7.0",
+    "@guanghechen/commander-helper": "^1.7.0",
+    "@guanghechen/event-bus": "^1.7.0",
+    "@guanghechen/file-helper": "^1.7.0",
+    "@guanghechen/option-helper": "^1.7.0",
+    "@guanghechen/plop-helper": "^1.7.0",
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "^10.0.0",
+    "@types/fs-extra": "^9.0.11",
+    "@types/inquirer": "^7.3.2",
+    "@types/js-yaml": "^4.0.1",
+    "@types/json-schema-faker": "^0.5.1",
+    "@types/koa": "^2.13.3",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-send": "^4.1.2",
+    "@types/koa__cors": "^3.0.2",
+    "@types/koa__router": "^8.0.4",
+    "@types/mockjs": "^1.0.3",
+    "ajv": "^8.6.0",
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "execa": "^5.1.1",
+    "fs-extra": "^10.0.0",
+    "globby": "^11.0.4",
+    "inquirer": "^8.1.1",
+    "js-yaml": "^4.1.0",
+    "json-schema-faker": "^0.5.0-rcv.35",
+    "koa": "^2.13.1",
+    "koa-json": "^2.0.2",
+    "koa-send": "^5.0.1",
+    "mockjs": "^1.1.0",
+    "node-plop": "~0.26.0",
+    "typescript": "^4.3.5"
+  }
+}

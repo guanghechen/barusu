@@ -48,62 +48,21 @@ A monorepo for maintaining multiple typescript projects.
 
 ## Overview
 
+Package                               | Status        | Description
+:------------------------------------:|:-------------:|:--------------------------------------
+[@barusu/template-simple-html][]      | Not Recommend | Boilerplates to create a simple traditional html project.
+[@barusu/tool-find-inconsistent][]    | Active        | Find inconsistent package versions in monorepo.
+[@barusu/tool-restful-api][]          | Active        | Quickly create restful style mock server.
+[@barusu/tool-tsconfig-paths][]       | Not Recommend | Expand path alias to full path of declaration files which bundled by tsc.
+[@barusu/tool-word][]                 | Not Recommend | Count the frequency of characters in the file(s).
+[@barusu/typescript-json-schema][]    | Active        | Convert typescript interfaces to JSON-Schema.
+[@barusu/webpack-source-map-loader][] | Not Recommend | Webpack plugin for loading source map.
 
-### Scaffolds
 
-Scaffolds are some development scripts.
-
-   Package                                | Status        | Description
-  :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/webpack-source-map-loader][]  | Not Recommend | Webpack plugin for loading source map.
-
-[@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/main/scaffolds/webpack-source-map-loader#readme
-
-
-### Templates
-
-Templates are some boilerplates for fast creating various projects.
-
-   Package                                | Status        | Description
-  :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/template-simple-html][]       | Not Recommend | Boilerplates to create a simple traditional html project.
-
-[@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/main/scaffolds/template-simple-hml#readme
-
-### Tools
-
-  Tools are some command line programs in node.js
-
-   Package                                | Status        | Description
-  :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/tool-find-inconsistent][]     | Active        | Find inconsistent package versions in monorepo.
-   [@barusu/tool-restful-api][]           | Active        | Quickly create restful style mock server.
-   [@barusu/tool-tsconfig-paths][]        | Not Recommend | Expand path alias to full path of declaration files which bundled by tsc.
-   [@barusu/tool-word][]                  | Not Recommend | Count the frequency of characters in the file(s).
-
-[@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/tools/find-inconsistent#readme
-[@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/main/tools/restful-api#readme
-[@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/main/tools/tsconfig-paths#readme
-[@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/tools/word#readme
-
-### Utils
-
-  Utils are some utility function collections.
-
-   Package                                | Status        | Description
-  :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/util-blob][]                  | Active        | Blob object helpers.
-   [@barusu/util-jest][]                  | Active        | Jest utility functions.
-
-[@barusu/util-blob]: https://github.com/guanghechen/barusu/tree/main/utils/blob#readme
-[@barusu/util-jest]: https://github.com/guanghechen/barusu/tree/main/utils/jest#readme
-
-### Other projects
-
-   Package                                | Status        | Description
-  :--------------------------------------:|:-------------:|:--------------------------------------
-   [@barusu/redux-actions][]              | Active        | Helpers for redux actions.
-   [@barusu/typescript-json-schema][]     | Active        | Convert typescript interfaces to JSON-Schema.
-
-[@barusu/redux-actions]: https://github.com/guanghechen/barusu/tree/main/packages/redux-actions#readme
+[@barusu/template-simple-html]: https://github.com/guanghechen/barusu/tree/main/packages/template-simple-hml#readme
+[@barusu/tool-find-inconsistent]: https://github.com/guanghechen/barusu/tree/main/packages/find-inconsistent#readme
+[@barusu/tool-restful-api]: https://github.com/guanghechen/barusu/tree/main/packages/restful-api#readme
+[@barusu/tool-tsconfig-paths]: https://github.com/guanghechen/barusu/tree/main/packages/tsconfig-paths#readme
+[@barusu/tool-word]: https://github.com/guanghechen/barusu/tree/main/packages/word#readme
 [@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/tree/main/packages/typescript-json-schema#readme
+[@barusu/webpack-source-map-loader]: https://github.com/guanghechen/barusu/tree/main/packages/webpack-source-map-loader#readme

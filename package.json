@@ -37,9 +37,7 @@
     "update:lock": "yarn-deduplicate"
   },
   "workspaces": [
-    "packages/*",
-    "scaffolds/*",
-    "tools/*"
+    "packages/*"
   ],
   "devDependencies": {
     "@babel/core": "7.14.6",

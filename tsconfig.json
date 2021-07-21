@@ -8,7 +8,7 @@
         "./packages/typescript-json-schema/src"
       ],
       "@barusu/webpack-source-map-loader": [
-        "./scaffolds/webpack-source-map-loader/src"
+        "./packages/webpack-source-map-loader/src"
       ],
       "jest.setup": ["jest.setup.ts"]
     }
