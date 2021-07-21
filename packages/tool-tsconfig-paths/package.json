@@ -47,6 +47,6 @@
     "fs-extra": "^10.0.0",
     "globby": "^11.0.4",
     "tsconfig": "^7.0.0",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.10.1"
   }
 }

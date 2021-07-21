@@ -116,4 +116,5 @@ export const subDefinitions = {
  *
  * for more details, see tests/require.test.ts
  */
-export const REGEX_REQUIRE = /^(\s+)?require\(('@?[a-zA-Z0-9./_-]+'|"@?[a-zA-Z0-9./_-]+")\)(\.([a-zA-Z0-9_$]+))?(\s+|$)/
+export const REGEX_REQUIRE =
+  /^(\s+)?require\(('@?[a-zA-Z0-9./_-]+'|"@?[a-zA-Z0-9./_-]+")\)(\.([a-zA-Z0-9_$]+))?(\s+|$)/
