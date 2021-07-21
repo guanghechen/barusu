@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-tsconfig-paths",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Expand path alias to full path of declaration files which bundled by tsc",
   "author": {
     "name": "guanghechen",

@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-find-inconsistent",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A cli tool to find inconsistent package versions in monorepo",
   "author": {
     "name": "guanghechen",

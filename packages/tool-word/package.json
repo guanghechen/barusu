@@ -1,6 +1,6 @@
 {
   "name": "@barusu/tool-word",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Count the frequency of characters in the file(s)",
   "author": {
     "name": "guanghechen",
