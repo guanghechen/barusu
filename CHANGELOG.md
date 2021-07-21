@@ -1,5 +1,30 @@
 # Changelog
 
+<a name="0.3.1"></a>
+## 0.3.1 (2021-07-21)
+
+### Added
+
+- ✅ test: use @guanghechen/jest-helper instead of @barusu/util-jest for tests [[31a518b](https://github.com/guanghechen/barusu/commit/31a518bd89280174bc3523f91db1e893b45ac07c)]
+
+### Changed
+
+- 🔧 chore: keep the same version of dependencies &amp; fix lint warnings [[9758a44](https://github.com/guanghechen/barusu/commit/9758a44f4c0eb9e33ccaac96e36943c5bcfe5cbd)]
+- 🚚 rename: rename packages/find-inconsistent to packages/tool-find-inconsistent [[2d8245e](https://github.com/guanghechen/barusu/commit/2d8245eaddd32bc135f6a520972635d64001ca48)]
+- 🚚 rename: rename packages/tsconfig-paths to packages/tool-tsconfig-paths [[085c4fa](https://github.com/guanghechen/barusu/commit/085c4fa685a326493d4ebcf8913b50a3409b35a1)]
+- 🚚 rename: rename packages/word to packages/tool-word [[2efc7c1](https://github.com/guanghechen/barusu/commit/2efc7c1d5d0d0475d9b9d43ea112262647ef993c)]
+- 🚚 rename: rename packages/restful-api to packages/tool-restful-api [[de99b17](https://github.com/guanghechen/barusu/commit/de99b17e9bae332371b07ad790544742e2b1f32a)]
+- ⬆️ chore: upgrade dependencies [[43670bf](https://github.com/guanghechen/barusu/commit/43670bf0ed2cf9e9458bd8f2a6ec31b3b65c2b8a)]
+- 🚚 refactor: move sub-packages under tools/ and scaffolds/ to packages/ [[7d06aa1](https://github.com/guanghechen/barusu/commit/7d06aa13aa841f36fa0012ef30eb5a44de8eb596)]
+
+### Miscellaneous
+
+- ⚰️ improve: migrate @barusu/redux-actions to @guanghechen/redux-actions [[466f6ee](https://github.com/guanghechen/barusu/commit/466f6ee270624aeae10f95e79dd6b99f0ed21e61)]
+- ⚰️ improve: remove @barusu/util-jest, use @guanghechen/jest-helper instead [[cd7a12a](https://github.com/guanghechen/barusu/commit/cd7a12a28dfbc35bedd20de8c5aa6fccb5efc729)]
+- ⚰️ improve: migrate @barusu/blob-helper to @guanghechen/blob-helper [[569ec2a](https://github.com/guanghechen/barusu/commit/569ec2a6e87e92ba3220033bc21b857f9b90cb6b)]
+- 📝 docs: update CHANGELOG [[93bff96](https://github.com/guanghechen/barusu/commit/93bff9663220ccca4554e9be98624af099c6f8f7)]
+
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2021-07-03)
 
