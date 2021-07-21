@@ -9,9 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guanghechen/barusu.git",
-    "directory": "packages/restful-api"
+    "directory": "packages/tool-restful-api"
   },
-  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/restful-api#readme",
+  "homepage": "https://github.com/guanghechen/barusu/tree/main/packages/tool-restful-api#readme",
   "main": "lib/cjs/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index.ts",

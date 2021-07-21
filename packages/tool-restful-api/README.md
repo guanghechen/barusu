@@ -1,6 +1,6 @@
 <header>
   <h1 align="center">
-    <a href="https://github.com/guanghechen/barusu/tree/main/packages/restful-apil#readme">@barusu/tool-restful-api</a>
+    <a href="https://github.com/guanghechen/barusu/tree/main/packages/tool-restful-apil#readme">@barusu/tool-restful-api</a>
   </h1>
   <div align="center">
     <a href="https://www.npmjs.com/package/@barusu/tool-restful-api">
@@ -398,11 +398,11 @@
 [json-schema]: https://json-schema.org/
 [json-schema-faker]: https://github.com/json-schema-faker/json-schema-faker
 [@barusu/typescript-json-schema]: https://github.com/guanghechen/barusu/blob/main/packages/typescript-json-schema
-[generate-command]: https://github.com/guanghechen/barusu/blob/main/packages/restful-api/src/core/generate/command.ts#L74
-[serve-command]: https://github.com/guanghechen/barusu/blob/main/packages/restful-api/src/core/serve/command.ts#L93
-[api-config]: https://github.com/guanghechen/barusu/blob/main/packages/restful-api/src/types/api-config.ts
-[api-config-rawapiconfig]: https://github.com/guanghechen/barusu/blob/main/packages/restful-api/src/types/api-config.ts#L7
-[example]: https://github.com/guanghechen/barusu/tree/main/packages/restful-api/example
+[generate-command]: https://github.com/guanghechen/barusu/blob/main/packages/tool-restful-api/src/core/generate/command.ts#L74
+[serve-command]: https://github.com/guanghechen/barusu/blob/main/packages/tool-restful-api/src/core/serve/command.ts#L93
+[api-config]: https://github.com/guanghechen/barusu/blob/main/packages/tool-restful-api/src/types/api-config.ts
+[api-config-rawapiconfig]: https://github.com/guanghechen/barusu/blob/main/packages/tool-restful-api/src/types/api-config.ts#L7
+[example]: https://github.com/guanghechen/barusu/tree/main/packages/tool-restful-api/example
 
 [usage-cli]: #Cli-Usage
 [usage-programming]: #Programming-Usage
